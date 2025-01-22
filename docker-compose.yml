@@ -1,0 +1,14 @@
+services:
+  client:
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - todo-client-network
+    restart: on-failure
+
+networks:
+  todo-client-network:
+    driver: bridge
