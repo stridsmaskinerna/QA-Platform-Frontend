@@ -1,3 +1,41 @@
+# QA-Platform-Frontend
+
+## Folder structure
+![frontend_package_diagram](https://github.com/user-attachments/assets/1bb7a4b0-1c12-4b31-b647-7ae8c58029b6)
+
+## CSS Usage
+- We use CSS modules in this project to avoid class naming conflicts (see this [guide](https://medium.com/@ralph1786/using-css-modules-in-react-app-c2079eadbb87) for how to use)
+  Short version:
+  ```
+  // Button.module.css
+  
+  .error {
+  background-color: red
+  }
+  ```
+  ```
+  //Button.tsx
+  
+  import React from "react";
+
+  import styles from "./Button.module.css"
+
+  export function Button() {
+    return <button className={styles.error}>Error<button>;
+  ```
+- Global CSS vars are found in global.css in the src-folder
+
+## Formatting
+- We use prettier in this project for code formatting. The vs-code extension "prettier - code formatter" is needed to adhere to the rules in .prettierrc.json in the src-folder.
+
+
+
+
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -48,4 +86,4 @@ export default tseslint.config({
   },
 })
 ```
-# QA-Platform-Frontend
+
