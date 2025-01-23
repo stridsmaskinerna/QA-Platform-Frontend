@@ -6,9 +6,8 @@ services:
     ports:
       - "3000:80"
     networks:
-      - todo-client-network
-    restart: on-failure
+      - qa-platform-client-network
 
 networks:
-  todo-client-network:
+  qa-platform-client-network:
     driver: bridge
