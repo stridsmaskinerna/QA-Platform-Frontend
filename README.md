@@ -22,11 +22,32 @@
 
   export function Button() {
     return <button className={styles.error}>Error<button>;
+  }
   ```
 - Global CSS vars are found in global.css in the src-folder
 
 ## Formatting
 - We use [Prettier](https://prettier.io/) in this project for code formatting. The vs-code extension "prettier - code formatter" is needed to adhere to the rules in .prettierrc.json in the root folder.
+
+## Language support
+We use [i18n](https://react.i18next.com/) to handle UI-texts and languages. [Here](https://medium.com/@devpedrodias/how-to-use-i18n-in-your-react-app-1f26deb2a3d8) is a short guide for setup and usage. Long story short we put all UI text in json files (en.json and eventually sv.json for english and swedish language respectively) in the locale folder. To use a text string using i18n:
+```
+// en.json
+{
+  "translation": {
+  "login": "Login"
+  }
+}
+```
+
+
+```
+//Some component
+ export function Button() {
+    const { t } = useTranslation();
+    return <button className={styles.error}>{t("login")}<button>;
+  }
+```
 
 
 
