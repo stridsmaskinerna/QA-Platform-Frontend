@@ -1,7 +1,8 @@
 # QA-Platform-Frontend
 
 ## Folder structure
-![frontend_package_diagram](https://github.com/user-attachments/assets/1bb7a4b0-1c12-4b31-b647-7ae8c58029b6)
+![frontend_package_diagram - Page 1](https://github.com/user-attachments/assets/129878c9-7109-4b95-93d2-f87b7f19d7d5)
+
 
 ## CSS Usage
 - We use CSS modules in this project to avoid class naming conflicts (see this [guide](https://medium.com/@ralph1786/using-css-modules-in-react-app-c2079eadbb87) for how to use)
