@@ -1,13 +1,13 @@
 services:
-    client:
-        build:
-            context: "."
-            dockerfile: Dockerfile
-        ports:
-            - "3000:80"
-        networks:
-            - qa-platform-client-network
+  client:
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - qa-platform-client-network
 
 networks:
-    qa-platform-client-network:
-        driver: bridge
+  qa-platform-client-network:
+    driver: bridge
