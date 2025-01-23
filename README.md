@@ -28,6 +28,8 @@
 
 ## Formatting
 - We use [Prettier](https://prettier.io/) in this project for code formatting. The vs-code extension "prettier - code formatter" is needed to adhere to the rules in .prettierrc.json in the root folder.
+- Want to change a format [option](https://prettier.io/docs/en/options)? Go to .prettierrc.json and change/add/remove the rule you want. Then: ``npx prettier . --write`` to apply the rule across the whole project. Be mindful of how this affects others in the project.
+- Use .prettierignore to [exclude files or folders to format](https://prettier.io/docs/en/ignore).
 
 ## Language support
 We use [i18n](https://react.i18next.com/) to handle UI-texts and languages. [Here](https://medium.com/@devpedrodias/how-to-use-i18n-in-your-react-app-1f26deb2a3d8) is a short guide for setup and usage. Long story short we put all UI text in json files (en.json and eventually sv.json for english and swedish language respectively) in the locale folder. To use a text string using i18n:
