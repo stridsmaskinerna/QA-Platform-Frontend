@@ -26,8 +26,7 @@
 - Global CSS vars are found in global.css in the src-folder
 
 ## Formatting
-- We use prettier in this project for code formatting. The vs-code extension "prettier - code formatter" is needed to adhere to the rules in .prettierrc.json in the src-folder.
-
+- We use [Prettier](https://prettier.io/) in this project for code formatting. The vs-code extension "prettier - code formatter" is needed to adhere to the rules in .prettierrc.json in the root folder.
 
 
 
