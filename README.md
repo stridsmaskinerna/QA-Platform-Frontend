@@ -1,5 +1,18 @@
 # QA-Platform-Frontend
 
+## Development requirements
+
+- Node version 20
+
+- Npm version 10
+
+## Run Application
+
+- **For Development**: `npm run dev`
+
+- **For Production/Staging (Nginx, Application)**: `docker compose up -d`
+
+
 ## Folder structure
 ![frontendPaketDiagram](https://github.com/user-attachments/assets/9305b618-36f2-4772-89c6-0ffcf2e18dcc)
 
