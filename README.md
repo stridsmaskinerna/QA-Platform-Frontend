@@ -1,7 +1,8 @@
 # QA-Platform-Frontend
 
 ## Folder structure
-![frontend_package_diagram - Page 1](https://github.com/user-attachments/assets/129878c9-7109-4b95-93d2-f87b7f19d7d5)
+![frontendPaketDiagram](https://github.com/user-attachments/assets/9305b618-36f2-4772-89c6-0ffcf2e18dcc)
+
 
 
 ## CSS Usage
