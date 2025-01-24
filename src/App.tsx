@@ -1,38 +1,34 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useTranslation } from "react-i18next";
 import "./App.css";
 
 function App() {
-    const [count, setCount] = useState(0);
+    const {
+        t,
+        i18n: { changeLanguage, language }
+    } = useTranslation();
+    const [currentLanguage, setCurrentLanguage] = useState(language);
+
+    const handleChangeLanguage = () => {
+        const newLanguage = currentLanguage === "en" ? "sv" : "en";
+        setCurrentLanguage(newLanguage);
+        changeLanguage(newLanguage);
+    };
 
     return (
-        <>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img
-                        src={reactLogo}
-                        className="logo react"
-                        alt="React logo"
-                    />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount(count => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
+        <div className="App">
+            <h1>
+                Our Translated Header:
+                {t("headerTitle", { appName: "App for Translations" })}
+            </h1>
+            <h3>Current Language: {currentLanguage}</h3>
+            <button
+                type="button"
+                onClick={handleChangeLanguage}
+            >
+                Change Language
+            </button>
+        </div>
     );
 }
 
