@@ -1,4 +1,4 @@
-import * as globals from "globals";
+import globals from "globals";
 import eslintJS from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
@@ -34,7 +34,7 @@ export default tseslint.config(
     },
     {
         // disable type-aware linting on JS files
-        files: ["**/*.js"],
+        files: ["**/*.js", "**/*.mjs"],
         extends: [tseslint.configs.disableTypeChecked]
     },
     reactRefresh.configs.vite,
