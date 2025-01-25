@@ -1,8 +1,6 @@
 name: CI Workflow
 
 on:
-  push:
-    branches: [ "*" ] # Run on pushes to any branch
   pull_request:
     branches: 
       - main        # Run on pull requests targeting main branch
@@ -35,8 +33,6 @@ jobs:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
-      - name: List installed npm packages
-        run: npm list --depth=0
 
   # Job 2: Lint Project (runs in parallel with TypeScript and Prettier checks)
   lint:
