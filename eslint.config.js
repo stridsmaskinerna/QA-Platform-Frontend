@@ -1,4 +1,4 @@
-import globals from "globals";
+import * as globals from "globals";
 import eslintJS from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
@@ -16,7 +16,7 @@ export default tseslint.config(
         languageOptions: {
             parser: tseslint.parser,
             ecmaVersion: 2020,
-            globals: globals.browser,
+            globals: { ...globals.browser },
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname
