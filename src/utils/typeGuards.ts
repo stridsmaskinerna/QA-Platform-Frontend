@@ -12,5 +12,5 @@ type RolesMatchCheck =
 type AssertRolesAreInSync = RolesMatchCheck extends never ? true : never;
 
 // This line will throw the compile-time error "Type 'true' is not assignable to type 'never'"
-// if POSSIBLE_ROLES and the Roles type are not in sync
+// if POSSIBLE_ROLES and the type Roles are not in sync
 const assertRolesSync: AssertRolesAreInSync = true;

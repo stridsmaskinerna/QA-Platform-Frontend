@@ -1,6 +1,13 @@
 import { Route, Routes } from "react-router";
 import { AuthGuard, Header, ErrorBoundary } from "./components";
-import { Admin, LoginRegister, QAExtended, QALimited } from "./pages";
+import {
+    Admin,
+    LoginRegister,
+    QAExtended,
+    QALimited,
+    QuestionPageExtended,
+    QuestionPageLimited
+} from "./pages";
 
 function App() {
     return (
@@ -16,6 +23,10 @@ function App() {
                     element={<LoginRegister />}
                 />
                 <Route
+                    path="/public/:questionId"
+                    element={<QuestionPageLimited />}
+                />
+                <Route
                     path="/"
                     element={
                         <AuthGuard
@@ -24,11 +35,16 @@ function App() {
                                 fallbackRoute: "/public"
                             }}
                         >
-                            <Route element={<QAExtended />} />
+                            <>
+                                <Route element={<QAExtended />} />
+                                <Route
+                                    path=":questionId"
+                                    element={<QuestionPageExtended />}
+                                />
+                            </>
                         </AuthGuard>
                     }
                 />
-
                 <Route
                     path="/admin"
                     element={
