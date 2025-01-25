@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v4  # Updated to v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')-key }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')}}-key
           restore-keys: |
             ${{ runner.os }}-node-
 
