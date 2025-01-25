@@ -11,7 +11,7 @@ interface IRoleBasedRedirect {
 
 interface IRequireAuthProps {
     children: ReactElement;
-    roleBasedRedirect?: IRoleBasedRedirect;
+    roleBasedRedirect: IRoleBasedRedirect;
 }
 
 export function AuthGuard({
@@ -36,10 +36,7 @@ export function AuthGuard({
 
     // If roleBasedRedirect is provided, check if the user lacks necessary roles
     //and redirect to fallback route in that case
-    if (
-        roleBasedRedirect &&
-        !roles.some(role => roleBasedRedirect.allowedRoles.includes(role))
-    ) {
+    if (!roles.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
         return (
             <Navigate
                 to={roleBasedRedirect.fallbackRoute}
