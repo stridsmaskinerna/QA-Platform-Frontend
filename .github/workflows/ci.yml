@@ -1,0 +1,103 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    branches: 
+      - main        # Run on pull requests targeting main branch
+      - development # Run on pull requests targeting development branch
+
+jobs:
+  # Job 1: Install Dependencies (shared)
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      node-modules-cache-hit: ${{ steps.cache-deps.outputs.cache-hit }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Updated to v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4  # Updated to v4
+        with:
+          node-version: '20'
+
+      - name: Cache Node.js modules
+        id: cache-deps
+        uses: actions/cache@v4  # Updated to v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')}}-key
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: npm ci
+
+  # Job 2: Lint Project (runs in parallel with TypeScript and Prettier checks)
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Updated to v4
+
+      - name: Use shared dependencies cache
+        uses: actions/cache@v4  # Updated to v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Run ESLint
+        run: npx eslint .
+
+  # Job 3: Check TypeScript (runs in parallel with Linting and Prettier check)
+  check-ts:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Updated to v4
+
+      - name: Use shared dependencies cache
+        uses: actions/cache@v4  # Updated to v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Check TypeScript
+        run: npx tsc --noEmit
+
+  # Job 4: Prettier Check (runs in parallel with Linting and TypeScript checks)
+  prettier:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Updated to v4
+
+      - name: Use shared dependencies cache
+        uses: actions/cache@v4  # Updated to v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Run Prettier Check
+        run: npx prettier --check .
+
+  # Job 5: Build Project (runs after all checks)
+  build:
+    needs: [lint, check-ts, prettier]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Updated to v4
+
+      - name: Use shared dependencies cache
+        uses: actions/cache@v4  # Updated to v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Build the project
+        run: npx vite build --mode prod
