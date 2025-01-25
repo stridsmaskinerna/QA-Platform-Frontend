@@ -1,5 +1,6 @@
 import { createContext, ReactElement, ReactNode } from "react";
 import {
+    getRolesFromToken,
     IAuthContext,
     ILoginCredentials,
     ITokens,
@@ -20,7 +21,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         null
     );
     const values: IAuthContext = {
-        isLoggedIn: tokens !== null,
+        roles: getRolesFromToken(tokens?.accessToken),
         login,
         logout,
         tokens

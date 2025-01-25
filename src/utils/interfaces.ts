@@ -1,5 +1,7 @@
+import { Roles } from ".";
+
 export interface IAuthContext {
-    isLoggedIn: boolean;
+    roles: Roles[] | undefined;
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
     tokens: ITokens | null;
@@ -8,7 +10,6 @@ export interface IAuthContext {
 export interface ITokens {
     accessToken: string;
     refreshToken: string;
-    role: "User" | "Admin" | "Teacher";
 }
 
 export interface ILoginCredentials {
