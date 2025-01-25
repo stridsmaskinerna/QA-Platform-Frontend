@@ -1,31 +1,42 @@
-import js from "@eslint/js";
 import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
+import eslintJS from "@eslint/js";
 import tseslint from "typescript-eslint";
-import eslintConfigPrettier from "eslint-config-prettier";
+import prettierConfig from "eslint-config-prettier";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import reactPlugin from "eslint-plugin-react";
+import { fixupPluginRules } from "@eslint/compat";
 
 export default tseslint.config(
-    { ignores: ["dist"] },
+    { ignores: ["**/build/**", "**/dist/**"] },
+    eslintJS.configs.recommended,
+    tseslint.configs.recommended,
+    tseslint.configs.stylistic,
     {
-        extends: [js.configs.recommended, ...tseslint.configs.recommended],
-        files: ["**/*.{ts,tsx}"],
         languageOptions: {
+            parser: tseslint.parser,
             ecmaVersion: 2020,
-            globals: globals.browser
+            globals: globals.browser,
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname
+            }
         },
+        // files: ["**/*.{ts,tsx}"],
         plugins: {
-            "react-hooks": reactHooks,
-            "react-refresh": reactRefresh
+            react: reactPlugin,
+            "react-hooks": fixupPluginRules(reactHooksPlugin),
+            "@typescript-eslint": tseslint.plugin
         },
         rules: {
-            ...reactHooks.configs.recommended.rules,
-            "react-refresh/only-export-components": [
-                "warn",
-                { allowConstantExport: true }
-            ]
+            ...reactHooksPlugin.configs.recommended.rules
         }
     },
-    //eslinrConfigPrettier needs to be last
-    eslintConfigPrettier
+    {
+        // disable type-aware linting on JS files
+        files: ["**/*.js"],
+        extends: [tseslint.configs.disableTypeChecked]
+    },
+    reactRefresh.configs.vite,
+    prettierConfig // prettierConfig must be last to disable conflicting rules
 );

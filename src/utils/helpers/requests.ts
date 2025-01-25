@@ -26,7 +26,7 @@ export async function refreshTokens({
     accessToken,
     refreshToken
 }: ITokens): Promise<ITokens> {
-    const url: string = `${BASE_URL}/authentication/refresh`;
+    const url = `${BASE_URL}/authentication/refresh`;
 
     const response: Response = await fetch(url, {
         method: "POST",
