@@ -51,7 +51,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Run ESLint
-        run: npx eslint . --ext .tsx,.ts
+        run: npx eslint .
 
   # Job 3: Check TypeScript (runs in parallel with Linting and Prettier check)
   check-ts:
