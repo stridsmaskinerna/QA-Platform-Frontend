@@ -104,4 +104,4 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build the project
-        run: npm run build
+        run: vite build --mode prod
