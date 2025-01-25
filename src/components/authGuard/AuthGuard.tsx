@@ -34,7 +34,7 @@ export function AuthGuard({
         );
     }
 
-    // If allowedRoles is provided, check if the user does not have any allowed role
+    // If roleBasedRedirect is provided, check if the user lacks necessary roles
     //and redirect to fallback route in that case
     if (
         roleBasedRedirect &&
