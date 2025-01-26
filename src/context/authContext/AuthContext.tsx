@@ -6,6 +6,7 @@ import {
     useState
 } from "react";
 import {
+    CustomError,
     getRolesFromToken,
     IAuthContext,
     ILoginCredentials,
@@ -38,8 +39,14 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     };
 
     async function login({ email, password }: ILoginCredentials) {
-        const tokens = await loginReq({ email, password });
-        setTokens(tokens);
+        try {
+            const tokens = await loginReq({ email, password });
+            setTokens(tokens);
+        } catch (error) {
+            if (error instanceof CustomError) {
+                console.log(error);
+            }
+        }
     }
 
     function logout() {
