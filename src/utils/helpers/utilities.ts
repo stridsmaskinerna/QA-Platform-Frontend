@@ -1,6 +1,5 @@
 import { jwtDecode } from "jwt-decode";
 import { Roles } from "../types";
-import { POSSIBLE_ROLES } from "../../data";
 
 export function addTokenToRequestInit(
     accessToken?: string,
@@ -36,14 +35,7 @@ export function getRolesFromToken(
         return undefined;
     }
 
-    const decoded = jwtDecode<{ roles: string[] }>(token);
-    const validRoles = decoded.roles.filter(r =>
-        POSSIBLE_ROLES.includes(r as Roles)
-    ) as Roles[];
+    const decoded = jwtDecode<{ roles: Roles[] }>(token);
 
-    if (validRoles.length === 0) {
-        return undefined;
-    }
-
-    return validRoles;
+    return decoded.roles;
 }

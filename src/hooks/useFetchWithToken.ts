@@ -8,6 +8,7 @@ import {
 } from "../utils";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_TOKEN_KEY } from "../data";
+import { useNavigate } from "react-router";
 
 interface IUseFetchWithTokenReturn<T> {
     error: CustomError | null;
@@ -25,6 +26,7 @@ export function useFetchWithToken<T>(
         null
     );
     const [error, setError] = useState<CustomError | null>(null);
+    const navigate = useNavigate();
 
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
     async function generatedFetch<T>(accessToken: string): Promise<T> {
@@ -60,8 +62,10 @@ export function useFetchWithToken<T>(
                     setError(error);
                     //If the attempt to refresh token fails with 401 unauthorized, then probably
                     //the refreshtoken has expired, so we clear the tokens in localStorage
+                    //and send the user to the login screen
                     if (error.errorCode === 401) {
                         clearTokens();
+                        await navigate("/login", { replace: true });
                     }
                 }
             } finally {
