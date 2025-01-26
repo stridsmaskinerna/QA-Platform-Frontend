@@ -1,4 +1,3 @@
-/* Base styling */
 .nav-menu {
     display: flex;
     justify-content: space-between;
@@ -90,10 +89,6 @@
 
     .menuLinks ul li:last-child {
         margin-bottom: 0;
-    }
-
-    .menuLinks ul li a {
-        padding: 0;
     }
 
     .burgerIcon {
