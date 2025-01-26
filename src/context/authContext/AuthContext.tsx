@@ -1,10 +1,17 @@
-import { createContext, ReactElement, ReactNode } from "react";
+import {
+    createContext,
+    ReactElement,
+    ReactNode,
+    useEffect,
+    useState
+} from "react";
 import {
     getRolesFromToken,
     IAuthContext,
     ILoginCredentials,
     ITokens,
-    loginReq
+    loginReq,
+    Roles
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
@@ -20,8 +27,11 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null
     );
+
+    const [roles, setRoles] = useState<Roles[]>();
+
     const values: IAuthContext = {
-        roles: getRolesFromToken(tokens?.accessToken),
+        roles,
         login,
         logout,
         tokens
@@ -35,6 +45,11 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     function logout() {
         clearTokens();
     }
+
+    useEffect(() => {
+        // Recompute roles whenever tokens change
+        setRoles(getRolesFromToken(tokens?.accessToken));
+    }, [tokens?.accessToken]);
 
     return (
         <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
