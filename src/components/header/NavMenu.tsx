@@ -45,7 +45,7 @@ export function NavMenu() {
 
                     <li>
                         <NavLink
-                            to={isUser ? "/" : "/public"}
+                            to={isUser ? "/" : "/guest"}
                             onClickSideEffect={closeMenu}
                             title={t("qa")}
                         />
@@ -61,7 +61,7 @@ export function NavMenu() {
                     ) : (
                         <li>
                             <NavLink
-                                to="/public"
+                                to="/guest"
                                 onClickSideEffect={() => {
                                     logout();
                                     closeMenu();

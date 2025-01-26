@@ -1,13 +1,8 @@
 import { ReactElement } from "react";
 import { Navigate } from "react-router";
-import { Roles } from "../../utils";
+import { IRoleBasedRedirect } from "../../utils";
 import { useRoles } from "../../hooks/useRoles";
 import { useAuthContext } from "../../hooks";
-
-interface IRoleBasedRedirect {
-    allowedRoles: Roles[];
-    fallbackRoute: string;
-}
 
 interface IRequireAuthProps {
     children: ReactElement;
@@ -25,13 +20,13 @@ export function AuthGuard({
     if (isGuest) {
         return (
             <Navigate
-                to="/public"
+                to="/guest"
                 replace
             />
         );
     }
 
-    //Otherwise check if the user lacks necessary roles and redirect to fallback route in that case
+    // //Otherwise check if the user lacks necessary roles and redirect to fallback route in that case
     if (
         roles &&
         !roles.some(role => roleBasedRedirect.allowedRoles.includes(role))

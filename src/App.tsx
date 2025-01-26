@@ -15,7 +15,7 @@ function App() {
             <Header />
             <Routes>
                 <Route
-                    path="/public"
+                    path="/guest"
                     element={<QALimited />}
                 />
                 <Route
@@ -23,7 +23,7 @@ function App() {
                     element={<LoginRegister />}
                 />
                 <Route
-                    path="/public/:questionId"
+                    path="/guest/questions/:questionId"
                     element={<QuestionPageLimited />}
                 />
                 <Route
@@ -32,16 +32,23 @@ function App() {
                         <AuthGuard
                             roleBasedRedirect={{
                                 allowedRoles: ["User", "Teacher"],
-                                fallbackRoute: "/public"
+                                fallbackRoute: "/guest"
                             }}
                         >
-                            <>
-                                <Route element={<QAExtended />} />
-                                <Route
-                                    path=":questionId"
-                                    element={<QuestionPageExtended />}
-                                />
-                            </>
+                            <QAExtended />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="questions/:questionId"
+                    element={
+                        <AuthGuard
+                            roleBasedRedirect={{
+                                allowedRoles: ["User", "Teacher"],
+                                fallbackRoute: "/"
+                            }}
+                        >
+                            <QuestionPageExtended />
                         </AuthGuard>
                     }
                 />
@@ -54,7 +61,7 @@ function App() {
                                 fallbackRoute: "/"
                             }}
                         >
-                            <Route element={<Admin />} />
+                            <Admin />
                         </AuthGuard>
                     }
                 />
