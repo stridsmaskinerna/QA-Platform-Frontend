@@ -45,22 +45,27 @@
     background-color: white;
 }
 
+.menuLinks {
+    transition: opacity 0.5s ease-in-out;
+}
+
 /* Mobile styles */
 @media (max-width: 768px) {
     .menuLinks {
-        display: none; /* Hide the links by default */
-    }
-
-    .menuLinks.menuOpen {
-        display: block; /* Show the links when open */
         position: absolute;
         top: 0;
         right: 0;
-        background-color: var(--blue-ltu);
-        text-align: center;
+        opacity: 0;
+        pointer-events: none;
         padding: 20px;
         border: 1px solid white;
         padding-left: 30px;
+        background-color: var(--blue-ltu);
+    }
+
+    .menuLinks.menuOpen {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .menuLinks ul {
@@ -71,7 +76,6 @@
 
     .menuLinks ul li::marker {
         color: white;
-        margin-right: -20px;
     }
 
     .menuLinks ul li {
