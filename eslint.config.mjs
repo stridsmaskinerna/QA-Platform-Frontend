@@ -4,31 +4,34 @@ import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import reactPlugin from "eslint-plugin-react";
+import react from "eslint-plugin-react";
 import { fixupPluginRules } from "@eslint/compat";
 
 export default tseslint.config(
     { ignores: ["**/build/**", "**/dist/**"] },
     eslintJS.configs.recommended,
-    tseslint.configs.recommended,
-    tseslint.configs.stylistic,
+    tseslint.configs.recommendedTypeChecked,
+    tseslint.configs.stylisticTypeChecked,
     {
         languageOptions: {
             parser: tseslint.parser,
             ecmaVersion: 2020,
             globals: { ...globals.browser },
             parserOptions: {
+                project: ["./tsconfig.node.json", "./tsconfig.app.json"],
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname
             }
         },
-        // files: ["**/*.{ts,tsx}"],
+        settings: { react: { version: "18.3" } },
         plugins: {
-            react: reactPlugin,
+            react,
             "react-hooks": fixupPluginRules(reactHooksPlugin),
             "@typescript-eslint": tseslint.plugin
         },
         rules: {
+            ...react.configs.recommended.rules,
+            ...react.configs["jsx-runtime"].rules,
             ...reactHooksPlugin.configs.recommended.rules
         }
     },
