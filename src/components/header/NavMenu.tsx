@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router";
 import styles from "./NavMenu.module.css";
 import { useTranslation } from "react-i18next";
 import { useRoles } from "../../hooks/useRoles";
 import { useAuthContext } from "../../hooks";
 import { useOnClickOutside } from "usehooks-ts";
+import { NavLink } from ".";
 
 export function NavMenu() {
     const { t } = useTranslation();
@@ -35,43 +35,39 @@ export function NavMenu() {
                 <ul>
                     {isAdmin && (
                         <li>
-                            <Link
-                                onClick={closeMenu}
+                            <NavLink
                                 to="/admin"
-                            >
-                                {t("admin")}
-                            </Link>
+                                onClickSideEffect={closeMenu}
+                                title={t("admin")}
+                            />
                         </li>
                     )}
 
                     <li>
-                        <Link
-                            onClick={closeMenu}
+                        <NavLink
                             to={isGuest || isOnlyAdmin ? "/public" : "/"}
-                        >
-                            {t("qa")}
-                        </Link>
+                            onClickSideEffect={closeMenu}
+                            title={t("qa")}
+                        />
                     </li>
                     {isGuest ? (
                         <li>
-                            <Link
-                                onClick={closeMenu}
+                            <NavLink
                                 to="/login"
-                            >
-                                {t("loginRegister")}
-                            </Link>
+                                onClickSideEffect={closeMenu}
+                                title={t("loginRegister")}
+                            />
                         </li>
                     ) : (
                         <li>
-                            <Link
+                            <NavLink
                                 to="/public"
-                                onClick={() => {
+                                onClickSideEffect={() => {
                                     logout();
                                     closeMenu();
                                 }}
-                            >
-                                {t("logout")}
-                            </Link>
+                                title={t("logout")}
+                            />
                         </li>
                     )}
                 </ul>

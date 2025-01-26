@@ -9,5 +9,5 @@ i18n.use(initReactI18next).init({
         en: { ...enJSON },
         sv: { ...svJSON }
     },
-    lng: "sv" // Set the initial language of the App
+    lng: "en" // Set the initial language of the App
 });
