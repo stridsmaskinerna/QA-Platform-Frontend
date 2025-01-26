@@ -1,65 +1,107 @@
-.container {
+/* Base styling */
+.nav-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #333;
+    background-color: var(--blue-ltu);
 }
 
-.menu-links ul {
+.logo {
+    font-size: 24px;
+    color: white;
+}
+
+.menuLinks ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
 }
 
-.menu-links ul li {
-    margin-right: 20px;
-}
-
-.menu-links ul li a {
+.menuLinks ul li a {
     text-decoration: none;
     color: white;
-    font-size: 18px;
+    font-size: clamp(1rem, 15px, 1.5rem);
     padding: 10px;
 }
 
+.burgerIcon {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.burgerLine {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}
+
+/* Mobile styles */
 @media (max-width: 768px) {
-    .menu-links {
+    .menuLinks {
         display: none; /* Hide the links by default */
     }
 
-    .menu-links.open {
+    .menuLinks.menuOpen {
         display: block; /* Show the links when open */
         position: absolute;
-        top: 60px;
-        left: 0;
+        top: 0;
         right: 0;
-        background-color: #333;
+        background-color: var(--blue-ltu);
         text-align: center;
         padding: 20px;
+        border: 1px solid white;
+        padding-left: 30px;
     }
 
-    .menu-links ul {
+    .menuLinks ul {
+        list-style-type: disc;
         flex-direction: column; /* Stack links vertically */
+        align-items: flex-start;
     }
 
-    .menu-links ul li {
+    .menuLinks ul li::marker {
+        color: white;
+        margin-right: -20px;
+    }
+
+    .menuLinks ul li {
         margin-bottom: 15px;
     }
 
-    .burger-icon {
+    .menuLinks ul li:last-child {
+        margin-bottom: 0;
+    }
+
+    .menuLinks ul li a {
+        padding: 0;
+    }
+
+    .burgerIcon {
         display: flex; /* Show the burger icon on mobile */
+    }
+
+    .burgerIcon.menuOpen {
+        visibility: hidden;
     }
 }
 
 /* Larger screens */
 @media (min-width: 769px) {
-    .burger-icon {
+    .burgerIcon {
         display: none; /* Hide the burger icon on larger screens */
     }
 
-    .menu-links {
+    .menuLinks {
         display: block; /* Ensure the menu is visible on larger screens */
     }
 }
