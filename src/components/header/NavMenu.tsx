@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useRoles } from "../../hooks/useRoles";
 import { useAuthContext } from "../../hooks";
 import { useOnClickOutside } from "usehooks-ts";
-import { NavLink } from ".";
+import { NavLink, LanguagePicker } from ".";
 
 export function NavMenu() {
     const { t } = useTranslation();
@@ -33,7 +33,7 @@ export function NavMenu() {
                 className={`${styles.menuLinks} ${isOpen ? styles.menuOpen : ""}`}
             >
                 <ul>
-                    {isAdmin && (
+                    {!isAdmin && (
                         <li>
                             <NavLink
                                 to="/admin"
@@ -70,6 +70,11 @@ export function NavMenu() {
                             />
                         </li>
                     )}
+                    <li
+                        className={`${styles.langPickerItem} ${isOpen ? styles.menuOpen : ""}`}
+                    >
+                        <LanguagePicker />
+                    </li>
                 </ul>
             </div>
 

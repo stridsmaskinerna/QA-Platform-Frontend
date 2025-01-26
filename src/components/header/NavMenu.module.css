@@ -14,17 +14,18 @@
 
 .menuLinks ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
     display: flex;
-    justify-content: center;
+    gap: 20px;
 }
 
 .menuLinks ul li a {
     text-decoration: none;
     color: white;
     font-size: clamp(1rem, 15px, 1.5rem);
-    padding: 10px;
+}
+
+.menuLinks ul li a:hover {
+    color: var(--grey-light);
 }
 
 .burgerIcon {
@@ -47,6 +48,10 @@
 
 .menuLinks {
     transition: opacity 0.5s ease-in-out;
+}
+
+.langPickerItem {
+    list-style: none;
 }
 
 /* Mobile styles */
@@ -72,6 +77,7 @@
         list-style-type: disc;
         flex-direction: column; /* Stack links vertically */
         align-items: flex-start;
+        gap: 5px;
     }
 
     .menuLinks ul li::marker {
