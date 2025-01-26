@@ -9,7 +9,7 @@ import { NavLink, LanguagePicker } from ".";
 export function NavMenu() {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
-    const { isAdmin, isGuest, isOnlyAdmin } = useRoles();
+    const { isAdmin, isGuest, isUser } = useRoles();
     const { logout } = useAuthContext();
     const menuRef = useRef(null);
 
@@ -33,7 +33,7 @@ export function NavMenu() {
                 className={`${styles.menuLinks} ${isOpen ? styles.menuOpen : ""}`}
             >
                 <ul>
-                    {!isAdmin && (
+                    {isAdmin && (
                         <li>
                             <NavLink
                                 to="/admin"
@@ -45,7 +45,7 @@ export function NavMenu() {
 
                     <li>
                         <NavLink
-                            to={isGuest || isOnlyAdmin ? "/public" : "/"}
+                            to={isUser ? "/" : "/public"}
                             onClickSideEffect={closeMenu}
                             title={t("qa")}
                         />
@@ -70,9 +70,7 @@ export function NavMenu() {
                             />
                         </li>
                     )}
-                    <li
-                        className={`${styles.langPickerItem} ${isOpen ? styles.menuOpen : ""}`}
-                    >
+                    <li className={styles.langPickerItem}>
                         <LanguagePicker />
                     </li>
                 </ul>
