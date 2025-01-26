@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+}
+
+.menu-links ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.menu-links ul li {
+    margin-right: 20px;
+}
+
+.menu-links ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .menu-links {
+        display: none; /* Hide the links by default */
+    }
+
+    .menu-links.open {
+        display: block; /* Show the links when open */
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .menu-links ul {
+        flex-direction: column; /* Stack links vertically */
+    }
+
+    .menu-links ul li {
+        margin-bottom: 15px;
+    }
+
+    .burger-icon {
+        display: flex; /* Show the burger icon on mobile */
+    }
+}
+
+/* Larger screens */
+@media (min-width: 769px) {
+    .burger-icon {
+        display: none; /* Hide the burger icon on larger screens */
+    }
+
+    .menu-links {
+        display: block; /* Ensure the menu is visible on larger screens */
+    }
+}

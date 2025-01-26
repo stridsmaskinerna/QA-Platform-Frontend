@@ -1,5 +1,10 @@
 {
     "translation": {
-        "login": "Login"
+        "login": "Login",
+        "headerHeadline": "LTU Q&A",
+        "admin": "Admin",
+        "logout": "Log out",
+        "qa": "Q&A",
+        "loginRegiser": "Login/Register"
     }
 }

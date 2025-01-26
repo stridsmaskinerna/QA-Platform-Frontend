@@ -1,0 +1,11 @@
+.container {
+    background-color: var(--blue-ltu);
+    padding: clamp(1rem, 5vw, 2rem);
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
+    color: white;
+    font-size: clamp(1rem, 5vw, 2rem);
+}
