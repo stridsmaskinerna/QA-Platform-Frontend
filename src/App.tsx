@@ -3,10 +3,10 @@ import { AuthGuard, Header, ErrorBoundary } from "./components";
 import {
     Admin,
     LoginRegister,
-    QAExtended,
-    QALimited,
-    QuestionPageExtended,
-    QuestionPageLimited
+    HomeExtended,
+    HomeLimited,
+    QuestionDetailsExtended,
+    QuestionDetailsLimited
 } from "./pages";
 import {
     ADMIN_ROUTE,
@@ -25,7 +25,7 @@ function App() {
             <Routes>
                 <Route
                     path={GUEST_QA_ROUTE}
-                    element={<QALimited />}
+                    element={<HomeLimited />}
                 />
                 <Route
                     path={LOGIN_REGISTER_ROUTE}
@@ -33,7 +33,7 @@ function App() {
                 />
                 <Route
                     path={GUEST_QUESTION_ROUTE + QUESTION_ID}
-                    element={<QuestionPageLimited />}
+                    element={<QuestionDetailsLimited />}
                 />
                 <Route
                     path={QA_ROUTE}
@@ -44,7 +44,7 @@ function App() {
                                 fallbackRoute: GUEST_QA_ROUTE
                             }}
                         >
-                            <QAExtended />
+                            <HomeExtended />
                         </AuthGuard>
                     }
                 />
@@ -57,7 +57,7 @@ function App() {
                                 fallbackRoute: GUEST_QUESTION_ROUTE
                             }}
                         >
-                            <QuestionPageExtended />
+                            <QuestionDetailsExtended />
                         </AuthGuard>
                     }
                 />
