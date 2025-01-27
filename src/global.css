@@ -11,4 +11,8 @@ html {
     --black-btn: black;
     --grey-light: lightgray;
     --grey-strong: gray;
+    --tabBtn-active: white;
+    --tabBtn-inactive: rgb(241, 239, 239);
+    --tabBtnText-active: black;
+    --tabBtnText-inactive: rgba(144, 142, 142, 0.977);
 }

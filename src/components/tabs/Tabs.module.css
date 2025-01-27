@@ -1,0 +1,118 @@
+/* Container for the entire tab component */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    position: relative;
+}
+
+/* Style for the tab buttons container */
+.btnsContainer {
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--tabBtn-inactive);
+    border: 6px solid var(--tabBtn-inactive);
+}
+
+/* Style for individual tab buttons */
+.tabButton {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--tabBtnText-inactive);
+    transition:
+        background-color 0.5s ease,
+        color 1s ease;
+}
+
+.tabButton:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.tabButton:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.tabButton:hover {
+    color: var(--tabBtnText-active);
+}
+
+.tabButton.btnActive {
+    background-color: var(--tabBtn-active);
+    color: var(--tabBtnText-active);
+    border-radius: 5px;
+}
+
+/* Style for the tab content */
+.tabContent {
+    transition: opacity 0.8s ease;
+    position: absolute;
+}
+
+.tabContent.hide {
+    opacity: 0;
+    visibility: hidden; /* Hide all tab content initially */
+    pointer-events: none;
+}
+
+/* Display the active tab content */
+.tabContent.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ------------------------  RESPONSIVE STYLE FROM HERE -------------------------- */
+
+.tabsContainer {
+    /* position: relative; */
+}
+
+.menu {
+    flex-direction: column;
+    position: relative;
+}
+
+.menu .tabWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.menu .tabButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.menu .tabButton.btnActive {
+    padding-right: 30px;
+    display: flex;
+    visibility: visible;
+}
+
+.menu .hide {
+    display: none;
+}
+
+.menu .show {
+    display: flex;
+}
+
+.downArrow {
+    position: absolute;
+    right: 10px;
+    display: inline-block;
+    margin-left: 8px; /* Space between the menu text and arrow */
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--black-btn); /* Arrow color */
+}
+
+.upsideDown {
+    transform: rotate(180deg);
+}
