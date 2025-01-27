@@ -1,6 +1,6 @@
 import { Tabs } from "../../components";
 
-export function QALimited() {
+export function QuestionDetailsLimited() {
     return (
         <div
             style={{
