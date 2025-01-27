@@ -1,5 +1,3 @@
 export function HomeExtended() {
-  return (
-    <div>HomeExtended</div>
-  )
+    return <div>HomeExtended</div>;
 }
