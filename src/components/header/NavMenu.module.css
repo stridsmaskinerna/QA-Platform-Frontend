@@ -1,0 +1,112 @@
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--blue-ltu);
+}
+
+.logo {
+    font-size: 24px;
+    color: white;
+}
+
+.menuLinks ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menuLinks ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: clamp(1rem, 15px, 1.5rem);
+}
+
+.menuLinks ul li a:hover {
+    color: var(--grey-light);
+}
+
+.burgerIcon {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 30px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.burgerLine {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}
+
+.menuLinks {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.langPickerItem {
+    list-style: none;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .menuLinks {
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        pointer-events: none;
+        padding: 20px;
+        border: 1px solid white;
+        padding-left: 30px;
+        background-color: var(--blue-ltu);
+    }
+
+    .menuLinks.menuOpen {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .menuLinks ul {
+        list-style-type: disc;
+        flex-direction: column; /* Stack links vertically */
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .menuLinks ul li::marker {
+        color: white;
+    }
+
+    .menuLinks ul li {
+        margin-bottom: 15px;
+    }
+
+    .menuLinks ul li:last-child {
+        margin-bottom: 0;
+    }
+
+    .burgerIcon {
+        display: flex; /* Show the burger icon on mobile */
+    }
+
+    .burgerIcon.menuOpen {
+        visibility: hidden;
+    }
+}
+
+/* Larger screens */
+@media (min-width: 769px) {
+    .burgerIcon {
+        display: none; /* Hide the burger icon on larger screens */
+    }
+
+    .menuLinks {
+        display: block; /* Ensure the menu is visible on larger screens */
+    }
+}

@@ -16,3 +16,8 @@ export interface ILoginCredentials {
     email: string;
     password: string;
 }
+
+export interface IRoleBasedRedirect {
+    allowedRoles: Roles[];
+    fallbackRoute: string;
+}

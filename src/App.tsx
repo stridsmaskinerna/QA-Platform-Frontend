@@ -8,6 +8,15 @@ import {
     QuestionPageExtended,
     QuestionPageLimited
 } from "./pages";
+import {
+    ADMIN_ROUTE,
+    GUEST_QA_ROUTE,
+    GUEST_QUESTION_ROUTE,
+    LOGIN_REGISTER_ROUTE,
+    QA_ROUTE,
+    QUESTION_ID,
+    QUESTION_ROUTE
+} from "./data";
 
 function App() {
     return (
@@ -15,46 +24,53 @@ function App() {
             <Header />
             <Routes>
                 <Route
-                    path="/public"
+                    path={GUEST_QA_ROUTE}
                     element={<QALimited />}
                 />
                 <Route
-                    path="/login"
+                    path={LOGIN_REGISTER_ROUTE}
                     element={<LoginRegister />}
                 />
                 <Route
-                    path="/public/:questionId"
+                    path={GUEST_QUESTION_ROUTE + QUESTION_ID}
                     element={<QuestionPageLimited />}
                 />
                 <Route
-                    path="/"
+                    path={QA_ROUTE}
                     element={
                         <AuthGuard
                             roleBasedRedirect={{
                                 allowedRoles: ["User", "Teacher"],
-                                fallbackRoute: "/public"
+                                fallbackRoute: GUEST_QA_ROUTE
                             }}
                         >
-                            <>
-                                <Route element={<QAExtended />} />
-                                <Route
-                                    path=":questionId"
-                                    element={<QuestionPageExtended />}
-                                />
-                            </>
+                            <QAExtended />
                         </AuthGuard>
                     }
                 />
                 <Route
-                    path="/admin"
+                    path={QUESTION_ROUTE + QUESTION_ID}
+                    element={
+                        <AuthGuard
+                            roleBasedRedirect={{
+                                allowedRoles: ["User", "Teacher"],
+                                fallbackRoute: GUEST_QUESTION_ROUTE
+                            }}
+                        >
+                            <QuestionPageExtended />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path={ADMIN_ROUTE}
                     element={
                         <AuthGuard
                             roleBasedRedirect={{
                                 allowedRoles: ["Admin"],
-                                fallbackRoute: "/"
+                                fallbackRoute: QA_ROUTE
                             }}
                         >
-                            <Route element={<Admin />} />
+                            <Admin />
                         </AuthGuard>
                     }
                 />

@@ -1,49 +1,49 @@
 import { ReactElement } from "react";
+import { Navigate, Params, useParams } from "react-router";
+import { IRoleBasedRedirect } from "../../utils";
 import { useAuthContext } from "../../hooks";
-import { Navigate } from "react-router";
-import { POSSIBLE_ROLES } from "../../data";
-import { Roles } from "../../utils";
-
-interface IRoleBasedRedirect {
-    allowedRoles: Roles[];
-    fallbackRoute: string;
-}
+import { GUEST_QUESTION_ROUTE } from "../../data";
 
 interface IRequireAuthProps {
     children: ReactElement;
     roleBasedRedirect: IRoleBasedRedirect;
 }
 
+//The idea behind this is that if a logged in user shares a link of a question and
+//a guest user uses that link, the guest should be taken to the corresponding question
+//as a guest, and we need to append the questionId to the guest route here.
+const createRedirectUrl = (
+    params: Readonly<Params<string>>,
+    fallbackRoute: string
+): string => {
+    if (fallbackRoute === GUEST_QUESTION_ROUTE) {
+        return fallbackRoute + (params?.questionId ?? "");
+    }
+
+    return fallbackRoute;
+};
+
 export function AuthGuard({
     children,
     roleBasedRedirect
 }: IRequireAuthProps): ReactElement {
     const { roles } = useAuthContext();
+    const params = useParams();
+    const redirectUrl = createRedirectUrl(
+        params,
+        roleBasedRedirect.fallbackRoute
+    );
 
-    //Check if no roles or if there is an unexpected role and in that case redirect to /public
-    if (
-        !roles ||
-        roles.length === 0 ||
-        roles.some(r => !POSSIBLE_ROLES.includes(r))
-    ) {
+    // //Check if the user lacks necessary roles and redirect to fallback route in that case
+    if (!roles?.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
         return (
             <Navigate
-                to="/public"
+                to={redirectUrl}
                 replace
             />
         );
     }
 
-    // If roleBasedRedirect is provided, check if the user lacks necessary roles
-    //and redirect to fallback route in that case
-    if (!roles.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
-        return (
-            <Navigate
-                to={roleBasedRedirect.fallbackRoute}
-                replace
-            />
-        );
-    }
-
+    //Otherwise return the aimed for route
     return children;
 }

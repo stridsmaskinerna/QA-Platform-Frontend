@@ -1,0 +1,14 @@
+.container {
+    background-color: var(--blue-ltu);
+    padding-inline: clamp(1rem, 5vw, 2rem);
+    padding-block: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.container h1 {
+    color: white;
+    font-size: clamp(1rem, 5vw, 1.8rem);
+}

@@ -1,3 +1,13 @@
+import { useTranslation } from "react-i18next";
+import styles from "./Header.module.css";
+import { NavMenu } from ".";
+
 export function Header() {
-    return <div>Header</div>;
+    const { t } = useTranslation();
+    return (
+        <header className={styles.container}>
+            <h1>{t("headerHeadline")}</h1>
+            <NavMenu />
+        </header>
+    );
 }

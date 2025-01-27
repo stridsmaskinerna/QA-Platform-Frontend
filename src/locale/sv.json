@@ -1,5 +1,10 @@
 {
     "translation": {
-        "login": "Logga in"
+        "login": "Logga in",
+        "headerHeadline": "LTU Frågor & Svar",
+        "admin": "Admin",
+        "logout": "Logga ut",
+        "qa": "Frågor & Svar",
+        "loginRegister": "Logga in/Registrering"
     }
 }
