@@ -5,3 +5,12 @@ export const BASE_URL = "ChangeMe";
 export const LOCAL_STORAGE_TOKEN_KEY = "tokens";
 //If changing POSSIBLE_ROLES, remember to change the type Roles in utils/types accordingly
 export const POSSIBLE_ROLES: Roles[] = ["Admin", "Teacher", "User"];
+
+//Routes
+export const GUEST_QUESTION_ROUTE = "/guest/questions/";
+export const ADMIN_ROUTE = "/admin/";
+export const LOGIN_REGISTER_ROUTE = "/login/";
+export const GUEST_QA_ROUTE = "/guest/";
+export const QA_ROUTE = "/";
+export const QUESTION_ROUTE = "/questions/";
+export const QUESTION_ID = ":questionId";
