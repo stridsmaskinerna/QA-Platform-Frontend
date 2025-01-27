@@ -18,10 +18,10 @@
 
 ### The pages folder
 
-- **qaLimited:** The landing page for unauthenticated users with _limited_ functionality where _public_ recent questions are displayed
-- **qaExtended:** The landing page for authenticated users with _full_ functionality where _all_ recent questions etc are displayed
-- **questionPageLimited:** The page where a Q&A thread with _limited_ functionality (not able to post answer etc.) is displayed
-- **questionPageExtended:** The page where a Q&A thread with _full_ functionality is displayed
+- **homeLimited:** The landing page for unauthenticated users with _limited_ functionality where _public_ recent questions are displayed
+- **homeExtended:** The landing page for authenticated users with _full_ functionality where _all_ recent questions etc are displayed
+- **questionDetailsLimited:** The page where a Q&A thread with _limited_ functionality (not able to post answer etc.) is displayed
+- **questionDetailsExtended:** The page where a Q&A thread with _full_ functionality is displayed
 - **admin:** The page for admin role functionality
 - **loginRegister:** The page with forms to login or register
 

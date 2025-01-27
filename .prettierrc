@@ -13,5 +13,6 @@
     "tabWidth": 4,
     "trailingComma": "none",
     "useTabs": false,
-    "singleAttributePerLine": true
+    "singleAttributePerLine": true,
+    "endOfLine": "lf"
 }
