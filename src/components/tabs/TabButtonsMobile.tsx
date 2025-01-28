@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ITabButtonsProps } from ".";
 import styles from "./TabButtonsMobile.module.css";
 import sharedStyles from "./SharedStyle.module.css";
+import { useOnClickOutside } from "usehooks-ts";
 
 export function TabButtonsMobile({
     tabBtns,
@@ -11,9 +12,11 @@ export function TabButtonsMobile({
     const [dropdownWidth, setDropdownWidth] = useState(0);
     const [isMenuExpanded, setIsMenuExpanded] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
+    useOnClickOutside(dropdownRef, () =>
+        setIsMenuExpanded(prev => (prev ? false : prev))
+    );
     //To make sure that when tabs are in a menu, the selected tab is on top
-    const sortedTabs = [...tabBtns].sort(a => (a.index === activeTab ? -1 : 1));
+    const sortedTabs = [...tabBtns].sort(a => (a.idx === activeTab ? -1 : 1));
 
     const handleDropdownClick = (idx: number) => {
         handleTabClick(idx);
@@ -48,7 +51,7 @@ export function TabButtonsMobile({
             <div
                 style={dropdownWidth ? { width: dropdownWidth } : {}}
                 className={`${styles.dropdownItem} ${styles.activeItem}`}
-                onClick={() => handleDropdownClick(sortedTabs[0].index)}
+                onClick={() => handleDropdownClick(sortedTabs[0].idx)}
             >
                 <button
                     style={sortedTabs[0].btnStyle}
@@ -65,15 +68,15 @@ export function TabButtonsMobile({
                 className={`${styles.inactiveItems} ${isMenuExpanded ? styles.show : ""}`}
             >
                 {sortedTabs
-                    .filter(t => t.index !== activeTab)
-                    .map(({ title, index, btnStyle }) => (
+                    .filter(t => t.idx !== activeTab)
+                    .map(({ title, idx, btnStyle }) => (
                         <div
-                            onClick={() => handleDropdownClick(index)}
+                            onClick={() => handleDropdownClick(idx)}
                             style={
                                 dropdownWidth ? { width: dropdownWidth } : {}
                             }
                             className={styles.dropdownItem}
-                            key={index}
+                            key={idx}
                         >
                             <button
                                 style={btnStyle}

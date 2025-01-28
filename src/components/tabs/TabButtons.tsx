@@ -8,12 +8,12 @@ export function TabButtons({
 }: ITabButtonsProps) {
     return (
         <>
-            {tabBtns.map(({ title, index, btnStyle }) => (
+            {tabBtns.map(({ title, idx, btnStyle }) => (
                 <button
-                    onClick={() => handleTabClick(index)}
-                    key={index}
+                    onClick={() => handleTabClick(idx)}
+                    key={idx}
                     style={btnStyle}
-                    className={`${styles.tabButton} ${activeTab === index ? styles.btnActive : ""}`}
+                    className={`${styles.tabButton} ${activeTab === idx ? styles.btnActive : ""}`}
                 >
                     {title}
                 </button>

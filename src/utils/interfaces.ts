@@ -26,7 +26,6 @@ export interface IRoleBasedRedirect {
 export interface ITab {
     title: string;
     content: ReactElement;
-    index: number;
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
     btnsContainerStyle?: CSSProperties;
