@@ -7,10 +7,10 @@ export const LOCAL_STORAGE_TOKEN_KEY = "tokens";
 export const POSSIBLE_ROLES: Roles[] = ["Admin", "Teacher", "User"];
 
 //Routes
-export const GUEST_QUESTION_ROUTE = "/guest/questions/";
+export const GUEST_QUESTION_DETAILS_ROUTE = "/guest/questions/";
 export const ADMIN_ROUTE = "/admin/";
 export const LOGIN_REGISTER_ROUTE = "/login/";
-export const GUEST_QA_ROUTE = "/guest/";
-export const QA_ROUTE = "/";
-export const QUESTION_ROUTE = "/questions/";
+export const GUEST_HOME_ROUTE = "/guest/";
+export const HOME_ROUTE = "/";
+export const QUESTION_DETAILS_ROUTE = "/questions/";
 export const QUESTION_ID = ":questionId";

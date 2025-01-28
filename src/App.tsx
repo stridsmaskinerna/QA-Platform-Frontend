@@ -10,12 +10,12 @@ import {
 } from "./pages";
 import {
     ADMIN_ROUTE,
-    GUEST_QA_ROUTE,
-    GUEST_QUESTION_ROUTE,
+    GUEST_HOME_ROUTE,
+    GUEST_QUESTION_DETAILS_ROUTE,
+    HOME_ROUTE,
     LOGIN_REGISTER_ROUTE,
-    QA_ROUTE,
-    QUESTION_ID,
-    QUESTION_ROUTE
+    QUESTION_DETAILS_ROUTE,
+    QUESTION_ID
 } from "./data";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
                 <Header />
                 <Routes>
                     <Route
-                        path={GUEST_QA_ROUTE}
+                        path={GUEST_HOME_ROUTE}
                         element={<HomeLimited />}
                     />
                     <Route
@@ -33,16 +33,16 @@ function App() {
                         element={<LoginRegister />}
                     />
                     <Route
-                        path={GUEST_QUESTION_ROUTE + QUESTION_ID}
+                        path={GUEST_QUESTION_DETAILS_ROUTE + QUESTION_ID}
                         element={<QuestionDetailsLimited />}
                     />
                     <Route
-                        path={QA_ROUTE}
+                        path={HOME_ROUTE}
                         element={
                             <AuthGuard
                                 roleBasedRedirect={{
                                     allowedRoles: ["User", "Teacher"],
-                                    fallbackRoute: GUEST_QA_ROUTE
+                                    fallbackRoute: GUEST_HOME_ROUTE
                                 }}
                             >
                                 <HomeExtended />
@@ -50,13 +50,13 @@ function App() {
                         }
                     />
                     <Route
-                        path={QUESTION_ROUTE + QUESTION_ID}
+                        path={QUESTION_DETAILS_ROUTE + QUESTION_ID}
                         element={
                             <AuthGuard
                                 roleBasedRedirect={{
                                     allowedRoles: ["User", "Teacher"],
                                     //The questionId is appended to the fallback route in the AuthGuard
-                                    fallbackRoute: GUEST_QUESTION_ROUTE
+                                    fallbackRoute: GUEST_QUESTION_DETAILS_ROUTE
                                 }}
                             >
                                 <QuestionDetailsExtended />
@@ -69,7 +69,7 @@ function App() {
                             <AuthGuard
                                 roleBasedRedirect={{
                                     allowedRoles: ["Admin"],
-                                    fallbackRoute: QA_ROUTE
+                                    fallbackRoute: HOME_ROUTE
                                 }}
                             >
                                 <Admin />
