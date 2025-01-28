@@ -1,56 +1,45 @@
-import {
-    CSSProperties,
-    ReactElement,
-    useEffect,
-    useRef,
-    useState
-} from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 import styles from "./Tabs.module.css";
-import { TabButtonsExpanded } from "./TabButtonsExpanded";
+import { TabButtons, TabButtonsMobile } from ".";
+import { ITab } from "../../utils";
 
-export interface ITab {
-    title: string;
-    content: ReactElement;
-    index: number;
-    contentContainerStyle?: CSSProperties;
+//Used internally in the tabs component
+export interface ITabButtonsProps {
+    tabBtns: {
+        title: string;
+        index: number;
+        btnStyle?: CSSProperties;
+    }[];
+    activeTab: number;
+    handleTabClick: (idx: number) => void;
 }
 
 interface ITabsProps {
     tabs: ITab[];
-    tabBtnStyle?: CSSProperties;
     tabBtnsContainerStyle?: CSSProperties;
     containerStyle?: CSSProperties;
     collapseWidth?: number;
 }
 
+//You can optionally pass styles to most elements of this component. But most
+// importantly you can pass a collapseWidth number prop to control at what viewport width
+// (in px) the tab-buttons will collapse into a dropdown menu. If passing styles as prop
+// remember to check that it looks good when tabButtons are in menu state also.
 export function Tabs({
     tabs,
-    tabBtnStyle,
+    //Style for the container holding the tab buttons
     tabBtnsContainerStyle,
+    //Style for the outermost container of this component
     containerStyle,
+    //The limit viewport width in px of which the tab buttons collapses into a menu
     collapseWidth
 }: ITabsProps) {
     const [activeTab, setActiveTab] = useState(tabs[0].index);
-    const [isMenuExpanded, setIsMenuExpanded] = useState(false);
     const [isViewportSmall, setIsViewportSmall] = useState(false);
-    const [dropdownWidth, setDropdownWidth] = useState(0);
-
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const sortedTabs = isViewportSmall
-        ? tabs
-              //To make sure that when tabs are in a menu, the selected tab is on top
-              .sort(a => (a.index === activeTab ? -1 : 1))
-        : tabs;
 
     const handleTabClick = (idx: number) => {
         setActiveTab(idx);
-        if (!isMenuExpanded && idx === activeTab) {
-            setIsMenuExpanded(true);
-        } else {
-            setIsMenuExpanded(false);
-        }
     };
 
     // Listen for window resize events given a prop passed to this component
@@ -59,8 +48,9 @@ export function Tabs({
 
         const handleResize = () => {
             if (collapseWidth !== undefined) {
+                // Update the state based on media query
                 setIsViewportSmall(mediaQuery.matches);
-            } // Update the state based on media query
+            }
         };
 
         handleResize(); // Set initial state
@@ -71,22 +61,6 @@ export function Tabs({
         };
     }, [collapseWidth]);
 
-    useEffect(() => {
-        if (dropdownRef.current) {
-            // Determine the widest element among the inactive items
-            const dropdownItems =
-                dropdownRef.current.querySelectorAll<HTMLDivElement>(
-                    `.${styles.dropdownItem}`
-                );
-            const maxWidth = Array.from(dropdownItems).reduce(
-                (max, item) => Math.max(max, item.offsetWidth),
-                0
-            );
-            setDropdownWidth(maxWidth);
-            console.log(maxWidth);
-        }
-    }, []);
-
     return (
         <div
             style={containerStyle}
@@ -96,56 +70,15 @@ export function Tabs({
                 style={tabBtnsContainerStyle}
                 className={`${styles.btnsContainer} ${isViewportSmall ? styles.noBorder : ""}`}
             >
-                <div
-                    className={styles.dropdownContainer}
-                    ref={dropdownRef}
-                    style={{ width: dropdownWidth }}
-                >
-                    <div
-                        className={`${styles.dropdownItem} ${styles.activeItem} ${isMenuExpanded ? styles.noBottomBorder : ""}`}
-                        onClick={() => handleTabClick(sortedTabs[0].index)}
-                    >
-                        <button
-                            style={tabBtnStyle}
-                            className={`${styles.tabButton} ${styles.btnActive}`}
-                        >
-                            {sortedTabs[0].title}
-                        </button>
-                        <span
-                            className={`${styles.downArrow} ${isMenuExpanded ? styles.upsideDown : ""}`}
-                        />
-                    </div>
-
-                    <div
-                        className={`${styles.inactiveItems} ${isMenuExpanded ? styles.show : ""}`}
-                    >
-                        {sortedTabs
-                            .filter(t => t.index !== activeTab)
-                            .map(({ title, index }) => (
-                                <div
-                                    style={
-                                        dropdownWidth
-                                            ? { width: dropdownWidth }
-                                            : {}
-                                    }
-                                    className={styles.dropdownItem}
-                                    key={index}
-                                >
-                                    <button
-                                        style={tabBtnStyle}
-                                        className={`${styles.tabButton}`}
-                                        onClick={() => handleTabClick(index)}
-                                    >
-                                        {title}
-                                    </button>
-                                </div>
-                            ))}
-                    </div>
-                </div>
-                {!isViewportSmall && (
-                    <TabButtonsExpanded
+                {isViewportSmall ? (
+                    <TabButtonsMobile
                         tabBtns={tabs}
-                        tabBtnStyle={tabBtnStyle}
+                        activeTab={activeTab}
+                        handleTabClick={handleTabClick}
+                    />
+                ) : (
+                    <TabButtons
+                        tabBtns={tabs}
                         activeTab={activeTab}
                         handleTabClick={handleTabClick}
                     />
@@ -156,9 +89,6 @@ export function Tabs({
                 <div
                     style={contentContainerStyle}
                     key={index}
-                    role="tabpanel"
-                    id={`tabpanel-${index}`}
-                    aria-labelledby={`tab-${index}`}
                     className={`${styles.tabContent} ${
                         activeTab === index ? styles.show : styles.hide
                     }`}

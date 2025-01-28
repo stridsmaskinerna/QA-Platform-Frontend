@@ -1,2 +1,3 @@
 export * from "./Tabs";
-export * from "./TabButtonsExpanded";
+export * from "./TabButtons";
+export * from "./TabButtonsMobile";

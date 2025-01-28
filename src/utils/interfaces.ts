@@ -1,3 +1,4 @@
+import { CSSProperties, ReactElement } from "react";
 import { Roles } from ".";
 
 export interface IAuthContext {
@@ -20,4 +21,13 @@ export interface ILoginCredentials {
 export interface IRoleBasedRedirect {
     allowedRoles: Roles[];
     fallbackRoute: string;
+}
+
+export interface ITab {
+    title: string;
+    content: ReactElement;
+    index: number;
+    contentContainerStyle?: CSSProperties;
+    btnStyle?: CSSProperties;
+    btnsContainerStyle?: CSSProperties;
 }
