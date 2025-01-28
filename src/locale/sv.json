@@ -5,6 +5,7 @@
         "admin": "Admin",
         "logout": "Logga ut",
         "qa": "Frågor & Svar",
-        "loginRegister": "Logga in/Registrering"
+        "loginRegister": "Logga in/Registrering",
+        "register": "Registrering"
     }
 }

@@ -16,3 +16,9 @@ html {
     --tabBtnText-active: black;
     --tabBtnText-inactive: rgba(144, 142, 142, 0.977);
 }
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}

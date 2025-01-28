@@ -5,6 +5,7 @@
         "admin": "Admin",
         "logout": "Log out",
         "qa": "Q&A",
-        "loginRegister": "Login/Register"
+        "loginRegister": "Login/Register",
+        "register": "Register"
     }
 }
