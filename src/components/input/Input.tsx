@@ -1,3 +1,7 @@
+interface IInputProps {
+    parentWidth?: number;
+}
+
 export function Input() {
-    return <div>Input</div>;
+    return <div></div>;
 }
