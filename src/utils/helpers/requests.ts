@@ -26,6 +26,12 @@ export async function refreshTokens({
     accessToken,
     refreshToken
 }: ITokens): Promise<ITokens> {
+    if (!accessToken || !refreshToken) {
+        throw new Error(
+            "Refresh request failed because accessToken or refreshToken was undefined"
+        );
+    }
+
     const url = `${BASE_URL}/authentication/refresh`;
 
     const response: Response = await fetch(url, {

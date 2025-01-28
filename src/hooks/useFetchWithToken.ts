@@ -29,7 +29,12 @@ export function useFetchWithToken<T>(
     const navigate = useNavigate();
 
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
-    async function generatedFetch<T>(accessToken: string): Promise<T> {
+    async function generatedFetch<T>(
+        accessToken: string | undefined
+    ): Promise<T> {
+        if (!accessToken) {
+            throw new Error("There is no accessToken in the tokens field");
+        }
         const requestInit: RequestInit = addTokenToRequestInit(
             accessToken,
             options
@@ -44,14 +49,17 @@ export function useFetchWithToken<T>(
     }
 
     async function requestFunc() {
+        if (!tokens) {
+            throw new Error("There is no tokens to make this request");
+        }
+
         setError(null);
         setIsLoading(true);
-
-        const tokenIsExpired: boolean = hasTokenExpired(tokens!.accessToken);
+        const tokenIsExpired: boolean = hasTokenExpired(tokens.accessToken);
         // Ask api to refresh accesstoken before fetching the data if accesstoken has expired.
         if (tokenIsExpired) {
             try {
-                const refreshedTokens = await refreshTokens(tokens!);
+                const refreshedTokens = await refreshTokens(tokens);
                 setTokens(refreshedTokens);
                 const data = await generatedFetch<T>(
                     refreshedTokens.accessToken
@@ -67,6 +75,8 @@ export function useFetchWithToken<T>(
                         clearTokens();
                         await navigate("/login", { replace: true });
                     }
+                } else {
+                    throw error;
                 }
             } finally {
                 setIsLoading(false);
@@ -74,11 +84,13 @@ export function useFetchWithToken<T>(
             // Else just fetch the data right away
         } else {
             try {
-                const data = await generatedFetch<T>(tokens!.accessToken);
+                const data = await generatedFetch<T>(tokens.accessToken);
                 return data;
             } catch (error) {
                 if (error instanceof CustomError) {
                     setError(error);
+                } else {
+                    throw error;
                 }
             } finally {
                 setIsLoading(false);

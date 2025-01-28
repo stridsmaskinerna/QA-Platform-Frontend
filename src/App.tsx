@@ -54,6 +54,7 @@ function App() {
                         <AuthGuard
                             roleBasedRedirect={{
                                 allowedRoles: ["User", "Teacher"],
+                                //The questionId is appended to the fallback route in the AuthGuard
                                 fallbackRoute: GUEST_QUESTION_ROUTE
                             }}
                         >
