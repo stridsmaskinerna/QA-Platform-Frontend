@@ -1,0 +1,34 @@
+/* Container for the entire tab component */
+.container {
+    position: relative;
+}
+
+/* Style for the tab buttons container */
+.btnsContainer {
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--tabBtn-inactive);
+    border: 6px solid var(--tabBtn-inactive);
+}
+
+.noBorder {
+    border: none;
+}
+
+/* Style for the tab content */
+.tabContent {
+    transition: opacity 0.8s ease;
+    position: absolute;
+}
+
+.tabContent.hide {
+    opacity: 0;
+    visibility: hidden; /* Hide all tab content initially */
+    pointer-events: none;
+}
+
+/* Display the active tab content */
+.tabContent.show {
+    opacity: 1;
+    visibility: visible;
+}
