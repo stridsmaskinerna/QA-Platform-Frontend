@@ -8,5 +8,5 @@
 
 .container h2 {
     margin-top: 4vh;
-    font-size: clamp(23px, 8vw, 3rem);
+    font-size: clamp(23px, 6vw, 2.2rem);
 }

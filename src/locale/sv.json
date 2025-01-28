@@ -6,6 +6,10 @@
         "logout": "Logga ut",
         "qa": "Frågor & Svar",
         "loginRegister": "Logga in/Registrering",
-        "register": "Registrering"
+        "register": "Registrering",
+        "email": "Email",
+        "password": "Lösenord",
+        "wrongCredentials": "Ogiltig e-postadress eller lösenord. Vänligen försök igen.",
+        "serverProblem": "Något gick fel. Vänligen försök igen senare."
     }
 }

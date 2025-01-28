@@ -6,6 +6,10 @@
         "logout": "Log out",
         "qa": "Q&A",
         "loginRegister": "Login/Register",
-        "register": "Register"
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "wrongCredentials": "Invalid email or password. Please try again.",
+        "serverProblem": "Something went wrong. Please try again later."
     }
 }
