@@ -14,7 +14,13 @@ const DummyContent3 = (): ReactElement => (
 const tabs = [
     { content: <DummyContent1 />, title: "Tab1", index: 1 },
     { content: <DummyContent2 />, title: "Tabö  aösldf öalsd", index: 2 },
-    { content: <DummyContent3 />, title: "Tab öl,as l", index: 3 }
+    { content: <DummyContent3 />, title: "Tab öl,as l", index: 3 },
+    { content: <DummyContent3 />, title: "Tab öl,as l", index: 4 },
+    {
+        content: <DummyContent3 />,
+        title: "Tab öl,as l alskdm lkmads k",
+        index: 5
+    }
 ];
 
 export function HomeLimited() {

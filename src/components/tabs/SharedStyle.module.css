@@ -1,0 +1,30 @@
+.tabButton {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--tabBtnText-inactive);
+    transition:
+        background-color 0.5s ease,
+        color 1s ease;
+}
+
+.tabButton:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.tabButton:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.tabButton:hover {
+    color: var(--tabBtnText-active);
+}
+
+.tabButton.btnActive {
+    background-color: var(--tabBtn-active);
+    color: var(--tabBtnText-active);
+    border-radius: 5px;
+}

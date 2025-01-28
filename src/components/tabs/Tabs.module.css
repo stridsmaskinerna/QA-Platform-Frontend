@@ -1,8 +1,5 @@
 /* Container for the entire tab component */
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 10px;
     position: relative;
 }
 
@@ -20,7 +17,6 @@
     border: none;
     cursor: pointer;
     background: none;
-    cursor: pointer;
     font-size: 16px;
     color: var(--tabBtnText-inactive);
     transition:
@@ -46,6 +42,10 @@
     border-radius: 5px;
 }
 
+.noBorder {
+    border: none;
+}
+
 /* Style for the tab content */
 .tabContent {
     transition: opacity 0.8s ease;
@@ -69,16 +69,13 @@
 .tabsContainer {
     /* position: relative; */
 }
-
+/* 
 .menu {
     flex-direction: column;
     position: relative;
 }
 
-.menu .tabWrapper {
-    display: flex;
-    align-items: center;
-}
+ 
 
 .menu .tabButton {
     display: flex;
@@ -91,21 +88,20 @@
     padding-right: 30px;
     display: flex;
     visibility: visible;
-}
+} */
 
-.menu .hide {
+/* .menu .hide {
     display: none;
 }
 
 .menu .show {
     display: flex;
-}
+} */
 
 .downArrow {
     position: absolute;
     right: 10px;
     display: inline-block;
-    margin-left: 8px; /* Space between the menu text and arrow */
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
@@ -115,4 +111,69 @@
 
 .upsideDown {
     transform: rotate(180deg);
+}
+
+.dropdownContainer {
+    position: relative;
+    background-color: var(--tabBtn-inactive);
+}
+
+.inactiveItems {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    align-items: flex-start;
+    background-color: var(--tabBtn-active);
+    width: 100%;
+    gap: 2px;
+    padding-top: 2px;
+}
+
+.inactiveItems.show {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 3;
+}
+
+.inactiveItems:first-child {
+    /* border: none; */
+}
+
+.dropdownItem.activeItem {
+    display: flex;
+    align-items: center;
+    background-color: var(--tabBtn-active);
+    border: 6px solid var(--tabBtn-inactive);
+    width: 100%;
+}
+
+.activeItem.noBottomBorder {
+    /* border-bottom: 0; */
+}
+
+.dropdownItem .tabButton.btnActive {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdownItem .tabButton {
+    padding-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dropdownItem {
+    /* background-color: var(--tabBtn-active); */
+    white-space: nowrap;
+    background-color: var(--tabBtn-inactive);
+}
+
+.inactiveItems .dropdownItem {
+    border: 6px solid var(--tabBtn-inactive);
+    /* width: 100%; */
+    /* border-top: 3px solid var(--tabBtn-inactive); */
 }

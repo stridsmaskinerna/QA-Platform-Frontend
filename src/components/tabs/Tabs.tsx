@@ -1,6 +1,13 @@
-import { CSSProperties, ReactElement, useEffect, useState } from "react";
+import {
+    CSSProperties,
+    ReactElement,
+    useEffect,
+    useRef,
+    useState
+} from "react";
 
 import styles from "./Tabs.module.css";
+import { TabButtonsExpanded } from "./TabButtonsExpanded";
 
 export interface ITab {
     title: string;
@@ -27,6 +34,9 @@ export function Tabs({
     const [activeTab, setActiveTab] = useState(tabs[0].index);
     const [isMenuExpanded, setIsMenuExpanded] = useState(false);
     const [isViewportSmall, setIsViewportSmall] = useState(false);
+    const [dropdownWidth, setDropdownWidth] = useState(0);
+
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const sortedTabs = isViewportSmall
         ? tabs
@@ -61,46 +71,87 @@ export function Tabs({
         };
     }, [collapseWidth]);
 
+    useEffect(() => {
+        if (dropdownRef.current) {
+            // Determine the widest element among the inactive items
+            const dropdownItems =
+                dropdownRef.current.querySelectorAll<HTMLDivElement>(
+                    `.${styles.dropdownItem}`
+                );
+            const maxWidth = Array.from(dropdownItems).reduce(
+                (max, item) => Math.max(max, item.offsetWidth),
+                0
+            );
+            setDropdownWidth(maxWidth);
+            console.log(maxWidth);
+        }
+    }, []);
+
     return (
         <div
             style={containerStyle}
             className={styles.container}
         >
-            <div className={styles.tabsContainer}>
+            <div
+                style={tabBtnsContainerStyle}
+                className={`${styles.btnsContainer} ${isViewportSmall ? styles.noBorder : ""}`}
+            >
                 <div
-                    style={tabBtnsContainerStyle}
-                    role="tablist"
-                    aria-label="Tab Selection"
-                    className={`${styles.btnsContainer} ${isViewportSmall ? styles.menu : ""}`}
+                    className={styles.dropdownContainer}
+                    ref={dropdownRef}
+                    style={{ width: dropdownWidth }}
                 >
-                    {sortedTabs.map(({ title, index }) => (
-                        <div
-                            className={styles.tabWrapper}
-                            key={index}
-                            onClick={() => handleTabClick(index)}
+                    <div
+                        className={`${styles.dropdownItem} ${styles.activeItem} ${isMenuExpanded ? styles.noBottomBorder : ""}`}
+                        onClick={() => handleTabClick(sortedTabs[0].index)}
+                    >
+                        <button
+                            style={tabBtnStyle}
+                            className={`${styles.tabButton} ${styles.btnActive}`}
                         >
-                            {isViewportSmall && activeTab === index && (
-                                <div className={styles.arrowContainer}>
-                                    <span
-                                        className={`${styles.downArrow} ${isMenuExpanded ? styles.upsideDown : ""}`}
-                                    />
+                            {sortedTabs[0].title}
+                        </button>
+                        <span
+                            className={`${styles.downArrow} ${isMenuExpanded ? styles.upsideDown : ""}`}
+                        />
+                    </div>
+
+                    <div
+                        className={`${styles.inactiveItems} ${isMenuExpanded ? styles.show : ""}`}
+                    >
+                        {sortedTabs
+                            .filter(t => t.index !== activeTab)
+                            .map(({ title, index }) => (
+                                <div
+                                    style={
+                                        dropdownWidth
+                                            ? { width: dropdownWidth }
+                                            : {}
+                                    }
+                                    className={styles.dropdownItem}
+                                    key={index}
+                                >
+                                    <button
+                                        style={tabBtnStyle}
+                                        className={`${styles.tabButton}`}
+                                        onClick={() => handleTabClick(index)}
+                                    >
+                                        {title}
+                                    </button>
                                 </div>
-                            )}
-                            <button
-                                style={tabBtnStyle}
-                                className={`${styles.tabButton} ${isMenuExpanded ? styles.show : styles.hide} ${activeTab === index ? styles.btnActive : ""}`}
-                                role="tab"
-                                id={`tab-${index}`}
-                                aria-controls={`tab-panel-${index}`}
-                                aria-selected={activeTab === index}
-                            >
-                                {title}
-                            </button>
-                        </div>
-                    ))}
+                            ))}
+                    </div>
                 </div>
+                {!isViewportSmall && (
+                    <TabButtonsExpanded
+                        tabBtns={tabs}
+                        tabBtnStyle={tabBtnStyle}
+                        activeTab={activeTab}
+                        handleTabClick={handleTabClick}
+                    />
+                )}
             </div>
-            {/* Tab Content */}
+
             {tabs.map(({ content, index, contentContainerStyle }) => (
                 <div
                     style={contentContainerStyle}
