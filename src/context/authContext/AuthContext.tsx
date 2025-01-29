@@ -6,12 +6,13 @@ import {
     useState
 } from "react";
 import {
-    CustomError,
     getRolesFromToken,
     IAuthContext,
     ILoginCredentials,
+    IRegisterFormData,
     ITokens,
     loginReq,
+    registerReq,
     Roles
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
@@ -35,18 +36,20 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         roles,
         login,
         logout,
-        tokens
+        tokens,
+        register
     };
 
+    //Handle failed requests in the form instead
     async function login({ email, password }: ILoginCredentials) {
-        try {
-            const tokens = await loginReq({ email, password });
-            setTokens(tokens);
-        } catch (error) {
-            if (error instanceof CustomError) {
-                console.log(error);
-            }
-        }
+        const tokens = await loginReq({ email, password });
+        setTokens(tokens);
+    }
+
+    //Handle failed requests in the form instead
+    async function register({ email, password, username }: IRegisterFormData) {
+        const tokens = await registerReq({ email, password, username });
+        setTokens(tokens);
     }
 
     function logout() {

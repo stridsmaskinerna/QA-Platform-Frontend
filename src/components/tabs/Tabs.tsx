@@ -1,14 +1,15 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useState } from "react";
 
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
+import { useMediaQuery } from "usehooks-ts";
 
 //Used internally in the tabs component
 export interface ITabButtonsProps {
     tabBtns: {
         title: string;
-        index: number;
+        idx: number;
         btnStyle?: CSSProperties;
     }[];
     activeTab: number;
@@ -35,31 +36,16 @@ export function Tabs({
     //The limit viewport width in px of which the tab buttons collapses into a menu
     collapseWidth
 }: ITabsProps) {
-    const [activeTab, setActiveTab] = useState(tabs[0].index);
-    const [isViewportSmall, setIsViewportSmall] = useState(false);
+    if (!tabs.length) {
+        throw new Error("Must supply at least on element in tabs prop");
+    }
+    const tabsWithIdx = tabs.map((t, idx) => ({ ...t, idx }));
+    const [activeTab, setActiveTab] = useState<number>(tabsWithIdx[0].idx);
+    const isViewportSmall = useMediaQuery(`(max-width: ${collapseWidth}px`);
 
     const handleTabClick = (idx: number) => {
         setActiveTab(idx);
     };
-
-    // Listen for window resize events given a prop passed to this component
-    useEffect(() => {
-        const mediaQuery = window.matchMedia(`(max-width: ${collapseWidth}px)`);
-
-        const handleResize = () => {
-            if (collapseWidth !== undefined) {
-                // Update the state based on media query
-                setIsViewportSmall(mediaQuery.matches);
-            }
-        };
-
-        handleResize(); // Set initial state
-        mediaQuery.addEventListener("change", handleResize); // Add listener for future changes
-
-        return () => {
-            mediaQuery.removeEventListener("change", handleResize); // Cleanup on unmount
-        };
-    }, [collapseWidth]);
 
     return (
         <div
@@ -72,25 +58,25 @@ export function Tabs({
             >
                 {isViewportSmall ? (
                     <TabButtonsMobile
-                        tabBtns={tabs}
+                        tabBtns={tabsWithIdx}
                         activeTab={activeTab}
                         handleTabClick={handleTabClick}
                     />
                 ) : (
                     <TabButtons
-                        tabBtns={tabs}
+                        tabBtns={tabsWithIdx}
                         activeTab={activeTab}
                         handleTabClick={handleTabClick}
                     />
                 )}
             </div>
 
-            {tabs.map(({ content, index, contentContainerStyle }) => (
+            {tabsWithIdx.map(({ content, idx, contentContainerStyle }) => (
                 <div
                     style={contentContainerStyle}
-                    key={index}
+                    key={idx}
                     className={`${styles.tabContent} ${
-                        activeTab === index ? styles.show : styles.hide
+                        activeTab === idx ? styles.show : styles.hide
                     }`}
                 >
                     {content}

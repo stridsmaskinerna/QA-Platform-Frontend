@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { Navigate, Params, useParams } from "react-router";
 import { IRoleBasedRedirect } from "../../utils";
 import { useAuthContext } from "../../hooks";
-import { GUEST_QUESTION_ROUTE } from "../../data";
+import { GUEST_QUESTION_DETAILS_ROUTE } from "../../data";
 
 interface IRequireAuthProps {
     children: ReactElement;
@@ -16,7 +16,7 @@ const createRedirectUrl = (
     params: Readonly<Params<string>>,
     fallbackRoute: string
 ): string => {
-    if (fallbackRoute === GUEST_QUESTION_ROUTE) {
+    if (fallbackRoute === GUEST_QUESTION_DETAILS_ROUTE) {
         return fallbackRoute + (params?.questionId ?? "");
     }
 

@@ -17,7 +17,7 @@ export function addTokenToRequestInit(
     return requestObject;
 }
 
-export function hasTokenExpired(token: string): boolean {
+export function hasTokenExpired(token: string | undefined): boolean {
     if (!token) return true;
 
     const decoded = jwtDecode(token);

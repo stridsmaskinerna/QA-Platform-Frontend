@@ -1,0 +1,35 @@
+.container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+}
+
+.submitBtn {
+    border: none;
+    border-radius: 6px;
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    font-size: 18px;
+    padding-block: 15px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    width: 100%;
+}
+
+.submitBtn:hover {
+    background-color: var(--btnDark-hover);
+}
+
+.errorMsg {
+    color: var(--error);
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    text-align: center;
+}
+
+.show {
+    opacity: 1;
+}

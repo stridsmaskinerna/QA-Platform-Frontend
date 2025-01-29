@@ -1,0 +1,37 @@
+.container {
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    border-radius: 6px;
+    border: 2px solid var(--input-idle);
+    padding-left: 1rem;
+    font-size: 16px;
+    padding-block: 10px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.inputWrapper {
+    transition:
+        border-color 0.5s ease,
+        padding 0.5s ease;
+    border: 3px solid transparent;
+    padding: 0;
+}
+
+.highlight {
+    border-radius: 6px;
+    border-color: var(--input-focused);
+    padding: 2px;
+}
+
+.label {
+    position: relative;
+    bottom: 5px;
+    left: 10px;
+    font-size: 18px;
+}

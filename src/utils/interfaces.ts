@@ -6,6 +6,7 @@ export interface IAuthContext {
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
     tokens: ITokens | null;
+    register: (formData: IRegisterFormData) => Promise<void>;
 }
 
 export interface ITokens {
@@ -18,6 +19,13 @@ export interface ILoginCredentials {
     password: string;
 }
 
+export interface IRegisterFormData {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    username: string;
+}
+
 export interface IRoleBasedRedirect {
     allowedRoles: Roles[];
     fallbackRoute: string;
@@ -26,7 +34,6 @@ export interface IRoleBasedRedirect {
 export interface ITab {
     title: string;
     content: ReactElement;
-    index: number;
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
     btnsContainerStyle?: CSSProperties;
