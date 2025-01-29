@@ -11,7 +11,9 @@ export function LoginForm() {
     const { t } = useTranslation();
     const { login } = useAuthContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<"wrongCredentials" | "serverProblem">();
+    const [error, setError] = useState<
+        "wrongCredentials" | "serverProblem" | "mustEndWithLtuErrMsg"
+    >();
     const navigate = useNavigate();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
@@ -22,17 +24,19 @@ export function LoginForm() {
             const formDetails = Object.fromEntries(
                 formData
             ) as unknown as ILoginCredentials;
+            if (formDetails.email.slice(-7).toUpperCase() !== "@LTU.SE") {
+                setError("mustEndWithLtuErrMsg");
+                return;
+            }
             try {
                 await login(formDetails);
                 await navigate("/");
             } catch (e) {
-                if (e instanceof CustomError) {
-                    if (e.errorCode === 401) {
-                        setError("wrongCredentials");
-                    } else {
-                        setError("serverProblem");
-                    }
+                if (e instanceof CustomError && e.errorCode === 401) {
+                    setError("wrongCredentials");
+                    return;
                 }
+                setError("serverProblem");
                 console.error(e);
             }
         })();

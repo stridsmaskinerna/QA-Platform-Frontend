@@ -5,6 +5,7 @@ import { useAuthContext } from "../../hooks";
 import { CustomError, IRegisterFormData } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
+import { PASSWORD_MIN_LENGTH } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
@@ -40,13 +41,11 @@ export function RegisterForm() {
                 await register(formDetails);
                 await navigate("/");
             } catch (e) {
-                if (e instanceof CustomError) {
-                    if (e.errorCode === 409) {
-                        setError("usernameTaken");
-                    } else {
-                        setError("serverProblem");
-                    }
+                if (e instanceof CustomError && e.errorCode === 409) {
+                    setError("usernameTaken");
+                    return;
                 }
+                setError("serverProblem");
                 console.error(e);
             }
         })();
@@ -68,11 +67,13 @@ export function RegisterForm() {
                 label={t("username")}
             />
             <Input
+                minInputValueLength={PASSWORD_MIN_LENGTH}
                 inputName="password"
                 inputType="password"
                 label={t("password")}
             />
             <Input
+                minInputValueLength={PASSWORD_MIN_LENGTH}
                 inputName="confirmPassword"
                 inputType="password"
                 label={t("confirmPassword")}
