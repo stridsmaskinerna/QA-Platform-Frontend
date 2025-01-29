@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
-import { Roles } from "../types";
 import { IUserDetails } from "../interfaces";
+import { Roles } from "..";
 
 export function addTokenToRequestInit(
     accessToken?: string,
@@ -40,8 +40,5 @@ export function getValuesFromToken(
         token
     );
 
-    return {
-        ...decoded,
-        roles: decoded.roles.split(",") as Roles[]
-    };
+    return { ...decoded, roles: decoded.roles.split(",") as Roles[] };
 }
