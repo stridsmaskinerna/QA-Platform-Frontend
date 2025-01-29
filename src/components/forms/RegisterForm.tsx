@@ -86,7 +86,7 @@ export function RegisterForm() {
             </button>
 
             <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                {error ? t(error) : ""}
+                {t(error ?? "")}
             </p>
         </form>
     );
