@@ -18,7 +18,8 @@ interface IUseFetchWithTokenReturn<T> {
 
 export function useFetchWithToken<T>(
     url: RequestInfo | URL,
-    options?: RequestInit
+    options?: RequestInit,
+    checkIfTokenNeedsRefresh = false
 ): IUseFetchWithTokenReturn<T> {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
@@ -55,9 +56,10 @@ export function useFetchWithToken<T>(
 
         setError(null);
         setIsLoading(true);
+
         const tokenIsExpired: boolean = hasTokenExpired(tokens.accessToken);
         // Ask api to refresh accesstoken before fetching the data if accesstoken has expired.
-        if (tokenIsExpired) {
+        if (checkIfTokenNeedsRefresh || tokenIsExpired) {
             try {
                 const refreshedTokens = await refreshTokens(tokens);
                 setTokens(refreshedTokens);
@@ -88,6 +90,12 @@ export function useFetchWithToken<T>(
                 return data;
             } catch (error) {
                 if (error instanceof CustomError) {
+                    //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
+                    if (error.errorCode === 401) {
+                        clearTokens();
+                        await navigate("/login", { replace: true });
+                    }
+                    //-------------------------------------------------------------------
                     setError(error);
                 } else {
                     throw error;

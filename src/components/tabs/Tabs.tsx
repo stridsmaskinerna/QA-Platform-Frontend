@@ -1,5 +1,4 @@
 import { CSSProperties, useState } from "react";
-
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
@@ -74,7 +73,7 @@ export function Tabs({
             {tabsWithIdx.map(({ content, idx, contentContainerStyle }) => (
                 <div
                     style={contentContainerStyle}
-                    key={idx}
+                    key={`tabContent-${idx}`}
                     className={`${styles.tabContent} ${
                         activeTab === idx ? styles.show : styles.hide
                     }`}
