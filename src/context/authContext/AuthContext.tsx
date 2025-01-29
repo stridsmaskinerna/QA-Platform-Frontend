@@ -6,14 +6,14 @@ import {
     useState
 } from "react";
 import {
-    getRolesFromToken,
+    getValuesFromToken,
     IAuthContext,
     ILoginCredentials,
     IRegisterFormData,
     ITokens,
+    IUserDetails,
     loginReq,
-    registerReq,
-    Roles
+    registerReq
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
@@ -29,14 +29,14 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null
     );
-
-    const [roles, setRoles] = useState<Roles[]>();
+    const [userDetails, setUserDetails] = useState<IUserDetails>();
 
     const values: IAuthContext = {
-        roles,
+        username: userDetails?.username,
+        userId: userDetails?.userId,
+        roles: userDetails?.roles,
         login,
         logout,
-        tokens,
         register
     };
 
@@ -57,8 +57,8 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     }
 
     useEffect(() => {
-        // Recompute roles whenever tokens change
-        setRoles(getRolesFromToken(tokens?.accessToken));
+        // Recompute user details whenever tokens change
+        setUserDetails(getValuesFromToken(tokens?.accessToken));
     }, [tokens?.accessToken]);
 
     return (

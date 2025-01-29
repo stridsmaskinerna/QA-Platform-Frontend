@@ -2,11 +2,18 @@ import { CSSProperties, ReactElement } from "react";
 import { Roles } from ".";
 
 export interface IAuthContext {
+    userId: string | undefined;
+    username: string | undefined;
     roles: Roles[] | undefined;
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
-    tokens: ITokens | null;
     register: (formData: IRegisterFormData) => Promise<void>;
+}
+
+export interface IUserDetails {
+    username: string;
+    userId: string;
+    roles: Roles[];
 }
 
 export interface ITokens {
