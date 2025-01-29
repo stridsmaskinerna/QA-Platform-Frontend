@@ -7,9 +7,15 @@
         "qa": "Frågor & Svar",
         "loginRegister": "Logga in/Registrering",
         "register": "Registrering",
-        "email": "Email",
+        "email": "E-post",
         "password": "Lösenord",
         "wrongCredentials": "Ogiltig e-postadress eller lösenord. Vänligen försök igen.",
-        "serverProblem": "Något gick fel. Vänligen försök igen senare."
+        "serverProblem": "Något gick fel. Vänligen försök igen senare.",
+        "usernameTaken": "Användarnamn ej tillgängligt. Vänligen välj ett annat.",
+        "username": "Användarnamn",
+        "confirmPassword": "Bekräfta lösenord",
+        "mustEndWithLtu": "måste sluta på @ltu.se",
+        "passwordsNoMatch": "Lösenorden matchar inte. Vänligen försök igen.",
+        "mustEndWithLtuErrMsg": "E-postadress måste sluta på @ltu.se. Vänligen försök igen."
     }
 }

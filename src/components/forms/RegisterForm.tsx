@@ -1,32 +1,48 @@
+import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
-import { Input } from "../";
-import styles from "./LoginForm.module.css";
-import { FormEventHandler, useRef, useState } from "react";
-import { useAuthContext } from "../../hooks";
-import { CustomError, ILoginCredentials } from "../../utils";
 import { useNavigate } from "react-router";
+import { useAuthContext } from "../../hooks";
+import { CustomError, IRegisterFormData } from "../../utils";
+import { Input } from "../input";
+import styles from "./FormShared.module.css";
 
-export function LoginForm() {
+export function RegisterForm() {
     const { t } = useTranslation();
-    const { login } = useAuthContext();
+    const { register } = useAuthContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<"wrongCredentials" | "serverProblem">();
+    const [error, setError] = useState<
+        | "usernameTaken"
+        | "serverProblem"
+        | "passwordsNoMatch"
+        | "mustEndWithLtuErrMsg"
+    >();
     const navigate = useNavigate();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
+        setError(undefined);
         void (async () => {
             const formData = new FormData(e.currentTarget);
             const formDetails = Object.fromEntries(
                 formData
-            ) as unknown as ILoginCredentials;
+            ) as unknown as IRegisterFormData;
+
+            if (formDetails.password !== formDetails.confirmPassword) {
+                setError("passwordsNoMatch");
+                return;
+            }
+            if (formDetails.email.slice(-7).toUpperCase() !== "@LTU.SE") {
+                setError("mustEndWithLtuErrMsg");
+                return;
+            }
+
             try {
-                await login(formDetails);
+                await register(formDetails);
                 await navigate("/");
             } catch (e) {
                 if (e instanceof CustomError) {
-                    if (e.errorCode === 401) {
-                        setError("wrongCredentials");
+                    if (e.errorCode === 409) {
+                        setError("usernameTaken");
                     } else {
                         setError("serverProblem");
                     }
@@ -44,18 +60,28 @@ export function LoginForm() {
             <Input
                 inputName="email"
                 inputType="email"
-                label={t("email")}
+                label={`${t("email")} (${t("mustEndWithLtu")})`}
+            />
+            <Input
+                inputName="username"
+                inputType="text"
+                label={t("username")}
             />
             <Input
                 inputName="password"
                 inputType="password"
                 label={t("password")}
             />
+            <Input
+                inputName="confirmPassword"
+                inputType="password"
+                label={t("confirmPassword")}
+            />
             <button
                 className={styles.submitBtn}
                 type="submit"
             >
-                {t("login")}
+                {t("register")}
             </button>
 
             <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>

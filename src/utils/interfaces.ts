@@ -6,6 +6,7 @@ export interface IAuthContext {
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
     tokens: ITokens | null;
+    register: (formData: IRegisterFormData) => Promise<void>;
 }
 
 export interface ITokens {
@@ -16,6 +17,13 @@ export interface ITokens {
 export interface ILoginCredentials {
     email: string;
     password: string;
+}
+
+export interface IRegisterFormData {
+    email: string;
+    password: string;
+    confirmPassword: string;
+    username: string;
 }
 
 export interface IRoleBasedRedirect {

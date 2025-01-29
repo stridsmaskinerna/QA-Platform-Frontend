@@ -6,9 +6,15 @@ interface IInputProps {
     inputType: HTMLInputTypeAttribute;
     label?: string;
     inputName: string;
+    minInputValueLength?: number;
 }
 
-export function Input({ inputType, label, inputName }: IInputProps) {
+export function Input({
+    inputType,
+    label,
+    inputName,
+    minInputValueLength
+}: IInputProps) {
     const [isActive, setIsActive] = useState(false);
     const id = useId();
     const inputRef = useRef(null);
@@ -28,6 +34,7 @@ export function Input({ inputType, label, inputName }: IInputProps) {
                 className={`${styles.inputWrapper} ${isActive ? styles.highlight : ""}`}
             >
                 <input
+                    minLength={minInputValueLength}
                     ref={inputRef}
                     required
                     id={id}

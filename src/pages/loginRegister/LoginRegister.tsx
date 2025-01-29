@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { LoginForm, Tabs } from "../../components";
+import { LoginForm, RegisterForm, Tabs } from "../../components";
 import styles from "./LoginRegister.module.css";
 import { CSSProperties } from "react";
 
@@ -30,7 +30,7 @@ export function LoginRegister() {
                         contentContainerStyle: tabsContentContainerStyle
                     },
                     {
-                        content: <LoginForm />,
+                        content: <RegisterForm />,
                         title: t("register"),
                         btnStyle: tabsBtnStyle,
                         contentContainerStyle: tabsContentContainerStyle

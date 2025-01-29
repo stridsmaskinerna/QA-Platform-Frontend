@@ -1,4 +1,9 @@
-import { CustomError, ILoginCredentials, ITokens } from "../";
+import {
+    CustomError,
+    ILoginCredentials,
+    IRegisterFormData,
+    ITokens
+} from "../";
 import { BASE_URL } from "../../data";
 
 export async function loginReq({
@@ -50,6 +55,28 @@ export async function refreshTokens({
             response.status,
             "Seomthing went wrong with refreshToken request"
         );
+    }
+
+    return (await response.json()) as ITokens;
+}
+
+export async function registerReq({
+    email,
+    password,
+    username
+}: Omit<IRegisterFormData, "confirmPassword">): Promise<ITokens> {
+    const url = `${BASE_URL}/authentication/register`;
+
+    const response: Response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password, username })
+    });
+
+    if (response.ok === false) {
+        throw new CustomError(response.status, "Could not register");
     }
 
     return (await response.json()) as ITokens;

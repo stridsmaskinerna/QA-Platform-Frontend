@@ -3,5 +3,5 @@ export * from "./header";
 export * from "./errorBoundary";
 export * from "./tabs";
 export * from "./questionCard";
-export * from "./loginForm";
+export * from "./forms";
 export * from "./input";
