@@ -17,6 +17,7 @@ import {
     QUESTION_DETAILS_ROUTE,
     QUESTION_ID
 } from "./data";
+import { Role } from "./utils/enums";
 
 function App() {
     return (
@@ -41,7 +42,7 @@ function App() {
                         element={
                             <AuthGuard
                                 roleBasedRedirect={{
-                                    allowedRoles: ["User", "Teacher"],
+                                    allowedRoles: [Role.User, Role.Teacher],
                                     fallbackRoute: GUEST_HOME_ROUTE
                                 }}
                             >
@@ -54,7 +55,7 @@ function App() {
                         element={
                             <AuthGuard
                                 roleBasedRedirect={{
-                                    allowedRoles: ["User", "Teacher"],
+                                    allowedRoles: [Role.User, Role.Teacher],
                                     //The questionId is appended to the fallback route in the AuthGuard
                                     fallbackRoute: GUEST_QUESTION_DETAILS_ROUTE
                                 }}
@@ -68,7 +69,7 @@ function App() {
                         element={
                             <AuthGuard
                                 roleBasedRedirect={{
-                                    allowedRoles: ["Admin"],
+                                    allowedRoles: [Role.Admin],
                                     fallbackRoute: HOME_ROUTE
                                 }}
                             >
