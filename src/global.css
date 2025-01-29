@@ -11,4 +11,6 @@ html {
     --black-btn: black;
     --grey-light: lightgray;
     --grey-strong: gray;
+    --green-resolved: rgb(80, 200, 120);
+    --yellow-not-resolved: rgb(255, 170, 51);
 }
