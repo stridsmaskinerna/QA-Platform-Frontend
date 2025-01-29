@@ -1,5 +1,4 @@
 import { CSSProperties, useState } from "react";
-
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
