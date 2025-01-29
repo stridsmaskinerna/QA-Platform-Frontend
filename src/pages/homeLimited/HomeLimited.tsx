@@ -1,3 +1,12 @@
+import { QuestionCard } from "../../components";
+import styles from './HomeLimited.module.css';
+
 export function HomeLimited() {
-    return <div>HomeLimited</div>;
+    return (
+        <div className={styles.card_container}>
+
+            <QuestionCard />
+
+        </div>
+    );
 }
