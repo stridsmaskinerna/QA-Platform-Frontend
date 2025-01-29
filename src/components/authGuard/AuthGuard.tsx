@@ -35,7 +35,7 @@ export function AuthGuard({
         roleBasedRedirect.fallbackRoute
     );
 
-    //We wait for the AuthContext to load and decode a possible token into a roles
+    //We wait for the AuthContext to load and decode a possible token into a roles before running validation logic
     if (isLoading) {
         return <Loader />;
     }
