@@ -76,7 +76,7 @@ export function TabButtonsMobile({
                                 dropdownWidth ? { width: dropdownWidth } : {}
                             }
                             className={styles.dropdownItem}
-                            key={idx}
+                            key={`tabBtnMobile-${idx}`}
                         >
                             <button
                                 style={btnStyle}

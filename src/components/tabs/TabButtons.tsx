@@ -11,7 +11,7 @@ export function TabButtons({
             {tabBtns.map(({ title, idx, btnStyle }) => (
                 <button
                     onClick={() => handleTabClick(idx)}
-                    key={idx}
+                    key={`tabBtn-${idx}`}
                     style={btnStyle}
                     className={`${styles.tabButton} ${activeTab === idx ? styles.btnActive : ""}`}
                 >
