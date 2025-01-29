@@ -5,7 +5,7 @@ import { FormEventHandler, useRef, useState } from "react";
 import { useAuthContext } from "../../hooks";
 import { CustomError, ILoginCredentials } from "../../utils";
 import { useNavigate } from "react-router";
-import { PASSWORD_MIN_LENGTH } from "../../data";
+import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
 
 export function LoginForm() {
     const { t } = useTranslation();
@@ -30,7 +30,7 @@ export function LoginForm() {
             }
             try {
                 await login(formDetails);
-                await navigate("/");
+                await navigate(HOME_ROUTE);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 401) {
                     setError("wrongCredentials");
@@ -66,7 +66,7 @@ export function LoginForm() {
             </button>
 
             <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                {error ? t(error) : ""}
+                {t(error ?? "")}
             </p>
         </form>
     );

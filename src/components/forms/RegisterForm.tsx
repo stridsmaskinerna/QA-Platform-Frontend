@@ -5,7 +5,7 @@ import { useAuthContext } from "../../hooks";
 import { CustomError, IRegisterFormData } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
-import { PASSWORD_MIN_LENGTH } from "../../data";
+import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
@@ -39,7 +39,7 @@ export function RegisterForm() {
 
             try {
                 await register(formDetails);
-                await navigate("/");
+                await navigate(HOME_ROUTE);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 409) {
                     setError("usernameTaken");
