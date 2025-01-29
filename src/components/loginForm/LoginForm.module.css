@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 30px;
     align-items: center;
+    width: 100%;
 }
 
 .submitBtn {
@@ -15,6 +16,7 @@
     padding-block: 15px;
     cursor: pointer;
     transition: background-color 0.5s ease;
+    width: 100%;
 }
 
 .submitBtn:hover {

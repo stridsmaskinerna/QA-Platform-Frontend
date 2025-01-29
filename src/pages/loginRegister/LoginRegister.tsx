@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { LoginForm, Tabs } from "../../components";
 import styles from "./LoginRegister.module.css";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties } from "react";
 
 const tabsContainerStyle: CSSProperties = { marginTop: "2rem" };
+const tabsContentContainerStyle: CSSProperties = { width: "100%" };
 const tabBtnsContainerStyle: CSSProperties = {
-    display: "flex",
     width: "clamp(260px, 60vw, 1000px)"
 };
 const tabsBtnStyle: CSSProperties = {
@@ -15,47 +15,30 @@ const tabsBtnStyle: CSSProperties = {
 
 export function LoginRegister() {
     const { t } = useTranslation();
-    const tabsWrapperRef = useRef<HTMLDivElement>(null);
-    const [articleWidth, setArticleWidth] = useState(0);
-
-    useEffect(() => {
-        const updateArticleWidth = () => {
-            if (tabsWrapperRef.current) {
-                setArticleWidth(tabsWrapperRef.current.offsetWidth);
-            }
-        };
-
-        updateArticleWidth();
-        window.addEventListener("resize", updateArticleWidth);
-
-        return () => {
-            window.removeEventListener("resize", updateArticleWidth);
-        };
-    }, []);
 
     return (
         <section className={styles.container}>
             <header>
                 <h2>{t("loginRegister").split("/").join(" / ")}</h2>
             </header>
-            <div ref={tabsWrapperRef}>
-                <Tabs
-                    tabs={[
-                        {
-                            content: <LoginForm parentWidth={articleWidth} />,
-                            title: t("login"),
-                            btnStyle: tabsBtnStyle
-                        },
-                        {
-                            content: <LoginForm parentWidth={articleWidth} />,
-                            title: t("register"),
-                            btnStyle: tabsBtnStyle
-                        }
-                    ]}
-                    containerStyle={tabsContainerStyle}
-                    tabBtnsContainerStyle={tabBtnsContainerStyle}
-                />
-            </div>
+            <Tabs
+                tabs={[
+                    {
+                        content: <LoginForm />,
+                        title: t("login"),
+                        btnStyle: tabsBtnStyle,
+                        contentContainerStyle: tabsContentContainerStyle
+                    },
+                    {
+                        content: <LoginForm />,
+                        title: t("register"),
+                        btnStyle: tabsBtnStyle,
+                        contentContainerStyle: tabsContentContainerStyle
+                    }
+                ]}
+                containerStyle={tabsContainerStyle}
+                tabBtnsContainerStyle={tabBtnsContainerStyle}
+            />
         </section>
     );
 }

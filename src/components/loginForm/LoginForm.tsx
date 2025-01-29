@@ -6,11 +6,7 @@ import { useAuthContext } from "../../hooks";
 import { CustomError, ILoginCredentials } from "../../utils";
 import { useNavigate } from "react-router";
 
-interface ILoginFormProps {
-    parentWidth: number;
-}
-
-export function LoginForm({ parentWidth }: ILoginFormProps) {
+export function LoginForm() {
     const { t } = useTranslation();
     const { login } = useAuthContext();
     const formRef = useRef<HTMLFormElement>(null);
@@ -29,10 +25,10 @@ export function LoginForm({ parentWidth }: ILoginFormProps) {
                 await navigate("/");
             } catch (e) {
                 if (e instanceof CustomError) {
-                    if (e.errorCode.toString().startsWith("5")) {
-                        setError("serverProblem");
-                    } else {
+                    if (e.errorCode === 401) {
                         setError("wrongCredentials");
+                    } else {
+                        setError("serverProblem");
                     }
                 }
                 console.error(e);
@@ -49,17 +45,14 @@ export function LoginForm({ parentWidth }: ILoginFormProps) {
                 inputName="email"
                 inputType="email"
                 label={t("email")}
-                parentWidth={parentWidth}
             />
             <Input
                 inputName="password"
                 inputType="password"
                 label={t("password")}
-                parentWidth={parentWidth}
             />
             <button
                 className={styles.submitBtn}
-                style={{ width: parentWidth }}
                 type="submit"
             >
                 {t("login")}

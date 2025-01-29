@@ -3,24 +3,18 @@ import styles from "./Input.module.css";
 import { useOnClickOutside } from "usehooks-ts";
 
 interface IInputProps {
-    parentWidth?: number;
     inputType: HTMLInputTypeAttribute;
     label?: string;
     inputName: string;
 }
 
-export function Input({
-    parentWidth,
-    inputType,
-    label,
-    inputName
-}: IInputProps) {
+export function Input({ inputType, label, inputName }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
     const id = useId();
     const inputRef = useRef(null);
     useOnClickOutside(inputRef, () => setIsActive(false));
     return (
-        <div style={{ width: parentWidth }}>
+        <div className={styles.container}>
             {label && (
                 <label
                     className={styles.label}
