@@ -19,6 +19,17 @@
         "oneDayAgo": "En dag sedan",
         "daysAgo": "{{days}} dagar sedan",
         "nonPublicQuestion": "Icke-offentlig fråga",
-        "publicQuestion": "Offentlig fråga"
+        "publicQuestion": "Offentlig fråga",
+        "register": "Registrering",
+        "email": "E-post",
+        "password": "Lösenord",
+        "wrongCredentials": "Ogiltig e-postadress eller lösenord. Vänligen försök igen.",
+        "serverProblem": "Något gick fel. Vänligen försök igen senare.",
+        "usernameTaken": "Användarnamn ej tillgängligt. Vänligen välj ett annat.",
+        "username": "Användarnamn",
+        "confirmPassword": "Bekräfta lösenord",
+        "mustEndWithLtu": "måste sluta på @ltu.se",
+        "passwordsNoMatch": "Lösenorden matchar inte. Vänligen försök igen.",
+        "mustEndWithLtuErrMsg": "E-postadress måste sluta på @ltu.se. Vänligen försök igen."
     }
 }

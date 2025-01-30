@@ -2,7 +2,8 @@ import { ReactElement } from "react";
 import { Navigate, Params, useParams } from "react-router";
 import { IRoleBasedRedirect } from "../../utils";
 import { useAuthContext } from "../../hooks";
-import { GUEST_QUESTION_ROUTE } from "../../data";
+import { GUEST_QUESTION_DETAILS_ROUTE } from "../../data";
+import { Loader } from "..";
 
 interface IRequireAuthProps {
     children: ReactElement;
@@ -16,7 +17,7 @@ const createRedirectUrl = (
     params: Readonly<Params<string>>,
     fallbackRoute: string
 ): string => {
-    if (fallbackRoute === GUEST_QUESTION_ROUTE) {
+    if (fallbackRoute === GUEST_QUESTION_DETAILS_ROUTE) {
         return fallbackRoute + (params?.questionId ?? "");
     }
 
@@ -27,14 +28,19 @@ export function AuthGuard({
     children,
     roleBasedRedirect
 }: IRequireAuthProps): ReactElement {
-    const { roles } = useAuthContext();
+    const { roles, isLoading } = useAuthContext();
     const params = useParams();
     const redirectUrl = createRedirectUrl(
         params,
         roleBasedRedirect.fallbackRoute
     );
 
-    // //Check if the user lacks necessary roles and redirect to fallback route in that case
+    //We wait for the AuthContext to load and decode a possible token into a roles before running validation logic
+    if (isLoading) {
+        return <Loader />;
+    }
+
+    // //Check if the user is a guest or lacks necessary roles and redirect to fallback route in that case
     if (!roles?.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
         return (
             <Navigate

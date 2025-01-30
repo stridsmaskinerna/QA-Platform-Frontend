@@ -1,0 +1,68 @@
+.downArrow {
+    position: absolute;
+    right: 10px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;
+}
+
+.upsideDown {
+    transform: rotate(180deg);
+}
+
+.dropdownContainer {
+    position: relative;
+    background-color: var(--tabBtn-inactive);
+}
+
+.inactiveItems {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    align-items: flex-start;
+    background-color: var(--tabBtn-active);
+    width: 100%;
+    gap: 2px;
+    padding-top: 2px;
+}
+
+.inactiveItems.show {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 3;
+}
+
+.dropdownItem.activeItem {
+    display: flex;
+    align-items: center;
+    background-color: var(--tabBtn-active);
+    border: 6px solid var(--tabBtn-inactive);
+    width: 100%;
+}
+
+.dropdownItem .tabButton.btnActive {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdownItem .tabButton {
+    padding-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dropdownItem {
+    white-space: nowrap;
+    background-color: var(--tabBtn-inactive);
+}
+
+.inactiveItems .dropdownItem {
+    border: 6px solid var(--tabBtn-inactive);
+}

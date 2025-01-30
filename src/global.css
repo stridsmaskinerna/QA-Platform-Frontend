@@ -8,9 +8,25 @@
 html {
     --blue-ltu: rgb(19, 48, 91);
     --red-delete: rgb(199, 0, 0);
-    --black-btn: black;
+    --btnDark-bg: black;
+    --btnDark-text: white;
+    --btnDark-hover: gray;
     --grey-light: lightgray;
-    --grey-strong: rgb(128, 128, 128);
     --green-resolved: rgb(80, 200, 120);
     --yellow-not-resolved: rgb(255, 170, 51);
+    --grey-strong: gray;
+    --tabBtn-active: white;
+    --tabBtn-inactive: rgb(241, 239, 239);
+    --tabBtnText-active: black;
+    --tabBtnText-inactive: rgba(144, 142, 142, 0.977);
+    --input-idle: rgb(241, 239, 239);
+    --input-focused: rgb(140, 139, 139);
+    --input-label: black;
+    --error: rgb(180, 38, 38);
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }

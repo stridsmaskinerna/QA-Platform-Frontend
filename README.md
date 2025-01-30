@@ -14,7 +14,7 @@
 
 ## Folder structure
 
-![image](https://github.com/user-attachments/assets/14dda8a0-1759-496e-8adf-c7dba16f9d07)
+![image](https://github.com/user-attachments/assets/c6dc793b-ea0a-4ac1-9c98-b2b41e1ace87)
 
 ### The pages folder
 

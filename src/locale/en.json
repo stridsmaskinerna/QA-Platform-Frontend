@@ -19,6 +19,17 @@
         "oneDayAgo": "One day ago",
         "daysAgo": "{{days}} days ago",
         "nonPublicQuestion": "Non-public question",
-        "publicQuestion": "Public question"
+        "publicQuestion": "Public question",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "wrongCredentials": "Invalid email or password. Please try again.",
+        "serverProblem": "Something went wrong. Please try again later.",
+        "usernameTaken": "Username unavailable. Please choose another one.",
+        "username": "Username",
+        "confirmPassword": "Confirm password",
+        "mustEndWithLtu": "must end with @ltu.se",
+        "passwordsNoMatch": "Passwords do not match. Please try again.",
+        "mustEndWithLtuErrMsg": "Email must end with @ltu.se. Please try again."
     }
 }

@@ -6,13 +6,14 @@ import {
     useState
 } from "react";
 import {
-    CustomError,
-    getRolesFromToken,
+    getValuesFromToken,
     IAuthContext,
     ILoginCredentials,
+    IRegisterFormData,
     ITokens,
+    IUserDetails,
     loginReq,
-    Roles
+    registerReq
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
@@ -28,25 +29,29 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null
     );
-
-    const [roles, setRoles] = useState<Roles[]>();
+    const [userDetails, setUserDetails] = useState<IUserDetails>();
+    const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
-        roles,
+        isLoading,
+        username: userDetails?.username,
+        userId: userDetails?.userId,
+        roles: userDetails?.roles,
         login,
         logout,
-        tokens
+        register
     };
 
+    //Handle failed requests in the form instead
     async function login({ email, password }: ILoginCredentials) {
-        try {
-            const tokens = await loginReq({ email, password });
-            setTokens(tokens);
-        } catch (error) {
-            if (error instanceof CustomError) {
-                console.log(error);
-            }
-        }
+        const tokens = await loginReq({ email, password });
+        setTokens(tokens);
+    }
+
+    //Handle failed requests in the form instead
+    async function register({ email, password, username }: IRegisterFormData) {
+        const tokens = await registerReq({ email, password, username });
+        setTokens(tokens);
     }
 
     function logout() {
@@ -54,8 +59,16 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     }
 
     useEffect(() => {
-        // Recompute roles whenever tokens change
-        setRoles(getRolesFromToken(tokens?.accessToken));
+        const decodeToken = () => {
+            if (tokens?.accessToken) {
+                setIsLoading(true);
+                const data = getValuesFromToken(tokens.accessToken);
+                setUserDetails(data);
+            }
+            setIsLoading(false);
+        };
+        // Recompute user details whenever tokens change
+        void decodeToken();
     }, [tokens?.accessToken]);
 
     return (

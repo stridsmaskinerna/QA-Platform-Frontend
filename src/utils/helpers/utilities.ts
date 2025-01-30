@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
-import { Roles } from "../types";
+import { IUserDetails } from "../interfaces";
+import { Roles } from "..";
 
 export function addTokenToRequestInit(
     accessToken?: string,
@@ -17,7 +18,7 @@ export function addTokenToRequestInit(
     return requestObject;
 }
 
-export function hasTokenExpired(token: string): boolean {
+export function hasTokenExpired(token: string | undefined): boolean {
     if (!token) return true;
 
     const decoded = jwtDecode(token);
@@ -28,14 +29,19 @@ export function hasTokenExpired(token: string): boolean {
     return expire < currentTimestamp;
 }
 
-export function getRolesFromToken(
+export function getValuesFromToken(
     token: string | undefined
-): Roles[] | undefined {
+): IUserDetails | undefined {
     if (!token) {
         return undefined;
     }
 
-    const decoded = jwtDecode<{ roles: Roles[] }>(token);
+    const decoded = jwtDecode<Omit<IUserDetails, "roles"> & { roles: string }>(
+        token
+    );
 
-    return decoded.roles;
+    return {
+        ...decoded,
+        roles: decoded.roles.split(",").filter(s => s) as Roles[]
+    };
 }
