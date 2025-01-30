@@ -1,5 +1,6 @@
 .container {
     margin: 2rem;
+    color: var(--grey-strong);
 }
 
 .header {
@@ -11,18 +12,28 @@
 }
 
 .topicName {
-    background-color: rgba(
-        80,
-        200,
-        120,
-        0.5
-    ); /* Green background, you can change as needed */
+    background-color: rgba(80, 200, 120, 0.5);
     color: black;
-    padding: 0.3rem 1rem; /* Padding inside the box */
-    border-radius: 12px; /* Rounded corners */
-    font-size: 0.7rem; /* Adjust font size if necessary */
+    padding: 0.3rem 1rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
     font-weight: 600;
-    display: inline-block; /* Prevents it from stretching full width */
+    display: inline-block;
+}
+
+.time_section {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon {
+    height: 1.3rem;
+    width: 1.3rem;
+    margin-top: 0.1rem;
+}
+
+.title {
+    color: var(--black-btn);
 }
 
 .question_section > p {

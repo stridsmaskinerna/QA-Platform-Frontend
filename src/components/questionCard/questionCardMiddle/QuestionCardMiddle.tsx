@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./QuestionCardMiddle.module.css";
-
+import clock_icon from "../../../assets/icons/clock_24dp_808080.svg";
 interface QuestionCardMiddleProps {
     data: {
         title: string;
@@ -38,11 +38,18 @@ export function QuestionCardMiddle({ data }: QuestionCardMiddleProps) {
         <div className={styles.container}>
             <div className={styles.header}>
                 <span className={styles.topicName}>{data.topicName}</span>
-                <div>{timeAgo}</div>
+                <div className={styles.time_section}>
+                    <img
+                        className={styles.icon}
+                        src={clock_icon}
+                        alt=""
+                    />
+                    <div>{timeAgo}</div>
+                </div>
             </div>
             <section className={styles.question_section}>
                 <section>
-                    <h2>{data.title}</h2>
+                    <h2 className={styles.title}>{data.title}</h2>
                     <p>
                         {t("askedBy")}: {data.username}
                     </p>
