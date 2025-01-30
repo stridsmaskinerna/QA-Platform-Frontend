@@ -45,3 +45,14 @@ export function getValuesFromToken(
         roles: decoded.roles.split(",").filter(s => s) as Roles[]
     };
 }
+
+export function removePropertiesFromObject<T, K extends keyof T>(
+    obj: T,
+    ...properties: K[]
+) {
+    const result = { ...obj };
+    for (const prop of properties) {
+        delete result[prop];
+    }
+    return result as Omit<T, K>;
+}

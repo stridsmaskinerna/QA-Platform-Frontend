@@ -2,7 +2,11 @@ import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../../hooks";
-import { CustomError, IRegisterFormData } from "../../utils";
+import {
+    CustomError,
+    IRegisterFormData,
+    removePropertiesFromObject
+} from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
 import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
@@ -38,7 +42,9 @@ export function RegisterForm() {
             }
 
             try {
-                await register(formDetails);
+                await register(
+                    removePropertiesFromObject(formDetails, "confirmPassword")
+                );
                 await navigate(HOME_ROUTE);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 409) {

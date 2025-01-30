@@ -49,7 +49,11 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     }
 
     //Handle failed requests in the form instead
-    async function register({ email, password, username }: IRegisterFormData) {
+    async function register({
+        email,
+        password,
+        username
+    }: Omit<IRegisterFormData, "confirmPassword">) {
         const tokens = await registerReq({ email, password, username });
         setTokens(tokens);
     }

@@ -7,7 +7,9 @@ export interface IAuthContext {
     roles: Roles[] | undefined;
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
-    register: (formData: IRegisterFormData) => Promise<void>;
+    register: (
+        formData: Omit<IRegisterFormData, "confirmPassword">
+    ) => Promise<void>;
     isLoading: boolean;
 }
 
