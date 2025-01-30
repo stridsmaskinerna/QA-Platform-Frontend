@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import styles from "./NavMenu.module.css";
 import { useTranslation } from "react-i18next";
 import { useRoles } from "../../hooks/useRoles";
-import { useAuthContext } from "../../hooks";
+import { useQAContext } from "../../hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { NavLink, LanguagePicker } from ".";
 import {
@@ -16,7 +16,9 @@ export function NavMenu() {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const { isAdmin, isGuest, isUser } = useRoles();
-    const { logout } = useAuthContext();
+    const {
+        authContext: { logout }
+    } = useQAContext();
     const menuRef = useRef(null);
 
     const toggleMenu = () => {

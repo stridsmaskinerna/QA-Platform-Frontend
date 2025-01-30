@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { AuthGuard, Header, ErrorBoundary } from "./components";
+import { AuthGuard, Header, ErrorBoundary, Loader } from "./components";
 import {
     Admin,
     LoginRegister,
@@ -18,10 +18,16 @@ import {
     QUESTION_ID
 } from "./data";
 import { Role } from "./utils";
+import { useQAContext } from "./hooks";
 
 function App() {
+    const {
+        loaderContext: { isLoading }
+    } = useQAContext();
+
     return (
         <ErrorBoundary>
+            {isLoading && <Loader />}
             <main className="app">
                 <Header />
                 <Routes>

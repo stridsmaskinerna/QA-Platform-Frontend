@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement } from "react";
+import { CSSProperties, Dispatch, ReactElement, SetStateAction } from "react";
 import { Role } from ".";
 
 export interface IAuthContext {
@@ -10,7 +10,6 @@ export interface IAuthContext {
     register: (
         formData: Omit<IRegisterFormData, "confirmPassword">
     ) => Promise<void>;
-    isLoading: boolean;
 }
 
 export interface IUserDetails {
@@ -51,4 +50,9 @@ export interface ITab {
 
 export interface IAuthErrorResponse {
     detail: string;
+}
+
+export interface ILoaderContext {
+    isLoading: boolean;
+    setIsLoading: Dispatch<SetStateAction<boolean>>;
 }

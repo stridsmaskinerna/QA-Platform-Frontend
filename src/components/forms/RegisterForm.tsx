@@ -1,6 +1,6 @@
 import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuthContext } from "../../hooks";
+import { useQAContext } from "../../hooks";
 import {
     CustomError,
     IRegisterFormData,
@@ -12,7 +12,10 @@ import { EMAIL_TAKEN, PASSWORD_MIN_LENGTH, USERNAME_TAKEN } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
-    const { register } = useAuthContext();
+    const {
+        authContext: { register },
+        loaderContext: { setIsLoading }
+    } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
     const [error, setError] = useState<
         | "usernameTaken"
@@ -41,9 +44,11 @@ export function RegisterForm() {
             }
 
             try {
+                setIsLoading(true);
                 await register(
                     removePropertiesFromObject(formDetails, "confirmPassword")
                 );
+                formRef.current?.reset();
                 alert(t("verifyEmail"));
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 409) {
@@ -57,6 +62,8 @@ export function RegisterForm() {
                 }
                 setError("serverProblem");
                 console.error(e);
+            } finally {
+                setIsLoading(false);
             }
         })();
     };

@@ -17,6 +17,7 @@ import {
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
+import { useQAContext } from "../../hooks";
 
 interface IAuthProviderProps {
     children: ReactNode;
@@ -29,11 +30,12 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null
     );
+    const {
+        loaderContext: { setIsLoading }
+    } = useQAContext();
     const [userDetails, setUserDetails] = useState<IUserDetails>();
-    const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
-        isLoading,
         username: userDetails?.username,
         userId: userDetails?.userId,
         roles: userDetails?.roles,
@@ -70,7 +72,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         };
         // Recompute user details whenever tokens change
         void decodeToken();
-    }, [clearTokens, tokens?.accessToken]);
+    }, [clearTokens, setIsLoading, tokens?.accessToken]);
 
     return (
         <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

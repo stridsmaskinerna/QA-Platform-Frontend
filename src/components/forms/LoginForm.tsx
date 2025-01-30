@@ -2,14 +2,17 @@ import { useTranslation } from "react-i18next";
 import { Input } from "..";
 import styles from "./FormShared.module.css";
 import { FormEventHandler, useRef, useState } from "react";
-import { useAuthContext } from "../../hooks";
+import { useQAContext } from "../../hooks";
 import { CustomError, ILoginCredentials } from "../../utils";
 import { useNavigate } from "react-router";
 import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
 
 export function LoginForm() {
     const { t } = useTranslation();
-    const { login } = useAuthContext();
+    const {
+        authContext: { login },
+        loaderContext: { setIsLoading }
+    } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
     const [error, setError] = useState<
         "wrongCredentials" | "serverProblem" | "mustEndWithLtuErrMsg"
@@ -29,8 +32,10 @@ export function LoginForm() {
                 return;
             }
             try {
+                setIsLoading(true);
                 await login(formDetails);
                 await navigate(HOME_ROUTE);
+                setIsLoading(false);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 401) {
                     setError("wrongCredentials");

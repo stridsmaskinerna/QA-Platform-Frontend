@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Navigate, Params, useParams } from "react-router";
 import { IRoleBasedRedirect } from "../../utils";
-import { useAuthContext } from "../../hooks";
+import { useQAContext } from "../../hooks";
 import { GUEST_QUESTION_DETAILS_ROUTE } from "../../data";
 import { Loader } from "..";
 
@@ -28,7 +28,10 @@ export function AuthGuard({
     children,
     roleBasedRedirect
 }: IRequireAuthProps): ReactElement {
-    const { roles, isLoading } = useAuthContext();
+    const {
+        authContext: { roles },
+        loaderContext: { isLoading }
+    } = useQAContext();
     const params = useParams();
     const redirectUrl = createRedirectUrl(
         params,

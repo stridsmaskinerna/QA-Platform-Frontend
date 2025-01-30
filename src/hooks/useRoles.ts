@@ -1,9 +1,11 @@
 import { Role } from "../utils";
-import { useAuthContext } from "./useAuthContext";
+import { useQAContext } from ".";
 
 export function useRoles() {
     const POSSIBLE_ROLES: Role[] = [Role.Admin, Role.Teacher, Role.User];
-    const { roles } = useAuthContext();
+    const {
+        authContext: { roles }
+    } = useQAContext();
     const isOnlyAdmin = roles?.includes(Role.Admin) && roles.length === 1;
     const isAdmin = roles?.includes(Role.Admin);
     const isTeacher = roles?.includes(Role.Teacher);
