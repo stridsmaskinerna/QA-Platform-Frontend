@@ -10,9 +10,11 @@ interface QuestionCardProps {
     data: {
         id: string;
         topicId: string;
+        topicName: string;
         courseName: string;
         courseCode: string;
         userId: string;
+        username: string;
         title: string;
         description: string;
         filePath: string | null;
@@ -20,6 +22,7 @@ interface QuestionCardProps {
         isResolved: boolean;
         isProtected: boolean;
         isHidden: boolean;
+        answerCount: number;
         tags: string[];
     };
 }
@@ -28,8 +31,8 @@ export function QuestionCard({ data }: QuestionCardProps) {
     return (
         <div className={styles.container}>
             <QuestionHeader data={data} />
-            <QuestionCardMiddle />
-            <QuestionCardBottom />
+            <QuestionCardMiddle data={data} />
+            <QuestionCardBottom data={data} />
         </div>
     );
 }

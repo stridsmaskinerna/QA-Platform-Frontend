@@ -4,8 +4,25 @@
 
 .header {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.topicName {
+    background-color: rgba(
+        80,
+        200,
+        120,
+        0.5
+    ); /* Green background, you can change as needed */
+    color: black;
+    padding: 0.3rem 1rem; /* Padding inside the box */
+    border-radius: 12px; /* Rounded corners */
+    font-size: 0.7rem; /* Adjust font size if necessary */
+    font-weight: 600;
+    display: inline-block; /* Prevents it from stretching full width */
 }
 
 .question_section > p {

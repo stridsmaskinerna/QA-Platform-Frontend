@@ -1,6 +1,18 @@
 import React from "react";
 import styles from "./QuestionCardBottom.module.css";
 
-export default function QuestionCardBottom() {
-    return <div className={styles.container}>QuestionCardBottom</div>;
+interface QuestionCardBottomProps {
+    data: {
+        tags: string[];
+    };
+}
+
+export default function QuestionCardBottom({ data }: QuestionCardBottomProps) {
+    return (
+        <div className={styles.container}>
+            {data.tags.map(tag => (
+                <p className={styles.tag_container}>{tag}</p>
+            ))}
+        </div>
+    );
 }
