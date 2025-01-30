@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./QuestionCardMiddle.module.css";
 import clock_icon from "../../../assets/icons/clock_24dp_808080.svg";
+import { getTimeAgo } from "../../../utils";
+
 interface QuestionCardMiddleProps {
     data: {
         title: string;
@@ -61,25 +63,3 @@ export function QuestionCardMiddle({ data }: QuestionCardMiddleProps) {
         </div>
     );
 }
-
-export const getTimeAgo = (
-    created: string,
-    t: (key: string, options?: any) => string
-): string => {
-    const createdDate = new Date(created);
-    const now = new Date();
-    const diffInSeconds = Math.floor(
-        (now.getTime() - createdDate.getTime()) / 1000
-    );
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    const diffInDays = Math.floor(diffInHours / 24);
-
-    if (diffInSeconds < 60) return t("lessThanMinuteAgo");
-    if (diffInMinutes === 1) return t("oneMinuteAgo");
-    if (diffInMinutes < 60) return t("minutesAgo", { minutes: diffInMinutes });
-    if (diffInHours === 1) return t("oneHourAgo");
-    if (diffInHours < 24) return t("hoursAgo", { hours: diffInHours });
-    if (diffInDays === 1) return t("oneDayAgo");
-    return t("daysAgo", { days: diffInDays });
-};

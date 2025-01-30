@@ -33,7 +33,7 @@
 }
 
 .title {
-    color: var(--black-btn);
+    color: var(--text-default);
 }
 
 .question_section > p {

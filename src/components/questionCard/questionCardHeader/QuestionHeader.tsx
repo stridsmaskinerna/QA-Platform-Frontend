@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./QuestionHeader.module.css";
 import check_circle_white from "../../../assets/icons/check_circle_white.svg";

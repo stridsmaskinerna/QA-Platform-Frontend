@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "./QuestionCard.module.css";
 
 import { QuestionHeader } from ".";

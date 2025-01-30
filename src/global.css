@@ -9,6 +9,7 @@ html {
     --blue-ltu: rgb(19, 48, 91);
     --red-delete: rgb(199, 0, 0);
     --btnDark-bg: black;
+    --text-default: black;
     --btnDark-text: white;
     --btnDark-hover: gray;
     --grey-light: lightgray;
