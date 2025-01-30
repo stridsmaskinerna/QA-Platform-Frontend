@@ -5,6 +5,20 @@
         "admin": "Admin",
         "logout": "Log out",
         "qa": "Q&A",
-        "loginRegister": "Login/Register"
+        "loginRegister": "Login/Register",
+        "resolved": "Resolved",
+        "notResolved": "Not resolved",
+        "askedBy": "Asked by",
+        "answer": "answers",
+        "answers": "answers",
+        "lessThanMinuteAgo": "Less than a minute ago",
+        "oneMinuteAgo": "One minute ago",
+        "minutesAgo": "{{minutes}} minutes ago",
+        "oneHourAgo": "One hour ago",
+        "hoursAgo": "{{hours}} hours ago",
+        "oneDayAgo": "One day ago",
+        "daysAgo": "{{days}} days ago",
+        "nonPublicQuestion": "Non-public question",
+        "publicQuestion": "Public question"
     }
 }

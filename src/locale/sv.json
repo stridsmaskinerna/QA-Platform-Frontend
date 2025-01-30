@@ -5,6 +5,20 @@
         "admin": "Admin",
         "logout": "Logga ut",
         "qa": "Frågor & Svar",
-        "loginRegister": "Logga in/Registrering"
+        "loginRegister": "Logga in/Registrering",
+        "resolved": "Löst",
+        "notResolved": "Inte löst",
+        "askedBy": "Frågad av",
+        "answer": "svar",
+        "answers": "svar",
+        "lessThanMinuteAgo": "Mindre än en minut sedan",
+        "oneMinuteAgo": "En minut sedan",
+        "minutesAgo": "{{minutes}} minuter sedan",
+        "oneHourAgo": "En timma sedan",
+        "hoursAgo": "{{hours}} timmar sedan",
+        "oneDayAgo": "En dag sedan",
+        "daysAgo": "{{days}} dagar sedan",
+        "nonPublicQuestion": "Icke-offentlig fråga",
+        "publicQuestion": "Offentlig fråga"
     }
 }
