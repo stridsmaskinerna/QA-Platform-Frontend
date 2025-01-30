@@ -35,7 +35,6 @@ export function LoginForm() {
                 setIsLoading(true);
                 await login(formDetails);
                 await navigate(HOME_ROUTE);
-                setIsLoading(false);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 401) {
                     setError("wrongCredentials");
@@ -43,6 +42,8 @@ export function LoginForm() {
                 }
                 setError("serverProblem");
                 console.error(e);
+            } finally {
+                setIsLoading(false);
             }
         })();
     };
