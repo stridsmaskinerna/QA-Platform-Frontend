@@ -68,12 +68,14 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
                 setIsLoading(true);
                 const data = getValuesFromToken(tokens.accessToken);
                 setUserDetails(data);
+            } else {
+                clearTokens();
             }
             setIsLoading(false);
         };
         // Recompute user details whenever tokens change
         void decodeToken();
-    }, [tokens?.accessToken]);
+    }, [clearTokens, tokens?.accessToken]);
 
     return (
         <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
