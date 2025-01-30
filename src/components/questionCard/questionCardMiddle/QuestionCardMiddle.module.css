@@ -1,0 +1,41 @@
+.container {
+    margin: 2rem;
+    color: var(--grey-strong);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.topicName {
+    background-color: rgba(80, 200, 120, 0.5);
+    color: black;
+    padding: 0.3rem 1rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.time_section {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon {
+    height: 1.3rem;
+    width: 1.3rem;
+    margin-top: 0.1rem;
+}
+
+.title {
+    color: var(--text-default);
+}
+
+.question_section > p {
+    margin-top: 1rem;
+}

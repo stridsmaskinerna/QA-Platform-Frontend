@@ -9,9 +9,12 @@ html {
     --blue-ltu: rgb(19, 48, 91);
     --red-delete: rgb(199, 0, 0);
     --btnDark-bg: black;
+    --text-default: black;
     --btnDark-text: white;
     --btnDark-hover: gray;
     --grey-light: lightgray;
+    --green-resolved: rgb(80, 200, 120);
+    --yellow-not-resolved: rgb(255, 170, 51);
     --grey-strong: gray;
     --tabBtn-active: white;
     --tabBtn-inactive: rgb(241, 239, 239);
