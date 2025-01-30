@@ -40,12 +40,8 @@ export function AuthGuard({
         return <Loader />;
     }
 
-    // //Check if the user lacks necessary roles and redirect to fallback route in that case
-    if (
-        !roles ||
-        roles.length === 0 ||
-        !roles.some(role => roleBasedRedirect.allowedRoles.includes(role))
-    ) {
+    // //Check if the user is a guest or lacks necessary roles and redirect to fallback route in that case
+    if (!roles?.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
         return (
             <Navigate
                 to={redirectUrl}
