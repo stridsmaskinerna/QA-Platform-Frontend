@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { IUserDetails } from "../interfaces";
-import { Roles } from "..";
+import { Role } from "..";
 import { TFunction } from "i18next";
 
 export function addTokenToRequestInit(
@@ -30,7 +30,12 @@ export function hasTokenExpired(token: string | undefined): boolean {
     return expire < currentTimestamp;
 }
 
-export function getValuesFromToken(token: string): IUserDetails {
+export function getValuesFromToken(token?: string): IUserDetails | undefined {
+    if (!token) {
+        //This will cause the useEffect in AuthContext to set all userdetails to undefined
+        return undefined;
+    }
+
     const rolesClaimKey =
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
     const decoded = jwtDecode<
@@ -38,8 +43,8 @@ export function getValuesFromToken(token: string): IUserDetails {
     >(token);
 
     const roles = Array.isArray(decoded[rolesClaimKey])
-        ? (decoded[rolesClaimKey] as Roles[])
-        : ([decoded[rolesClaimKey]] as Roles[]);
+        ? (decoded[rolesClaimKey] as Role[])
+        : ([decoded[rolesClaimKey]] as Role[]);
 
     return {
         roles,

@@ -42,20 +42,19 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         register
     };
 
-    //Handle failed requests in the form instead
+    //Handle failed requests in the form instead (no try catch here)
     async function login({ email, password }: ILoginCredentials) {
         const tokens = await loginReq({ email, password });
         setTokens(tokens);
     }
 
-    //Handle failed requests in the form instead
+    //Handle failed requests in the form instead (no try catch here)
     async function register({
         email,
         password,
         username
-    }: Omit<IRegisterFormData, "confirmPassword">) {
-        const tokens = await registerReq({ email, password, username });
-        setTokens(tokens);
+    }: Omit<IRegisterFormData, "confirmPassword">): Promise<void> {
+        await registerReq({ email, password, username });
     }
 
     function logout() {
@@ -64,13 +63,9 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
 
     useEffect(() => {
         const decodeToken = () => {
-            if (tokens?.accessToken) {
-                setIsLoading(true);
-                const data = getValuesFromToken(tokens.accessToken);
-                setUserDetails(data);
-            } else {
-                clearTokens();
-            }
+            setIsLoading(true);
+            const data = getValuesFromToken(tokens?.accessToken);
+            setUserDetails(data);
             setIsLoading(false);
         };
         // Recompute user details whenever tokens change

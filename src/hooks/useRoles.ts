@@ -1,8 +1,8 @@
-import { POSSIBLE_ROLES } from "../data";
-import { Role } from "../utils/enums";
+import { Role } from "../utils";
 import { useAuthContext } from "./useAuthContext";
 
 export function useRoles() {
+    const POSSIBLE_ROLES: Role[] = [Role.Admin, Role.Teacher, Role.User];
     const { roles } = useAuthContext();
     const isOnlyAdmin = roles?.includes(Role.Admin) && roles.length === 1;
     const isAdmin = roles?.includes(Role.Admin);
@@ -21,6 +21,7 @@ export function useRoles() {
         isAdmin,
         isTeacher,
         isUser,
-        isGuest
+        isGuest,
+        POSSIBLE_ROLES
     };
 }

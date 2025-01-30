@@ -1,6 +1,5 @@
 import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import { useAuthContext } from "../../hooks";
 import {
     CustomError,
@@ -9,12 +8,7 @@ import {
 } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
-import {
-    EMAIL_TAKEN,
-    HOME_ROUTE,
-    PASSWORD_MIN_LENGTH,
-    USERNAME_TAKEN
-} from "../../data";
+import { EMAIL_TAKEN, PASSWORD_MIN_LENGTH, USERNAME_TAKEN } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
@@ -27,7 +21,6 @@ export function RegisterForm() {
         | "mustEndWithLtuErrMsg"
         | "emailTaken"
     >();
-    const navigate = useNavigate();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
@@ -51,13 +44,13 @@ export function RegisterForm() {
                 await register(
                     removePropertiesFromObject(formDetails, "confirmPassword")
                 );
-                await navigate(HOME_ROUTE);
+                alert(t("verifyEmail"));
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 409) {
-                    if (e.message === USERNAME_TAKEN) {
+                    if (e?.detail === USERNAME_TAKEN) {
                         setError("usernameTaken");
                     }
-                    if (e.message === EMAIL_TAKEN) {
+                    if (e?.detail === EMAIL_TAKEN) {
                         setError("emailTaken");
                     }
                     return;
@@ -67,44 +60,47 @@ export function RegisterForm() {
             }
         })();
     };
-    return (
-        <form
-            ref={formRef}
-            className={styles.container}
-            onSubmit={onSubmit}
-        >
-            <Input
-                inputName="email"
-                inputType="email"
-                label={`${t("email")} (${t("mustEndWithLtu")})`}
-            />
-            <Input
-                inputName="username"
-                inputType="text"
-                label={t("username")}
-            />
-            <Input
-                minInputValueLength={PASSWORD_MIN_LENGTH}
-                inputName="password"
-                inputType="password"
-                label={t("password")}
-            />
-            <Input
-                minInputValueLength={PASSWORD_MIN_LENGTH}
-                inputName="confirmPassword"
-                inputType="password"
-                label={t("confirmPassword")}
-            />
-            <button
-                className={styles.submitBtn}
-                type="submit"
-            >
-                {t("register")}
-            </button>
 
-            <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                {t(error ?? "")}
-            </p>
-        </form>
+    return (
+        <>
+            <form
+                ref={formRef}
+                className={styles.container}
+                onSubmit={onSubmit}
+            >
+                <Input
+                    inputName="email"
+                    inputType="email"
+                    label={`${t("email")} (${t("mustEndWithLtu")})`}
+                />
+                <Input
+                    inputName="username"
+                    inputType="text"
+                    label={t("username")}
+                />
+                <Input
+                    minInputValueLength={PASSWORD_MIN_LENGTH}
+                    inputName="password"
+                    inputType="password"
+                    label={t("password")}
+                />
+                <Input
+                    minInputValueLength={PASSWORD_MIN_LENGTH}
+                    inputName="confirmPassword"
+                    inputType="password"
+                    label={t("confirmPassword")}
+                />
+                <button
+                    className={styles.submitBtn}
+                    type="submit"
+                >
+                    {t("register")}
+                </button>
+
+                <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
+                    {t(error ?? "")}
+                </p>
+            </form>
+        </>
     );
 }

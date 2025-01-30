@@ -24,6 +24,7 @@ html {
     --input-focused: rgb(140, 139, 139);
     --input-label: black;
     --error: rgb(180, 38, 38);
+    --overlay-loader: rgba(19, 48, 91, 0.3);
 }
 
 .app {

@@ -71,6 +71,7 @@ export function NavMenu() {
                                 onClickSideEffect={() => {
                                     logout();
                                     closeMenu();
+                                    console.log("here");
                                 }}
                                 title={t("logout")}
                             />

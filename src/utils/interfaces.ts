@@ -1,10 +1,10 @@
 import { CSSProperties, ReactElement } from "react";
-import { Roles } from ".";
+import { Role } from ".";
 
 export interface IAuthContext {
     userId: string | undefined;
     username: string | undefined;
-    roles: Roles[] | undefined;
+    roles: Role[] | undefined;
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
     register: (
@@ -16,7 +16,7 @@ export interface IAuthContext {
 export interface IUserDetails {
     username: string;
     userId: string;
-    roles: Roles[];
+    roles: Role[];
 }
 
 export interface ITokens {
@@ -37,7 +37,7 @@ export interface IRegisterFormData {
 }
 
 export interface IRoleBasedRedirect {
-    allowedRoles: Roles[];
+    allowedRoles: Role[];
     fallbackRoute: string;
 }
 
@@ -47,4 +47,8 @@ export interface ITab {
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
     btnsContainerStyle?: CSSProperties;
+}
+
+export interface IAuthErrorResponse {
+    detail: string;
 }

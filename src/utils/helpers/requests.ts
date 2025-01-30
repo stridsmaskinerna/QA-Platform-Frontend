@@ -5,6 +5,7 @@ import {
     ITokens
 } from "../";
 import { BASE_URL } from "../../data";
+import { isAuthErrorResponse } from "../typeGuards";
 
 export async function loginReq({
     email,
@@ -64,7 +65,7 @@ export async function registerReq({
     email,
     password,
     username
-}: Omit<IRegisterFormData, "confirmPassword">): Promise<ITokens> {
+}: Omit<IRegisterFormData, "confirmPassword">): Promise<void> {
     const url = `${BASE_URL}/authentication/register`;
 
     const response: Response = await fetch(url, {
@@ -76,8 +77,11 @@ export async function registerReq({
     });
 
     if (response.ok === false) {
-        throw new CustomError(response.status, "Could not register");
+        const data: unknown = await response.json();
+        throw new CustomError(
+            response.status,
+            "Could not register",
+            isAuthErrorResponse(data) ? data.detail : undefined
+        );
     }
-
-    return (await response.json()) as ITokens;
 }

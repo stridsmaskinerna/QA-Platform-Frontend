@@ -17,7 +17,7 @@ import {
     QUESTION_DETAILS_ROUTE,
     QUESTION_ID
 } from "./data";
-import { Role } from "./utils/enums";
+import { Role } from "./utils";
 
 function App() {
     return (
