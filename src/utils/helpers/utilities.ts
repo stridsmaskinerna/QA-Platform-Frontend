@@ -30,20 +30,21 @@ export function hasTokenExpired(token: string | undefined): boolean {
     return expire < currentTimestamp;
 }
 
-export function getValuesFromToken(
-    token: string | undefined
-): IUserDetails | undefined {
-    if (!token) {
-        return undefined;
-    }
+export function getValuesFromToken(token: string): IUserDetails {
+    const rolesClaimKey =
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    const decoded = jwtDecode<
+        Omit<IUserDetails, "roles"> & { [rolesClaimKey]: string | string[] }
+    >(token);
 
-    const decoded = jwtDecode<Omit<IUserDetails, "roles"> & { roles: string }>(
-        token
-    );
+    const roles = Array.isArray(decoded[rolesClaimKey])
+        ? (decoded[rolesClaimKey] as Roles[])
+        : ([decoded[rolesClaimKey]] as Roles[]);
 
     return {
-        ...decoded,
-        roles: decoded.roles.split(",").filter(s => s) as Roles[]
+        roles,
+        userId: decoded.userId,
+        username: decoded.username
     };
 }
 
