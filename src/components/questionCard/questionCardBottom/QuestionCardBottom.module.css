@@ -1,0 +1,17 @@
+.container {
+    border-top: 1px solid grey;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.tag_container {
+    background-color: rgb(211, 211, 211);
+    color: black;
+    padding: 0.3rem 1rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-block;
+}
