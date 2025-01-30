@@ -1,2 +1,2 @@
 export * from "./QuestionCard";
-export * from "./questCardHeader/QuestionHeader";
+export * from "./questionCardHeader/QuestionHeader";
