@@ -30,6 +30,7 @@
         "confirmPassword": "Confirm password",
         "mustEndWithLtu": "must end with @ltu.se",
         "passwordsNoMatch": "Passwords do not match. Please try again.",
-        "mustEndWithLtuErrMsg": "Email must end with @ltu.se. Please try again."
+        "mustEndWithLtuErrMsg": "Email must end with @ltu.se. Please try again.",
+        "emailTaken": "Email is already in use. Please try another one."
     }
 }

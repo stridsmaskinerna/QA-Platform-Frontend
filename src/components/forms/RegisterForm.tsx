@@ -9,7 +9,12 @@ import {
 } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
-import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
+import {
+    EMAIL_TAKEN,
+    HOME_ROUTE,
+    PASSWORD_MIN_LENGTH,
+    USERNAME_TAKEN
+} from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
@@ -20,6 +25,7 @@ export function RegisterForm() {
         | "serverProblem"
         | "passwordsNoMatch"
         | "mustEndWithLtuErrMsg"
+        | "emailTaken"
     >();
     const navigate = useNavigate();
 
@@ -48,7 +54,12 @@ export function RegisterForm() {
                 await navigate(HOME_ROUTE);
             } catch (e) {
                 if (e instanceof CustomError && e.errorCode === 409) {
-                    setError("usernameTaken");
+                    if (e.message === USERNAME_TAKEN) {
+                        setError("usernameTaken");
+                    }
+                    if (e.message === EMAIL_TAKEN) {
+                        setError("emailTaken");
+                    }
                     return;
                 }
                 setError("serverProblem");

@@ -16,3 +16,6 @@ export const QUESTION_DETAILS_ROUTE = "/questions/";
 export const QUESTION_ID = ":questionId";
 
 export const PASSWORD_MIN_LENGTH = 8;
+
+export const EMAIL_TAKEN = "Email taken";
+export const USERNAME_TAKEN = "Username taken";
