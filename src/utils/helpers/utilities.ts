@@ -40,5 +40,8 @@ export function getValuesFromToken(
         token
     );
 
-    return { ...decoded, roles: decoded.roles.split(",") as Roles[] };
+    return {
+        ...decoded,
+        roles: decoded.roles.split(",").filter(s => s) as Roles[]
+    };
 }

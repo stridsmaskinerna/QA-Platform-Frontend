@@ -7,7 +7,7 @@ import {
     refreshTokens
 } from "../utils";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_TOKEN_KEY } from "../data";
+import { LOCAL_STORAGE_TOKEN_KEY, LOGIN_REGISTER_ROUTE } from "../data";
 import { useNavigate } from "react-router";
 
 interface IUseFetchWithTokenReturn<T> {
@@ -59,7 +59,7 @@ export function useFetchWithToken<T>(
 
         const tokenIsExpired: boolean = hasTokenExpired(tokens.accessToken);
         // Ask api to refresh accesstoken before fetching the data if accesstoken has expired.
-        if (checkIfTokenNeedsRefresh || tokenIsExpired) {
+        if (checkIfTokenNeedsRefresh && tokenIsExpired) {
             try {
                 const refreshedTokens = await refreshTokens(tokens);
                 setTokens(refreshedTokens);
@@ -75,7 +75,7 @@ export function useFetchWithToken<T>(
                     //and send the user to the login screen
                     if (error.errorCode === 401) {
                         clearTokens();
-                        await navigate("/login", { replace: true });
+                        await navigate(LOGIN_REGISTER_ROUTE, { replace: true });
                     }
                 } else {
                     throw error;
@@ -93,7 +93,7 @@ export function useFetchWithToken<T>(
                     //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
                     if (error.errorCode === 401) {
                         clearTokens();
-                        await navigate("/login", { replace: true });
+                        await navigate(LOGIN_REGISTER_ROUTE, { replace: true });
                     }
                     //-------------------------------------------------------------------
                     setError(error);

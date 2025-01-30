@@ -30,8 +30,10 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         null
     );
     const [userDetails, setUserDetails] = useState<IUserDetails>();
+    const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
+        isLoading,
         username: userDetails?.username,
         userId: userDetails?.userId,
         roles: userDetails?.roles,
@@ -57,8 +59,16 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     }
 
     useEffect(() => {
+        const decodeToken = () => {
+            if (tokens?.accessToken) {
+                setIsLoading(true);
+                const data = getValuesFromToken(tokens.accessToken);
+                setUserDetails(data);
+            }
+            setIsLoading(false);
+        };
         // Recompute user details whenever tokens change
-        setUserDetails(getValuesFromToken(tokens?.accessToken));
+        void decodeToken();
     }, [tokens?.accessToken]);
 
     return (

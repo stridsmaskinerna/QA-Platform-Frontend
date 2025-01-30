@@ -5,6 +5,12 @@ import { useRoles } from "../../hooks/useRoles";
 import { useAuthContext } from "../../hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { NavLink, LanguagePicker } from ".";
+import {
+    ADMIN_ROUTE,
+    GUEST_HOME_ROUTE,
+    HOME_ROUTE,
+    LOGIN_REGISTER_ROUTE
+} from "../../data";
 
 export function NavMenu() {
     const { t } = useTranslation();
@@ -36,7 +42,7 @@ export function NavMenu() {
                     {isAdmin && (
                         <li>
                             <NavLink
-                                to="/admin"
+                                to={ADMIN_ROUTE}
                                 onClickSideEffect={closeMenu}
                                 title={t("admin")}
                             />
@@ -45,7 +51,7 @@ export function NavMenu() {
 
                     <li>
                         <NavLink
-                            to={isUser ? "/" : "/guest"}
+                            to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
                             onClickSideEffect={closeMenu}
                             title={t("qa")}
                         />
@@ -53,7 +59,7 @@ export function NavMenu() {
                     {isGuest ? (
                         <li>
                             <NavLink
-                                to="/login"
+                                to={LOGIN_REGISTER_ROUTE}
                                 onClickSideEffect={closeMenu}
                                 title={t("loginRegister")}
                             />
@@ -61,7 +67,7 @@ export function NavMenu() {
                     ) : (
                         <li>
                             <NavLink
-                                to="/guest"
+                                to={GUEST_HOME_ROUTE}
                                 onClickSideEffect={() => {
                                     logout();
                                     closeMenu();

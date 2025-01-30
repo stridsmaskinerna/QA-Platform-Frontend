@@ -5,3 +5,4 @@ export * from "./tabs";
 export * from "./questionCard";
 export * from "./forms";
 export * from "./input";
+export * from "./loader";

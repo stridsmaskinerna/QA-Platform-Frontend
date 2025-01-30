@@ -8,6 +8,7 @@ export interface IAuthContext {
     login: (credentials: ILoginCredentials) => Promise<void>;
     logout: () => void;
     register: (formData: IRegisterFormData) => Promise<void>;
+    isLoading: boolean;
 }
 
 export interface IUserDetails {
