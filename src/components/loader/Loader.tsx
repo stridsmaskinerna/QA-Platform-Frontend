@@ -1,8 +1,19 @@
 import styles from "./Loader.module.css";
-export function Loader() {
+
+interface ILoaderProps {
+    diameter?: number;
+}
+
+export function Loader({ diameter }: ILoaderProps) {
     return (
         <div className={styles.container}>
-            <span className={styles.loader}></span>
+            <span
+                style={{
+                    width: `${diameter}px`,
+                    height: `${diameter}px`
+                }}
+                className={styles.loader}
+            ></span>
         </div>
     );
 }

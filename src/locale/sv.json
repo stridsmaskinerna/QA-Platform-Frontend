@@ -30,6 +30,8 @@
         "confirmPassword": "Bekräfta lösenord",
         "mustEndWithLtu": "måste sluta på @ltu.se",
         "passwordsNoMatch": "Lösenorden matchar inte. Vänligen försök igen.",
-        "mustEndWithLtuErrMsg": "E-postadress måste sluta på @ltu.se. Vänligen försök igen."
+        "mustEndWithLtuErrMsg": "E-postadress måste sluta på @ltu.se. Vänligen försök igen.",
+        "emailTaken": "E-postadressen används redan. Vänligen prova en annan.",
+        "verifyEmail": "Ett verifieringsmail har skickats till din e-postadress. Vänligen kontrollera din inkorg och följ instruktionerna för att verifiera ditt konto."
     }
 }

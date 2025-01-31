@@ -6,17 +6,25 @@ import {
     useState
 } from "react";
 import {
+    CustomError,
     getValuesFromToken,
     IAuthContext,
     ILoginCredentials,
     IRegisterFormData,
     ITokens,
     IUserDetails,
-    loginReq,
-    registerReq
+    LoginErrorMessage,
+    RegisterErrorMessage
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
+import {
+    EMAIL_TAKEN,
+    LOCAL_STORAGE_TOKEN_KEY,
+    loginReq,
+    registerReq,
+    USERNAME_TAKEN
+} from "../../data";
+import { useQAContext } from "../../hooks";
 
 interface IAuthProviderProps {
     children: ReactNode;
@@ -29,11 +37,12 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null
     );
+    const {
+        loaderContext: { setIsLoading }
+    } = useQAContext();
     const [userDetails, setUserDetails] = useState<IUserDetails>();
-    const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
-        isLoading,
         username: userDetails?.username,
         userId: userDetails?.userId,
         roles: userDetails?.roles,
@@ -42,16 +51,44 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         register
     };
 
-    //Handle failed requests in the form instead
-    async function login({ email, password }: ILoginCredentials) {
-        const tokens = await loginReq({ email, password });
-        setTokens(tokens);
+    async function login({
+        email,
+        password
+    }: ILoginCredentials): Promise<LoginErrorMessage | void> {
+        try {
+            const tokens = await loginReq({ email, password });
+            setTokens(tokens);
+        } catch (error) {
+            if (error instanceof CustomError && error.errorCode === 401) {
+                return "wrongCredentials";
+            }
+            console.error(error);
+            return "serverProblem";
+        }
     }
 
-    //Handle failed requests in the form instead
-    async function register({ email, password, username }: IRegisterFormData) {
-        const tokens = await registerReq({ email, password, username });
-        setTokens(tokens);
+    async function register({
+        email,
+        password,
+        username
+    }: Omit<
+        IRegisterFormData,
+        "confirmPassword"
+    >): Promise<RegisterErrorMessage | void> {
+        try {
+            await registerReq({ email, password, username });
+        } catch (error) {
+            if (error instanceof CustomError && error.errorCode === 409) {
+                if (error?.detail === USERNAME_TAKEN) {
+                    return "usernameTaken";
+                }
+                if (error?.detail === EMAIL_TAKEN) {
+                    return "emailTaken";
+                }
+                console.error(error);
+                return "serverProblem";
+            }
+        }
     }
 
     function logout() {
@@ -60,16 +97,14 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
 
     useEffect(() => {
         const decodeToken = () => {
-            if (tokens?.accessToken) {
-                setIsLoading(true);
-                const data = getValuesFromToken(tokens.accessToken);
-                setUserDetails(data);
-            }
+            setIsLoading(true);
+            const data = getValuesFromToken(tokens?.accessToken);
+            setUserDetails(data);
             setIsLoading(false);
         };
         // Recompute user details whenever tokens change
         void decodeToken();
-    }, [tokens?.accessToken]);
+    }, [setIsLoading, tokens?.accessToken]);
 
     return (
         <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

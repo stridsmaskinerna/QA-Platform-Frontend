@@ -1,20 +1,23 @@
-import { CSSProperties, ReactElement } from "react";
-import { Roles } from ".";
+import { CSSProperties, Dispatch, ReactElement, SetStateAction } from "react";
+import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 
 export interface IAuthContext {
     userId: string | undefined;
     username: string | undefined;
-    roles: Roles[] | undefined;
-    login: (credentials: ILoginCredentials) => Promise<void>;
+    roles: Role[] | undefined;
+    login: (
+        credentials: ILoginCredentials
+    ) => Promise<LoginErrorMessage | void>;
     logout: () => void;
-    register: (formData: IRegisterFormData) => Promise<void>;
-    isLoading: boolean;
+    register: (
+        formData: Omit<IRegisterFormData, "confirmPassword">
+    ) => Promise<RegisterErrorMessage | void>;
 }
 
 export interface IUserDetails {
     username: string;
     userId: string;
-    roles: Roles[];
+    roles: Role[];
 }
 
 export interface ITokens {
@@ -35,7 +38,7 @@ export interface IRegisterFormData {
 }
 
 export interface IRoleBasedRedirect {
-    allowedRoles: Roles[];
+    allowedRoles: Role[];
     fallbackRoute: string;
 }
 
@@ -45,4 +48,13 @@ export interface ITab {
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
     btnsContainerStyle?: CSSProperties;
+}
+
+export interface IAuthErrorResponse {
+    detail: string;
+}
+
+export interface ILoaderContext {
+    isLoading: boolean;
+    setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
