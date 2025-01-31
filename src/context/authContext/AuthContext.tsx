@@ -104,7 +104,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         };
         // Recompute user details whenever tokens change
         void decodeToken();
-    }, [clearTokens, setIsLoading, tokens?.accessToken]);
+    }, [setIsLoading, tokens?.accessToken]);
 
     return (
         <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
