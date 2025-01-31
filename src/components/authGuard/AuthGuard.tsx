@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Navigate, Params, useParams } from "react-router";
 import { IRoleBasedRedirect } from "../../utils";
-import { useQAContext } from "../../hooks";
+import { useQAContext, useRoles } from "../../hooks";
 import { GUEST_QUESTION_DETAILS_ROUTE } from "../../data";
 import { Loader } from "..";
 
@@ -28,6 +28,7 @@ export function AuthGuard({
     children,
     roleBasedRedirect
 }: IRequireAuthProps): ReactElement {
+    const { isRolesCorrupt } = useRoles();
     const {
         authContext: { roles },
         loaderContext: { isLoading }
@@ -43,8 +44,11 @@ export function AuthGuard({
         return <Loader />;
     }
 
-    // //Check if the user is a guest or lacks necessary roles and redirect to fallback route in that case
-    if (!roles?.some(role => roleBasedRedirect.allowedRoles.includes(role))) {
+    // //Check if roles include anything unexpected or lacks necessary roles for the route and redirect to fallback route in that case
+    if (
+        isRolesCorrupt ||
+        !roles?.some(role => roleBasedRedirect.allowedRoles.includes(role))
+    ) {
         return (
             <Navigate
                 to={redirectUrl}

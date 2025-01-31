@@ -1,15 +1,17 @@
 import { CSSProperties, Dispatch, ReactElement, SetStateAction } from "react";
-import { Role } from ".";
+import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 
 export interface IAuthContext {
     userId: string | undefined;
     username: string | undefined;
     roles: Role[] | undefined;
-    login: (credentials: ILoginCredentials) => Promise<void>;
+    login: (
+        credentials: ILoginCredentials
+    ) => Promise<LoginErrorMessage | void>;
     logout: () => void;
     register: (
         formData: Omit<IRegisterFormData, "confirmPassword">
-    ) => Promise<void>;
+    ) => Promise<RegisterErrorMessage | void>;
 }
 
 export interface IUserDetails {

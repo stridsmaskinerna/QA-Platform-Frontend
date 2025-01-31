@@ -6,17 +6,24 @@ import {
     useState
 } from "react";
 import {
+    CustomError,
     getValuesFromToken,
     IAuthContext,
     ILoginCredentials,
     IRegisterFormData,
     ITokens,
     IUserDetails,
+    LoginErrorMessage,
     loginReq,
+    RegisterErrorMessage,
     registerReq
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_TOKEN_KEY } from "../../data";
+import {
+    EMAIL_TAKEN,
+    LOCAL_STORAGE_TOKEN_KEY,
+    USERNAME_TAKEN
+} from "../../data";
 import { useQAContext } from "../../hooks";
 
 interface IAuthProviderProps {
@@ -44,19 +51,44 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         register
     };
 
-    //Handle failed requests in the form instead (no try catch here)
-    async function login({ email, password }: ILoginCredentials) {
-        const tokens = await loginReq({ email, password });
-        setTokens(tokens);
+    async function login({
+        email,
+        password
+    }: ILoginCredentials): Promise<LoginErrorMessage | void> {
+        try {
+            const tokens = await loginReq({ email, password });
+            setTokens(tokens);
+        } catch (error) {
+            if (error instanceof CustomError && error.errorCode === 401) {
+                return "wrongCredentials";
+            }
+            console.error(error);
+            return "serverProblem";
+        }
     }
 
-    //Handle failed requests in the form instead (no try catch here)
     async function register({
         email,
         password,
         username
-    }: Omit<IRegisterFormData, "confirmPassword">): Promise<void> {
-        await registerReq({ email, password, username });
+    }: Omit<
+        IRegisterFormData,
+        "confirmPassword"
+    >): Promise<RegisterErrorMessage | void> {
+        try {
+            await registerReq({ email, password, username });
+        } catch (error) {
+            if (error instanceof CustomError && error.errorCode === 409) {
+                if (error?.detail === USERNAME_TAKEN) {
+                    return "usernameTaken";
+                }
+                if (error?.detail === EMAIL_TAKEN) {
+                    return "emailTaken";
+                }
+                console.error(error);
+                return "serverProblem";
+            }
+        }
     }
 
     function logout() {

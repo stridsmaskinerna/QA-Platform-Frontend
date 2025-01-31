@@ -3,7 +3,7 @@ import { Input } from "..";
 import styles from "./FormShared.module.css";
 import { FormEventHandler, useRef, useState } from "react";
 import { useQAContext } from "../../hooks";
-import { CustomError, ILoginCredentials } from "../../utils";
+import { ILoginCredentials, LoginErrorMessage } from "../../utils";
 import { useNavigate } from "react-router";
 import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
 
@@ -14,9 +14,7 @@ export function LoginForm() {
         loaderContext: { setIsLoading }
     } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<
-        "wrongCredentials" | "serverProblem" | "mustEndWithLtuErrMsg"
-    >();
+    const [error, setError] = useState<LoginErrorMessage>();
     const navigate = useNavigate();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
@@ -31,20 +29,15 @@ export function LoginForm() {
                 setError("mustEndWithLtuErrMsg");
                 return;
             }
-            try {
-                setIsLoading(true);
-                await login(formDetails);
+
+            setIsLoading(true);
+            const errMsg = await login(formDetails);
+            if (!errMsg) {
                 await navigate(HOME_ROUTE);
-            } catch (e) {
-                if (e instanceof CustomError && e.errorCode === 401) {
-                    setError("wrongCredentials");
-                    return;
-                }
-                setError("serverProblem");
-                console.error(e);
-            } finally {
-                setIsLoading(false);
+            } else {
+                setError(errMsg);
             }
+            setIsLoading(false);
         })();
     };
     return (

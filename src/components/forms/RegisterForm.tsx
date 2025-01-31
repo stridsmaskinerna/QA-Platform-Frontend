@@ -2,13 +2,13 @@ import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
 import { useQAContext } from "../../hooks";
 import {
-    CustomError,
     IRegisterFormData,
+    RegisterErrorMessage,
     removePropertiesFromObject
 } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
-import { EMAIL_TAKEN, PASSWORD_MIN_LENGTH, USERNAME_TAKEN } from "../../data";
+import { PASSWORD_MIN_LENGTH } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
@@ -17,13 +17,7 @@ export function RegisterForm() {
         loaderContext: { setIsLoading }
     } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<
-        | "usernameTaken"
-        | "serverProblem"
-        | "passwordsNoMatch"
-        | "mustEndWithLtuErrMsg"
-        | "emailTaken"
-    >();
+    const [error, setError] = useState<RegisterErrorMessage>();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
@@ -43,71 +37,58 @@ export function RegisterForm() {
                 return;
             }
 
-            try {
-                setIsLoading(true);
-                await register(
-                    removePropertiesFromObject(formDetails, "confirmPassword")
-                );
+            setIsLoading(true);
+            const errMsg = await register(
+                removePropertiesFromObject(formDetails, "confirmPassword")
+            );
+            if (!errMsg) {
                 formRef.current?.reset();
                 alert(t("verifyEmail"));
-            } catch (e) {
-                if (e instanceof CustomError && e.errorCode === 409) {
-                    if (e?.detail === USERNAME_TAKEN) {
-                        setError("usernameTaken");
-                    }
-                    if (e?.detail === EMAIL_TAKEN) {
-                        setError("emailTaken");
-                    }
-                    return;
-                }
-                setError("serverProblem");
-                console.error(e);
-            } finally {
-                setIsLoading(false);
+            } else {
+                setError(errMsg);
             }
+            setIsLoading(false);
         })();
     };
 
     return (
-        <>
-            <form
-                ref={formRef}
-                className={styles.container}
-                onSubmit={onSubmit}
+        <form
+            ref={formRef}
+            className={styles.container}
+            onSubmit={onSubmit}
+        >
+            <Input
+                inputName="email"
+                inputType="email"
+                label={`${t("email")} (${t("mustEndWithLtu")})`}
+            />
+            <Input
+                inputName="username"
+                inputType="text"
+                label={t("username")}
+            />
+            <Input
+                minInputValueLength={PASSWORD_MIN_LENGTH}
+                inputName="password"
+                inputType="password"
+                label={t("password")}
+            />
+            <Input
+                minInputValueLength={PASSWORD_MIN_LENGTH}
+                inputName="confirmPassword"
+                inputType="password"
+                label={t("confirmPassword")}
+            />
+            <button
+                className={styles.submitBtn}
+                type="submit"
             >
-                <Input
-                    inputName="email"
-                    inputType="email"
-                    label={`${t("email")} (${t("mustEndWithLtu")})`}
-                />
-                <Input
-                    inputName="username"
-                    inputType="text"
-                    label={t("username")}
-                />
-                <Input
-                    minInputValueLength={PASSWORD_MIN_LENGTH}
-                    inputName="password"
-                    inputType="password"
-                    label={t("password")}
-                />
-                <Input
-                    minInputValueLength={PASSWORD_MIN_LENGTH}
-                    inputName="confirmPassword"
-                    inputType="password"
-                    label={t("confirmPassword")}
-                />
-                <button
-                    className={styles.submitBtn}
-                    type="submit"
-                >
-                    {t("register")}
-                </button>
+                {t("register")}
+            </button>
 
-                <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                    {t(error ?? "")}
-                </p>
-            </form>
-        </>
+            <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
+                {t(error ?? "")}
+            </p>
+        </form>
     );
 }
