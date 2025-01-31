@@ -1,11 +1,11 @@
+import { BASE_URL } from "..";
 import {
     CustomError,
     ILoginCredentials,
     IRegisterFormData,
+    isAuthErrorResponse,
     ITokens
-} from "../";
-import { BASE_URL } from "../../data";
-import { isAuthErrorResponse } from "../typeGuards";
+} from "../../utils";
 
 export async function loginReq({
     email,

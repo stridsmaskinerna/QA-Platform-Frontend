@@ -3,11 +3,14 @@ import {
     addTokenToRequestInit,
     CustomError,
     hasTokenExpired,
-    ITokens,
-    refreshTokens
+    ITokens
 } from "../utils";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_TOKEN_KEY, LOGIN_REGISTER_ROUTE } from "../data";
+import {
+    LOCAL_STORAGE_TOKEN_KEY,
+    LOGIN_REGISTER_ROUTE,
+    refreshTokens
+} from "../data";
 import { useNavigate } from "react-router";
 
 interface IUseFetchWithTokenReturn<T> {

@@ -14,14 +14,14 @@ import {
     ITokens,
     IUserDetails,
     LoginErrorMessage,
-    loginReq,
-    RegisterErrorMessage,
-    registerReq
+    RegisterErrorMessage
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import {
     EMAIL_TAKEN,
     LOCAL_STORAGE_TOKEN_KEY,
+    loginReq,
+    registerReq,
     USERNAME_TAKEN
 } from "../../data";
 import { useQAContext } from "../../hooks";
