@@ -6,23 +6,26 @@ import hidden_question from "../../../assets/icons/hide_source_24dp_white.svg";
 
 interface QuestionHeaderProps {
     data: {
-        courseName: string;
-        courseCode: string;
+        subjectName: string;
+        subjectCode: string;
         isProtected: boolean;
         isResolved: boolean;
     };
 }
 
 export function QuestionHeader({ data }: QuestionHeaderProps) {
-    // data.isResolved = false;
     const { t } = useTranslation();
     const statusClass = data.isResolved ? styles.resolved : styles.notResolved;
     const visibility = data.isProtected ? hidden_question : public_question;
 
+    const subjectDisplay = data.subjectCode
+        ? `${data.subjectCode} - ${data.subjectName}`
+        : data.subjectName;
+
     return (
         <div className={styles.container}>
             <h3 className={styles.courseTitle}>
-                {data.courseCode} - {data.courseName}
+                {subjectDisplay}
             </h3>
             <div className={styles.icon_section}>
                 <div className={`${styles.status} ${statusClass}`}>

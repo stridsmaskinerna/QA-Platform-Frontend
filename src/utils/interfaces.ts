@@ -46,3 +46,28 @@ export interface ITab {
     btnStyle?: CSSProperties;
     btnsContainerStyle?: CSSProperties;
 }
+
+export interface IQuestion {
+    id: string;
+    topicName: string;
+    subjectId: string;
+    subjectName: string;
+    subjectCode: string;
+    username: string;
+    title: string;
+    created: string;
+    isResolved: boolean;
+    isProtected: boolean;
+    isHidden: boolean;
+    answerCount: number;
+    tags: string[];
+    userId: string;
+}
+
+export interface IQuestionCardProps {
+    data: IQuestion;
+}
+
+export interface IQuestionCardListProps {
+    data: IQuestionCardProps[];
+}
