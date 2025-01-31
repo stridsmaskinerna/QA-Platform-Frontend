@@ -82,3 +82,16 @@
     height: 0.9rem;
     margin-top: 0.1rem;
 }
+
+@media (max-width: 320px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .icon_section {
+        margin-top: 0.5rem; /* Add some spacing */
+        justify-content: flex-start;
+        width: 100%;
+    }
+}

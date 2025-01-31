@@ -4,7 +4,6 @@
     width: 100%;
     block-size: fit-content;
     max-width: 50rem;
-    /* min-width: 20rem; */
     margin: 0 auto;
     box-sizing: border-box;
     border: 2px solid grey;
