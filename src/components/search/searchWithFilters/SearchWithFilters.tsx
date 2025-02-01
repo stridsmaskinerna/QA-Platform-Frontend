@@ -6,6 +6,7 @@ import styles from "./SearchWithFilters.module.css";
 interface ISearchWithFiltersProps extends ISearchBarProps {
     subjectFilter: ISearchFilter;
     topicFilter: ISearchFilter;
+    showTopicFilters: boolean;
 }
 
 export function SearchWithFilters(props: ISearchWithFiltersProps) {
@@ -23,7 +24,7 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
                     activeFilter={props.subjectFilter.activeFilter}
                 />
             )}
-            {props.subjectFilter.activeFilter && (
+            {props.subjectFilter.activeFilter && props.showTopicFilters && (
                 <SearchFilter
                     onFilterClick={props.topicFilter.onFilterClick}
                     displayedFilters={props.topicFilter.displayedFilters}

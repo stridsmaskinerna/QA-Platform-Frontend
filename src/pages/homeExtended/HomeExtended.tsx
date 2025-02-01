@@ -3,8 +3,13 @@ import { useSearchQuestions } from "../../hooks";
 import styles from "./HomeExtended.module.css";
 
 export function HomeExtended() {
-    const { debouncedSearch, questions, subjectFilter, topicFilter } =
-        useSearchQuestions();
+    const {
+        debouncedSearch,
+        questions,
+        subjectFilter,
+        topicFilter,
+        showTopicsFilters
+    } = useSearchQuestions();
 
     return (
         <section className={styles.container}>
@@ -12,6 +17,7 @@ export function HomeExtended() {
                 subjectFilter={subjectFilter}
                 topicFilter={topicFilter}
                 onInputChange={debouncedSearch}
+                showTopicFilters={showTopicsFilters}
             />
             <div style={{ height: "100px" }} />
             {questions.map(question => (

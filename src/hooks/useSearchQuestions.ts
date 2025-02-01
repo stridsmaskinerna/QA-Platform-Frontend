@@ -10,13 +10,14 @@ const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
 
 interface IUrlAppendixes {
     searchStr: string;
-    subjectId: string;
-    topicId: string;
+    subjectId: string | null;
+    topicId: string | null;
 }
 
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
+    const [showTopicsFilters, setShowTopicsFilters] = useState(true);
     const [subjectFilter, setSubjectFilter] = useState<
         Omit<ISearchFilter, "onFilterClick">
     >({
@@ -31,62 +32,71 @@ export const useSearchQuestions = () => {
     });
     const [urlAppendixes, setUrlAppendixes] = useState<IUrlAppendixes>({
         searchStr: "",
-        subjectId: "",
-        topicId: ""
+        subjectId: null,
+        topicId: null
     });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
 
     const subjectFilterClick = (subjectId: string) => {
         if (subjectFilter.activeFilter === subjectId) {
+            setUrlAppendixes(prev => ({
+                ...prev,
+                subjectId: "",
+                topicId: null
+            }));
             setSubjectFilter(prev => ({
                 activeFilter: "",
                 displayedFilters: prev.displayedFilters
             }));
-            setUrlAppendixes(prev => ({ ...prev, subjectId: "", topicId: "" }));
         } else {
+            //Set showTopicsFilters to false to prevent TopicFilters from the previous fetch to
+            //momentarily appear on screen before the new data has been fetched and parsed
+            setShowTopicsFilters(false);
+            setUrlAppendixes(prev => ({
+                ...prev,
+                subjectId: `&subjectId=${subjectId}`,
+                topicId: null
+            }));
             setSubjectFilter(prev => ({
                 activeFilter: subjectId,
                 displayedFilters: prev.displayedFilters
             }));
-            setUrlAppendixes(prev => ({
-                ...prev,
-                subjectId: `&subjectId=${subjectId}`,
-                topicId: ""
-            }));
         }
     };
+
     const topicFilterClick = (topicId: string) => {
         if (topicFilter.activeFilter === topicId) {
+            setUrlAppendixes(prev => ({
+                ...prev,
+                topicId: ""
+            }));
             setTopicFilter(prev => ({
                 activeFilter: "",
                 displayedFilters: prev.displayedFilters
             }));
-            setUrlAppendixes(prev => ({
-                ...prev,
-                topicId: ""
-            }));
         } else {
-            setTopicFilter(prev => ({
-                activeFilter: topicId,
-                displayedFilters: prev.displayedFilters
-            }));
             setUrlAppendixes(prev => ({
                 ...prev,
                 topicId: `&topicId=${topicId}`
             }));
+            setTopicFilter(prev => ({
+                activeFilter: topicId,
+                displayedFilters: prev.displayedFilters
+            }));
         }
     };
     const onSearchBarInputChange: ChangeEventHandler<HTMLInputElement> = e => {
-        const searchStr = e.target.value;
-        if (searchStr?.length > 1) {
-            setUrlAppendixes({
-                searchStr: `&searchString=${searchStr}`,
-                subjectId: "",
-                topicId: ""
-            });
-        }
+        setUrlAppendixes({
+            searchStr: `&searchString=${e.target.value}`,
+            subjectId: null,
+            topicId: null
+        });
     };
+
+    useEffect(() => {
+        console.log(topicFilter.displayedFilters.length);
+    }, [topicFilter.displayedFilters.length]);
 
     const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 400);
 
@@ -95,8 +105,9 @@ export const useSearchQuestions = () => {
         refreshTopicFilters: boolean
     ) => {
         const filterQueryParams =
-            (refreshSubjectFilters ? "" : urlAppendixes.subjectId) +
-            (refreshTopicFilters ? "" : urlAppendixes.topicId);
+            (refreshSubjectFilters ? "" : (urlAppendixes.subjectId ?? "")) +
+            (refreshTopicFilters ? "" : (urlAppendixes.topicId ?? ""));
+
         const data = isGuest
             ? await fetchQuestions(
                   publicQuestionsBaseUrl +
@@ -109,6 +120,7 @@ export const useSearchQuestions = () => {
 
         if (data) {
             setQuestions(data);
+
             if (refreshSubjectFilters) {
                 setSubjectFilter({
                     activeFilter: "",
@@ -150,42 +162,35 @@ export const useSearchQuestions = () => {
                 });
             }
         }
+        setShowTopicsFilters(true);
     };
 
     useEffect(() => {
         void updateQuestionsData(true, false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        isGuest,
-        publicQuestionsBaseUrl,
-        questionsBaseUrl,
-        urlAppendixes.searchStr
-    ]);
+    }, [isGuest, urlAppendixes.searchStr]);
 
     useEffect(() => {
-        void updateQuestionsData(false, true);
+        //Dont run on initial render
+        if (urlAppendixes.subjectId !== null) {
+            void updateQuestionsData(false, true);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        isGuest,
-        publicQuestionsBaseUrl,
-        questionsBaseUrl,
-        urlAppendixes.subjectId
-    ]);
+    }, [isGuest, urlAppendixes.subjectId]);
 
     useEffect(() => {
-        void updateQuestionsData(false, false);
+        //Dont run on initial render
+        if (urlAppendixes.topicId !== null) {
+            void updateQuestionsData(false, false);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        isGuest,
-        publicQuestionsBaseUrl,
-        questionsBaseUrl,
-        urlAppendixes.topicId
-    ]);
+    }, [isGuest, urlAppendixes.topicId]);
 
     return {
         debouncedSearch,
         questions,
         topicFilter: { ...topicFilter, onFilterClick: topicFilterClick },
-        subjectFilter: { ...subjectFilter, onFilterClick: subjectFilterClick }
+        subjectFilter: { ...subjectFilter, onFilterClick: subjectFilterClick },
+        showTopicsFilters
     };
 };
