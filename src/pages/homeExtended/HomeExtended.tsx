@@ -1,3 +1,22 @@
+import { SearchWithFilters } from "../../components";
+import { useSearchQuestions } from "../../hooks";
+import styles from "./HomeExtended.module.css";
+
 export function HomeExtended() {
-    return <div>HomeExtended</div>;
+    const { debouncedSearch, questions, subjectFilter, topicFilter } =
+        useSearchQuestions();
+
+    return (
+        <section className={styles.container}>
+            <SearchWithFilters
+                subjectFilter={subjectFilter}
+                topicFilter={topicFilter}
+                onInputChange={debouncedSearch}
+            />
+            <div style={{ height: "100px" }} />
+            {questions.map(question => (
+                <div key={question.id}>{question.topicName}</div>
+            ))}
+        </section>
+    );
 }

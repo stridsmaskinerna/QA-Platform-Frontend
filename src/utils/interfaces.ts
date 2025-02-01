@@ -1,4 +1,10 @@
-import { CSSProperties, Dispatch, ReactElement, SetStateAction } from "react";
+import {
+    ChangeEventHandler,
+    CSSProperties,
+    Dispatch,
+    ReactElement,
+    SetStateAction
+} from "react";
 import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 
 export interface IAuthContext {
@@ -57,4 +63,34 @@ export interface IAuthErrorResponse {
 export interface ILoaderContext {
     isLoading: boolean;
     setIsLoading: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IQuestion {
+    id: string;
+    topicName: string;
+    topicId: string;
+    subjectId: string;
+    subjectName: string;
+    subjectCode: string;
+    username: string;
+    title: string;
+    created: string;
+    isResolved: boolean;
+    isProtected: boolean;
+    isHidden: boolean;
+    answerCount: number;
+    tags: string[];
+    userId: string;
+}
+
+export interface ISearchBarProps {
+    onInputChange: ChangeEventHandler<HTMLInputElement>;
+    defaultValue?: string;
+    placeholder?: string;
+}
+
+export interface ISearchFilter {
+    displayedFilters?: { title: string; id: string }[];
+    onFilterClick: (id: string) => void;
+    activeFilter: string;
 }

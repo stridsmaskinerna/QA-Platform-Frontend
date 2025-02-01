@@ -6,3 +6,4 @@ export * from "./questionCard";
 export * from "./forms";
 export * from "./input";
 export * from "./loader";
+export * from "./search";
