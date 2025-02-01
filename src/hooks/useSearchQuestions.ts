@@ -94,19 +94,12 @@ export const useSearchQuestions = () => {
         });
     };
 
-    useEffect(() => {
-        console.log(topicFilter.displayedFilters.length);
-    }, [topicFilter.displayedFilters.length]);
+    const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 500);
 
-    const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 400);
-
-    const updateQuestionsData = async (
-        refreshSubjectFilters: boolean,
-        refreshTopicFilters: boolean
-    ) => {
+    const updateQuestionsData = async (origin?: "search" | "subject") => {
         const filterQueryParams =
-            (refreshSubjectFilters ? "" : (urlAppendixes.subjectId ?? "")) +
-            (refreshTopicFilters ? "" : (urlAppendixes.topicId ?? ""));
+            (origin === "search" ? "" : (urlAppendixes.subjectId ?? "")) +
+            (origin === "subject" ? "" : (urlAppendixes.topicId ?? ""));
 
         const data = isGuest
             ? await fetchQuestions(
@@ -121,7 +114,7 @@ export const useSearchQuestions = () => {
         if (data) {
             setQuestions(data);
 
-            if (refreshSubjectFilters) {
+            if (origin === "search") {
                 setSubjectFilter({
                     activeFilter: "",
                     displayedFilters: data
@@ -142,7 +135,7 @@ export const useSearchQuestions = () => {
                 setTopicFilter({ activeFilter: "", displayedFilters: [] });
             }
 
-            if (refreshTopicFilters) {
+            if (origin === "subject") {
                 setTopicFilter({
                     activeFilter: "",
                     displayedFilters: data
@@ -166,14 +159,14 @@ export const useSearchQuestions = () => {
     };
 
     useEffect(() => {
-        void updateQuestionsData(true, false);
+        void updateQuestionsData("search");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.searchStr]);
 
     useEffect(() => {
         //Dont run on initial render
         if (urlAppendixes.subjectId !== null) {
-            void updateQuestionsData(false, true);
+            void updateQuestionsData("subject");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.subjectId]);
@@ -181,7 +174,7 @@ export const useSearchQuestions = () => {
     useEffect(() => {
         //Dont run on initial render
         if (urlAppendixes.topicId !== null) {
-            void updateQuestionsData(false, false);
+            void updateQuestionsData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.topicId]);
