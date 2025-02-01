@@ -81,7 +81,7 @@ export const useSearchQuestions = () => {
         const searchStr = e.target.value;
         if (searchStr?.length > 1) {
             setUrlAppendixes({
-                searchStr: `&searchStr=${searchStr}`,
+                searchStr: `&searchString=${searchStr}`,
                 subjectId: "",
                 topicId: ""
             });
@@ -95,9 +95,10 @@ export const useSearchQuestions = () => {
         refreshTopicFilters: boolean
     ) => {
         const filterQueryParams =
-            (refreshSubjectFilters ? urlAppendixes.subjectId : "") +
-            (refreshTopicFilters ? urlAppendixes.topicId : "");
-
+            (refreshSubjectFilters ? "" : urlAppendixes.subjectId) +
+            (refreshTopicFilters ? "" : urlAppendixes.topicId);
+        console.log("subjetParam", urlAppendixes.subjectId);
+        console.log(filterQueryParams);
         const data = isGuest
             ? await fetchQuestions(
                   publicQuestionsBaseUrl +
