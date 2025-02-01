@@ -90,7 +90,7 @@ export interface ISearchBarProps {
 }
 
 export interface ISearchFilter {
-    displayedFilters?: { title: string; id: string }[];
+    displayedFilters: { title: string; id: string }[];
     onFilterClick: (id: string) => void;
     activeFilter: string;
 }

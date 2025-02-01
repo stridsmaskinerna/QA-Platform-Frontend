@@ -5,6 +5,9 @@ import { BASE_URL, fetchQuestions } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, ISearchFilter } from "../utils";
 
+const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
+const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
+
 interface IUrlAppendixes {
     searchStr: string;
     subjectId: string;
@@ -33,9 +36,6 @@ export const useSearchQuestions = () => {
     });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
-
-    const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
-    const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
 
     const subjectFilterClick = (subjectId: string) => {
         if (subjectFilter.activeFilter === subjectId) {
@@ -97,8 +97,6 @@ export const useSearchQuestions = () => {
         const filterQueryParams =
             (refreshSubjectFilters ? "" : urlAppendixes.subjectId) +
             (refreshTopicFilters ? "" : urlAppendixes.topicId);
-        console.log("subjetParam", urlAppendixes.subjectId);
-        console.log(filterQueryParams);
         const data = isGuest
             ? await fetchQuestions(
                   publicQuestionsBaseUrl +

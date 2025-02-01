@@ -16,16 +16,20 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
                 placeholder={props.placeholder}
                 onInputChange={props.onInputChange}
             />
-            <SearchFilter
-                onFilterClick={props.subjectFilter.onFilterClick}
-                displayedFilters={props.subjectFilter.displayedFilters}
-                activeFilter={props.subjectFilter.activeFilter}
-            />
-            <SearchFilter
-                onFilterClick={props.topicFilter.onFilterClick}
-                displayedFilters={props.topicFilter.displayedFilters}
-                activeFilter={props.topicFilter.activeFilter}
-            />
+            {props.subjectFilter.displayedFilters.length && (
+                <SearchFilter
+                    onFilterClick={props.subjectFilter.onFilterClick}
+                    displayedFilters={props.subjectFilter.displayedFilters}
+                    activeFilter={props.subjectFilter.activeFilter}
+                />
+            )}
+            {props.subjectFilter.activeFilter && (
+                <SearchFilter
+                    onFilterClick={props.topicFilter.onFilterClick}
+                    displayedFilters={props.topicFilter.displayedFilters}
+                    activeFilter={props.topicFilter.activeFilter}
+                />
+            )}
         </div>
     );
 }
