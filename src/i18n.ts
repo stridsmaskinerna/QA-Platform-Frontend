@@ -11,3 +11,5 @@ i18n.use(initReactI18next).init({
     },
     lng: "en" // Set the initial language of the App
 });
+
+export default i18n;
