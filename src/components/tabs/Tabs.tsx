@@ -1,4 +1,4 @@
-import { CSSProperties, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
@@ -43,11 +43,16 @@ export function Tabs({
     const btnsContainerRef = useRef<HTMLDivElement>(null);
     const tabsWithIdx = tabs.map((t, idx) => ({ ...t, idx }));
     const [activeTab, setActiveTab] = useState<number>(tabsWithIdx[0].idx);
+    const [contentTopAttribute, setContentTopAttribute] = useState(0);
     const isViewportSmall = useMediaQuery(`(max-width: ${collapseWidth}px`);
 
     const handleTabClick = (idx: number) => {
         setActiveTab(idx);
     };
+
+    useEffect(() => {
+        setContentTopAttribute(btnsContainerRef.current?.offsetHeight ?? 0);
+    }, []);
 
     return (
         <div
@@ -78,7 +83,7 @@ export function Tabs({
                 <div
                     style={{
                         ...contentContainerStyle,
-                        top: btnsContainerRef.current?.offsetHeight
+                        top: contentTopAttribute
                     }}
                     key={`tabContent-${idx}`}
                     className={`${styles.tabContent} ${

@@ -4,7 +4,9 @@ import styles from "./LoginRegister.module.css";
 import { CSSProperties } from "react";
 
 const tabsContainerStyle: CSSProperties = { marginTop: "2rem" };
-const tabsContentContainerStyle: CSSProperties = { width: "100%" };
+const tabsContentContainerStyle: CSSProperties = {
+    width: "100%"
+};
 const tabBtnsContainerStyle: CSSProperties = {
     width: "clamp(260px, 60vw, 1000px)"
 };
