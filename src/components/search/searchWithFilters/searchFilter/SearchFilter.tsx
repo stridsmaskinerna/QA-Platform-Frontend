@@ -12,6 +12,8 @@ interface IShowScrollArrows {
 
 const LEFT_SCROLL_ARROW_THRESHOLD = 10;
 const RIGHT_SCROLL_ARROW_THRESHOLD = 10;
+const THROTTLE_TIMER = 300;
+const CLICK_SCROLL_AMOUNT = 150;
 
 export function SearchFilter({
     displayedFilters,
@@ -27,16 +29,22 @@ export function SearchFilter({
             rightArrow: false
         }
     );
-    const throttledHandleScroll = useThrottle(handleScroll, 400);
+    const throttledHandleScroll = useThrottle(handleScroll, THROTTLE_TIMER);
     const throttledHandleContainerResize = useThrottle(
         handleContainerResize,
-        400
+        THROTTLE_TIMER
     );
     useResizeObserver({
         ref: containerRef,
         box: "border-box",
         onResize: throttledHandleContainerResize
     });
+
+    const handleScrollArrowClick = (scrollAmount: number) =>
+        containerRef.current?.scrollBy({
+            left: scrollAmount,
+            behavior: "smooth"
+        });
 
     function handleScroll() {
         const scrollPosition = containerRef.current?.scrollLeft ?? 0;
@@ -142,7 +150,12 @@ export function SearchFilter({
                 className={styles.filtersWrapper}
             >
                 {showScrollArrows.leftArrow && (
-                    <button className={styles.arrow} />
+                    <button
+                        onClick={() =>
+                            handleScrollArrowClick(-CLICK_SCROLL_AMOUNT)
+                        }
+                        className={styles.arrow}
+                    />
                 )}
                 <p className={styles.title}>{title}</p>
                 {displayedFilters?.map(f => (
@@ -154,7 +167,12 @@ export function SearchFilter({
                     />
                 ))}
                 {showScrollArrows.rightArrow && (
-                    <button className={styles.arrow} />
+                    <button
+                        onClick={() =>
+                            handleScrollArrowClick(CLICK_SCROLL_AMOUNT)
+                        }
+                        className={styles.arrow}
+                    />
                 )}
             </div>
         </div>

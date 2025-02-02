@@ -6,9 +6,8 @@ import { ITab } from "../../utils";
 import { CSSProperties } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-const tabBtnsContainerStyle: CSSProperties = {
-    width: "clamp(290px, 90vw, 700px)"
-};
+let tabBtnsContainerStyle: CSSProperties = {};
+
 const btnStyle: CSSProperties = {
     fontSize: "clamp(14px, 2vw, 1.2rem)",
     flex: 1
@@ -33,10 +32,21 @@ export function HomeExtended() {
     const { isTeacher } = useRoles();
     const matches = useMediaQuery(`(max-width: 1000px`);
     if (matches) {
-        tabsContainerStyle = { alignSelf: "center" };
+        tabsContainerStyle = {
+            alignSelf: "center",
+            width: "100%",
+            justifyContent: "center"
+        };
+        tabBtnsContainerStyle = {
+            width: "clamp(290px, 90vw, 700px)"
+        };
     } else {
         tabsContainerStyle = {
-            width: "100%"
+            width: "100%",
+            justifyContent: "flex-start"
+        };
+        tabBtnsContainerStyle = {
+            width: "clamp(290px, 90vw, 700px)"
         };
     }
 

@@ -1,6 +1,7 @@
 /* Container for the entire tab component */
 .container {
     position: relative;
+    display: flex;
 }
 
 /* Style for the tab buttons container */

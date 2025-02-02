@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useRef, useState } from "react";
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
@@ -38,6 +38,9 @@ export function Tabs({
     if (!tabs.length) {
         throw new Error("Must supply at least on element in tabs prop");
     }
+    //We use btnsContainerRef to read the height of the buttonsContainer and apply it as
+    //top attribute to the content to ensure the content is rendered UNDERNEATH the tab buttons.
+    const btnsContainerRef = useRef<HTMLDivElement>(null);
     const tabsWithIdx = tabs.map((t, idx) => ({ ...t, idx }));
     const [activeTab, setActiveTab] = useState<number>(tabsWithIdx[0].idx);
     const isViewportSmall = useMediaQuery(`(max-width: ${collapseWidth}px`);
@@ -52,6 +55,7 @@ export function Tabs({
             className={styles.container}
         >
             <div
+                ref={btnsContainerRef}
                 style={tabBtnsContainerStyle}
                 className={`${styles.btnsContainer} ${isViewportSmall ? styles.noBorder : ""}`}
             >
@@ -72,7 +76,10 @@ export function Tabs({
 
             {tabsWithIdx.map(({ content, idx, contentContainerStyle }) => (
                 <div
-                    style={contentContainerStyle}
+                    style={{
+                        ...contentContainerStyle,
+                        top: btnsContainerRef.current?.offsetHeight
+                    }}
                     key={`tabContent-${idx}`}
                     className={`${styles.tabContent} ${
                         activeTab === idx ? styles.show : styles.hide

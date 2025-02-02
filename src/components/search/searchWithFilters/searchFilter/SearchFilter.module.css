@@ -1,12 +1,12 @@
 .container {
     width: 100%;
     overflow: scroll;
-    /*scrollbar-width: none; /* Firefox */
-    /*-ms-overflow-style: none;  IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
 
 .container::-webkit-scrollbar {
-    /* display: none; Chrome, Safari */
+    display: none; /*Chrome, Safari */
 }
 
 .filtersWrapper {
@@ -51,11 +51,12 @@
 }
 
 .arrow:first-child {
+    left: 3px;
     transform: rotate(180deg);
 }
 
 .arrow:last-child {
-    right: 50px;
+    right: 3px;
 }
 
 .arrow:last-child:hover::after {
