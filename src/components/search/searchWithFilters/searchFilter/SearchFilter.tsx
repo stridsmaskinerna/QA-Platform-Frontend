@@ -4,6 +4,7 @@ import styles from "./SearchFilter.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useThrottle } from "../../../../hooks";
 import { useResizeObserver } from "usehooks-ts";
+import arrowRight from "../../../../assets/icons/arrow_right.svg";
 
 interface IShowScrollArrows {
     leftArrow: boolean;
@@ -162,14 +163,16 @@ export function SearchFilter({
                 ref={wrapperRef}
                 className={styles.filtersWrapper}
             >
-                {showScrollArrows.leftArrow && (
-                    <button
-                        onClick={() =>
-                            handleScrollArrowClick(-CLICK_SCROLL_AMOUNT)
-                        }
-                        className={styles.arrow}
+                <button
+                    className={`${styles.arrowContainer} ${showScrollArrows.leftArrow ? styles.show : ""}`}
+                    onClick={() => handleScrollArrowClick(-CLICK_SCROLL_AMOUNT)}
+                >
+                    <img
+                        className={styles.flip}
+                        src={arrowRight}
                     />
-                )}
+                </button>
+
                 <p className={styles.title}>{title}</p>
                 {displayedFilters?.map(f => (
                     <FilterButton
@@ -179,14 +182,13 @@ export function SearchFilter({
                         key={f.id}
                     />
                 ))}
-                {showScrollArrows.rightArrow && (
-                    <button
-                        onClick={() =>
-                            handleScrollArrowClick(CLICK_SCROLL_AMOUNT)
-                        }
-                        className={styles.arrow}
-                    />
-                )}
+
+                <button
+                    className={`${styles.arrowContainer}  ${showScrollArrows.rightArrow ? styles.show : ""}`}
+                    onClick={() => handleScrollArrowClick(CLICK_SCROLL_AMOUNT)}
+                >
+                    <img src={arrowRight} />
+                </button>
             </div>
         </div>
     );

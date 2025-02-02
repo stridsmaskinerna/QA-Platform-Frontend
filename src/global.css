@@ -27,6 +27,7 @@ html {
     --overlay-loader: rgba(19, 48, 91, 0.3);
     --btnLight-bg: white;
     --btnLight-text: black;
+    --btnLight-hover: lightgray;
 }
 
 .app {

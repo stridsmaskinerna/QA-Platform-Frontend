@@ -21,44 +21,36 @@
     font-weight: 600;
 }
 
-.arrow {
-    display: inline-flex;
+.arrowContainer {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 8px; /* Space between text and arrow */
-    font-size: 1.2em;
-    font-weight: bold;
-    color: red; /* Customize the color */
-    text-decoration: none; /* Optional */
-    border: none;
-    background-color: transparent;
+    background-color: var(--btnLight-bg);
+    padding: clamp(0px, 0.4vw, 5px);
+    border: 2px solid var(--btnLight-text);
+    border-radius: 100px;
     position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
 
-.arrow::after {
-    content: "";
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-right: 3px solid currentColor; /* Arrow color */
-    border-top: 3px solid currentColor;
-    transform: rotate(45deg);
-    margin-left: 5px;
-    transition: transform 0.2s ease-in-out;
+.show {
+    opacity: 1;
+    pointer-events: all;
 }
 
-.arrow:hover::after {
-    transform: rotate(45deg) translateX(3px); /* Fancy hover effect */
+.arrowContainer:hover {
+    background-color: var(--btnLight-hover);
 }
 
-.arrow:first-child {
-    left: 3px;
-    transform: rotate(180deg);
-}
-
-.arrow:last-child {
+.arrowContainer:last-child {
     right: 3px;
 }
+.arrowContainer:first-child {
+    left: 3px;
+}
 
-.arrow:last-child:hover::after {
-    transform: rotate(45deg) translateY(-3px); /* Fancy hover effect */
+.flip {
+    transform: rotate(180deg);
 }
