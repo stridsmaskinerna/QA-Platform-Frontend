@@ -95,20 +95,21 @@ export const useSearchQuestions = () => {
     };
     const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 500);
 
-    const updateQuestionsData = async (origin?: "search" | "subject") => {
-        const filterQueryParams =
+    //The "topic" arg isn't used at this point. Putting it there for clarities sake
+    // and possible future use.
+    const updateQuestionsData = async (
+        origin: "search" | "subject" | "topic"
+    ) => {
+        //If this updateQuestionsData is called because of an updated topicId, then all
+        //types of query params will be active.
+        const queryParams =
+            urlAppendixes.searchStr +
             (origin === "search" ? "" : (urlAppendixes.subjectId ?? "")) +
             (origin === "subject" ? "" : (urlAppendixes.topicId ?? ""));
 
         const data = isGuest
-            ? await fetchQuestions(
-                  publicQuestionsBaseUrl +
-                      urlAppendixes.searchStr +
-                      filterQueryParams
-              )
-            : await authFetchQuestions(
-                  questionsBaseUrl + urlAppendixes.searchStr + filterQueryParams
-              );
+            ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
+            : await authFetchQuestions(questionsBaseUrl + queryParams);
 
         if (data) {
             setQuestions(data);
@@ -173,7 +174,7 @@ export const useSearchQuestions = () => {
     useEffect(() => {
         //Dont run on initial render
         if (urlAppendixes.topicId !== null) {
-            void updateQuestionsData();
+            void updateQuestionsData("topic");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.topicId]);
