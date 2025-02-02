@@ -45,10 +45,10 @@
 }
 
 .arrowContainer:last-child {
-    right: 3px;
+    right: 0px;
 }
 .arrowContainer:first-child {
-    left: 3px;
+    left: 0px;
 }
 
 .flip {

@@ -11,6 +11,7 @@
     align-items: center;
     white-space: normal;
     width: fit-content;
+    border: 2px solid transparent;
 }
 
 .btn:hover {
@@ -20,5 +21,5 @@
 .active {
     background-color: var(--btnLight-bg);
     color: var(--btnLight-text);
-    border: 2px solid var(--btnLight-text);
+    border-color: var(--btnLight-text);
 }
