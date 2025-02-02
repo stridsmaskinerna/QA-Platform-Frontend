@@ -23,14 +23,16 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
                 activeFilter={props.subjectFilter.activeFilter}
             />
 
-            {showTopics && (
+            <div
+                className={`${styles.filterWrapper} ${showTopics ? styles.show : ""}`}
+            >
                 <SearchFilter
                     title={`${t("topicFilter")}:`}
                     onFilterClick={props.topicFilter.onFilterClick}
                     displayedFilters={props.topicFilter.displayedFilters}
                     activeFilter={props.topicFilter.activeFilter}
                 />
-            )}
+            </div>
         </div>
     );
 }

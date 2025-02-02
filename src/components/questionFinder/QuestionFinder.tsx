@@ -1,21 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { IQuestion, ISearchWithFiltersProps } from "../../utils";
 import { SearchWithFilters } from "..";
+import { useSearchQuestions } from "../../hooks";
 
-interface IQuestionFinderProps {
-    searchAndFilterProps: ISearchWithFiltersProps;
-    questions: IQuestion[];
-}
-
-export function QuestionFinder({
-    searchAndFilterProps: {
+export function QuestionFinder() {
+    const {
+        debouncedSearch,
+        questions,
         subjectFilter,
         topicFilter,
-        onInputChange,
         showTopicsFilters
-    },
-    questions
-}: IQuestionFinderProps) {
+    } = useSearchQuestions();
     const { t } = useTranslation();
 
     return (
@@ -24,9 +18,12 @@ export function QuestionFinder({
                 placeholder={t("searchQuestionsPlaceholder")}
                 subjectFilter={subjectFilter}
                 topicFilter={topicFilter}
-                onInputChange={onInputChange}
+                onInputChange={debouncedSearch}
                 showTopicsFilters={showTopicsFilters}
             />
+
+            {/* Here goes the Recent Questions - My Q&A which will be conditionally rendered depending on having the User role.
+            This component will then be usable in HomeLimited as well */}
 
             <div style={{ height: "100px" }} />
             {questions.map(question => (

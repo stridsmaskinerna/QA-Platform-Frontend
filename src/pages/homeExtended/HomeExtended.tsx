@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { QuestionFinder, Tabs } from "../../components";
-import { useRoles, useSearchQuestions } from "../../hooks";
+import { useRoles } from "../../hooks";
 import styles from "./HomeExtended.module.css";
 import { ITab } from "../../utils";
 import { CSSProperties } from "react";
@@ -21,13 +21,6 @@ const questionFinderContainerStyle: CSSProperties = {
 let tabsContainerStyle: CSSProperties = {};
 
 export function HomeExtended() {
-    const {
-        debouncedSearch,
-        questions,
-        subjectFilter,
-        topicFilter,
-        showTopicsFilters
-    } = useSearchQuestions();
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
     const matches = useMediaQuery(`(max-width: 1000px`);
@@ -52,17 +45,7 @@ export function HomeExtended() {
 
     const tabs: ITab[] = [
         {
-            content: (
-                <QuestionFinder
-                    searchAndFilterProps={{
-                        topicFilter,
-                        subjectFilter,
-                        showTopicsFilters,
-                        onInputChange: debouncedSearch
-                    }}
-                    questions={questions}
-                />
-            ),
+            content: <QuestionFinder />,
             contentContainerStyle: questionFinderContainerStyle,
             btnStyle,
             title: t("searchQuestions")
