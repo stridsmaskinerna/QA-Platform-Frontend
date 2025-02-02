@@ -33,6 +33,11 @@
         "mustEndWithLtuErrMsg": "Email must end with @ltu.se. Please try again.",
         "emailTaken": "Email is already in use. Please try another one.",
         "verifyEmail": "A verification email has been sent to your email address. Please check your inbox and follow the instructions to verify your account.",
-        "searchQuestionsPlaceholder": "Search questions by title, course code, course name, tag, or topic"
+        "searchQuestionsPlaceholder": "Search questions by title, course code, course name, tag, or topic",
+        "searchQuestions": "Search question",
+        "askAQuestion": "Ask a question",
+        "teacher": "Teacher",
+        "categoryFilter": "Category filter",
+        "topicFilter": "Topic filter"
     }
 }

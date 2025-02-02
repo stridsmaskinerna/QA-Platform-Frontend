@@ -53,7 +53,6 @@ export interface ITab {
     content: ReactElement;
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
-    btnsContainerStyle?: CSSProperties;
 }
 
 export interface IAuthErrorResponse {
@@ -93,4 +92,11 @@ export interface ISearchFilter {
     displayedFilters: { title: string; id: string }[];
     onFilterClick: (id: string) => void;
     activeFilter: string;
+    title?: string;
+}
+
+export interface ISearchWithFiltersProps extends ISearchBarProps {
+    subjectFilter: ISearchFilter;
+    topicFilter: ISearchFilter;
+    showTopicsFilters: boolean;
 }

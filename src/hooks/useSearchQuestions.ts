@@ -93,7 +93,6 @@ export const useSearchQuestions = () => {
             topicId: null
         });
     };
-
     const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 500);
 
     const updateQuestionsData = async (origin?: "search" | "subject") => {
@@ -129,7 +128,7 @@ export const useSearchQuestions = () => {
                         //Map to right format
                         .map(q => ({
                             id: q.subjectId,
-                            title: q.subjectCode
+                            title: `${q.subjectCode ?? ""} ${q.subjectName}`
                         }))
                 });
                 setTopicFilter({ activeFilter: "", displayedFilters: [] });

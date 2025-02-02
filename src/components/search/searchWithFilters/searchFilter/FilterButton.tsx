@@ -1,3 +1,5 @@
+import styles from "./FilterButton.module.css";
+
 interface IFilterButtonProps {
     title: string;
     onClick: () => void;
@@ -6,11 +8,11 @@ interface IFilterButtonProps {
 
 export function FilterButton({ title, onClick, isActive }: IFilterButtonProps) {
     return (
-        <div
-            style={isActive ? { backgroundColor: "red" } : {}}
+        <button
+            className={`${styles.btn} ${isActive ? styles.active : ""}`}
             onClick={onClick}
         >
             {title}
-        </div>
+        </button>
     );
 }

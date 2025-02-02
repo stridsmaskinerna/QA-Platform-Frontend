@@ -7,7 +7,7 @@
     border-radius: 6px;
     border: 2px solid var(--input-idle);
     padding-left: 1rem;
-    font-size: 16px;
+    font-size: clamp(12px, 2vw, 16px);
     padding-block: 10px;
 }
 

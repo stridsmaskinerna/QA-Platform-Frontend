@@ -3,4 +3,5 @@
     display: flex;
     flex-direction: column;
     padding-top: clamp(1rem, 5vw, 4rem);
+    padding-inline: clamp(0px, 3vw, 5rem);
 }
