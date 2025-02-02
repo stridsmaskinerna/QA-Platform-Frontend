@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    overflow: scroll;
+    overflow-x: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
 }

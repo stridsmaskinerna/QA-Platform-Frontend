@@ -13,7 +13,7 @@ interface IShowScrollArrows {
 const LEFT_SCROLL_ARROW_THRESHOLD = 10;
 const RIGHT_SCROLL_ARROW_THRESHOLD = 10;
 const THROTTLE_TIMER = 300;
-const CLICK_SCROLL_AMOUNT = 150;
+const CLICK_SCROLL_AMOUNT = 300;
 
 export function SearchFilter({
     displayedFilters,
@@ -46,7 +46,13 @@ export function SearchFilter({
             behavior: "smooth"
         });
 
-    function handleScroll() {
+    function handleScroll(event?: WheelEvent) {
+        //If called with a wheel event (i.e the user uses the mousewheel)
+        if (event && containerRef.current) {
+            event.preventDefault();
+            containerRef.current.scrollLeft += event.deltaY;
+        }
+
         const scrollPosition = containerRef.current?.scrollLeft ?? 0;
         //Cirka the amount of width that is scrollabe
         const scrollOverflowWidth =
@@ -120,7 +126,12 @@ export function SearchFilter({
 
         if (containerElement) {
             //Use throttle to prevent setting state too often
-            containerElement.addEventListener("scroll", throttledHandleScroll);
+            containerElement.addEventListener("scroll", () =>
+                throttledHandleScroll()
+            );
+            containerElement.addEventListener("wheel", e => handleScroll(e), {
+                passive: false
+            });
             setShowScrollArrows({
                 leftArrow: false,
                 //Initialize right arrow depending on whether there is filterbuttons hidden behind scroll
@@ -132,9 +143,11 @@ export function SearchFilter({
         }
 
         return () => {
-            containerElement?.removeEventListener(
-                "scroll",
-                throttledHandleScroll
+            containerElement?.removeEventListener("scroll", () =>
+                throttledHandleScroll()
+            );
+            containerElement?.removeEventListener("wheel", e =>
+                handleScroll(e)
             );
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
