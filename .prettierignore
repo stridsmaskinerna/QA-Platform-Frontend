@@ -4,3 +4,5 @@ coverage
 
 
 **/*.yml
+
+package-lock.json

@@ -1,9 +1,9 @@
 import { BASE_URL } from "..";
 import {
     CustomError,
+    IAuthErrorResponse,
     ILoginCredentials,
     IRegisterFormData,
-    isAuthErrorResponse,
     ITokens
 } from "../../utils";
 
@@ -77,11 +77,11 @@ export async function registerReq({
     });
 
     if (response.ok === false) {
-        const data: unknown = await response.json();
+        const data = (await response.json()) as IAuthErrorResponse;
         throw new CustomError(
             response.status,
             "Could not register",
-            isAuthErrorResponse(data) ? data.detail : undefined
+            data?.detail
         );
     }
 }

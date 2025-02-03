@@ -1,4 +1,10 @@
-import { HTMLInputTypeAttribute, useId, useRef, useState } from "react";
+import {
+    ChangeEventHandler,
+    HTMLInputTypeAttribute,
+    useId,
+    useRef,
+    useState
+} from "react";
 import styles from "./Input.module.css";
 import { useOnClickOutside } from "usehooks-ts";
 
@@ -7,13 +13,19 @@ interface IInputProps {
     label?: string;
     inputName: string;
     minInputValueLength?: number;
+    placeHolder?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    defaultValue?: string;
 }
 
 export function Input({
     inputType,
     label,
     inputName,
-    minInputValueLength
+    minInputValueLength,
+    placeHolder,
+    onChange,
+    defaultValue
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
     const id = useId();
@@ -34,6 +46,9 @@ export function Input({
                 className={`${styles.inputWrapper} ${isActive ? styles.highlight : ""}`}
             >
                 <input
+                    defaultValue={defaultValue}
+                    onChange={onChange}
+                    placeholder={placeHolder}
                     minLength={minInputValueLength}
                     ref={inputRef}
                     required

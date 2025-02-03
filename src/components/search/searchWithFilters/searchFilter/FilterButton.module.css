@@ -1,0 +1,25 @@
+.btn {
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    border: none;
+    padding: clamp(0.5rem, 2vw, 0.7rem);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: clamp(12px, 2vw, 16px);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: normal;
+    width: fit-content;
+    border: 2px solid transparent;
+}
+
+.btn:hover {
+    background-color: var(--btnDark-hover);
+}
+
+.active {
+    background-color: var(--btnLight-bg);
+    color: var(--btnLight-text);
+    border-color: var(--btnLight-text);
+}
