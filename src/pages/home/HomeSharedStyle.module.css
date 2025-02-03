@@ -4,11 +4,13 @@
     padding-top: clamp(1rem, 5vw, 4rem);
     padding-inline: clamp(15px, 4vw, 10rem);
     align-items: center;
+    flex: 1;
 }
 
-.card_container {
+/* .container {
+
     display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-    margin-top: 1rem;
-}
+    flex-direction: column;
+ 
+    padding-inline: clamp(0px, 3vw, 5rem);
+} */

@@ -1,5 +1,5 @@
-import { QuestionFinder } from "../../components";
-import styles from "./HomeLimited.module.css";
+import { QuestionFinder } from "../../../components";
+import styles from "../HomeSharedStyle.module.css";
 
 export function HomeLimited() {
     return (
