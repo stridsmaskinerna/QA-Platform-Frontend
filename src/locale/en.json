@@ -40,6 +40,7 @@
         "categoryFilter": "Category filter",
         "topicFilter": "Topic filter",
         "clickToHide": "Set question to hidden",
-        "clickToShow": "Set question to visible"
+        "clickToShow": "Set question to visible",
+        "ok": "Ok"
     }
 }

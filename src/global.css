@@ -10,6 +10,7 @@ html {
     --red-delete: rgb(199, 0, 0);
     --btnDark-bg: black;
     --text-default: black;
+    --textLight-default: white;
     --btnDark-text: white;
     --btnDark-hover: gray;
     --grey-light: lightgray;
