@@ -3,12 +3,12 @@
     justify-content: center;
     align-items: center;
     background-color: var(--btnLight-bg);
-    padding: 13px;
+    padding: clamp(7px, 2.2vw, 13px);
     position: absolute;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
-    border-radius: 100px;
+    border: none;
 }
 
 .arrowContainer {

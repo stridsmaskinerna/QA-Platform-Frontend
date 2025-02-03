@@ -12,15 +12,13 @@ export function ArrowScrollBtn({
     pointingDirection
 }: IArrowScrollBtnProps) {
     return (
-        <div
+        <button
+            onClick={onClick}
             className={`${styles.container} ${show ? styles.show : ""} ${pointingDirection === "left" ? styles.left : styles.right}`}
         >
-            <button
-                className={`${styles.arrowContainer} `}
-                onClick={onClick}
-            >
+            <div className={`${styles.arrowContainer} `}>
                 <img src={arrowRight} />
-            </button>
-        </div>
+            </div>
+        </button>
     );
 }

@@ -3,15 +3,15 @@ import { ISearchFilter } from "../../../../utils";
 import styles from "./SearchFilter.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useThrottle } from "../../../../hooks";
-import { useResizeObserver } from "usehooks-ts";
+import { useIsMounted, useResizeObserver } from "usehooks-ts";
 
 interface IShowScrollArrows {
     leftArrow: boolean;
     rightArrow: boolean;
 }
 
-const LEFT_SCROLL_ARROW_THRESHOLD = 10;
-const RIGHT_SCROLL_ARROW_THRESHOLD = 10;
+const LEFT_SCROLL_ARROW_THRESHOLD = 3;
+const RIGHT_SCROLL_ARROW_THRESHOLD = 3;
 const THROTTLE_TIMER = 300;
 const CLICK_SCROLL_AMOUNT = 300;
 
@@ -22,7 +22,7 @@ export function SearchFilter({
     title
 }: ISearchFilter) {
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [showScrollArrows, setShowScrollArrows] = useState<IShowScrollArrows>(
         {
             leftArrow: false,
@@ -35,29 +35,35 @@ export function SearchFilter({
         THROTTLE_TIMER
     );
     useResizeObserver({
-        ref: containerRef,
+        ref: scrollRef,
         box: "border-box",
         onResize: throttledHandleContainerResize
     });
+    const isMounted = useIsMounted();
 
     const handleScrollArrowClick = (scrollAmount: number) =>
-        containerRef.current?.scrollBy({
+        scrollRef.current?.scrollBy({
             left: scrollAmount,
             behavior: "smooth"
         });
 
-    function handleScroll(event?: WheelEvent) {
-        //If called with a wheel event (i.e the user uses the mousewheel)
-        if (event && containerRef.current) {
+    //If called with a wheel event (i.e the user uses the mousewheel)
+    const handleMouseWheelEvent = (event?: WheelEvent) => {
+        if (event && scrollRef.current) {
             event.preventDefault();
-            containerRef.current.scrollLeft += event.deltaY;
+            scrollRef.current.scrollLeft += event.deltaY;
+            throttledHandleScroll();
         }
-
-        const scrollPosition = containerRef.current?.scrollLeft ?? 0;
-        //Cirka the amount of width that is scrollabe
+    };
+    function handleScroll() {
+        //The amount of width that is scrollabe
         const scrollOverflowWidth =
-            (containerRef.current?.scrollWidth ?? 0) -
-            (containerRef.current?.offsetWidth ?? 0);
+            (wrapperRef.current?.offsetWidth ?? 0) -
+            ((scrollRef.current?.offsetWidth ?? 0) +
+                (scrollRef.current?.scrollLeft ?? 0));
+
+        const scrollPosition = scrollRef.current?.scrollLeft ?? 0;
+
         setShowScrollArrows(prev => {
             // If scrolled past the threshold and left arrow is not shown, enable it
             if (
@@ -75,15 +81,13 @@ export function SearchFilter({
             }
             //Same for right arrow...
             if (
-                scrollOverflowWidth - scrollPosition >
-                    RIGHT_SCROLL_ARROW_THRESHOLD &&
+                scrollOverflowWidth > RIGHT_SCROLL_ARROW_THRESHOLD &&
                 !prev.rightArrow
             ) {
                 return { ...prev, rightArrow: true };
             }
             if (
-                scrollOverflowWidth - scrollPosition <
-                    RIGHT_SCROLL_ARROW_THRESHOLD &&
+                scrollOverflowWidth < RIGHT_SCROLL_ARROW_THRESHOLD &&
                 prev.rightArrow
             ) {
                 return { ...prev, rightArrow: false };
@@ -92,29 +96,22 @@ export function SearchFilter({
         });
     }
 
-    function handleContainerResize({
-        width: containerWidth
-    }: {
-        width: number | undefined;
-    }) {
+    function handleContainerResize() {
         //We scroll to beginning on resize to prevent handleScroll from firing when user has scrolled a bit
         //and the resizes the window.
-        containerRef.current?.scrollTo({ left: 0 });
+        scrollRef.current?.scrollTo({ left: 0 });
+
+        //The amount of width that is scrollabe
+        const scrollOverflowWidth =
+            (wrapperRef.current?.offsetWidth ?? 0) -
+            ((scrollRef.current?.offsetWidth ?? 0) +
+                (scrollRef.current?.scrollLeft ?? 0));
+
         setShowScrollArrows(prev => {
-            //If one arrow is shown and the container is wider than the wrapper there is nothing to scroll
-            //and we hide the scroll arrows
-            if (
-                (prev.rightArrow || prev.leftArrow) &&
-                (containerWidth ?? 0) >= (wrapperRef.current?.offsetWidth ?? 0)
-            ) {
+            if (scrollOverflowWidth < RIGHT_SCROLL_ARROW_THRESHOLD) {
                 return { leftArrow: false, rightArrow: false };
             }
-            // If container width is smaller than the wrapper width there is scrollable content and we show the right
-            //arrow which will be correct since we reset the scroll in the beginning of this function.
-            if (
-                !prev.rightArrow &&
-                (containerWidth ?? 0) < (wrapperRef.current?.offsetWidth ?? 0)
-            ) {
+            if (scrollOverflowWidth > RIGHT_SCROLL_ARROW_THRESHOLD) {
                 return { leftArrow: false, rightArrow: true };
             }
             return prev;
@@ -122,36 +119,40 @@ export function SearchFilter({
     }
 
     useEffect(() => {
-        const containerElement = containerRef.current;
+        const scrollElement = scrollRef.current;
 
-        if (containerElement) {
+        if (scrollElement) {
             //Use throttle to prevent setting state too often
-            containerElement.addEventListener("scroll", () =>
-                throttledHandleScroll()
-            );
-            containerElement.addEventListener("wheel", e => handleScroll(e), {
+            scrollElement.addEventListener("scroll", throttledHandleScroll);
+            //Not use throttle directly since the scrolling becomes choppy then.
+            //Instead call throttledHandleScroll in handleMouseWheelEvent,
+            //after the wheel even have been mapped to scrolling
+            scrollElement.addEventListener("wheel", handleMouseWheelEvent, {
                 passive: false
-            });
-            setShowScrollArrows({
-                leftArrow: false,
-                //Initialize right arrow depending on whether there is filterbuttons hidden behind scroll
-                rightArrow:
-                    containerElement.scrollWidth -
-                        containerElement.offsetWidth >
-                    RIGHT_SCROLL_ARROW_THRESHOLD
             });
         }
 
         return () => {
-            containerElement?.removeEventListener("scroll", () =>
-                throttledHandleScroll()
-            );
-            containerElement?.removeEventListener("wheel", e =>
-                handleScroll(e)
-            );
+            scrollElement?.removeEventListener("scroll", throttledHandleScroll);
+            scrollElement?.removeEventListener("wheel", handleMouseWheelEvent);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        //The amount of width that is scrollabe
+        const scrollOverflowWidth =
+            (wrapperRef.current?.offsetWidth ?? 0) -
+            ((scrollRef.current?.offsetWidth ?? 0) +
+                (scrollRef.current?.scrollLeft ?? 0));
+        if (wrapperRef.current && scrollRef.current) {
+            setShowScrollArrows({
+                leftArrow: false,
+                //Initialize right arrow depending on whether there is filterbuttons hidden behind scroll
+                rightArrow: scrollOverflowWidth > RIGHT_SCROLL_ARROW_THRESHOLD
+            });
+        }
+    }, [isMounted]);
 
     return (
         <div className={styles.container}>
@@ -161,7 +162,7 @@ export function SearchFilter({
                 pointingDirection="left"
             />
             <div
-                ref={containerRef}
+                ref={scrollRef}
                 className={styles.scrollContainer}
             >
                 <div
