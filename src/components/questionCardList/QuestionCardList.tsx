@@ -1,14 +1,18 @@
-import { IQuestionCardListProps } from "../../utils";
+import { IQuestion } from "../../utils";
 import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
+
+interface IQuestionCardListProps {
+    data: IQuestion[];
+}
 
 export function QuestionCardList({ data }: IQuestionCardListProps) {
     return (
         <div className={styles.container}>
-            {data.map(props => (
+            {data.map(question => (
                 <QuestionCard
-                    key={props.data.id}
-                    data={props.data}
+                    key={question.id}
+                    {...question}
                 />
             ))}
         </div>

@@ -38,6 +38,8 @@
         "askAQuestion": "Ställ en fråga",
         "teacher": "Lärare",
         "categoryFilter": "Kategorifilter",
-        "topicFilter": "Ämnesfilter"
+        "topicFilter": "Ämnesfilter",
+        "clickToHide": "Sätt fråga till dold",
+        "clickToShow": "Sätt fråga till synlig"
     }
 }

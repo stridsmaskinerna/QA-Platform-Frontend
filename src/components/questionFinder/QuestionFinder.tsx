@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { SearchWithFilters } from "..";
 import { useSearchQuestions } from "../../hooks";
+import { QuestionCardList } from "../questionCardList";
+import styles from "./QuestionFinder.module.css";
 
 export function QuestionFinder() {
     const {
@@ -13,7 +15,7 @@ export function QuestionFinder() {
     const { t } = useTranslation();
 
     return (
-        <div>
+        <div className={styles.container}>
             <SearchWithFilters
                 placeholder={t("searchQuestionsPlaceholder")}
                 subjectFilter={subjectFilter}
@@ -25,10 +27,7 @@ export function QuestionFinder() {
             {/* Here goes the Recent Questions - My Q&A which will be conditionally rendered depending on having the User role.
             This component will then be usable in HomeLimited as well */}
 
-            <div style={{ height: "100px" }} />
-            {questions.map(question => (
-                <div key={question.id}>{question.topicName}</div>
-            ))}
+            <QuestionCardList data={questions} />
         </div>
     );
 }

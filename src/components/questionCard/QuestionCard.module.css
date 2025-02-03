@@ -2,8 +2,6 @@
     border-radius: 10px;
     overflow: hidden;
     width: 100%;
-    block-size: fit-content;
-    max-width: 50rem;
     margin: 0 auto;
     box-sizing: border-box;
     border: 2px solid grey;

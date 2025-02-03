@@ -1,6 +1,9 @@
 .container {
-    margin: 2rem;
+    padding: clamp(10px, 2vw, 3rem);
     color: var(--grey-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .header {
@@ -12,11 +15,19 @@
 }
 
 /* When the screen width is 320px or less, stack elements vertically */
-@media (max-width: 320px) {
+@media (max-width: 600px) {
     .header {
         flex-direction: column;
-        align-items: flex-start; /* Align content to the left */
+        align-items: center; /* Align content to the left */
         gap: 0.5rem;
+    }
+    .title {
+        text-align: center;
+    }
+    .question_section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -43,8 +54,9 @@
 
 .title {
     color: var(--text-default);
+    margin-bottom: 6px;
 }
 
-.question_section > p {
-    margin-top: 1rem;
+.question_section > p:last-child {
+    margin-top: 2rem;
 }

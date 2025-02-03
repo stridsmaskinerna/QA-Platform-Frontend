@@ -1,15 +1,13 @@
 import styles from "./QuestionCardBottom.module.css";
 
 interface QuestionCardBottomProps {
-    data: {
-        tags: string[];
-    };
+    tags: string[];
 }
 
-export default function QuestionCardBottom({ data }: QuestionCardBottomProps) {
+export default function QuestionCardBottom({ tags }: QuestionCardBottomProps) {
     return (
         <div className={styles.container}>
-            {data.tags.map(tag => (
+            {tags.map(tag => (
                 <p
                     key={tag}
                     className={styles.tag_container}

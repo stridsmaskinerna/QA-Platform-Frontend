@@ -13,7 +13,8 @@
         "isProtected": false,
         "isHidden": true,
         "answerCount": 0,
-        "tags": ["Beginner", "Diploma"]
+        "tags": ["Beginner", "Diploma"],
+        "topicId": "topicId1"
     },
     {
         "id": "0194ae80-9f98-72ee-961d-e1ea49c64333",
@@ -29,6 +30,7 @@
         "isProtected": false,
         "isHidden": true,
         "answerCount": 0,
-        "tags": ["Beginner", "Diploma"]
+        "tags": ["Beginner", "Diploma"],
+        "topicId": "topicId2"
     }
 ]
