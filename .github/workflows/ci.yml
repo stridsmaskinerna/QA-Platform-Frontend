@@ -34,7 +34,7 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
 
-  # Job 2: Lint Project (runs in parallel with TypeScript and Prettier checks)
+  # Job 2: Lint Project (runs in parallel with TypeScript, Prettier and Test checks)
   lint:
     needs: setup
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
       - name: Run ESLint
         run: npx eslint .
 
-  # Job 3: Check TypeScript (runs in parallel with Linting and Prettier check)
+  # Job 3: Check TypeScript (runs in parallel with Linting, Prettier and Test checks)
   check-ts:
     needs: setup
     runs-on: ubuntu-latest
@@ -68,7 +68,7 @@ jobs:
       - name: Check TypeScript
         run: npx tsc --noEmit
 
-  # Job 4: Prettier Check (runs in parallel with Linting and TypeScript checks)
+  # Job 4: Prettier Check (runs in parallel with Linting, TypeScript and Test checks)
   prettier:
     needs: setup
     runs-on: ubuntu-latest
@@ -85,9 +85,26 @@ jobs:
       - name: Run Prettier Check
         run: npx prettier --check .
 
+  # Job 5 Run Tests (runs in parallel with Linting, TypeScript and Prettier checks)
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  
+
+      - name: Use shared dependencies cache
+        uses: actions/cache@v4  
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Run Tests
+        run: npx vitest
+
   # Job 5: Build Project (runs after all checks)
   build:
-    needs: [lint, check-ts, prettier]
+    needs: [lint, check-ts, prettier, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -1,20 +1,29 @@
-import { CSSProperties, ReactElement } from "react";
-import { Roles } from ".";
+import {
+    ChangeEventHandler,
+    CSSProperties,
+    Dispatch,
+    ReactElement,
+    SetStateAction
+} from "react";
+import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 
 export interface IAuthContext {
     userId: string | undefined;
     username: string | undefined;
-    roles: Roles[] | undefined;
-    login: (credentials: ILoginCredentials) => Promise<void>;
+    roles: Role[] | undefined;
+    login: (
+        credentials: ILoginCredentials
+    ) => Promise<LoginErrorMessage | void>;
     logout: () => void;
-    register: (formData: IRegisterFormData) => Promise<void>;
-    isLoading: boolean;
+    register: (
+        formData: Omit<IRegisterFormData, "confirmPassword">
+    ) => Promise<RegisterErrorMessage | void>;
 }
 
 export interface IUserDetails {
     username: string;
     userId: string;
-    roles: Roles[];
+    roles: Role[];
 }
 
 export interface ITokens {
@@ -35,7 +44,7 @@ export interface IRegisterFormData {
 }
 
 export interface IRoleBasedRedirect {
-    allowedRoles: Roles[];
+    allowedRoles: Role[];
     fallbackRoute: string;
 }
 
@@ -44,7 +53,52 @@ export interface ITab {
     content: ReactElement;
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
-    btnsContainerStyle?: CSSProperties;
+}
+
+export interface IAuthErrorResponse {
+    detail: string;
+}
+
+export interface ILoaderContext {
+    isLoading: boolean;
+    setIsLoading: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IQuestion {
+    id: string;
+    topicName: string;
+    topicId: string;
+    subjectId: string;
+    subjectName: string;
+    subjectCode: string;
+    username: string;
+    title: string;
+    created: string;
+    isResolved: boolean;
+    isProtected: boolean;
+    isHidden: boolean;
+    answerCount: number;
+    tags: string[];
+    userId: string;
+}
+
+export interface ISearchBarProps {
+    onInputChange: ChangeEventHandler<HTMLInputElement>;
+    defaultValue?: string;
+    placeholder?: string;
+}
+
+export interface ISearchFilter {
+    displayedFilters: { title: string; id: string }[];
+    onFilterClick: (id: string) => void;
+    activeFilter: string;
+    title?: string;
+}
+
+export interface ISearchWithFiltersProps extends ISearchBarProps {
+    subjectFilter: ISearchFilter;
+    topicFilter: ISearchFilter;
+    showTopicsFilters: boolean;
 }
 
 export interface IQuestion {

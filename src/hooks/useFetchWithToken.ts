@@ -3,21 +3,23 @@ import {
     addTokenToRequestInit,
     CustomError,
     hasTokenExpired,
-    ITokens,
-    refreshTokens
+    ITokens
 } from "../utils";
 import { useLocalStorage } from "usehooks-ts";
-import { LOCAL_STORAGE_TOKEN_KEY, LOGIN_REGISTER_ROUTE } from "../data";
+import {
+    LOCAL_STORAGE_TOKEN_KEY,
+    LOGIN_REGISTER_ROUTE,
+    refreshTokens
+} from "../data";
 import { useNavigate } from "react-router";
 
 interface IUseFetchWithTokenReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
-    requestFunc: () => Promise<T | void>;
+    requestHandler: (url: RequestInfo | URL) => Promise<T | void>;
 }
 
 export function useFetchWithToken<T>(
-    url: RequestInfo | URL,
     options?: RequestInit,
     checkIfTokenNeedsRefresh = false
 ): IUseFetchWithTokenReturn<T> {
@@ -31,7 +33,8 @@ export function useFetchWithToken<T>(
 
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
     async function generatedFetch<T>(
-        accessToken: string | undefined
+        accessToken: string | undefined,
+        url: RequestInfo | URL
     ): Promise<T> {
         if (!accessToken) {
             throw new Error("There is no accessToken in the tokens field");
@@ -49,7 +52,7 @@ export function useFetchWithToken<T>(
         return (await response.json()) as T;
     }
 
-    async function requestFunc() {
+    async function requestHandler(url: RequestInfo | URL) {
         if (!tokens) {
             throw new Error("There is no tokens to make this request");
         }
@@ -64,7 +67,8 @@ export function useFetchWithToken<T>(
                 const refreshedTokens = await refreshTokens(tokens);
                 setTokens(refreshedTokens);
                 const data = await generatedFetch<T>(
-                    refreshedTokens.accessToken
+                    refreshedTokens.accessToken,
+                    url
                 );
                 return data;
             } catch (error) {
@@ -86,7 +90,7 @@ export function useFetchWithToken<T>(
             // Else just fetch the data right away
         } else {
             try {
-                const data = await generatedFetch<T>(tokens.accessToken);
+                const data = await generatedFetch<T>(tokens.accessToken, url);
                 return data;
             } catch (error) {
                 if (error instanceof CustomError) {
@@ -106,5 +110,5 @@ export function useFetchWithToken<T>(
         }
     }
 
-    return { isLoading, error, requestFunc };
+    return { isLoading, error, requestHandler };
 }

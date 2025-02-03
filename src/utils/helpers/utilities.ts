@@ -1,53 +1,15 @@
-import { jwtDecode } from "jwt-decode";
-import { IUserDetails } from "../interfaces";
-import { Roles } from "..";
 import { TFunction } from "i18next";
 
-export function addTokenToRequestInit(
-    accessToken?: string,
-    options?: RequestInit
-): RequestInit {
-    const requestObject: RequestInit = { ...options };
-
-    if (accessToken) {
-        requestObject.headers = {
-            ...options?.headers,
-            Authorization: `Bearer ${accessToken}`
-        };
+export function removePropertiesFromObject<T, K extends keyof T>(
+    obj: T,
+    ...properties: K[]
+) {
+    const result = { ...obj };
+    for (const prop of properties) {
+        delete result[prop];
     }
-
-    return requestObject;
+    return result as Omit<T, K>;
 }
-
-export function hasTokenExpired(token: string | undefined): boolean {
-    if (!token) return true;
-
-    const decoded = jwtDecode(token);
-    //TODO Check that backend sends the exp-field as seconds, otherwise adjust next line accordingly
-    const expire = decoded.exp! * 1000; // * 1000 to get time in milliseconds.
-    const currentTimestamp = Date.now();
-
-    return expire < currentTimestamp;
-}
-
-export function getValuesFromToken(token: string): IUserDetails {
-    const rolesClaimKey =
-        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
-    const decoded = jwtDecode<
-        Omit<IUserDetails, "roles"> & { [rolesClaimKey]: string | string[] }
-    >(token);
-
-    const roles = Array.isArray(decoded[rolesClaimKey])
-        ? (decoded[rolesClaimKey] as Roles[])
-        : ([decoded[rolesClaimKey]] as Roles[]);
-
-    return {
-        roles,
-        userId: decoded.userId,
-        username: decoded.username
-    };
-}
-
 export const getTimeAgo = (
     created: string,
     t: TFunction<"translation", undefined>

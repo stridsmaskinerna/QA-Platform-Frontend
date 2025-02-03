@@ -1,23 +1,23 @@
 import { useRef, useState, FormEventHandler } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import { useAuthContext } from "../../hooks";
-import { CustomError, IRegisterFormData } from "../../utils";
+import { useQAContext } from "../../hooks";
+import {
+    IRegisterFormData,
+    RegisterErrorMessage,
+    removePropertiesFromObject
+} from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
-import { HOME_ROUTE, PASSWORD_MIN_LENGTH } from "../../data";
+import { PASSWORD_MIN_LENGTH } from "../../data";
 
 export function RegisterForm() {
     const { t } = useTranslation();
-    const { register } = useAuthContext();
+    const {
+        authContext: { register },
+        loaderContext: { setIsLoading }
+    } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<
-        | "usernameTaken"
-        | "serverProblem"
-        | "passwordsNoMatch"
-        | "mustEndWithLtuErrMsg"
-    >();
-    const navigate = useNavigate();
+    const [error, setError] = useState<RegisterErrorMessage>();
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
@@ -37,19 +37,20 @@ export function RegisterForm() {
                 return;
             }
 
-            try {
-                await register(formDetails);
-                await navigate(HOME_ROUTE);
-            } catch (e) {
-                if (e instanceof CustomError && e.errorCode === 409) {
-                    setError("usernameTaken");
-                    return;
-                }
-                setError("serverProblem");
-                console.error(e);
+            setIsLoading(true);
+            const errMsg = await register(
+                removePropertiesFromObject(formDetails, "confirmPassword")
+            );
+            if (!errMsg) {
+                formRef.current?.reset();
+                alert(t("verifyEmail"));
+            } else {
+                setError(errMsg);
             }
+            setIsLoading(false);
         })();
     };
+
     return (
         <form
             ref={formRef}

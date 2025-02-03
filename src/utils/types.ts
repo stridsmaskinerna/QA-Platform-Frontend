@@ -1,4 +1,11 @@
-import { Role } from "./enums";
+export type RegisterErrorMessage =
+    | "usernameTaken"
+    | "serverProblem"
+    | "passwordsNoMatch"
+    | "mustEndWithLtuErrMsg"
+    | "emailTaken";
 
-//If changing Roles, remember to change POSSIBLE_ROLES in constants and the Role enum accordingly
-export type Roles = Role.Admin | Role.Teacher | Role.User;
+export type LoginErrorMessage =
+    | "wrongCredentials"
+    | "serverProblem"
+    | "mustEndWithLtuErrMsg";
