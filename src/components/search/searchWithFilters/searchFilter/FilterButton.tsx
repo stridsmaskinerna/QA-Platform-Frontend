@@ -9,6 +9,7 @@ interface IFilterButtonProps {
 export function FilterButton({ title, onClick, isActive }: IFilterButtonProps) {
     return (
         <button
+            data-testid={`filterButton-${title}`}
             className={`${styles.btn} ${isActive ? styles.active : ""}`}
             onClick={onClick}
         >

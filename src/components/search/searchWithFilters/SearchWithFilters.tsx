@@ -24,6 +24,7 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
             />
 
             <div
+                data-testid="topicFilterWrapper"
                 className={`${styles.filterWrapper} ${showTopics ? styles.show : ""}`}
             >
                 <SearchFilter

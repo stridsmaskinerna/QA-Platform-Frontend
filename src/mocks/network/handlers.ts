@@ -1,14 +1,18 @@
 import { http, HttpResponse } from "msw";
 import { BASE_URL } from "../../data";
 import { IQuestion } from "../../utils";
+import { mockAPI } from "../../tests/testUtils";
+
 export const handlers = [
     http.get(`${BASE_URL}/questions/public`, ({ request }) => {
         const url = new URL(request.url);
         const subjectId = url.searchParams.get("subjectId");
 
         if (subjectId === "subject-1") {
+            mockAPI(subjectId);
             return HttpResponse.json([questions[0]]);
         }
+        mockAPI();
 
         return HttpResponse.json(questions);
     }),
