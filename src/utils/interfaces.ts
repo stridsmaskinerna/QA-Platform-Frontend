@@ -98,7 +98,7 @@ export interface ISearchFilter {
 export interface ISearchWithFiltersProps extends ISearchBarProps {
     subjectFilter: ISearchFilter;
     topicFilter: ISearchFilter;
-    showTopicsFilters: boolean;
+    isLoadingQuestions: boolean;
 }
 
 export interface IQuestionCardProps {
