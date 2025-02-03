@@ -1,10 +1,9 @@
-import { FilterButton } from ".";
+import { ArrowScrollBtn, FilterButton } from ".";
 import { ISearchFilter } from "../../../../utils";
 import styles from "./SearchFilter.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useThrottle } from "../../../../hooks";
 import { useResizeObserver } from "usehooks-ts";
-import arrowRight from "../../../../assets/icons/arrow_right.svg";
 
 interface IShowScrollArrows {
     leftArrow: boolean;
@@ -155,41 +154,36 @@ export function SearchFilter({
     }, []);
 
     return (
-        <div
-            ref={containerRef}
-            className={styles.container}
-        >
+        <div className={styles.container}>
+            <ArrowScrollBtn
+                onClick={() => handleScrollArrowClick(-CLICK_SCROLL_AMOUNT)}
+                show={showScrollArrows.leftArrow}
+                pointingDirection="left"
+            />
             <div
-                ref={wrapperRef}
-                className={styles.filtersWrapper}
+                ref={containerRef}
+                className={styles.scrollContainer}
             >
-                <button
-                    className={`${styles.arrowContainer} ${showScrollArrows.leftArrow ? styles.show : ""}`}
-                    onClick={() => handleScrollArrowClick(-CLICK_SCROLL_AMOUNT)}
+                <div
+                    ref={wrapperRef}
+                    className={styles.filtersWrapper}
                 >
-                    <img
-                        className={styles.flip}
-                        src={arrowRight}
-                    />
-                </button>
-
-                <p className={styles.title}>{title}</p>
-                {displayedFilters?.map(f => (
-                    <FilterButton
-                        isActive={activeFilter === f.id}
-                        title={f.title}
-                        onClick={() => onFilterClick(f.id)}
-                        key={f.id}
-                    />
-                ))}
-
-                <button
-                    className={`${styles.arrowContainer}  ${showScrollArrows.rightArrow ? styles.show : ""}`}
-                    onClick={() => handleScrollArrowClick(CLICK_SCROLL_AMOUNT)}
-                >
-                    <img src={arrowRight} />
-                </button>
+                    <p className={styles.title}>{title}</p>
+                    {displayedFilters?.map(f => (
+                        <FilterButton
+                            isActive={activeFilter === f.id}
+                            title={f.title}
+                            onClick={() => onFilterClick(f.id)}
+                            key={f.id}
+                        />
+                    ))}
+                </div>
             </div>
+            <ArrowScrollBtn
+                onClick={() => handleScrollArrowClick(CLICK_SCROLL_AMOUNT)}
+                show={showScrollArrows.rightArrow}
+                pointingDirection="right"
+            />
         </div>
     );
 }

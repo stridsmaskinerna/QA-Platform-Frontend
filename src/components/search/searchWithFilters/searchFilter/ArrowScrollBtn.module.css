@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--btnLight-bg);
+    padding: 13px;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    border-radius: 100px;
+}
+
+.arrowContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(0px, 0.4vw, 5px);
+    border: 2px solid var(--btnLight-text);
+    border-radius: 100px;
+}
+
+.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.arrowContainer:hover {
+    background-color: var(--btnLight-hover);
+}
+
+.right {
+    right: -11px;
+}
+.left {
+    left: -11px;
+    transform: rotate(180deg);
+}
