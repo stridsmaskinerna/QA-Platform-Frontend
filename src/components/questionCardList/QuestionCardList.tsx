@@ -6,7 +6,10 @@ export function QuestionCardList({ data }: IQuestionCardListProps) {
     return (
         <div className={styles.container}>
             {data.map(props => (
-                <QuestionCard data={props.data} />
+                <QuestionCard
+                    key={props.data.id}
+                    data={props.data}
+                />
             ))}
         </div>
     );

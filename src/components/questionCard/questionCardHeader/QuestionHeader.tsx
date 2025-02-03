@@ -24,9 +24,7 @@ export function QuestionHeader({ data }: QuestionHeaderProps) {
 
     return (
         <div className={styles.container}>
-            <h3 className={styles.courseTitle}>
-                {subjectDisplay}
-            </h3>
+            <h3 className={styles.courseTitle}>{subjectDisplay}</h3>
             <div className={styles.icon_section}>
                 <div className={`${styles.status} ${statusClass}`}>
                     {data.isResolved && (
