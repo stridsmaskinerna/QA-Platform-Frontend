@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { QuestionFinder, Tabs } from "../../components";
-import { useRoles } from "../../hooks";
-import styles from "./HomeExtended.module.css";
-import { ITab } from "../../utils";
+import { QuestionFinder, Tabs } from "../../../components";
+import { useRoles } from "../../../hooks";
+import styles from "../HomeSharedStyle.module.css";
+import { ITab } from "../../../utils";
 import { CSSProperties } from "react";
-import { useMediaQuery } from "usehooks-ts";
 
-let tabBtnsContainerStyle: CSSProperties = {};
+const tabBtnsContainerStyle: CSSProperties = {
+    width: "clamp(290px, 90vw, 700px)"
+};
 
 const btnStyle: CSSProperties = {
     fontSize: "clamp(14px, 2vw, 1.2rem)",
@@ -17,31 +18,11 @@ const questionFinderContainerStyle: CSSProperties = {
     marginTop: "1.5rem",
     width: "100%"
 };
-
-let tabsContainerStyle: CSSProperties = {};
+const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
 
 export function HomeExtended() {
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
-    const matches = useMediaQuery(`(max-width: 1000px`);
-    if (matches) {
-        tabsContainerStyle = {
-            alignSelf: "center",
-            width: "100%",
-            justifyContent: "center"
-        };
-        tabBtnsContainerStyle = {
-            width: "clamp(290px, 90vw, 700px)"
-        };
-    } else {
-        tabsContainerStyle = {
-            width: "100%",
-            justifyContent: "flex-start"
-        };
-        tabBtnsContainerStyle = {
-            width: "clamp(290px, 90vw, 700px)"
-        };
-    }
 
     const tabs: ITab[] = [
         {

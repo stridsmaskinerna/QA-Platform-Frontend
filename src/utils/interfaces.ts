@@ -71,7 +71,7 @@ export interface IQuestion {
     subjectId: string;
     subjectName: string;
     subjectCode: string;
-    username: string;
+    userName: string;
     title: string;
     created: string;
     isResolved: boolean;
@@ -98,5 +98,13 @@ export interface ISearchFilter {
 export interface ISearchWithFiltersProps extends ISearchBarProps {
     subjectFilter: ISearchFilter;
     topicFilter: ISearchFilter;
-    showTopicsFilters: boolean;
+    isLoadingQuestions: boolean;
+}
+
+export interface IQuestionCardProps {
+    data: IQuestion;
+}
+
+export interface IQuestionCardListProps {
+    data: IQuestionCardProps[];
 }

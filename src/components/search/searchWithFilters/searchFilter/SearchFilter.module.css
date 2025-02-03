@@ -1,5 +1,12 @@
 .container {
+    position: relative;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scrollContainer {
     overflow-x: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -29,7 +36,7 @@
     padding: clamp(0px, 0.4vw, 5px);
     border: 2px solid var(--btnLight-text);
     border-radius: 100px;
-    position: absolute;
+    position: sticky;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;

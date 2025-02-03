@@ -9,6 +9,6 @@
 }
 
 .container h1 {
-    color: white;
+    color: var(--textLight-default);
     font-size: clamp(1rem, 5vw, 1.8rem);
 }

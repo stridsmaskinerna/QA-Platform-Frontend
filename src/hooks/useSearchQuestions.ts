@@ -17,7 +17,7 @@ interface IUrlAppendixes {
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [showTopicsFilters, setShowTopicsFilters] = useState(true);
+    const [isLoadingQuestions, setIsLoadingQuestions] = useState(true);
     const [subjectFilter, setSubjectFilter] = useState<
         Omit<ISearchFilter, "onFilterClick">
     >({
@@ -50,9 +50,9 @@ export const useSearchQuestions = () => {
                 displayedFilters: prev.displayedFilters
             }));
         } else {
-            //Set showTopicsFilters to false to prevent TopicFilters from the previous fetch to
+            //Set isLoadingQuestions to true here to prevent TopicFilters from the previous fetch to
             //momentarily appear on screen before the new data has been fetched and parsed
-            setShowTopicsFilters(false);
+            setIsLoadingQuestions(true);
             setUrlAppendixes(prev => ({
                 ...prev,
                 subjectId: `&subjectId=${subjectId}`,
@@ -100,6 +100,8 @@ export const useSearchQuestions = () => {
     const updateQuestionsData = async (
         origin: "search" | "subject" | "topic"
     ) => {
+        setIsLoadingQuestions(true);
+
         //If this updateQuestionsData is called because of an updated topicId, then all
         //types of query params will be active.
         const queryParams =
@@ -155,7 +157,7 @@ export const useSearchQuestions = () => {
                 });
             }
         }
-        setShowTopicsFilters(true);
+        setIsLoadingQuestions(false);
     };
 
     useEffect(() => {
@@ -184,6 +186,6 @@ export const useSearchQuestions = () => {
         questions,
         topicFilter: { ...topicFilter, onFilterClick: topicFilterClick },
         subjectFilter: { ...subjectFilter, onFilterClick: subjectFilterClick },
-        showTopicsFilters
+        isLoadingQuestions
     };
 };

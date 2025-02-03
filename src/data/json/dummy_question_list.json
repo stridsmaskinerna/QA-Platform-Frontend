@@ -1,0 +1,36 @@
+[
+    {
+        "id": "0194ae80-9f98-72ee-961d-e1ea49c64502",
+        "topicName": "Assignments",
+        "subjectId": "",
+        "subjectName": "Computer Basic",
+        "subjectCode": "CB101",
+        "userId": "fae7b3d7-df4a-42d7-8889-0e058afe5dcf",
+        "username": "NewCountryNewStudent",
+        "title": "How do I center a div?",
+        "created": "2025-01-30T09:45:21.83594Z",
+        "isResolved": true,
+        "isProtected": false,
+        "isHidden": true,
+        "answerCount": 0,
+        "tags": ["Beginner", "Diploma"],
+        "topicId": "topicId1"
+    },
+    {
+        "id": "0194ae80-9f98-72ee-961d-e1ea49c64333",
+        "topicName": "Housing",
+        "subjectId": "",
+        "subjectName": "General",
+        "subjectCode": "",
+        "userId": "fae7b3d7-df4a-42d7-8889-0e058afe5dcf",
+        "username": "NewCountryNewStudent",
+        "title": "Where do I live?",
+        "created": "2025-01-28T09:45:21.83594Z",
+        "isResolved": true,
+        "isProtected": false,
+        "isHidden": true,
+        "answerCount": 0,
+        "tags": ["Beginner", "Diploma"],
+        "topicId": "topicId2"
+    }
+]

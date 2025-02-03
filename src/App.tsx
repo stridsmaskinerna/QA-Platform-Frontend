@@ -1,5 +1,10 @@
 import { Route, Routes } from "react-router";
-import { AuthGuard, Header, ErrorBoundary, Loader } from "./components";
+import {
+    AuthGuard,
+    Header,
+    ErrorBoundary,
+    FullScreenLoader
+} from "./components";
 import {
     Admin,
     LoginRegister,
@@ -27,7 +32,7 @@ function App() {
 
     return (
         <ErrorBoundary>
-            {isLoading && <Loader />}
+            {isLoading && <FullScreenLoader />}
             <main className="app">
                 <Header />
                 <Routes>
