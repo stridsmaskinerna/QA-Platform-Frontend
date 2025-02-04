@@ -11,7 +11,7 @@ export function LoginForm() {
     const { t } = useTranslation();
     const {
         authContext: { login },
-        loaderContext: { setIsLoading }
+        loaderContext: { setIsLoading },
     } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
     const [error, setError] = useState<LoginErrorMessage>();
@@ -23,7 +23,7 @@ export function LoginForm() {
         void (async () => {
             const formData = new FormData(e.currentTarget);
             const formDetails = Object.fromEntries(
-                formData
+                formData,
             ) as unknown as ILoginCredentials;
             if (formDetails.email.slice(-7).toUpperCase() !== "@LTU.SE") {
                 setError("mustEndWithLtuErrMsg");

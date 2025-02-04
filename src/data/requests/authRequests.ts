@@ -4,21 +4,21 @@ import {
     IAuthErrorResponse,
     ILoginCredentials,
     IRegisterFormData,
-    ITokens
+    ITokens,
 } from "../../utils";
 
 export async function loginReq({
     email,
-    password
+    password,
 }: ILoginCredentials): Promise<ITokens> {
     const url = `${BASE_URL}/authentication/login`;
 
     const response: Response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
     });
 
     if (response.ok === false) {
@@ -30,11 +30,11 @@ export async function loginReq({
 
 export async function refreshTokens({
     accessToken,
-    refreshToken
+    refreshToken,
 }: ITokens): Promise<ITokens> {
     if (!accessToken || !refreshToken) {
         throw new Error(
-            "Refresh request failed because accessToken or refreshToken was undefined"
+            "Refresh request failed because accessToken or refreshToken was undefined",
         );
     }
 
@@ -43,18 +43,18 @@ export async function refreshTokens({
     const response: Response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             accessToken,
-            refreshToken
-        })
+            refreshToken,
+        }),
     });
 
     if (!response.ok) {
         throw new CustomError(
             response.status,
-            "Seomthing went wrong with refreshToken request"
+            "Seomthing went wrong with refreshToken request",
         );
     }
 
@@ -64,16 +64,16 @@ export async function refreshTokens({
 export async function registerReq({
     email,
     password,
-    username
+    username,
 }: Omit<IRegisterFormData, "confirmPassword">): Promise<void> {
     const url = `${BASE_URL}/authentication/register`;
 
     const response: Response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, username })
+        body: JSON.stringify({ email, password, username }),
     });
 
     if (response.ok === false) {
@@ -81,7 +81,7 @@ export async function registerReq({
         throw new CustomError(
             response.status,
             "Could not register",
-            data?.detail
+            data?.detail,
         );
     }
 }

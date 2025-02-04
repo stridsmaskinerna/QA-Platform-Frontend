@@ -4,7 +4,7 @@ import { ITabButtonsProps } from ".";
 export function TabButtons({
     tabBtns,
     activeTab,
-    handleTabClick
+    handleTabClick,
 }: ITabButtonsProps) {
     return (
         <>

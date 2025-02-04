@@ -33,7 +33,7 @@ export function Tabs({
     //Style for the outermost container of this component
     containerStyle,
     //The limit viewport width in px of which the tab buttons collapses into a menu
-    collapseWidth
+    collapseWidth,
 }: ITabsProps) {
     if (!tabs.length) {
         throw new Error("Must supply at least on element in tabs prop");
@@ -83,7 +83,7 @@ export function Tabs({
                 <div
                     style={{
                         ...contentContainerStyle,
-                        top: contentTopAttribute
+                        top: contentTopAttribute,
                     }}
                     key={`tabContent-${idx}`}
                     className={`${styles.tabContent} ${

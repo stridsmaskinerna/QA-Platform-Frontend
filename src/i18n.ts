@@ -7,9 +7,9 @@ import svJSON from "./locale/sv.json";
 i18n.use(initReactI18next).init({
     resources: {
         en: { ...enJSON },
-        sv: { ...svJSON }
+        sv: { ...svJSON },
     },
-    lng: "en" // Set the initial language of the App
+    lng: "en", // Set the initial language of the App
 });
 
 export default i18n;

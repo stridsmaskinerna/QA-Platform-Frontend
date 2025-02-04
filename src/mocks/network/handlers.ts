@@ -24,9 +24,9 @@ export const handlers = [
         return HttpResponse.json({
             accessToken:
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAbHR1LnNlIiwidXNlcklkIjoiNzE5YzhiMGItOWQ4Yy00NzFjLWEzOTgtOTcyMTRkMTg0ZWQyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsIm5iZiI6MTczODQ5NTUxOSwiZXhwIjoxNzQyMDk1NTE5LCJpc3MiOiJxYS1wbGF0Zm9ybS5sdHUuc2UiLCJhdWQiOiJxYS1wbGF0Zm9ybS5sdHUuc2UifQ.BqkZAA5KEoa0iof4NaaOWqw8cBpLFbKOBaVnFSebsNY",
-            refreshToken: ""
+            refreshToken: "",
         });
-    })
+    }),
 ];
 
 const randomDate = (): string => {
@@ -52,5 +52,5 @@ const questions: IQuestion[] = Array.from({ length: 10 }, (_, index) => ({
     isHidden: index % 4 === 0, // Every fourth question is hidden
     answerCount: Math.floor(Math.random() * 10), // Random answer count
     tags: [`tag${index + 1}-1`, `tag${index + 1}-2`], // Example tags
-    userId: `user-${index + 1}`
+    userId: `user-${index + 1}`,
 }));

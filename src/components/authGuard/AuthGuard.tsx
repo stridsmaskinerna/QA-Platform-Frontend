@@ -15,7 +15,7 @@ interface IRequireAuthProps {
 //as a guest, and we need to append the questionId to the guest route here.
 const createRedirectUrl = (
     params: Readonly<Params<string>>,
-    fallbackRoute: string
+    fallbackRoute: string,
 ): string => {
     if (fallbackRoute === GUEST_QUESTION_DETAILS_ROUTE) {
         return fallbackRoute + (params?.questionId ?? "");
@@ -26,17 +26,17 @@ const createRedirectUrl = (
 
 export function AuthGuard({
     children,
-    roleBasedRedirect
+    roleBasedRedirect,
 }: IRequireAuthProps): ReactElement {
     const { isRolesCorrupt } = useRoles();
     const {
         authContext: { roles },
-        loaderContext: { isLoading }
+        loaderContext: { isLoading },
     } = useQAContext();
     const params = useParams();
     const redirectUrl = createRedirectUrl(
         params,
-        roleBasedRedirect.fallbackRoute
+        roleBasedRedirect.fallbackRoute,
     );
 
     //We wait for the AuthContext to load and decode a possible token into a roles before running validation logic

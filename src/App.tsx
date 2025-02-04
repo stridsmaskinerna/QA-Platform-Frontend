@@ -3,7 +3,7 @@ import {
     AuthGuard,
     Header,
     ErrorBoundary,
-    FullScreenLoader
+    FullScreenLoader,
 } from "./components";
 import {
     Admin,
@@ -11,7 +11,7 @@ import {
     HomeExtended,
     HomeLimited,
     QuestionDetailsExtended,
-    QuestionDetailsLimited
+    QuestionDetailsLimited,
 } from "./pages";
 import {
     ADMIN_ROUTE,
@@ -20,14 +20,14 @@ import {
     HOME_ROUTE,
     LOGIN_REGISTER_ROUTE,
     QUESTION_DETAILS_ROUTE,
-    QUESTION_ID
+    QUESTION_ID,
 } from "./data";
 import { Role } from "./utils";
 import { useQAContext } from "./hooks";
 
 function App() {
     const {
-        loaderContext: { isLoading }
+        loaderContext: { isLoading },
     } = useQAContext();
 
     return (
@@ -54,7 +54,7 @@ function App() {
                             <AuthGuard
                                 roleBasedRedirect={{
                                     allowedRoles: [Role.User, Role.Teacher],
-                                    fallbackRoute: GUEST_HOME_ROUTE
+                                    fallbackRoute: GUEST_HOME_ROUTE,
                                 }}
                             >
                                 <HomeExtended />
@@ -68,7 +68,7 @@ function App() {
                                 roleBasedRedirect={{
                                     allowedRoles: [Role.User, Role.Teacher],
                                     //The questionId is appended to the fallback route in the AuthGuard
-                                    fallbackRoute: GUEST_QUESTION_DETAILS_ROUTE
+                                    fallbackRoute: GUEST_QUESTION_DETAILS_ROUTE,
                                 }}
                             >
                                 <QuestionDetailsExtended />
@@ -81,7 +81,7 @@ function App() {
                             <AuthGuard
                                 roleBasedRedirect={{
                                     allowedRoles: [Role.Admin],
-                                    fallbackRoute: HOME_ROUTE
+                                    fallbackRoute: HOME_ROUTE,
                                 }}
                             >
                                 <Admin />

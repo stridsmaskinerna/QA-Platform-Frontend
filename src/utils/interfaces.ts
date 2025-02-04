@@ -3,7 +3,7 @@ import {
     CSSProperties,
     Dispatch,
     ReactElement,
-    SetStateAction
+    SetStateAction,
 } from "react";
 import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 
@@ -12,11 +12,11 @@ export interface IAuthContext {
     username: string | undefined;
     roles: Role[] | undefined;
     login: (
-        credentials: ILoginCredentials
+        credentials: ILoginCredentials,
     ) => Promise<LoginErrorMessage | void>;
     logout: () => void;
     register: (
-        formData: Omit<IRegisterFormData, "confirmPassword">
+        formData: Omit<IRegisterFormData, "confirmPassword">,
     ) => Promise<RegisterErrorMessage | void>;
 }
 

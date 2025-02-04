@@ -5,14 +5,14 @@ import { CSSProperties } from "react";
 
 const tabsContainerStyle: CSSProperties = { marginTop: "2rem" };
 const tabsContentContainerStyle: CSSProperties = {
-    width: "100%"
+    width: "100%",
 };
 const tabBtnsContainerStyle: CSSProperties = {
-    width: "clamp(260px, 60vw, 1000px)"
+    width: "clamp(260px, 60vw, 1000px)",
 };
 const tabsBtnStyle: CSSProperties = {
     fontSize: "clamp(16px, 2vw, 1.5rem)",
-    flex: 1
+    flex: 1,
 };
 
 export function LoginRegister() {
@@ -29,14 +29,14 @@ export function LoginRegister() {
                         content: <LoginForm />,
                         title: t("login"),
                         btnStyle: tabsBtnStyle,
-                        contentContainerStyle: tabsContentContainerStyle
+                        contentContainerStyle: tabsContentContainerStyle,
                     },
                     {
                         content: <RegisterForm />,
                         title: t("register"),
                         btnStyle: tabsBtnStyle,
-                        contentContainerStyle: tabsContentContainerStyle
-                    }
+                        contentContainerStyle: tabsContentContainerStyle,
+                    },
                 ]}
                 containerStyle={tabsContainerStyle}
                 tabBtnsContainerStyle={tabBtnsContainerStyle}

@@ -9,36 +9,36 @@ describe("QuestionFinder", () => {
         const { queryByText, queryAllByText, getByTestId } = render(
             <MockedContexts>
                 <QuestionFinder />
-            </MockedContexts>
+            </MockedContexts>,
         );
         expect(await waitFor(() => mockAPI)).to.toHaveBeenCalledTimes(1);
         //Check that subject filters have been rendered
         expect(
-            await waitFor(() => queryByText("SUBJ2 Subject 2"))
+            await waitFor(() => queryByText("SUBJ2 Subject 2")),
         ).toBeTruthy();
         expect(
-            await waitFor(() => queryByText("SUBJ3 Subject 3"))
+            await waitFor(() => queryByText("SUBJ3 Subject 3")),
         ).toBeTruthy();
         expect(
-            await waitFor(() => queryByText("SUBJ4 Subject 4"))
+            await waitFor(() => queryByText("SUBJ4 Subject 4")),
         ).toBeTruthy();
 
         //Since we dont conditionally render Topic Filters but add a class called show to its wrapper instead,
         //we here assert that the wrapper does not have the class "show".
         expect(
-            await waitFor(() => getByTestId("topicFilterWrapper"))
+            await waitFor(() => getByTestId("topicFilterWrapper")),
         ).not.toHaveClass("show");
 
         //Check that questions cards have been rendered. They each contain a text string with their
         //topic name. If topic filters would have rendered the length of below querys would have been 2.
         expect(await waitFor(() => queryAllByText("Topic 2"))).to.toHaveLength(
-            1
+            1,
         );
         expect(await waitFor(() => queryAllByText("Topic 3"))).to.toHaveLength(
-            1
+            1,
         );
         expect(await waitFor(() => queryAllByText("Topic 4"))).to.toHaveLength(
-            1
+            1,
         );
     });
 
@@ -48,15 +48,15 @@ describe("QuestionFinder", () => {
             queryAllByText,
             queryByTestId,
             getByTestId,
-            queryAllByTestId
+            queryAllByTestId,
         } = render(
             <MockedContexts>
                 <QuestionFinder />
-            </MockedContexts>
+            </MockedContexts>,
         );
         expect(await waitFor(() => mockAPI)).to.toHaveBeenCalledTimes(1);
         const firstSubjectFilter = await waitFor(() =>
-            getByText("SUBJ1 Subject 1")
+            getByText("SUBJ1 Subject 1"),
         );
 
         expect(firstSubjectFilter).not.toHaveClass("active");
@@ -64,12 +64,12 @@ describe("QuestionFinder", () => {
         await waitFor(() =>
             fireEvent(
                 firstSubjectFilter,
-                new MouseEvent("click", { bubbles: true, cancelable: true })
-            )
+                new MouseEvent("click", { bubbles: true, cancelable: true }),
+            ),
         );
 
         expect(await waitFor(() => mockAPI)).to.toHaveBeenCalledWith(
-            "subject-1"
+            "subject-1",
         );
 
         //Check that the correct styling have been applied
@@ -80,23 +80,23 @@ describe("QuestionFinder", () => {
         //one topic filter will be rendered. We check here that topic filters are shown, ,that there is only one Topic filter, and that
         //that one is "Topic 1".
         expect(
-            await waitFor(() => getByTestId("topicFilterWrapper"))
+            await waitFor(() => getByTestId("topicFilterWrapper")),
         ).to.toHaveClass("show");
         //We attached a testId to each filter button which is its filterbutton-{title}. We query all of them here
         //and expect there to be only 1
         expect(
             await waitFor(() =>
-                queryAllByTestId("filterButton-Topic", { exact: false })
-            )
+                queryAllByTestId("filterButton-Topic", { exact: false }),
+            ),
         ).toHaveLength(1);
 
         expect(
-            await waitFor(() => queryByTestId("filterButton-Topic 1"))
+            await waitFor(() => queryByTestId("filterButton-Topic 1")),
         ).toHaveTextContent("Topic 1");
 
         //Assert that the belonging question is rendered: "Topic 1" will be shown once as a topic filter and once in the question card
         expect(await waitFor(() => queryAllByText("Topic 1"))).to.toHaveLength(
-            2
+            2,
         );
     });
 
@@ -104,11 +104,11 @@ describe("QuestionFinder", () => {
         const { getByText, queryAllByText, getByTestId } = render(
             <MockedContexts>
                 <QuestionFinder />
-            </MockedContexts>
+            </MockedContexts>,
         );
         expect(await waitFor(() => mockAPI)).to.toHaveBeenCalledTimes(1);
         const firstSubjectFilter = await waitFor(() =>
-            getByText("SUBJ1 Subject 1")
+            getByText("SUBJ1 Subject 1"),
         );
         //Selecting the Subject filter
         await waitFor(() =>
@@ -116,12 +116,12 @@ describe("QuestionFinder", () => {
                 firstSubjectFilter,
                 new MouseEvent("click", {
                     bubbles: true,
-                    cancelable: true
-                })
-            )
+                    cancelable: true,
+                }),
+            ),
         );
         expect(await waitFor(() => mockAPI)).to.toHaveBeenCalledWith(
-            "subject-1"
+            "subject-1",
         );
 
         expect(await waitFor(() => queryAllByText("Topic 1"))).toHaveLength(2);
@@ -129,7 +129,7 @@ describe("QuestionFinder", () => {
         //Since we dont conditionally render Topic Filters but add a class called show to its wrapper instead,
         //we here assert that the wrapper have the class "show".
         expect(
-            await waitFor(() => getByTestId("topicFilterWrapper"))
+            await waitFor(() => getByTestId("topicFilterWrapper")),
         ).to.toHaveClass("show");
 
         //Deselecting the Subject filter
@@ -138,16 +138,16 @@ describe("QuestionFinder", () => {
                 firstSubjectFilter,
                 new MouseEvent("click", {
                     bubbles: true,
-                    cancelable: true
-                })
-            )
+                    cancelable: true,
+                }),
+            ),
         );
 
         expect(await waitFor(() => mockAPI)).toHaveBeenCalledTimes(3);
 
         //Check that topic filters are hidden
         expect(
-            await waitFor(() => getByTestId("topicFilterWrapper"))
+            await waitFor(() => getByTestId("topicFilterWrapper")),
         ).not.toHaveClass("show");
 
         //Check all questions are shown again. If they are, queryAll on Topic X will have length 2

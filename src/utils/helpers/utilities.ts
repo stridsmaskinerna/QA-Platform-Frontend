@@ -12,12 +12,12 @@ export function removePropertiesFromObject<T, K extends keyof T>(
 }
 export const getTimeAgo = (
     created: string,
-    t: TFunction<"translation", undefined>
+    t: TFunction<"translation", undefined>,
 ): string => {
     const createdDate = new Date(created);
     const now = new Date();
     const diffInSeconds = Math.floor(
-        (now.getTime() - createdDate.getTime()) / 1000
+        (now.getTime() - createdDate.getTime()) / 1000,
     );
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     const diffInHours = Math.floor(diffInMinutes / 60);

@@ -4,7 +4,7 @@ import { ISearchBarProps } from "../../../utils";
 export function SearchBar({
     onInputChange,
     defaultValue,
-    placeholder
+    placeholder,
 }: ISearchBarProps) {
     return (
         <Input

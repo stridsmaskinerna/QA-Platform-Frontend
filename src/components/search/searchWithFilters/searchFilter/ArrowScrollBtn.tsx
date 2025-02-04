@@ -9,7 +9,7 @@ interface IArrowScrollBtnProps {
 export function ArrowScrollBtn({
     show,
     onClick,
-    pointingDirection
+    pointingDirection,
 }: IArrowScrollBtnProps) {
     return (
         <button

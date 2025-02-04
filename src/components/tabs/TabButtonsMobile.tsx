@@ -7,13 +7,13 @@ import { useOnClickOutside } from "usehooks-ts";
 export function TabButtonsMobile({
     tabBtns,
     handleTabClick,
-    activeTab
+    activeTab,
 }: ITabButtonsProps) {
     const [dropdownWidth, setDropdownWidth] = useState(0);
     const [isMenuExpanded, setIsMenuExpanded] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(dropdownRef, () =>
-        setIsMenuExpanded(prev => (prev ? false : prev))
+        setIsMenuExpanded(prev => (prev ? false : prev)),
     );
     //To make sure that when tabs are in a menu, the selected tab is on top
     const sortedTabs = [...tabBtns].sort(a => (a.idx === activeTab ? -1 : 1));
@@ -31,12 +31,12 @@ export function TabButtonsMobile({
         if (dropdownRef.current) {
             const dropdownItems =
                 dropdownRef.current.querySelectorAll<HTMLDivElement>(
-                    `.${styles.dropdownItem}`
+                    `.${styles.dropdownItem}`,
                 );
             // Determine the widest element among the items
             const maxWidth = Array.from(dropdownItems).reduce(
                 (max, item) => Math.max(max, item.offsetWidth),
-                0
+                0,
             );
             setDropdownWidth(maxWidth);
         }

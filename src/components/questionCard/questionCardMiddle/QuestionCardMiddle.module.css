@@ -29,6 +29,9 @@
         flex-direction: column;
         align-items: center;
     }
+    .question_section > p {
+        text-align: center;
+    }
 }
 
 .topicName {
@@ -58,5 +61,5 @@
 }
 
 .question_section > p:last-child {
-    margin-top: 2rem;
+    margin-top: clamp(20px, 3vw, 2rem);
 }

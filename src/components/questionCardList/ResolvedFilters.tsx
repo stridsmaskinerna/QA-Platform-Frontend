@@ -7,7 +7,7 @@ interface IResolvedFilterProps {
 
 export function ResolvedFilters({
     activeResolvedFilter,
-    onResolvedFilterClick
+    onResolvedFilterClick,
 }: IResolvedFilterProps) {
     const { t } = useTranslation();
     return (
