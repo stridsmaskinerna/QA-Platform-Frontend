@@ -5,7 +5,11 @@ import { QuestionCardMiddle } from "./questionCardMiddle/QuestionCardMiddle";
 import QuestionCardBottom from "./questionCardBottom/QuestionCardBottom";
 import { IQuestion } from "../../utils";
 
-export function QuestionCard(data: IQuestion) {
+interface IQuestionCardProps {
+    data: IQuestion;
+}
+
+export function QuestionCard({ data }: IQuestionCardProps) {
     return (
         <div className={styles.container}>
             <QuestionHeader

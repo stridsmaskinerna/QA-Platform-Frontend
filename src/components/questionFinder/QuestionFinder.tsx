@@ -10,7 +10,9 @@ export function QuestionFinder() {
         questions,
         subjectFilter,
         topicFilter,
-        isLoadingQuestions
+        isLoadingQuestions,
+        resolvedFilter,
+        onResolvedFilterClick
     } = useSearchQuestions();
     const { t } = useTranslation();
 
@@ -32,7 +34,11 @@ export function QuestionFinder() {
                     <Loader />
                 </div>
             ) : (
-                <QuestionCardList data={questions} />
+                <QuestionCardList
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={resolvedFilter}
+                    data={questions}
+                />
             )}
         </div>
     );

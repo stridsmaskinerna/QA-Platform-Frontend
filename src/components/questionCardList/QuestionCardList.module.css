@@ -5,3 +5,10 @@
     align-items: center;
     width: 100%;
 }
+
+.headerRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

@@ -41,7 +41,7 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                         />
                     )}
                     <span className={styles.resolvedContainer}>
-                        {props.isResolved ? t("resolved") : t("notResolved")}
+                        {props.isResolved ? t("resolved") : t("unresolved")}
                     </span>
                 </div>
                 <div className={styles.iconWrapper}>

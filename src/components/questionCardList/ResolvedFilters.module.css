@@ -1,0 +1,23 @@
+.container {
+    align-self: flex-end;
+    background-color: var(
+        --tabBtn-active
+    ); /*Invert colors compared to tabs component*/
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    padding-inline: 15px;
+    padding-block: 12px;
+    border-radius: 10px;
+    color: var(--btnLight-text);
+    font-size: clamp(12px, 3vw, 16px);
+}
+
+.active {
+    background-color: var(
+        --tabBtn-inactive
+    ); /*Invert colors compared to tabs component*/
+}

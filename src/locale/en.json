@@ -7,7 +7,9 @@
         "qa": "Q&A",
         "loginRegister": "Login/Register",
         "resolved": "Resolved",
-        "notResolved": "Not resolved",
+        "resolvedPlural": "Resolved",
+        "unresolved": "Unresolved",
+        "unresolvedPlural": "Unresolved",
         "askedBy": "Asked by",
         "answer": "answers",
         "answers": "answers",
@@ -41,6 +43,7 @@
         "topicFilter": "Topic filter",
         "clickToHide": "Set question to hidden",
         "clickToShow": "Set question to visible",
-        "ok": "Ok"
+        "ok": "Ok",
+        "all": "All"
     }
 }
