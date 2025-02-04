@@ -3,7 +3,7 @@ import { QuestionFinder, Tabs } from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
 import { ITab } from "../../../utils";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
 
 const tabBtnsContainerStyle: CSSProperties = {
     width: "clamp(290px, 90vw, 700px)",
@@ -24,26 +24,29 @@ export function HomeExtended() {
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
 
-    const tabs: ITab[] = [
-        {
-            content: <QuestionFinder />,
-            contentContainerStyle: questionFinderContainerStyle,
-            btnStyle,
-            title: t("searchQuestions"),
-        },
-        {
-            content: <></>,
-            btnStyle,
-            title: t("askAQuestion"),
-        },
-    ];
-    if (!isTeacher) {
-        tabs.push({
-            content: <></>,
-            btnStyle,
-            title: t("teacher"),
-        });
-    }
+    const tabs: ITab[] = useMemo(() => {
+        const baseTabs = [
+            {
+                content: <QuestionFinder />,
+                contentContainerStyle: questionFinderContainerStyle,
+                btnStyle,
+                title: t("searchQuestions"),
+            },
+            {
+                content: <></>,
+                btnStyle,
+                title: t("askAQuestion"),
+            },
+        ];
+        if (!isTeacher) {
+            baseTabs.push({
+                content: <></>,
+                btnStyle,
+                title: t("teacher"),
+            });
+        }
+        return baseTabs;
+    }, [isTeacher, t]);
 
     return (
         <section className={styles.container}>

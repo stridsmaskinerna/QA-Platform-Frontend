@@ -4,7 +4,8 @@ import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
 import { ITab } from "../../utils";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
+import { MyQASection } from "../myQASection";
 
 const tabContainerStyle: CSSProperties = {
     width: "100%",
@@ -33,22 +34,41 @@ export function QuestionFinder() {
     const { t } = useTranslation();
     const { isUser } = useRoles();
 
-    const tabs: ITab[] = [
-        {
-            content: (
-                <QuestionCardList
-                    onResolvedFilterClick={onResolvedFilterClick}
-                    activeResolvedFilter={resolvedFilter}
-                    data={questions}
-                    isLoadingQuestions={isLoadingQuestions}
-                />
-            ),
-            title: t("recentQuestions"),
-            btnStyle: tabsBtnStyle,
-            contentContainerStyle: tabContainerStyle,
-        },
-        { content: <></>, title: t("myQa"), btnStyle: tabsBtnStyle },
-    ];
+    const questionListContent = useMemo(
+        () => (
+            <QuestionCardList
+                onResolvedFilterClick={onResolvedFilterClick}
+                activeResolvedFilter={resolvedFilter}
+                data={questions}
+                isLoadingQuestions={isLoadingQuestions}
+            />
+        ),
+        [isLoadingQuestions, onResolvedFilterClick, questions, resolvedFilter],
+    );
+
+    const tabs: ITab[] = useMemo(
+        () => [
+            {
+                content: questionListContent,
+                title: t("recentQuestions"),
+                btnStyle: tabsBtnStyle,
+                contentContainerStyle: tabContainerStyle,
+            },
+            {
+                content: (
+                    <MyQASection
+                        activeFilter="answered"
+                        setActiveFilter={filter => {}}
+                    >
+                        {questionListContent}
+                    </MyQASection>
+                ),
+                title: t("myQa"),
+                btnStyle: tabsBtnStyle,
+            },
+        ],
+        [questionListContent, t],
+    );
 
     return (
         <div className={styles.container}>
@@ -66,12 +86,7 @@ export function QuestionFinder() {
                     tabs={tabs}
                 />
             ) : (
-                <QuestionCardList
-                    onResolvedFilterClick={onResolvedFilterClick}
-                    activeResolvedFilter={resolvedFilter}
-                    data={questions}
-                    isLoadingQuestions={isLoadingQuestions}
-                />
+                questionListContent
             )}
         </div>
     );

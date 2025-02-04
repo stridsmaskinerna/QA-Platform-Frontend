@@ -9,3 +9,5 @@ export type LoginErrorMessage =
     | "wrongCredentials"
     | "serverProblem"
     | "mustEndWithLtuErrMsg";
+
+export type UserInteractionFilter = "asked" | "answered" | "commented";
