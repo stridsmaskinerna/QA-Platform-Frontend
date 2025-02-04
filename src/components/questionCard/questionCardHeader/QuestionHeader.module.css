@@ -29,6 +29,17 @@
 }
 
 .resolvedContainer {
+    border-radius: 8px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 1.2rem;
+}
+
+.resolvedTextContainer {
     text-wrap: nowrap;
 }
 
@@ -42,30 +53,18 @@
     border: 1px solid black;
     border-radius: 1px;
     position: absolute;
-    /* top: 155%; */
     right: 50%;
     white-space: nowrap;
     font-size: 0.75rem;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
-    z-index: 1000; /* Ensure it appears above everything */
+    z-index: 4; /* Ensure it appears above everything */
 }
 
 /* Show tooltip on hover */
 .iconWrapper:hover .tooltip {
     visibility: visible;
     opacity: 1;
-}
-
-.status {
-    border-radius: 8px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    height: 1.2rem;
 }
 
 .icon {

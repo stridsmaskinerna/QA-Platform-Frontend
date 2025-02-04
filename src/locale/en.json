@@ -41,6 +41,8 @@
         "topicFilter": "Topic filter",
         "clickToHide": "Set question to hidden",
         "clickToShow": "Set question to visible",
-        "ok": "Ok"
+        "ok": "Ok",
+        "recentQuestions": "Recent Questions",
+        "myQa": "My Q&A"
     }
 }
