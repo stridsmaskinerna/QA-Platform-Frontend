@@ -46,6 +46,9 @@
         "ok": "Ok",
         "all": "All",
         "recentQuestions": "Recent Questions",
-        "myQa": "My Q&A"
+        "myQa": "My Q&A",
+        "asked": "Asked",
+        "answered": "Answered",
+        "commented": "Commented"
     }
 }

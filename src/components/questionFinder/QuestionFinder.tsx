@@ -30,6 +30,8 @@ export function QuestionFinder() {
         isLoadingQuestions,
         resolvedFilter,
         onResolvedFilterClick,
+        interactionFilter,
+        onInterActionFilterClick,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
@@ -37,13 +39,21 @@ export function QuestionFinder() {
     const questionListContent = useMemo(
         () => (
             <QuestionCardList
+                header={t(interactionFilter ?? "recentQuestions")}
                 onResolvedFilterClick={onResolvedFilterClick}
                 activeResolvedFilter={resolvedFilter}
                 data={questions}
                 isLoadingQuestions={isLoadingQuestions}
             />
         ),
-        [isLoadingQuestions, onResolvedFilterClick, questions, resolvedFilter],
+        [
+            interactionFilter,
+            isLoadingQuestions,
+            onResolvedFilterClick,
+            questions,
+            resolvedFilter,
+            t,
+        ],
     );
 
     const tabs: ITab[] = useMemo(
@@ -53,21 +63,25 @@ export function QuestionFinder() {
                 title: t("recentQuestions"),
                 btnStyle: tabsBtnStyle,
                 contentContainerStyle: tabContainerStyle,
+                tabBtnClickSideEffect: () => onInterActionFilterClick(null),
             },
             {
                 content: (
                     <MyQASection
-                        activeFilter="answered"
-                        setActiveFilter={filter => {}}
+                        activeFilter={interactionFilter ?? "asked"}
+                        setActiveFilter={onInterActionFilterClick}
                     >
                         {questionListContent}
                     </MyQASection>
                 ),
+                contentContainerStyle: tabContainerStyle,
                 title: t("myQa"),
                 btnStyle: tabsBtnStyle,
+                tabBtnClickSideEffect: () =>
+                    onInterActionFilterClick(interactionFilter),
             },
         ],
-        [questionListContent, t],
+        [interactionFilter, onInterActionFilterClick, questionListContent, t],
     );
 
     return (

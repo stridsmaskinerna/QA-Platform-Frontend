@@ -10,4 +10,4 @@ export type LoginErrorMessage =
     | "serverProblem"
     | "mustEndWithLtuErrMsg";
 
-export type UserInteractionFilter = "asked" | "answered" | "commented";
+export type UserInteractionFilter = "created" | "answered" | "commented";

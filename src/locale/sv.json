@@ -46,6 +46,9 @@
         "ok": "Ok",
         "all": "Alla",
         "recentQuestions": "Senaste Frågor",
-        "myQa": "Mina Frågor & Svar"
+        "myQa": "Mina Frågor & Svar",
+        "asked": "Frågat",
+        "answered": "Svarat",
+        "commented": "Kommenterat"
     }
 }

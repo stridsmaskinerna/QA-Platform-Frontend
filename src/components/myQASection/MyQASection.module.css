@@ -1,2 +1,30 @@
 .container {
+    width: 100%;
+}
+
+.childrenWrapper {
+    border: 2px solid var(--tabBtn-inactive);
+    padding-inline: clamp(11px, 3vw, 80px);
+    padding-top: clamp(1.7rem, 5vw, 3rem);
+}
+
+.btnsContainer {
+    width: fit-content;
+}
+
+.btn {
+    position: relative;
+    top: 2px;
+    padding-inline: clamp(7px, 2vw, 13px);
+    padding-block: 7px;
+    background-color: var(--btnLight-bg);
+    border: none;
+    font-size: clamp(13px, 2.5vw, 17px);
+    cursor: pointer;
+}
+
+.active {
+    border: 2px solid var(--tabBtn-inactive);
+    border-bottom-color: var(--btnLight-bg);
+    font-weight: 600;
 }

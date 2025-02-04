@@ -48,6 +48,9 @@ export function Tabs({
 
     const handleTabClick = (idx: number) => {
         setActiveTab(idx);
+        if (tabsWithIdx[idx].tabBtnClickSideEffect) {
+            tabsWithIdx[idx].tabBtnClickSideEffect();
+        }
     };
 
     useEffect(() => {

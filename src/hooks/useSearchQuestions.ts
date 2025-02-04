@@ -3,7 +3,7 @@ import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
 import { BASE_URL, fetchQuestions } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
-import { IQuestion, ISearchFilter } from "../utils";
+import { IQuestion, ISearchFilter, UserInteractionFilter } from "../utils";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
@@ -13,6 +13,7 @@ interface IUrlAppendixes {
     subjectId: string | null;
     topicId: string | null;
     isResolved: string | null | undefined;
+    userInteraction: string | null | undefined;
 }
 
 export const useSearchQuestions = () => {
@@ -32,11 +33,14 @@ export const useSearchQuestions = () => {
         displayedFilters: [],
     });
     const [resolvedFilter, setResolvedFilter] = useState<boolean | null>(null);
+    const [interactionFilter, setInteractionFilter] =
+        useState<UserInteractionFilter>("created");
     const [urlAppendixes, setUrlAppendixes] = useState<IUrlAppendixes>({
         searchStr: "",
         subjectId: null,
         topicId: null,
         isResolved: undefined,
+        userInteraction: undefined,
     });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
@@ -107,10 +111,28 @@ export const useSearchQuestions = () => {
         }));
     };
 
+    const onInterActionFilterClick = (
+        newValue: UserInteractionFilter | null,
+    ) => {
+        if (newValue) {
+            setInteractionFilter(newValue);
+        }
+        setUrlAppendixes(prev => ({
+            ...prev,
+            userInteraction:
+                newValue === null ? null : `&interactionType=${newValue}`,
+        }));
+    };
+
     //The "topic" and "isResolved" arg isn't used at this point. Putting it there for clarities sake
     // and possible future use.
     const updateQuestionsData = async (
-        caller: "search" | "subject" | "topic" | "isResolved",
+        caller:
+            | "search"
+            | "subject"
+            | "topic"
+            | "isResolved"
+            | "interactionFilter",
     ) => {
         setIsLoadingQuestions(true);
 
@@ -119,6 +141,7 @@ export const useSearchQuestions = () => {
         const queryParams =
             urlAppendixes.searchStr +
             (urlAppendixes.isResolved ?? "") +
+            (urlAppendixes.userInteraction ?? "") +
             (caller === "search" ? "" : (urlAppendixes.subjectId ?? "")) +
             (caller === "subject" ? "" : (urlAppendixes.topicId ?? ""));
 
@@ -202,6 +225,17 @@ export const useSearchQuestions = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.isResolved]);
 
+    useEffect(() => {
+        //Dont run on initial render. We use the null value to indicate that user
+        // is on the Recent Questions tab and we shouldnt filter on interactionType at all.
+        //When clicking going from My Q&A to Recent Questions we set it to null and this is then going to update
+        //the filters to not filter on interactionType.
+        if (urlAppendixes.userInteraction !== undefined) {
+            void updateQuestionsData("interactionFilter");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isGuest, urlAppendixes.userInteraction]);
+
     return {
         debouncedSearch,
         questions,
@@ -210,5 +244,7 @@ export const useSearchQuestions = () => {
         isLoadingQuestions,
         onResolvedFilterClick,
         resolvedFilter,
+        onInterActionFilterClick,
+        interactionFilter,
     };
 };
