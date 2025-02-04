@@ -20,7 +20,9 @@ export function QuestionHeader(props: QuestionHeaderProps) {
 
     //TODO Replace isTeacher with isTeacher from server later on
     const { isTeacher } = useRoles();
-    const statusClass = props.isResolved ? styles.resolved : styles.notResolved;
+    const isResolvedClass = props.isResolved
+        ? styles.resolved
+        : styles.notResolved;
     const isPublic = !props.isProtected ? public_icon : non_public_icon;
     const isVisible = !props.isHidden ? visibility_on : visibility_off;
 
@@ -32,7 +34,9 @@ export function QuestionHeader(props: QuestionHeaderProps) {
         <div className={styles.container}>
             <h3 className={styles.courseTitle}>{subjectDisplay}</h3>
             <div className={styles.icon_section}>
-                <div className={`${styles.status} ${statusClass}`}>
+                <div
+                    className={`${styles.resolvedContainer} ${isResolvedClass}`}
+                >
                     {props.isResolved && (
                         <img
                             src={check_circle_white}

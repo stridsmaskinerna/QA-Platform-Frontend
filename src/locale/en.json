@@ -44,6 +44,8 @@
         "clickToHide": "Set question to hidden",
         "clickToShow": "Set question to visible",
         "ok": "Ok",
-        "all": "All"
+        "all": "All",
+        "recentQuestions": "Recent Questions",
+        "myQa": "My Q&A"
     }
 }

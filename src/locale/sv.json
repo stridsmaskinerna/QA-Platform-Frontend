@@ -44,6 +44,8 @@
         "clickToHide": "Sätt fråga till dold",
         "clickToShow": "Sätt fråga till synlig",
         "ok": "Ok",
-        "all": "Alla"
+        "all": "Alla",
+        "recentQuestions": "Senaste Frågor",
+        "myQa": "Mina Frågor & Svar"
     }
 }

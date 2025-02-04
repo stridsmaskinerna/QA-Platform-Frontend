@@ -12,3 +12,7 @@
     justify-content: space-between;
     width: 100%;
 }
+
+.loader {
+    margin-top: 15rem;
+}
