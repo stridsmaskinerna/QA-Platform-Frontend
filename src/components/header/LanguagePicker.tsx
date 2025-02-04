@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 export function LanguagePicker() {
     const {
         // eslint-disable-next-line @typescript-eslint/unbound-method
-        i18n: { changeLanguage, language }
+        i18n: { changeLanguage, language },
     } = useTranslation();
 
     return (

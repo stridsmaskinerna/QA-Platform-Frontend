@@ -9,7 +9,7 @@ import {
     ADMIN_ROUTE,
     GUEST_HOME_ROUTE,
     HOME_ROUTE,
-    LOGIN_REGISTER_ROUTE
+    LOGIN_REGISTER_ROUTE,
 } from "../../data";
 
 export function NavMenu() {
@@ -17,7 +17,7 @@ export function NavMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const { isAdmin, isGuest, isUser } = useRoles();
     const {
-        authContext: { logout }
+        authContext: { logout },
     } = useQAContext();
     const menuRef = useRef(null);
 
@@ -73,7 +73,6 @@ export function NavMenu() {
                                 onClickSideEffect={() => {
                                     logout();
                                     closeMenu();
-                                    console.log("here");
                                 }}
                                 title={t("logout")}
                             />

@@ -3,7 +3,7 @@ import { useQAContext } from ".";
 
 export function useRoles() {
     const {
-        authContext: { roles }
+        authContext: { roles },
     } = useQAContext();
 
     const POSSIBLE_ROLES: Role[] = [Role.Admin, Role.Teacher, Role.User];
@@ -28,6 +28,6 @@ export function useRoles() {
         isUser,
         isGuest,
         POSSIBLE_ROLES,
-        isRolesCorrupt
+        isRolesCorrupt,
     };
 }

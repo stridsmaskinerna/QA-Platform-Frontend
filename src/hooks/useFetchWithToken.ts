@@ -3,13 +3,13 @@ import {
     addTokenToRequestInit,
     CustomError,
     hasTokenExpired,
-    ITokens
+    ITokens,
 } from "../utils";
 import { useLocalStorage } from "usehooks-ts";
 import {
     LOCAL_STORAGE_TOKEN_KEY,
     LOGIN_REGISTER_ROUTE,
-    refreshTokens
+    refreshTokens,
 } from "../data";
 import { useNavigate } from "react-router";
 
@@ -21,12 +21,12 @@ interface IUseFetchWithTokenReturn<T> {
 
 export function useFetchWithToken<T>(
     options?: RequestInit,
-    checkIfTokenNeedsRefresh = false
+    checkIfTokenNeedsRefresh = false,
 ): IUseFetchWithTokenReturn<T> {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
         LOCAL_STORAGE_TOKEN_KEY,
-        null
+        null,
     );
     const [error, setError] = useState<CustomError | null>(null);
     const navigate = useNavigate();
@@ -34,14 +34,14 @@ export function useFetchWithToken<T>(
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
     async function generatedFetch<T>(
         accessToken: string | undefined,
-        url: RequestInfo | URL
+        url: RequestInfo | URL,
     ): Promise<T> {
         if (!accessToken) {
             throw new Error("There is no accessToken in the tokens field");
         }
         const requestInit: RequestInit = addTokenToRequestInit(
             accessToken,
-            options
+            options,
         );
         const response: Response = await fetch(url, requestInit);
 
@@ -68,7 +68,7 @@ export function useFetchWithToken<T>(
                 setTokens(refreshedTokens);
                 const data = await generatedFetch<T>(
                     refreshedTokens.accessToken,
-                    url
+                    url,
                 );
                 return data;
             } catch (error) {

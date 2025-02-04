@@ -12,6 +12,7 @@ interface IUrlAppendixes {
     searchStr: string;
     subjectId: string | null;
     topicId: string | null;
+    isResolved: string | null | undefined;
 }
 
 export const useSearchQuestions = () => {
@@ -22,18 +23,20 @@ export const useSearchQuestions = () => {
         Omit<ISearchFilter, "onFilterClick">
     >({
         activeFilter: "",
-        displayedFilters: []
+        displayedFilters: [],
     });
     const [topicFilter, setTopicFilter] = useState<
         Omit<ISearchFilter, "onFilterClick">
     >({
         activeFilter: "",
-        displayedFilters: []
+        displayedFilters: [],
     });
+    const [resolvedFilter, setResolvedFilter] = useState<boolean | null>(null);
     const [urlAppendixes, setUrlAppendixes] = useState<IUrlAppendixes>({
         searchStr: "",
         subjectId: null,
-        topicId: null
+        topicId: null,
+        isResolved: undefined,
     });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
@@ -43,11 +46,11 @@ export const useSearchQuestions = () => {
             setUrlAppendixes(prev => ({
                 ...prev,
                 subjectId: "",
-                topicId: null
+                topicId: null,
             }));
             setSubjectFilter(prev => ({
                 activeFilter: "",
-                displayedFilters: prev.displayedFilters
+                displayedFilters: prev.displayedFilters,
             }));
         } else {
             //Set isLoadingQuestions to true here to prevent TopicFilters from the previous fetch to
@@ -56,11 +59,11 @@ export const useSearchQuestions = () => {
             setUrlAppendixes(prev => ({
                 ...prev,
                 subjectId: `&subjectId=${subjectId}`,
-                topicId: null
+                topicId: null,
             }));
             setSubjectFilter(prev => ({
                 activeFilter: subjectId,
-                displayedFilters: prev.displayedFilters
+                displayedFilters: prev.displayedFilters,
             }));
         }
     };
@@ -69,45 +72,55 @@ export const useSearchQuestions = () => {
         if (topicFilter.activeFilter === topicId) {
             setUrlAppendixes(prev => ({
                 ...prev,
-                topicId: ""
+                topicId: "",
             }));
             setTopicFilter(prev => ({
                 activeFilter: "",
-                displayedFilters: prev.displayedFilters
+                displayedFilters: prev.displayedFilters,
             }));
         } else {
             setUrlAppendixes(prev => ({
                 ...prev,
-                topicId: `&topicId=${topicId}`
+                topicId: `&topicId=${topicId}`,
             }));
             setTopicFilter(prev => ({
                 activeFilter: topicId,
-                displayedFilters: prev.displayedFilters
+                displayedFilters: prev.displayedFilters,
             }));
         }
     };
     const onSearchBarInputChange: ChangeEventHandler<HTMLInputElement> = e => {
-        setUrlAppendixes({
+        setUrlAppendixes(prev => ({
+            ...prev,
             searchStr: `&searchString=${e.target.value}`,
             subjectId: null,
-            topicId: null
-        });
+            topicId: null,
+        }));
     };
     const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 500);
 
-    //The "topic" arg isn't used at this point. Putting it there for clarities sake
+    const onResolvedFilterClick = (newValue: boolean | null) => {
+        setResolvedFilter(newValue);
+        setUrlAppendixes(prev => ({
+            ...prev,
+            isResolved: newValue === null ? null : `&isResolved=${newValue}`,
+        }));
+    };
+
+    //The "topic" and "isResolved" arg isn't used at this point. Putting it there for clarities sake
     // and possible future use.
     const updateQuestionsData = async (
-        origin: "search" | "subject" | "topic"
+        caller: "search" | "subject" | "topic" | "isResolved",
     ) => {
         setIsLoadingQuestions(true);
 
-        //If this updateQuestionsData is called because of an updated topicId, then all
+        //If updateQuestionsData is called because of an updated topicId (caller = "topic"), then all
         //types of query params will be active.
         const queryParams =
             urlAppendixes.searchStr +
-            (origin === "search" ? "" : (urlAppendixes.subjectId ?? "")) +
-            (origin === "subject" ? "" : (urlAppendixes.topicId ?? ""));
+            (urlAppendixes.isResolved ?? "") +
+            (caller === "search" ? "" : (urlAppendixes.subjectId ?? "")) +
+            (caller === "subject" ? "" : (urlAppendixes.topicId ?? ""));
 
         const data = isGuest
             ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
@@ -116,7 +129,7 @@ export const useSearchQuestions = () => {
         if (data) {
             setQuestions(data);
 
-            if (origin === "search") {
+            if (caller === "search") {
                 setSubjectFilter({
                     activeFilter: "",
                     displayedFilters: data
@@ -126,18 +139,18 @@ export const useSearchQuestions = () => {
                                 acc.some(q => q.subjectId === current.subjectId)
                                     ? acc
                                     : [...acc, current],
-                            []
+                            [],
                         )
                         //Map to right format
                         .map(q => ({
                             id: q.subjectId,
-                            title: `${q.subjectCode ?? ""} ${q.subjectName}`
-                        }))
+                            title: `${q.subjectCode ?? ""} ${q.subjectName}`,
+                        })),
                 });
                 setTopicFilter({ activeFilter: "", displayedFilters: [] });
             }
 
-            if (origin === "subject") {
+            if (caller === "subject") {
                 setTopicFilter({
                     activeFilter: "",
                     displayedFilters: data
@@ -147,13 +160,13 @@ export const useSearchQuestions = () => {
                                 acc.some(q => q.topicId === current.topicId)
                                     ? acc
                                     : [...acc, current],
-                            []
+                            [],
                         )
                         //Map to right format
                         .map(q => ({
                             id: q.topicId,
-                            title: q.topicName
-                        }))
+                            title: q.topicName,
+                        })),
                 });
             }
         }
@@ -181,11 +194,21 @@ export const useSearchQuestions = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.topicId]);
 
+    useEffect(() => {
+        //Dont run on initial render. We use the null value to indicate fetch all.
+        if (urlAppendixes.isResolved !== undefined) {
+            void updateQuestionsData("isResolved");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isGuest, urlAppendixes.isResolved]);
+
     return {
         debouncedSearch,
         questions,
         topicFilter: { ...topicFilter, onFilterClick: topicFilterClick },
         subjectFilter: { ...subjectFilter, onFilterClick: subjectFilterClick },
-        isLoadingQuestions
+        isLoadingQuestions,
+        onResolvedFilterClick,
+        resolvedFilter,
     };
 };

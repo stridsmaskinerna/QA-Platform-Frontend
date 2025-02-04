@@ -3,14 +3,14 @@ import { IUserDetails, Role } from "..";
 
 export function addTokenToRequestInit(
     accessToken?: string,
-    options?: RequestInit
+    options?: RequestInit,
 ): RequestInit {
     const requestObject: RequestInit = { ...options };
 
     if (accessToken) {
         requestObject.headers = {
             ...options?.headers,
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${accessToken}`,
         };
     }
 
@@ -47,6 +47,6 @@ export function getValuesFromToken(token?: string): IUserDetails | undefined {
     return {
         roles,
         userId: decoded.userId,
-        username: decoded.username
+        username: decoded.username,
     };
 }

@@ -2,7 +2,7 @@ import { useRef, useCallback } from "react";
 
 export function useThrottle<T extends unknown[]>(
     cb: (...args: T) => void,
-    delay = 1000
+    delay = 1000,
 ) {
     const shouldWait = useRef(false);
     const waitingArgs = useRef<T | null>(null);
@@ -17,7 +17,7 @@ export function useThrottle<T extends unknown[]>(
                 setTimeout(timeoutFunc, delay);
             }
         },
-        [cb, delay]
+        [cb, delay],
     );
 
     return useCallback(
@@ -31,6 +31,6 @@ export function useThrottle<T extends unknown[]>(
             shouldWait.current = true;
             setTimeout(timeoutFunc, delay);
         },
-        [cb, delay, timeoutFunc]
+        [cb, delay, timeoutFunc],
     );
 }

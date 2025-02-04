@@ -3,7 +3,7 @@ import {
     HTMLInputTypeAttribute,
     useId,
     useRef,
-    useState
+    useState,
 } from "react";
 import styles from "./Input.module.css";
 import { useOnClickOutside } from "usehooks-ts";
@@ -25,7 +25,7 @@ export function Input({
     minInputValueLength,
     placeHolder,
     onChange,
-    defaultValue
+    defaultValue,
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
     const id = useId();

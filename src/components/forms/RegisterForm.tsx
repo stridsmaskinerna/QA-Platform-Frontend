@@ -4,7 +4,7 @@ import { useQAContext } from "../../hooks";
 import {
     IRegisterFormData,
     RegisterErrorMessage,
-    removePropertiesFromObject
+    removePropertiesFromObject,
 } from "../../utils";
 import { Input } from "../input";
 import styles from "./FormShared.module.css";
@@ -15,7 +15,7 @@ export function RegisterForm() {
     const { t } = useTranslation();
     const {
         authContext: { register },
-        loaderContext: { setIsLoading }
+        loaderContext: { setIsLoading },
     } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
     const [error, setError] = useState<RegisterErrorMessage>();
@@ -27,7 +27,7 @@ export function RegisterForm() {
         void (async () => {
             const formData = new FormData(e.currentTarget);
             const formDetails = Object.fromEntries(
-                formData
+                formData,
             ) as unknown as IRegisterFormData;
 
             if (formDetails.password !== formDetails.confirmPassword) {
@@ -41,7 +41,7 @@ export function RegisterForm() {
 
             setIsLoading(true);
             const errMsg = await register(
-                removePropertiesFromObject(formDetails, "confirmPassword")
+                removePropertiesFromObject(formDetails, "confirmPassword"),
             );
             if (!errMsg) {
                 formRef.current?.reset();

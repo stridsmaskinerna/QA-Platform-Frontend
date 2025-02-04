@@ -7,9 +7,11 @@
         "qa": "Q&A",
         "loginRegister": "Login/Register",
         "resolved": "Resolved",
-        "notResolved": "Not resolved",
+        "resolvedPlural": "Resolved",
+        "unresolved": "Unresolved",
+        "unresolvedPlural": "Unresolved",
         "askedBy": "Asked by",
-        "answer": "answers",
+        "answer": "answer",
         "answers": "answers",
         "lessThanMinuteAgo": "Less than a minute ago",
         "oneMinuteAgo": "One minute ago",
@@ -42,6 +44,7 @@
         "clickToHide": "Set question to hidden",
         "clickToShow": "Set question to visible",
         "ok": "Ok",
+        "all": "All",
         "recentQuestions": "Recent Questions",
         "myQa": "My Q&A"
     }

@@ -7,7 +7,9 @@
         "qa": "Frågor & Svar",
         "loginRegister": "Logga in/Registrering",
         "resolved": "Löst",
-        "notResolved": "Inte löst",
+        "resolvedPlural": "Lösta",
+        "unresolved": "Ej löst",
+        "unresolvedPlural": "Ej Lösta",
         "askedBy": "Frågad av",
         "answer": "svar",
         "answers": "svar",
@@ -42,6 +44,7 @@
         "clickToHide": "Sätt fråga till dold",
         "clickToShow": "Sätt fråga till synlig",
         "ok": "Ok",
+        "all": "Alla",
         "recentQuestions": "Senaste Frågor",
         "myQa": "Mina Frågor & Svar"
     }

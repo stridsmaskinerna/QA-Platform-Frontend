@@ -6,17 +6,17 @@ import { ITab } from "../../../utils";
 import { CSSProperties } from "react";
 
 const tabBtnsContainerStyle: CSSProperties = {
-    width: "clamp(290px, 90vw, 700px)"
+    width: "clamp(290px, 90vw, 700px)",
 };
 
 const btnStyle: CSSProperties = {
     fontSize: "clamp(14px, 2vw, 1.2rem)",
-    flex: 1
+    flex: 1,
 };
 
 const questionFinderContainerStyle: CSSProperties = {
     marginTop: "1.5rem",
-    width: "100%"
+    width: "100%",
 };
 const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
 
@@ -29,19 +29,19 @@ export function HomeExtended() {
             content: <QuestionFinder />,
             contentContainerStyle: questionFinderContainerStyle,
             btnStyle,
-            title: t("searchQuestions")
+            title: t("searchQuestions"),
         },
         {
             content: <></>,
             btnStyle,
-            title: t("askAQuestion")
-        }
+            title: t("askAQuestion"),
+        },
     ];
     if (!isTeacher) {
         tabs.push({
             content: <></>,
             btnStyle,
-            title: t("teacher")
+            title: t("teacher"),
         });
     }
 

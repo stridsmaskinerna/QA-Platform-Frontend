@@ -19,32 +19,32 @@ export function SearchFilter({
     displayedFilters,
     onFilterClick,
     activeFilter,
-    title
+    title,
 }: ISearchFilter) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showScrollArrows, setShowScrollArrows] = useState<IShowScrollArrows>(
         {
             leftArrow: false,
-            rightArrow: false
-        }
+            rightArrow: false,
+        },
     );
     const throttledHandleScroll = useThrottle(handleScroll, THROTTLE_TIMER);
     const throttledHandleContainerResize = useThrottle(
         handleContainerResize,
-        THROTTLE_TIMER
+        THROTTLE_TIMER,
     );
     useResizeObserver({
         ref: scrollRef,
         box: "border-box",
-        onResize: throttledHandleContainerResize
+        onResize: throttledHandleContainerResize,
     });
     const isMounted = useIsMounted();
 
     const handleScrollArrowClick = (scrollAmount: number) =>
         scrollRef.current?.scrollBy({
             left: scrollAmount,
-            behavior: "smooth"
+            behavior: "smooth",
         });
 
     //If called with a wheel event (i.e the user uses the mousewheel)
@@ -128,7 +128,7 @@ export function SearchFilter({
             //Instead call throttledHandleScroll in handleMouseWheelEvent,
             //after the wheel even have been mapped to scrolling
             scrollElement.addEventListener("wheel", handleMouseWheelEvent, {
-                passive: false
+                passive: false,
             });
         }
 
@@ -149,7 +149,7 @@ export function SearchFilter({
             setShowScrollArrows({
                 leftArrow: false,
                 //Initialize right arrow depending on whether there is filterbuttons hidden behind scroll
-                rightArrow: scrollOverflowWidth > RIGHT_SCROLL_ARROW_THRESHOLD
+                rightArrow: scrollOverflowWidth > RIGHT_SCROLL_ARROW_THRESHOLD,
             });
         }
     }, [isMounted]);

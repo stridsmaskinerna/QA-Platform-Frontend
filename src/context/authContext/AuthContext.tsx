@@ -3,7 +3,7 @@ import {
     ReactElement,
     ReactNode,
     useEffect,
-    useState
+    useState,
 } from "react";
 import {
     CustomError,
@@ -14,7 +14,7 @@ import {
     ITokens,
     IUserDetails,
     LoginErrorMessage,
-    RegisterErrorMessage
+    RegisterErrorMessage,
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import {
@@ -22,7 +22,7 @@ import {
     LOCAL_STORAGE_TOKEN_KEY,
     loginReq,
     registerReq,
-    USERNAME_TAKEN
+    USERNAME_TAKEN,
 } from "../../data";
 import { useQAContext } from "../../hooks";
 
@@ -35,10 +35,10 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
         LOCAL_STORAGE_TOKEN_KEY,
-        null
+        null,
     );
     const {
-        loaderContext: { setIsLoading }
+        loaderContext: { setIsLoading },
     } = useQAContext();
     const [userDetails, setUserDetails] = useState<IUserDetails>();
 
@@ -48,12 +48,12 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         roles: userDetails?.roles,
         login,
         logout,
-        register
+        register,
     };
 
     async function login({
         email,
-        password
+        password,
     }: ILoginCredentials): Promise<LoginErrorMessage | void> {
         try {
             const tokens = await loginReq({ email, password });
@@ -70,7 +70,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     async function register({
         email,
         password,
-        username
+        username,
     }: Omit<
         IRegisterFormData,
         "confirmPassword"

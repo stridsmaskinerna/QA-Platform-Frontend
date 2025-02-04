@@ -20,26 +20,26 @@ export default tseslint.config(
             parserOptions: {
                 project: ["./tsconfig.node.json", "./tsconfig.app.json"],
                 projectService: true,
-                tsconfigRootDir: import.meta.dirname
-            }
+                tsconfigRootDir: import.meta.dirname,
+            },
         },
         settings: { react: { version: "18.3" } },
         plugins: {
             react,
             "react-hooks": fixupPluginRules(reactHooksPlugin),
-            "@typescript-eslint": tseslint.plugin
+            "@typescript-eslint": tseslint.plugin,
         },
         rules: {
             ...react.configs.recommended.rules,
             ...react.configs["jsx-runtime"].rules,
-            ...reactHooksPlugin.configs.recommended.rules
-        }
+            ...reactHooksPlugin.configs.recommended.rules,
+        },
     },
     {
         // disable type-aware linting on JS files
         files: ["**/*.js", "**/*.mjs"],
-        extends: [tseslint.configs.disableTypeChecked]
+        extends: [tseslint.configs.disableTypeChecked],
     },
     reactRefresh.configs.vite,
-    prettierConfig // prettierConfig must be last to disable conflicting rules
+    prettierConfig, // prettierConfig must be last to disable conflicting rules
 );

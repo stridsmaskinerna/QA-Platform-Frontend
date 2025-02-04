@@ -10,7 +10,7 @@ export function FullScreenLoader({ diameter }: ILoaderProps) {
             <span
                 style={{
                     width: `${diameter}px`,
-                    height: `${diameter}px`
+                    height: `${diameter}px`,
                 }}
                 className={styles.loader}
             ></span>

@@ -30,13 +30,14 @@
 
 .resolvedContainer {
     border-radius: 8px;
-    padding: 0.2rem 0.6rem;
+    padding-inline: 0.6rem;
+    padding-block: 0.1rem;
     font-size: 0.8rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    height: 1.2rem;
+    /* height: 1.2rem; */
 }
 
 .resolvedTextContainer {
@@ -68,9 +69,8 @@
 }
 
 .icon {
-    width: 1rem; /* Match the height of .status */
+    width: 1rem; /* Match the height of .resolvedContainer */
     height: 1rem;
-    margin-top: 0.13rem;
 }
 
 .resolved {

@@ -6,16 +6,19 @@ import styles from "./QuestionFinder.module.css";
 import { ITab } from "../../utils";
 import { CSSProperties } from "react";
 
-const tabContainerStyle: CSSProperties = { width: "100%", marginTop: "3rem" };
+const tabContainerStyle: CSSProperties = {
+    width: "100%",
+    marginTop: "clamp(0.2rem, 5vw, 2rem)",
+};
 
 const tabsOuterContainerStyle: CSSProperties = {
     width: "100%",
-    flexDirection: "column"
+    flexDirection: "column",
 };
 
 const tabsBtnStyle: CSSProperties = {
-    fontSize: "clamp(16px, 2vw, 1.5rem)",
-    flex: 1
+    fontSize: "clamp(12px, 2vw, 1.5rem)",
+    flex: 1,
 };
 export function QuestionFinder() {
     const {
@@ -23,7 +26,9 @@ export function QuestionFinder() {
         questions,
         subjectFilter,
         topicFilter,
-        isLoadingQuestions
+        isLoadingQuestions,
+        resolvedFilter,
+        onResolvedFilterClick,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
@@ -32,15 +37,17 @@ export function QuestionFinder() {
         {
             content: (
                 <QuestionCardList
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={resolvedFilter}
                     data={questions}
                     isLoadingQuestions={isLoadingQuestions}
                 />
             ),
             title: t("recentQuestions"),
             btnStyle: tabsBtnStyle,
-            contentContainerStyle: tabContainerStyle
+            contentContainerStyle: tabContainerStyle,
         },
-        { content: <></>, title: t("myQa"), btnStyle: tabsBtnStyle }
+        { content: <></>, title: t("myQa"), btnStyle: tabsBtnStyle },
     ];
 
     return (
@@ -60,6 +67,8 @@ export function QuestionFinder() {
                 />
             ) : (
                 <QuestionCardList
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={resolvedFilter}
                     data={questions}
                     isLoadingQuestions={isLoadingQuestions}
                 />

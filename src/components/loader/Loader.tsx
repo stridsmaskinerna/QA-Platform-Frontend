@@ -8,7 +8,7 @@ export function Loader({ diameter }: ILoaderProps) {
         <span
             style={{
                 width: `${diameter}px`,
-                height: `${diameter}px`
+                height: `${diameter}px`,
             }}
             className={styles.loader}
         ></span>
