@@ -41,6 +41,8 @@
         "topicFilter": "Ämnesfilter",
         "clickToHide": "Sätt fråga till dold",
         "clickToShow": "Sätt fråga till synlig",
-        "ok": "Ok"
+        "ok": "Ok",
+        "recentQuestions": "Senaste Frågor",
+        "myQa": "Mina Frågor & Svar"
     }
 }

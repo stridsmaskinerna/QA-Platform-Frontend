@@ -1,9 +1,22 @@
 import { useTranslation } from "react-i18next";
-import { Loader, SearchWithFilters } from "..";
-import { useSearchQuestions } from "../../hooks";
+import { SearchWithFilters, Tabs } from "..";
+import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
+import { ITab } from "../../utils";
+import { CSSProperties } from "react";
 
+const tabContainerStyle: CSSProperties = { width: "100%", marginTop: "3rem" };
+
+const tabsOuterContainerStyle: CSSProperties = {
+    width: "100%",
+    flexDirection: "column"
+};
+
+const tabsBtnStyle: CSSProperties = {
+    fontSize: "clamp(16px, 2vw, 1.5rem)",
+    flex: 1
+};
 export function QuestionFinder() {
     const {
         debouncedSearch,
@@ -13,6 +26,22 @@ export function QuestionFinder() {
         isLoadingQuestions
     } = useSearchQuestions();
     const { t } = useTranslation();
+    const { isUser } = useRoles();
+
+    const tabs: ITab[] = [
+        {
+            content: (
+                <QuestionCardList
+                    data={questions}
+                    isLoadingQuestions={isLoadingQuestions}
+                />
+            ),
+            title: t("recentQuestions"),
+            btnStyle: tabsBtnStyle,
+            contentContainerStyle: tabContainerStyle
+        },
+        { content: <></>, title: t("myQa"), btnStyle: tabsBtnStyle }
+    ];
 
     return (
         <div className={styles.container}>
@@ -24,15 +53,16 @@ export function QuestionFinder() {
                 isLoadingQuestions={isLoadingQuestions}
             />
 
-            {/* Here goes the Recent Questions - My Q&A which will be conditionally rendered depending on having the User role.
-            This component will then be usable in HomeLimited as well */}
-
-            {isLoadingQuestions ? (
-                <div className={styles.loader}>
-                    <Loader />
-                </div>
+            {isUser ? (
+                <Tabs
+                    containerStyle={tabsOuterContainerStyle}
+                    tabs={tabs}
+                />
             ) : (
-                <QuestionCardList data={questions} />
+                <QuestionCardList
+                    data={questions}
+                    isLoadingQuestions={isLoadingQuestions}
+                />
             )}
         </div>
     );
