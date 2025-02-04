@@ -6,7 +6,10 @@ import styles from "./QuestionFinder.module.css";
 import { ITab } from "../../utils";
 import { CSSProperties } from "react";
 
-const tabContainerStyle: CSSProperties = { width: "100%", marginTop: "3rem" };
+const tabContainerStyle: CSSProperties = {
+    width: "100%",
+    marginTop: "clamp(0.2rem, 5vw, 2rem)",
+};
 
 const tabsOuterContainerStyle: CSSProperties = {
     width: "100%",
@@ -14,7 +17,7 @@ const tabsOuterContainerStyle: CSSProperties = {
 };
 
 const tabsBtnStyle: CSSProperties = {
-    fontSize: "clamp(16px, 2vw, 1.5rem)",
+    fontSize: "clamp(12px, 2vw, 1.5rem)",
     flex: 1,
 };
 export function QuestionFinder() {

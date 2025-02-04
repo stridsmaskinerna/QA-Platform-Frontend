@@ -1,5 +1,4 @@
 .container {
-    align-self: flex-end;
     background-color: var(
         --tabBtn-active
     ); /*Invert colors compared to tabs component*/
