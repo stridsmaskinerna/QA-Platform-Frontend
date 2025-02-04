@@ -34,6 +34,8 @@ export function QuestionFinder() {
         {
             content: (
                 <QuestionCardList
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={resolvedFilter}
                     data={questions}
                     isLoadingQuestions={isLoadingQuestions}
                 />
