@@ -25,12 +25,11 @@ export function QuestionFinder() {
     const {
         debouncedSearch,
         questions,
-        subjectFilter,
-        topicFilter,
+        subjectFilterProps,
+        topicFilterProps,
         isLoadingQuestions,
-        resolvedFilter,
         onResolvedFilterClick,
-        interactionFilter,
+        activeFilters,
         onInterActionFilterClick,
     } = useSearchQuestions();
     const { t } = useTranslation();
@@ -39,19 +38,21 @@ export function QuestionFinder() {
     const questionListContent = useMemo(
         () => (
             <QuestionCardList
-                header={t(interactionFilter ?? "recentQuestions")}
+                header={t(
+                    `${activeFilters.userInteraction ?? "questionList"}Header`,
+                )}
                 onResolvedFilterClick={onResolvedFilterClick}
-                activeResolvedFilter={resolvedFilter}
+                activeResolvedFilter={activeFilters.resolved}
                 data={questions}
                 isLoadingQuestions={isLoadingQuestions}
             />
         ),
         [
-            interactionFilter,
+            activeFilters.resolved,
+            activeFilters.userInteraction,
             isLoadingQuestions,
             onResolvedFilterClick,
             questions,
-            resolvedFilter,
             t,
         ],
     );
@@ -68,7 +69,9 @@ export function QuestionFinder() {
             {
                 content: (
                     <MyQASection
-                        activeFilter={interactionFilter ?? "asked"}
+                        activeFilter={
+                            activeFilters.userInteraction ?? "created"
+                        }
                         setActiveFilter={onInterActionFilterClick}
                     >
                         {questionListContent}
@@ -78,18 +81,23 @@ export function QuestionFinder() {
                 title: t("myQa"),
                 btnStyle: tabsBtnStyle,
                 tabBtnClickSideEffect: () =>
-                    onInterActionFilterClick(interactionFilter),
+                    onInterActionFilterClick("created"),
             },
         ],
-        [interactionFilter, onInterActionFilterClick, questionListContent, t],
+        [
+            activeFilters.userInteraction,
+            onInterActionFilterClick,
+            questionListContent,
+            t,
+        ],
     );
 
     return (
         <div className={styles.container}>
             <SearchWithFilters
                 placeholder={t("searchQuestionsPlaceholder")}
-                subjectFilter={subjectFilter}
-                topicFilter={topicFilter}
+                subjectFilter={subjectFilterProps}
+                topicFilter={topicFilterProps}
                 onInputChange={debouncedSearch}
                 isLoadingQuestions={isLoadingQuestions}
             />

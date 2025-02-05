@@ -45,10 +45,15 @@
         "clickToShow": "Set question to visible",
         "ok": "Ok",
         "all": "All",
+        "questionListHeader": "Recent Questions",
         "recentQuestions": "Recent Questions",
         "myQa": "My Q&A",
-        "asked": "Asked",
+        "created": "Asked",
         "answered": "Answered",
-        "commented": "Commented"
+        "commented": "Commented",
+        "noQuestionsFound": "No questions match those criteria",
+        "createdHeader": "Questions You've Asked",
+        "answeredHeader": "Questions You've Answered",
+        "commentedHeader": "Questions With Answers You've Commented On"
     }
 }

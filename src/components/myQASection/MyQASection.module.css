@@ -6,6 +6,7 @@
     border: 2px solid var(--tabBtn-inactive);
     padding-inline: clamp(11px, 3vw, 80px);
     padding-top: clamp(1.7rem, 5vw, 3rem);
+    min-height: 20rem;
 }
 
 .btnsContainer {

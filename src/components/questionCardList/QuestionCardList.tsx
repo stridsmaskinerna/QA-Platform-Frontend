@@ -3,6 +3,7 @@ import { Loader } from "..";
 import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
 import { ResolvedFilters } from "./ResolvedFilters";
+import { useTranslation } from "react-i18next";
 
 interface IQuestionCardListProps {
     data: IQuestion[];
@@ -19,6 +20,7 @@ export function QuestionCardList({
     isLoadingQuestions,
     header,
 }: IQuestionCardListProps) {
+    const { t } = useTranslation();
     if (isLoadingQuestions) {
         return (
             <div className={styles.container}>
@@ -28,7 +30,7 @@ export function QuestionCardList({
             </div>
         );
     }
-
+    const isNoData = data.length === 0;
     return (
         <div className={styles.container}>
             <div className={styles.headerRow}>
@@ -44,6 +46,7 @@ export function QuestionCardList({
                     data={question}
                 />
             ))}
+            {isNoData && <h3>{t("noQuestionsFound")}</h3>}
         </div>
     );
 }

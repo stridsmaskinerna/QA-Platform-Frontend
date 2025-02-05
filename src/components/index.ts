@@ -9,3 +9,5 @@ export * from "./loader";
 export * from "./search";
 export * from "./questionFinder";
 export * from "./modal";
+export * from "./questionCardList";
+export * from "./myQASection";

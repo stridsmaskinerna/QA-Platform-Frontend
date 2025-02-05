@@ -45,10 +45,15 @@
         "clickToShow": "Sätt fråga till synlig",
         "ok": "Ok",
         "all": "Alla",
+        "questionListHeader": "Senaste Frågor",
         "recentQuestions": "Senaste Frågor",
         "myQa": "Mina Frågor & Svar",
-        "asked": "Frågat",
+        "created": "Frågat",
         "answered": "Svarat",
-        "commented": "Kommenterat"
+        "commented": "Kommenterat",
+        "noQuestionsFound": "Inga frågor matchar dessa kriterier",
+        "createdHeader": "Frågor Du Har Ställt",
+        "answeredHeader": "Frågor Du Har Svarat På",
+        "commentedHeader": "Frågor Med Svar Du Har Kommenterat"
     }
 }

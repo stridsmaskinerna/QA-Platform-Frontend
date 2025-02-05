@@ -22,7 +22,7 @@ export function MyQASection({
                     onClick={() => setActiveFilter("created")}
                     className={`${styles.btn} ${activeFilter === "created" ? styles.active : ""}`}
                 >
-                    {t("asked")}
+                    {t("created")}
                 </button>
                 <button
                     onClick={() => setActiveFilter("answered")}
