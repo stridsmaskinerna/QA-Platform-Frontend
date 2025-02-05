@@ -82,34 +82,6 @@ export const useSearchQuestions = () => {
         }));
     };
 
-    // const onSubjectFilterClick = (subjectId: string) => {
-    //     //If deactivating a subject filter
-    //     if (activeFilters.subject === subjectId) {
-    //         setUrlAppendixes(prev => ({
-    //             ...prev,
-    //             subjectId: "",
-    //             topicId: undefined,
-    //         }));
-    //         setActiveFilters(prev => ({
-    //             ...prev,
-    //             topic: "",
-    //             subject: "",
-    //         }));
-    //     } else {
-
-    //         setIsLoadingQuestions(true);
-    //         setUrlAppendixes(prev => ({
-    //             ...prev,
-    //             subjectId: `&subjectId=${subjectId}`,
-    //             topicId: undefined,
-    //         }));
-    //         setActiveFilters(prev => ({
-    //             ...prev,
-    //             subject: subjectId,
-    //         }));
-    //     }
-    // };
-
     const onTopicFilterClick = (topicId: string) => {
         setUrlAppendixes(prev => ({
             ...prev,
@@ -197,14 +169,7 @@ export const useSearchQuestions = () => {
     //The "topic" arg isn't used at this point. Putting it there for clarities sake
     // and possible future use.
     const updateQuestionsAndFilters = useCallback(
-        async (
-            caller:
-                | "search"
-                | "subject"
-                | "topic"
-                | "isResolved"
-                | "interactionFilter",
-        ) => {
+        async (caller: keyof IUrlAppendixes) => {
             setIsLoadingQuestions(true);
 
             const queryParams =
@@ -223,7 +188,12 @@ export const useSearchQuestions = () => {
 
                 //If called by search we kind of reset the displayed filters. We update subject filter
                 //to mirror the fetched questions and set displayed topic filters to none.
-                if (caller === "search") {
+                if (caller === "searchStr") {
+                    setActiveFilters(prev => ({
+                        ...prev,
+                        subject: "",
+                        topic: "",
+                    }));
                     setDisplayedFilters({
                         subject: updateDisplayedSubjectFilters(data),
                         topic: [],
@@ -232,7 +202,7 @@ export const useSearchQuestions = () => {
 
                 //If called by subject we only update the displayed topic filters and sort the subject filters
                 // so that the possible new active filter comes first
-                if (caller === "subject") {
+                if (caller === "subjectId") {
                     setDisplayedFilters(prev => ({
                         subject: prev.subject.sort(a =>
                             a.id === activeFilters.subject ? -1 : 1,
@@ -243,7 +213,7 @@ export const useSearchQuestions = () => {
 
                 //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
                 //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
-                if (caller === "interactionFilter" || caller === "isResolved") {
+                if (caller === "userInteraction" || caller === "isResolved") {
                     setDisplayedFilters(prev => ({
                         subject: activeFilters.subject
                             ? prev.subject
@@ -275,43 +245,20 @@ export const useSearchQuestions = () => {
         // and now searchString. Will initiate filters and ust fetch the 10 most recent questions.
         if (!prevUrlAppendixes.current) {
             prevUrlAppendixes.current = urlAppendixes;
-            void updateQuestionsAndFilters("search");
+            void updateQuestionsAndFilters("searchStr");
         }
 
         // Determine what changed
-        let caller:
-            | "search"
-            | "subject"
-            | "topic"
-            | "isResolved"
-            | "interactionFilter"
-            | null = null;
-
-        if (prevUrlAppendixes.current.searchStr !== urlAppendixes.searchStr) {
-            caller = "search";
-        } else if (
-            prevUrlAppendixes.current.subjectId !== urlAppendixes.subjectId
-        ) {
-            caller = "subject";
-        } else if (
-            prevUrlAppendixes.current.topicId !== urlAppendixes.topicId
-        ) {
-            caller = "topic";
-        } else if (
-            prevUrlAppendixes.current.isResolved !== urlAppendixes.isResolved
-        ) {
-            caller = "isResolved";
-        } else if (
-            prevUrlAppendixes.current.userInteraction !==
-            urlAppendixes.userInteraction
-        ) {
-            caller = "interactionFilter";
-        }
+        const changedKey = Object.keys(urlAppendixes).find(
+            key =>
+                prevUrlAppendixes.current?.[key as keyof IUrlAppendixes] !==
+                urlAppendixes[key as keyof IUrlAppendixes],
+        ) as keyof IUrlAppendixes | undefined;
 
         prevUrlAppendixes.current = urlAppendixes; // Update ref for next render
 
-        if (caller) {
-            void updateQuestionsAndFilters(caller);
+        if (changedKey) {
+            void updateQuestionsAndFilters(changedKey);
         }
     }, [isGuest, updateQuestionsAndFilters, urlAppendixes]);
 
