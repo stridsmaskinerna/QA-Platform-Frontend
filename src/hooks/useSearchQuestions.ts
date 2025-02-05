@@ -137,7 +137,7 @@ export const useSearchQuestions = () => {
 
     //The "topic" arg isn't used at this point. Putting it there for clarities sake
     // and possible future use.
-    const updateQuestionsData = async (
+    const updateQuestionsAndFilters = async (
         caller:
             | "search"
             | "subject"
@@ -161,6 +161,8 @@ export const useSearchQuestions = () => {
         if (data) {
             setQuestions(data);
 
+            //If called by search we kind of reset the displayed filters. We update subject filter
+            //to mirror the fetched questions and set displayed topic filters to none
             if (caller === "search") {
                 const newDisplayedSubjectFilters = data
                     //Get array with only unique SubjectIds
@@ -185,6 +187,8 @@ export const useSearchQuestions = () => {
                 });
             }
 
+            //If called by subject we only update the displayed topic filters and sort the subject filters
+            // so that the possible new active filter comes first
             if (caller === "subject") {
                 const newDisplayedTopicFilters = data
                     //Get array with only unique topicIds
@@ -209,6 +213,8 @@ export const useSearchQuestions = () => {
                 }));
             }
 
+            //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
+            //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
             if (caller === "interactionFilter" || caller === "isResolved") {
                 setDisplayedFilters(prev => {
                     const newDisplayedSubjectFilters = activeFilters.subject
@@ -251,9 +257,7 @@ export const useSearchQuestions = () => {
                               }));
 
                     return {
-                        topic: newDisplayedTopicFilters.sort(a =>
-                            a.id === activeFilters.topic ? -1 : 1,
-                        ),
+                        topic: newDisplayedTopicFilters,
                         subject: newDisplayedSubjectFilters,
                     };
                 });
@@ -263,14 +267,14 @@ export const useSearchQuestions = () => {
     };
 
     useEffect(() => {
-        void updateQuestionsData("search");
+        void updateQuestionsAndFilters("search");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.searchStr]);
 
     useEffect(() => {
         //Dont run on initial render
         if (urlAppendixes.subjectId !== undefined) {
-            void updateQuestionsData("subject");
+            void updateQuestionsAndFilters("subject");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.subjectId]);
@@ -278,7 +282,7 @@ export const useSearchQuestions = () => {
     useEffect(() => {
         //Dont run on initial render
         if (urlAppendixes.topicId !== undefined) {
-            void updateQuestionsData("topic");
+            void updateQuestionsAndFilters("topic");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.topicId]);
@@ -286,7 +290,7 @@ export const useSearchQuestions = () => {
     useEffect(() => {
         //Dont run on initial render. We use the null value to indicate fetch all.
         if (urlAppendixes.isResolved !== undefined) {
-            void updateQuestionsData("isResolved");
+            void updateQuestionsAndFilters("isResolved");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.isResolved]);
@@ -297,7 +301,7 @@ export const useSearchQuestions = () => {
         //When clicking going from My Q&A to Recent Questions we set it to null and this is then going to update
         //the filters to not filter on interactionType.
         if (urlAppendixes.userInteraction !== undefined) {
-            void updateQuestionsData("interactionFilter");
+            void updateQuestionsAndFilters("interactionFilter");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes.userInteraction]);
