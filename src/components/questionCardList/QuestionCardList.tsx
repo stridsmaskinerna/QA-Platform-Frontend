@@ -1,15 +1,16 @@
-import { useTranslation } from "react-i18next";
 import { IQuestion } from "../../utils";
 import { Loader } from "..";
 import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
 import { ResolvedFilters } from "./ResolvedFilters";
+import { useTranslation } from "react-i18next";
 
 interface IQuestionCardListProps {
     data: IQuestion[];
     activeResolvedFilter: boolean | null;
     onResolvedFilterClick: (arg: boolean | null) => void;
     isLoadingQuestions: boolean;
+    header: string;
 }
 
 export function QuestionCardList({
@@ -17,6 +18,7 @@ export function QuestionCardList({
     activeResolvedFilter,
     onResolvedFilterClick,
     isLoadingQuestions,
+    header,
 }: IQuestionCardListProps) {
     const { t } = useTranslation();
     if (isLoadingQuestions) {
@@ -28,11 +30,11 @@ export function QuestionCardList({
             </div>
         );
     }
-
+    const isNoData = data.length === 0;
     return (
         <div className={styles.container}>
             <div className={styles.headerRow}>
-                <h3>{t("recentQuestions")}</h3>
+                <h3>{header}</h3>
                 <ResolvedFilters
                     activeResolvedFilter={activeResolvedFilter}
                     onResolvedFilterClick={onResolvedFilterClick}
@@ -44,6 +46,7 @@ export function QuestionCardList({
                     data={question}
                 />
             ))}
+            {isNoData && <h3>{t("noQuestionsFound")}</h3>}
         </div>
     );
 }

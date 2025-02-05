@@ -53,6 +53,7 @@ export interface ITab {
     content: ReactElement;
     contentContainerStyle?: CSSProperties;
     btnStyle?: CSSProperties;
+    tabBtnClickSideEffect?: () => void;
 }
 
 export interface IAuthErrorResponse {
