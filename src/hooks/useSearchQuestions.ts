@@ -176,7 +176,7 @@ export const useSearchQuestions = () => {
                         id: q.subjectId,
                         title: `${q.subjectCode ?? ""} ${q.subjectName}`,
                     }))
-                    //Sort to so active filter comes first
+                    //Sort so possible active filter comes first
                     .sort(a => (a.id === activeFilters.subject ? -1 : 1));
 
                 setDisplayedFilters({
@@ -199,12 +199,12 @@ export const useSearchQuestions = () => {
                     .map(q => ({
                         id: q.topicId,
                         title: q.topicName,
-                    }))
-                    //Sort to so active filter comes first
-                    .sort(a => (a.id === activeFilters.topic ? -1 : 1));
+                    }));
 
                 setDisplayedFilters(prev => ({
-                    subject: prev.subject,
+                    subject: prev.subject.sort(a =>
+                        a.id === activeFilters.subject ? -1 : 1,
+                    ),
                     topic: newDisplayedTopicFilters,
                 }));
             }
@@ -229,11 +229,7 @@ export const useSearchQuestions = () => {
                               .map(q => ({
                                   id: q.subjectId,
                                   title: `${q.subjectCode ?? ""} ${q.subjectName}`,
-                              }))
-                              //Sort to so active filter comes first
-                              .sort(a =>
-                                  a.id === activeFilters.subject ? -1 : 1,
-                              );
+                              }));
 
                     const newDisplayedTopicFilters = activeFilters.topic
                         ? prev.topic
@@ -252,14 +248,12 @@ export const useSearchQuestions = () => {
                               .map(q => ({
                                   id: q.topicId,
                                   title: q.topicName,
-                              }))
-                              //Sort to so active filter comes first
-                              .sort(a =>
-                                  a.id === activeFilters.topic ? -1 : 1,
-                              );
+                              }));
 
                     return {
-                        topic: newDisplayedTopicFilters,
+                        topic: newDisplayedTopicFilters.sort(a =>
+                            a.id === activeFilters.topic ? -1 : 1,
+                        ),
                         subject: newDisplayedSubjectFilters,
                     };
                 });
