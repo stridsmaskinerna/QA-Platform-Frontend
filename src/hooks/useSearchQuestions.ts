@@ -1,4 +1,10 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import {
+    ChangeEventHandler,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
 import { BASE_URL, fetchQuestions } from "../data";
@@ -50,7 +56,7 @@ export const useSearchQuestions = () => {
         isResolved: undefined,
         userInteraction: undefined,
     });
-
+    const prevUrlAppendixes = useRef<typeof urlAppendixes>();
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
 
@@ -137,174 +143,194 @@ export const useSearchQuestions = () => {
 
     //The "topic" arg isn't used at this point. Putting it there for clarities sake
     // and possible future use.
-    const updateQuestionsAndFilters = async (
-        caller:
+    const updateQuestionsAndFilters = useCallback(
+        async (
+            caller:
+                | "search"
+                | "subject"
+                | "topic"
+                | "isResolved"
+                | "interactionFilter",
+        ) => {
+            setIsLoadingQuestions(true);
+
+            const queryParams =
+                urlAppendixes.searchStr +
+                (urlAppendixes.isResolved ?? "") +
+                (urlAppendixes.userInteraction ?? "") +
+                (urlAppendixes.subjectId ?? "") +
+                (urlAppendixes.topicId ?? "");
+
+            const data = isGuest
+                ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
+                : await authFetchQuestions(questionsBaseUrl + queryParams);
+
+            if (data) {
+                setQuestions(data);
+
+                //If called by search we kind of reset the displayed filters. We update subject filter
+                //to mirror the fetched questions and set displayed topic filters to none
+                if (caller === "search") {
+                    const newDisplayedSubjectFilters = data
+                        //Get array with only unique SubjectIds
+                        .reduce(
+                            (acc: IQuestion[], current) =>
+                                acc.some(q => q.subjectId === current.subjectId)
+                                    ? acc
+                                    : [...acc, current],
+                            [],
+                        )
+                        //Map to right format
+                        .map(q => ({
+                            id: q.subjectId,
+                            title: `${q.subjectCode ?? ""} ${q.subjectName}`,
+                        }))
+                        //Sort so possible active filter comes first
+                        .sort(a => (a.id === activeFilters.subject ? -1 : 1));
+
+                    setDisplayedFilters({
+                        subject: newDisplayedSubjectFilters,
+                        topic: [],
+                    });
+                }
+
+                //If called by subject we only update the displayed topic filters and sort the subject filters
+                // so that the possible new active filter comes first
+                if (caller === "subject") {
+                    const newDisplayedTopicFilters = data
+                        //Get array with only unique topicIds
+                        .reduce(
+                            (acc: IQuestion[], current) =>
+                                acc.some(q => q.topicId === current.topicId)
+                                    ? acc
+                                    : [...acc, current],
+                            [],
+                        )
+                        //Map to right format
+                        .map(q => ({
+                            id: q.topicId,
+                            title: q.topicName,
+                        }));
+
+                    setDisplayedFilters(prev => ({
+                        subject: prev.subject.sort(a =>
+                            a.id === activeFilters.subject ? -1 : 1,
+                        ),
+                        topic: newDisplayedTopicFilters,
+                    }));
+                }
+
+                //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
+                //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
+                if (caller === "interactionFilter" || caller === "isResolved") {
+                    setDisplayedFilters(prev => {
+                        const newDisplayedSubjectFilters = activeFilters.subject
+                            ? prev.subject
+                            : data
+                                  //Get array with only unique SubjectIds
+                                  .reduce(
+                                      (acc: IQuestion[], current) =>
+                                          acc.some(
+                                              q =>
+                                                  q.subjectId ===
+                                                  current.subjectId,
+                                          )
+                                              ? acc
+                                              : [...acc, current],
+                                      [],
+                                  )
+                                  //Map to right format
+                                  .map(q => ({
+                                      id: q.subjectId,
+                                      title: `${q.subjectCode ?? ""} ${q.subjectName}`,
+                                  }));
+
+                        const newDisplayedTopicFilters = activeFilters.topic
+                            ? prev.topic
+                            : data
+                                  //Get array with only unique topicIds
+                                  .reduce(
+                                      (acc: IQuestion[], current) =>
+                                          acc.some(
+                                              q =>
+                                                  q.topicId === current.topicId,
+                                          )
+                                              ? acc
+                                              : [...acc, current],
+                                      [],
+                                  )
+                                  //Map to right format
+                                  .map(q => ({
+                                      id: q.topicId,
+                                      title: q.topicName,
+                                  }));
+
+                        return {
+                            topic: newDisplayedTopicFilters,
+                            subject: newDisplayedSubjectFilters,
+                        };
+                    });
+                }
+            }
+            setIsLoadingQuestions(false);
+        },
+        [
+            activeFilters.subject,
+            activeFilters.topic,
+            authFetchQuestions,
+            isGuest,
+            urlAppendixes.isResolved,
+            urlAppendixes.searchStr,
+            urlAppendixes.subjectId,
+            urlAppendixes.topicId,
+            urlAppendixes.userInteraction,
+        ],
+    );
+
+    useEffect(() => {
+        //Initial render. Run the updateQuestionsAndFilters function with caller = search
+        // and now searchString. Will initiate filters and ust fetch the 10 most recent questions.
+        if (!prevUrlAppendixes.current) {
+            prevUrlAppendixes.current = urlAppendixes;
+            void updateQuestionsAndFilters("search");
+        }
+
+        // Determine what changed
+        let caller:
             | "search"
             | "subject"
             | "topic"
             | "isResolved"
-            | "interactionFilter",
-    ) => {
-        setIsLoadingQuestions(true);
+            | "interactionFilter"
+            | null = null;
 
-        const queryParams =
-            urlAppendixes.searchStr +
-            (urlAppendixes.isResolved ?? "") +
-            (urlAppendixes.userInteraction ?? "") +
-            (urlAppendixes.subjectId ?? "") +
-            (urlAppendixes.topicId ?? "");
-
-        const data = isGuest
-            ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
-            : await authFetchQuestions(questionsBaseUrl + queryParams);
-
-        if (data) {
-            setQuestions(data);
-
-            //If called by search we kind of reset the displayed filters. We update subject filter
-            //to mirror the fetched questions and set displayed topic filters to none
-            if (caller === "search") {
-                const newDisplayedSubjectFilters = data
-                    //Get array with only unique SubjectIds
-                    .reduce(
-                        (acc: IQuestion[], current) =>
-                            acc.some(q => q.subjectId === current.subjectId)
-                                ? acc
-                                : [...acc, current],
-                        [],
-                    )
-                    //Map to right format
-                    .map(q => ({
-                        id: q.subjectId,
-                        title: `${q.subjectCode ?? ""} ${q.subjectName}`,
-                    }))
-                    //Sort so possible active filter comes first
-                    .sort(a => (a.id === activeFilters.subject ? -1 : 1));
-
-                setDisplayedFilters({
-                    subject: newDisplayedSubjectFilters,
-                    topic: [],
-                });
-            }
-
-            //If called by subject we only update the displayed topic filters and sort the subject filters
-            // so that the possible new active filter comes first
-            if (caller === "subject") {
-                const newDisplayedTopicFilters = data
-                    //Get array with only unique topicIds
-                    .reduce(
-                        (acc: IQuestion[], current) =>
-                            acc.some(q => q.topicId === current.topicId)
-                                ? acc
-                                : [...acc, current],
-                        [],
-                    )
-                    //Map to right format
-                    .map(q => ({
-                        id: q.topicId,
-                        title: q.topicName,
-                    }));
-
-                setDisplayedFilters(prev => ({
-                    subject: prev.subject.sort(a =>
-                        a.id === activeFilters.subject ? -1 : 1,
-                    ),
-                    topic: newDisplayedTopicFilters,
-                }));
-            }
-
-            //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
-            //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
-            if (caller === "interactionFilter" || caller === "isResolved") {
-                setDisplayedFilters(prev => {
-                    const newDisplayedSubjectFilters = activeFilters.subject
-                        ? prev.subject
-                        : data
-                              //Get array with only unique SubjectIds
-                              .reduce(
-                                  (acc: IQuestion[], current) =>
-                                      acc.some(
-                                          q =>
-                                              q.subjectId === current.subjectId,
-                                      )
-                                          ? acc
-                                          : [...acc, current],
-                                  [],
-                              )
-                              //Map to right format
-                              .map(q => ({
-                                  id: q.subjectId,
-                                  title: `${q.subjectCode ?? ""} ${q.subjectName}`,
-                              }));
-
-                    const newDisplayedTopicFilters = activeFilters.topic
-                        ? prev.topic
-                        : data
-                              //Get array with only unique topicIds
-                              .reduce(
-                                  (acc: IQuestion[], current) =>
-                                      acc.some(
-                                          q => q.topicId === current.topicId,
-                                      )
-                                          ? acc
-                                          : [...acc, current],
-                                  [],
-                              )
-                              //Map to right format
-                              .map(q => ({
-                                  id: q.topicId,
-                                  title: q.topicName,
-                              }));
-
-                    return {
-                        topic: newDisplayedTopicFilters,
-                        subject: newDisplayedSubjectFilters,
-                    };
-                });
-            }
+        if (prevUrlAppendixes.current.searchStr !== urlAppendixes.searchStr) {
+            caller = "search";
+        } else if (
+            prevUrlAppendixes.current.subjectId !== urlAppendixes.subjectId
+        ) {
+            caller = "subject";
+        } else if (
+            prevUrlAppendixes.current.topicId !== urlAppendixes.topicId
+        ) {
+            caller = "topic";
+        } else if (
+            prevUrlAppendixes.current.isResolved !== urlAppendixes.isResolved
+        ) {
+            caller = "isResolved";
+        } else if (
+            prevUrlAppendixes.current.userInteraction !==
+            urlAppendixes.userInteraction
+        ) {
+            caller = "interactionFilter";
         }
-        setIsLoadingQuestions(false);
-    };
 
-    useEffect(() => {
-        void updateQuestionsAndFilters("search");
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes.searchStr]);
+        prevUrlAppendixes.current = urlAppendixes; // Update ref for next render
 
-    useEffect(() => {
-        //Dont run on initial render
-        if (urlAppendixes.subjectId !== undefined) {
-            void updateQuestionsAndFilters("subject");
+        if (caller) {
+            void updateQuestionsAndFilters(caller);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes.subjectId]);
-
-    useEffect(() => {
-        //Dont run on initial render
-        if (urlAppendixes.topicId !== undefined) {
-            void updateQuestionsAndFilters("topic");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes.topicId]);
-
-    useEffect(() => {
-        //Dont run on initial render. We use the null value to indicate fetch all.
-        if (urlAppendixes.isResolved !== undefined) {
-            void updateQuestionsAndFilters("isResolved");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes.isResolved]);
-
-    useEffect(() => {
-        //Dont run on initial render. We use the null value to indicate that user
-        // is on the Recent Questions tab and we shouldnt filter on interactionType at all.
-        //When clicking going from My Q&A to Recent Questions we set it to null and this is then going to update
-        //the filters to not filter on interactionType.
-        if (urlAppendixes.userInteraction !== undefined) {
-            void updateQuestionsAndFilters("interactionFilter");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes.userInteraction]);
+    }, [isGuest, updateQuestionsAndFilters, urlAppendixes]);
 
     return {
         debouncedSearch,
