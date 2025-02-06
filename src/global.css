@@ -29,6 +29,7 @@ html {
     --btnLight-bg: white;
     --btnLight-text: black;
     --btnLight-hover: lightgray;
+    overflow-y: scroll;
 }
 
 .app {

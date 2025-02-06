@@ -20,6 +20,7 @@ const tabsOuterContainerStyle: CSSProperties = {
 const tabsBtnStyle: CSSProperties = {
     fontSize: "clamp(12px, 2vw, 1.5rem)",
     flex: 1,
+    textWrap: "nowrap",
 };
 export function QuestionFinder() {
     const {
