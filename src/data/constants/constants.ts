@@ -9,6 +9,7 @@ export const GUEST_HOME_ROUTE = "/guest/";
 export const HOME_ROUTE = "/";
 export const QUESTION_DETAILS_ROUTE = "/questions/";
 export const QUESTION_ID = ":questionId";
+export const SPECIFIC_QUESTION = "/question/:questionId";
 
 export const PASSWORD_MIN_LENGTH = 8;
 
