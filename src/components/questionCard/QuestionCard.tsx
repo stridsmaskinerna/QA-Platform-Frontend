@@ -4,14 +4,25 @@ import { QuestionHeader } from ".";
 import { QuestionCardMiddle } from "./questionCardMiddle/QuestionCardMiddle";
 import QuestionCardBottom from "./questionCardBottom/QuestionCardBottom";
 import { IQuestion } from "../../utils";
-import { SPECIFIC_QUESTION } from "../../data";
+import {
+    QUESTION_DETAILS_ROUTE,
+    GUEST_QUESTION_DETAILS_ROUTE,
+} from "../../data";
 import { Link } from "react-router";
+import { useRoles } from "../../hooks/useRoles";
 
 interface IQuestionCardProps {
     data: IQuestion;
 }
 
 export function QuestionCard({ data }: IQuestionCardProps) {
+    const { isUser, isTeacher } = useRoles();
+
+    const questionLink =
+        isUser || isTeacher
+            ? `${QUESTION_DETAILS_ROUTE}${data.id}`
+            : `${GUEST_QUESTION_DETAILS_ROUTE}${data.id}`;
+
     return (
         <div className={styles.container}>
             <QuestionHeader
@@ -22,7 +33,7 @@ export function QuestionCard({ data }: IQuestionCardProps) {
                 subjectName={data.subjectName}
             />
             <Link
-                to={SPECIFIC_QUESTION.replace(":questionId", data.id)}
+                to={questionLink}
                 className={styles.link}
             >
                 <QuestionCardMiddle

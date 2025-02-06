@@ -18,6 +18,7 @@ export function NavMenu() {
     const { isAdmin, isGuest, isUser } = useRoles();
     const {
         authContext: { logout },
+        loaderContext: { setIsLoading },
     } = useQAContext();
     const menuRef = useRef(null);
 
@@ -71,6 +72,7 @@ export function NavMenu() {
                             <NavLink
                                 to={GUEST_HOME_ROUTE}
                                 onClickSideEffect={() => {
+                                    setIsLoading(true);
                                     logout();
                                     closeMenu();
                                 }}
