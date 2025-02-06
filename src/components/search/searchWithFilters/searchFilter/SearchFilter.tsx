@@ -80,14 +80,10 @@ export function SearchFilter({
             ((scrollRef.current?.offsetWidth ?? 0) +
                 (scrollRef.current?.scrollLeft ?? 0));
 
-        //We scroll to beginning on resize to prevent handleScroll from firing when user has scrolled a bit
-        //and the resizes the window.
-        if (scrollOverflowWidth > SCROLL_THRESHOLD) {
-            scrollRef.current?.scrollTo({ left: 0 });
-        }
+        const scrollPosition = scrollRef.current?.scrollLeft ?? 0;
 
         setShowScrollArrows({
-            leftArrow: false,
+            leftArrow: scrollPosition > SCROLL_THRESHOLD,
             rightArrow: scrollOverflowWidth > SCROLL_THRESHOLD,
         });
     }

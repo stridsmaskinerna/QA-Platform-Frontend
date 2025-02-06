@@ -8,6 +8,9 @@
 .filterWrapper {
     visibility: hidden;
     pointer-events: none;
+    /* Adjust min-height with respect to height of a FilterButton to prevent components jumping the first
+    time topicFilters are rendered */
+    min-height: 46px;
 }
 
 .show {

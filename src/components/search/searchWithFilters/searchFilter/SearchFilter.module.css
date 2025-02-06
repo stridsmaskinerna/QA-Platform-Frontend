@@ -21,9 +21,9 @@
     display: flex;
     gap: 15px;
     width: max-content;
-    /* Adjust min-height according to height of a FilterButton to prevent components jumping the first
-    time topicFilters are rendered */
-    min-height: 42px;
+    /* Adjust min-height with respect to the height of filterWrapper in SearchWithFilter.module.css to prevent
+    components jumping around*/
+    min-height: 46px;
 }
 
 .title {

@@ -124,32 +124,20 @@ export const useSearchQuestions = () => {
     };
     const debouncedSearch = useDebounceCallback(onSearchBarInputChange, 500);
 
-    const updateDisplayedSubjectFilters = useCallback(
-        (data: IQuestion[], sort?: boolean) => {
-            const uniqueSubjects = data
-                .reduce(
-                    (acc: IQuestion[], current) =>
-                        acc.some(q => q.subjectId === current.subjectId)
-                            ? acc
-                            : [...acc, current],
-                    [],
-                )
-                .map(q => ({
-                    id: q.subjectId,
-                    title: `${q.subjectCode ?? ""} ${q.subjectName}`,
-                }));
-
-            // Apply sorting only if `sort` is true
-            if (sort) {
-                uniqueSubjects.sort(a =>
-                    a.id === activeFilters.subject ? -1 : 1,
-                );
-            }
-
-            return uniqueSubjects;
-        },
-        [activeFilters.subject],
-    );
+    const updateDisplayedSubjectFilters = useCallback((data: IQuestion[]) => {
+        return data
+            .reduce(
+                (acc: IQuestion[], current) =>
+                    acc.some(q => q.subjectId === current.subjectId)
+                        ? acc
+                        : [...acc, current],
+                [],
+            )
+            .map(q => ({
+                id: q.subjectId,
+                title: `${q.subjectCode ?? ""} ${q.subjectName}`,
+            }));
+    }, []);
 
     const updateDisplayedTopicFilters = (data: IQuestion[]) => {
         return data
@@ -200,13 +188,10 @@ export const useSearchQuestions = () => {
                     });
                 }
 
-                //If called by subject we only update the displayed topic filters and sort the subject filters
-                // so that the possible new active filter comes first
+                //If called by subject we only update the displayed topic filters.
                 if (caller === "subjectId") {
                     setDisplayedFilters(prev => ({
-                        subject: prev.subject.sort(a =>
-                            a.id === activeFilters.subject ? -1 : 1,
-                        ),
+                        subject: prev.subject,
                         topic: updateDisplayedTopicFilters(data),
                     }));
                 }
