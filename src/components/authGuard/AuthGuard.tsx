@@ -31,7 +31,7 @@ export function AuthGuard({
     const { isRolesCorrupt } = useRoles();
     const {
         authContext: { roles },
-        loaderContext: { isLoading, setIsLoading },
+        loaderContext: { isLoading },
     } = useQAContext();
     const params = useParams();
     const redirectUrl = createRedirectUrl(
@@ -56,7 +56,6 @@ export function AuthGuard({
             />
         );
     }
-    setIsLoading(false);
     //Otherwise return the aimed for route
     return children;
 }
