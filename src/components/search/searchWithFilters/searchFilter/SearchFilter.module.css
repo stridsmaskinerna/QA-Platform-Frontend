@@ -21,6 +21,7 @@
     display: flex;
     gap: 15px;
     width: max-content;
+    min-height: 42px;
 }
 
 .title {
