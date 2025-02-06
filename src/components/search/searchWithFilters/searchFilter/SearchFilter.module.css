@@ -21,6 +21,8 @@
     display: flex;
     gap: 15px;
     width: max-content;
+    /* Adjust min-height according to height of a FilterButton to prevent components jumping the first
+    time topicFilters are rendered */
     min-height: 42px;
 }
 
