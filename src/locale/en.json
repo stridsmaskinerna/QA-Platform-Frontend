@@ -39,13 +39,21 @@
         "searchQuestions": "Search question",
         "askAQuestion": "Ask a question",
         "teacher": "Teacher",
-        "categoryFilter": "Category filter",
+        "categoryFilter": "Course filter",
         "topicFilter": "Topic filter",
         "clickToHide": "Set question to hidden",
         "clickToShow": "Set question to visible",
         "ok": "Ok",
         "all": "All",
+        "questionListHeader": "Recent Questions",
         "recentQuestions": "Recent Questions",
-        "myQa": "My Q&A"
+        "myQa": "My Q&A",
+        "created": "Asked",
+        "answered": "Answered",
+        "commented": "Commented",
+        "noQuestionsFound": "No questions match those criteria",
+        "createdHeader": "Questions You've Asked",
+        "answeredHeader": "Questions You've Answered",
+        "commentedHeader": "Questions With Answers You've Commented On"
     }
 }

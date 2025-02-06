@@ -1,7 +1,9 @@
 .container {
+    display: flex;
     background-color: var(
         --tabBtn-active
     ); /*Invert colors compared to tabs component*/
+    flex-wrap: nowrap;
 }
 
 .btn {

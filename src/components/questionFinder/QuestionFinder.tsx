@@ -4,7 +4,8 @@ import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
 import { ITab } from "../../utils";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
+import { MyQASection } from "../myQASection";
 
 const tabContainerStyle: CSSProperties = {
     width: "100%",
@@ -24,38 +25,79 @@ export function QuestionFinder() {
     const {
         debouncedSearch,
         questions,
-        subjectFilter,
-        topicFilter,
+        subjectFilterProps,
+        topicFilterProps,
         isLoadingQuestions,
-        resolvedFilter,
         onResolvedFilterClick,
+        activeFilters,
+        onInterActionFilterClick,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
 
-    const tabs: ITab[] = [
-        {
-            content: (
-                <QuestionCardList
-                    onResolvedFilterClick={onResolvedFilterClick}
-                    activeResolvedFilter={resolvedFilter}
-                    data={questions}
-                    isLoadingQuestions={isLoadingQuestions}
-                />
-            ),
-            title: t("recentQuestions"),
-            btnStyle: tabsBtnStyle,
-            contentContainerStyle: tabContainerStyle,
-        },
-        { content: <></>, title: t("myQa"), btnStyle: tabsBtnStyle },
-    ];
+    const questionListContent = useMemo(
+        () => (
+            <QuestionCardList
+                header={t(
+                    `${activeFilters.userInteraction ?? "questionList"}Header`,
+                )}
+                onResolvedFilterClick={onResolvedFilterClick}
+                activeResolvedFilter={activeFilters.resolved}
+                data={questions}
+                isLoadingQuestions={isLoadingQuestions}
+            />
+        ),
+        [
+            activeFilters.resolved,
+            activeFilters.userInteraction,
+            isLoadingQuestions,
+            onResolvedFilterClick,
+            questions,
+            t,
+        ],
+    );
+
+    const tabs: ITab[] = useMemo(
+        () => [
+            {
+                content: questionListContent,
+                title: t("recentQuestions"),
+                btnStyle: tabsBtnStyle,
+                contentContainerStyle: tabContainerStyle,
+                tabBtnClickSideEffect: () => onInterActionFilterClick(null),
+            },
+            {
+                content: (
+                    <MyQASection
+                        activeFilter={
+                            activeFilters.userInteraction ?? "created"
+                        }
+                        setActiveFilter={onInterActionFilterClick}
+                    >
+                        {questionListContent}
+                    </MyQASection>
+                ),
+                contentContainerStyle: tabContainerStyle,
+                title: t("myQa"),
+                btnStyle: tabsBtnStyle,
+                tabBtnClickSideEffect: () =>
+                    onInterActionFilterClick("created"),
+            },
+        ],
+        [
+            activeFilters.userInteraction,
+            onInterActionFilterClick,
+            questionListContent,
+            t,
+        ],
+    );
 
     return (
         <div className={styles.container}>
             <SearchWithFilters
                 placeholder={t("searchQuestionsPlaceholder")}
-                subjectFilter={subjectFilter}
-                topicFilter={topicFilter}
+                subjectFilter={subjectFilterProps}
+                topicFilter={topicFilterProps}
                 onInputChange={debouncedSearch}
                 isLoadingQuestions={isLoadingQuestions}
             />
@@ -66,12 +108,7 @@ export function QuestionFinder() {
                     tabs={tabs}
                 />
             ) : (
-                <QuestionCardList
-                    onResolvedFilterClick={onResolvedFilterClick}
-                    activeResolvedFilter={resolvedFilter}
-                    data={questions}
-                    isLoadingQuestions={isLoadingQuestions}
-                />
+                questionListContent
             )}
         </div>
     );

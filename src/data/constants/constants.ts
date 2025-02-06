@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5084/api";
+export const BASE_URL = import.meta.env.VITE_BASE_URL as string;
 export const LOCAL_STORAGE_TOKEN_KEY = "tokens";
 
 //Routes
