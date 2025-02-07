@@ -76,6 +76,7 @@ describe("QuestionFinder", () => {
                 new MouseEvent("click", { bubbles: true, cancelable: true }),
             ),
         );
+
         //Check that the correct styling have been applied
         expect(firstSubjectFilter).toHaveClass("active");
 
