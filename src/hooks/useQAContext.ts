@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../context";
-import { LoaderContext } from "../context/loaderContext/LoaderContext";
+import { AuthContext, LoaderContext } from "../context";
 
 export function useQAContext() {
     const authContext = useContext(AuthContext);

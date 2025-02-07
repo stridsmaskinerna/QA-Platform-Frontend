@@ -54,6 +54,19 @@
         "noQuestionsFound": "Inga frågor matchar dessa kriterier",
         "createdHeader": "Frågor Du Har Ställt",
         "answeredHeader": "Frågor Du Har Svarat På",
-        "commentedHeader": "Frågor Med Svar Du Har Kommenterat"
+        "commentedHeader": "Frågor Med Svar Du Har Kommenterat",
+        "questionTitle": "Frågetitel",
+        "questionTitlePlaceholder": "Skriv in din frågetitel",
+        "questionDescription": "Frågebeskrivning",
+        "questionDescriptionPlaceholder": "Beskriv din fråga i detalj",
+        "questionDescriptionExpl": "Ange alla nödvändiga detaljer för att hjälpa andra att förstå och besvara din fråga",
+        "course": "Kurs",
+        "topic": "Ämne",
+        "publicQuestionExpl": "Tillåt offentlig åtkomst till din fråga för större synlighet",
+        "tags": "Taggar",
+        "addATag": "Lägg till en tagg",
+        "addATagExpl": "Lägg till relevanta taggar för att hjälpa till att kategorisera din fråga",
+        "add": "Lägg till",
+        "submitQuestion": "Publicera Fråga"
     }
 }

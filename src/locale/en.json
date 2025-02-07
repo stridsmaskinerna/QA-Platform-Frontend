@@ -54,6 +54,19 @@
         "noQuestionsFound": "No questions match those criteria",
         "createdHeader": "Questions You've Asked",
         "answeredHeader": "Questions You've Answered",
-        "commentedHeader": "Questions With Answers You've Commented On"
+        "commentedHeader": "Questions With Answers You've Commented On",
+        "questionTitle": "Question Title",
+        "questionTitlePlaceholder": "Enter your question title",
+        "questionDescription": "Question Description",
+        "questionDescriptionPlaceholder": "Describe your question in detail",
+        "questionDescriptionExpl": "Provide all necessary details to help others understand and answer your question",
+        "course": "Course",
+        "topic": "Topic",
+        "publicQuestionExpl": "Allow public access to your question for greater visibility",
+        "tags": "Tags",
+        "addATag": "Add a tag",
+        "addATagExpl": "Add relevant tags to help categorize your question",
+        "add": "Add",
+        "submitQuestion": "Submit Question"
     }
 }

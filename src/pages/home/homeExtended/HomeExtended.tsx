@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { QuestionFinder, Tabs } from "../../../components";
+import { AskAQuestion, QuestionFinder, Tabs } from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
 import { ITab } from "../../../utils";
@@ -33,7 +33,7 @@ export function HomeExtended() {
                 title: t("searchQuestions"),
             },
             {
-                content: <></>,
+                content: <AskAQuestion />,
                 btnStyle,
                 title: t("askAQuestion"),
             },
