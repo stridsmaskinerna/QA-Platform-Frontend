@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    padding-top: clamp(1rem, 5vw, 4rem);
+    padding-top: clamp(1rem, 5vw, 1.3rem);
     padding-inline: clamp(15px, 4vw, 10rem);
     align-items: center;
     flex: 1;
