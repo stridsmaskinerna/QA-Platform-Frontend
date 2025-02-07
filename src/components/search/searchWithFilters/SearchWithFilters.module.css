@@ -2,18 +2,21 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 .filterWrapper {
-    visibility: hidden;
     pointer-events: none;
-    /* Adjust min-height with respect to height of a FilterButton to prevent components jumping the first
-    time topicFilters are rendered */
-    min-height: 46px;
+    max-height: 0;
+    overflow: hidden;
+    transform-origin: top; /* Ensures scaling happens from the top */
+    transition: max-height 0.5s ease;
+}
+
+.subjectFilterWrapper {
+    padding-block: 1rem;
 }
 
 .show {
+    max-height: 100px;
     pointer-events: all;
-    visibility: visible;
 }

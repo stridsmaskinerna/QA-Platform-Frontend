@@ -7,11 +7,18 @@ export const handlers = [
     http.get(`${BASE_URL}/questions/public`, ({ request }) => {
         const url = new URL(request.url);
         const subjectId = url.searchParams.get("subjectId");
+        const searchString = url.searchParams.get("searchString");
 
         if (subjectId === "subject-1") {
             mockAPI(subjectId);
             return HttpResponse.json([questions[0]]);
         }
+
+        if (searchString === "subj") {
+            mockAPI(searchString);
+            return HttpResponse.json(questions);
+        }
+
         mockAPI();
 
         return HttpResponse.json(questions);
@@ -44,7 +51,7 @@ const questions: IQuestion[] = Array.from({ length: 10 }, (_, index) => ({
     subjectId: `subject-${index + 1}`,
     subjectName: `Subject ${index + 1}`,
     subjectCode: `SUBJ${index + 1}`,
-    username: `user${index + 1}`,
+    userName: `user${index + 1}`,
     title: `Question Title ${index + 1}`,
     created: randomDate(),
     isResolved: index % 2 === 0, // Alternate between resolved and unresolved
