@@ -30,12 +30,10 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
             </div>
 
             <div
+                data-testid="topicFilterWrapper"
                 className={`${styles.filterWrapper} ${props.shouldShowFilters.topic ? styles.show : ""}`}
             >
-                <div
-                    data-testid="topicFilterWrapper"
-                    className={styles.topicFilterWrapper}
-                >
+                <div className={styles.topicFilterWrapper}>
                     <SearchFilter
                         title={`${t("topicFilter")}:`}
                         onFilterClick={props.topicFilter.onFilterClick}

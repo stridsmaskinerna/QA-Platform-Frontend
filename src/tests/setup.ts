@@ -5,6 +5,7 @@ import { server } from "../mocks/network/node";
 import { mockAPI } from "./testUtils";
 
 beforeAll(() => server.listen());
+
 afterEach(() => {
     server.resetHandlers();
     mockAPI.mockClear();
