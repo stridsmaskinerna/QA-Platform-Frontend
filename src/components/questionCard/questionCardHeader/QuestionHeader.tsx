@@ -44,7 +44,7 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                             className={styles.icon}
                         />
                     )}
-                    <span className={styles.resolvedContainer}>
+                    <span className={styles.resolvedTextContainer}>
                         {props.isResolved ? t("resolved") : t("unresolved")}
                     </span>
                 </div>
@@ -60,7 +60,7 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                             : t("publicQuestion")}
                     </span>
                 </div>
-                {isTeacher && (
+                {!isTeacher && (
                     <div className={styles.iconWrapper}>
                         <img
                             className={styles.icon}

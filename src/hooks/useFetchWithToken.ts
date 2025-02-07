@@ -78,8 +78,8 @@ export function useFetchWithToken<T>(
                     //the refreshtoken has expired, so we clear the tokens in localStorage
                     //and send the user to the login screen
                     if (error.errorCode === 401) {
-                        clearTokens();
                         await navigate(LOGIN_REGISTER_ROUTE, { replace: true });
+                        clearTokens();
                     }
                 } else {
                     throw error;
@@ -96,8 +96,8 @@ export function useFetchWithToken<T>(
                 if (error instanceof CustomError) {
                     //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
                     if (error.errorCode === 401) {
-                        clearTokens();
                         await navigate(LOGIN_REGISTER_ROUTE, { replace: true });
+                        clearTokens();
                     }
                     //-------------------------------------------------------------------
                     setError(error);

@@ -101,11 +101,3 @@ export interface ISearchWithFiltersProps extends ISearchBarProps {
     topicFilter: ISearchFilter;
     isLoadingQuestions: boolean;
 }
-
-export interface IQuestionCardProps {
-    data: IQuestion;
-}
-
-export interface IQuestionCardListProps {
-    data: IQuestionCardProps[];
-}
