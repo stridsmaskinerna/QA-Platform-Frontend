@@ -16,8 +16,8 @@ const btnStyle: CSSProperties = {
 };
 
 const questionFinderContainerStyle: CSSProperties = {
-    marginTop: "1rem",
     width: "100%",
+    marginTop: "1rem",
 };
 const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
 
