@@ -6,8 +6,9 @@ import styles from "./SearchWithFilters.module.css";
 
 export function SearchWithFilters(props: ISearchWithFiltersProps) {
     const { t } = useTranslation();
-    const showTopics =
-        props.subjectFilter.activeFilter && !props.isLoadingQuestions;
+    // const showTopicFilters =
+    //     props.subjectFilter.activeFilter && !props.isLoadingQuestions;
+    // const showSubjectFilters = props.subjectFilter.displayedFilters.length > 0;
     return (
         <div className={styles.container}>
             <SearchBar
@@ -15,24 +16,31 @@ export function SearchWithFilters(props: ISearchWithFiltersProps) {
                 placeholder={props.placeholder}
                 onInputChange={props.onInputChange}
             />
-
-            <SearchFilter
-                title={`${t("categoryFilter")}:`}
-                onFilterClick={props.subjectFilter.onFilterClick}
-                displayedFilters={props.subjectFilter.displayedFilters}
-                activeFilter={props.subjectFilter.activeFilter}
-            />
+            <div
+                className={`${styles.filterWrapper} ${props.shouldShowFilters.subject ? styles.show : ""}`}
+            >
+                <div className={styles.subjectFilterWrapper}>
+                    <SearchFilter
+                        title={`${t("categoryFilter")}:`}
+                        onFilterClick={props.subjectFilter.onFilterClick}
+                        displayedFilters={props.subjectFilter.displayedFilters}
+                        activeFilter={props.subjectFilter.activeFilter}
+                    />
+                </div>
+            </div>
 
             <div
                 data-testid="topicFilterWrapper"
-                className={`${styles.filterWrapper} ${showTopics ? styles.show : ""}`}
+                className={`${styles.filterWrapper} ${props.shouldShowFilters.topic ? styles.show : ""}`}
             >
-                <SearchFilter
-                    title={`${t("topicFilter")}:`}
-                    onFilterClick={props.topicFilter.onFilterClick}
-                    displayedFilters={props.topicFilter.displayedFilters}
-                    activeFilter={props.topicFilter.activeFilter}
-                />
+                <div className={styles.topicFilterWrapper}>
+                    <SearchFilter
+                        title={`${t("topicFilter")}:`}
+                        onFilterClick={props.topicFilter.onFilterClick}
+                        displayedFilters={props.topicFilter.displayedFilters}
+                        activeFilter={props.topicFilter.activeFilter}
+                    />
+                </div>
             </div>
         </div>
     );

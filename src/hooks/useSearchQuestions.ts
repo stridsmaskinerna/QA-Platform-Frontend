@@ -9,7 +9,7 @@ import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
 import { BASE_URL, fetchQuestions } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
-import { IQuestion, UserInteractionFilter } from "../utils";
+import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
@@ -44,11 +44,9 @@ export const useSearchQuestions = () => {
         resolved: null,
         userInteraction: null,
     });
-
     const [displayedFilters, setDisplayedFilters] = useState<IDisplayedFilters>(
         { subject: [], topic: [] },
     );
-
     const [urlAppendixes, setUrlAppendixes] = useState<IUrlAppendixes>({
         searchStr: "",
         subjectId: undefined,
@@ -56,9 +54,13 @@ export const useSearchQuestions = () => {
         isResolved: undefined,
         userInteraction: undefined,
     });
+    const [shouldShowFilters, setShouldShowFilters] =
+        useState<IShouldShowFilters>({ subject: false, topic: false });
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
+
+    const ANIMATION_TIMER = 500;
 
     const onSubjectFilterClick = (subjectId: string) => {
         //Set isLoadingQuestions to true here if activating a subject filter to prevent
@@ -117,7 +119,7 @@ export const useSearchQuestions = () => {
     const onSearchBarInputChange: ChangeEventHandler<HTMLInputElement> = e => {
         setUrlAppendixes(prev => ({
             ...prev,
-            searchStr: `&searchString=${e.target.value}`,
+            searchStr: e.target.value ? `&searchString=${e.target.value}` : "",
             subjectId: undefined,
             topicId: undefined,
         }));
@@ -174,26 +176,55 @@ export const useSearchQuestions = () => {
             if (data) {
                 setQuestions(data);
 
-                //If called by search we kind of reset the displayed filters. We update subject filter
-                //to mirror the fetched questions and set displayed topic filters to none.
+                //If called by searchStr (which will also be the caller on initital render)
+                // we kind of reset the displayed filters. We update subject filter
+                //to mirror the fetched questions (if there is a searchStr)
+                // and set displayed topic filters to none.
                 if (caller === "searchStr") {
-                    setActiveFilters(prev => ({
-                        ...prev,
-                        subject: "",
-                        topic: "",
-                    }));
-                    setDisplayedFilters({
-                        subject: updateDisplayedSubjectFilters(data),
-                        topic: [],
-                    });
+                    if (urlAppendixes.searchStr) {
+                        setShouldShowFilters({ subject: true, topic: false });
+                        setActiveFilters(prev => ({
+                            ...prev,
+                            subject: "",
+                            topic: "",
+                        }));
+                        setDisplayedFilters({
+                            subject: updateDisplayedSubjectFilters(data),
+                            topic: [],
+                        });
+                    } else {
+                        setShouldShowFilters({ subject: false, topic: false });
+                        setTimeout(() => {
+                            setActiveFilters(prev => ({
+                                ...prev,
+                                subject: "",
+                                topic: "",
+                            }));
+                            setDisplayedFilters({
+                                subject: [],
+                                topic: [],
+                            });
+                        }, ANIMATION_TIMER);
+                    }
                 }
 
                 //If called by subject we only update the displayed topic filters.
                 if (caller === "subjectId") {
-                    setDisplayedFilters(prev => ({
-                        subject: prev.subject,
-                        topic: updateDisplayedTopicFilters(data),
-                    }));
+                    if (urlAppendixes.subjectId) {
+                        setShouldShowFilters({ subject: true, topic: true });
+                        setDisplayedFilters(prev => ({
+                            subject: prev.subject,
+                            topic: updateDisplayedTopicFilters(data),
+                        }));
+                    } else {
+                        setShouldShowFilters({ subject: true, topic: false });
+                        setTimeout(() => {
+                            setDisplayedFilters(prev => ({
+                                subject: prev.subject,
+                                topic: [],
+                            }));
+                        }, ANIMATION_TIMER);
+                    }
                 }
 
                 //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
@@ -264,5 +295,6 @@ export const useSearchQuestions = () => {
             displayedFilters: displayedFilters.topic,
             activeFilter: activeFilters.topic,
         },
+        shouldShowFilters,
     };
 };

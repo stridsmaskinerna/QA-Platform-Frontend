@@ -12,11 +12,6 @@ const tabContainerStyle: CSSProperties = {
     marginTop: "clamp(0.2rem, 5vw, 2rem)",
 };
 
-const tabsOuterContainerStyle: CSSProperties = {
-    width: "100%",
-    flexDirection: "column",
-};
-
 const tabsBtnStyle: CSSProperties = {
     fontSize: "clamp(12px, 2vw, 1.5rem)",
     flex: 1,
@@ -32,9 +27,16 @@ export function QuestionFinder() {
         onResolvedFilterClick,
         activeFilters,
         onInterActionFilterClick,
+        shouldShowFilters,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
+
+    const tabsOuterContainerStyle: CSSProperties = {
+        width: "100%",
+        flexDirection: "column",
+        transition: "transform 0.5s ease",
+    };
 
     const questionListContent = useMemo(
         () => (
@@ -96,6 +98,7 @@ export function QuestionFinder() {
     return (
         <div className={styles.container}>
             <SearchWithFilters
+                shouldShowFilters={shouldShowFilters}
                 placeholder={t("searchQuestionsPlaceholder")}
                 subjectFilter={subjectFilterProps}
                 topicFilter={topicFilterProps}

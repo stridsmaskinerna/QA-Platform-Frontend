@@ -100,4 +100,18 @@ export interface ISearchWithFiltersProps extends ISearchBarProps {
     subjectFilter: ISearchFilter;
     topicFilter: ISearchFilter;
     isLoadingQuestions: boolean;
+    shouldShowFilters: IShouldShowFilters;
+}
+
+export interface IQuestionCardProps {
+    data: IQuestion;
+}
+
+export interface IQuestionCardListProps {
+    data: IQuestionCardProps[];
+}
+
+export interface IShouldShowFilters {
+    subject: boolean;
+    topic: boolean;
 }

@@ -6,16 +6,17 @@ import { ITab } from "../../../utils";
 import { CSSProperties, useMemo } from "react";
 
 const tabBtnsContainerStyle: CSSProperties = {
-    width: "clamp(290px, 90vw, 700px)",
+    maxWidth: "100%",
 };
 
 const btnStyle: CSSProperties = {
-    fontSize: "clamp(14px, 2vw, 1.2rem)",
-    flex: 1,
+    fontSize: "13px",
+    width: "max-content",
+    paddingBlock: "5px",
 };
 
 const questionFinderContainerStyle: CSSProperties = {
-    marginTop: "1.5rem",
+    marginTop: "1rem",
     width: "100%",
 };
 const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
