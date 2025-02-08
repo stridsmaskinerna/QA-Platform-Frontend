@@ -13,6 +13,7 @@ import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
+let timeout: NodeJS.Timeout;
 
 interface IUrlAppendixes {
     searchStr: string;
@@ -211,14 +212,18 @@ export const useSearchQuestions = () => {
                 //If called by subject we only update the displayed topic filters.
                 if (caller === "subjectId") {
                     if (urlAppendixes.subjectId) {
-                        setShouldShowFilters({ subject: true, topic: true });
+                        clearTimeout(timeout);
+                        setShouldShowFilters({
+                            subject: true,
+                            topic: true,
+                        });
                         setDisplayedFilters(prev => ({
                             subject: prev.subject,
                             topic: updateDisplayedTopicFilters(data),
                         }));
                     } else {
                         setShouldShowFilters({ subject: true, topic: false });
-                        setTimeout(() => {
+                        timeout = setTimeout(() => {
                             setDisplayedFilters(prev => ({
                                 subject: prev.subject,
                                 topic: [],
