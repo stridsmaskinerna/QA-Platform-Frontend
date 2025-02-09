@@ -14,6 +14,8 @@ import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
 let timeout: NodeJS.Timeout;
+//If changes this, also change the transition time length accordingly in SearchWithFilters.module.css
+const ANIMATION_TIMER = 500;
 
 interface IUrlAppendixes {
     searchStr: string;
@@ -60,8 +62,6 @@ export const useSearchQuestions = () => {
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
-
-    const ANIMATION_TIMER = 500;
 
     const onSubjectFilterClick = (subjectId: string) => {
         //Set isLoadingQuestions to true here if activating a subject filter to prevent

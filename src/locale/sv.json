@@ -61,6 +61,7 @@
         "questionDescriptionPlaceholder": "Beskriv din fråga i detalj",
         "questionDescriptionExpl": "Ange alla nödvändiga detaljer för att hjälpa andra att förstå och besvara din fråga",
         "course": "Kurs",
+        "askQuestionCoursePlaceholder": "Välj en kurs. Börja skriva för att se förslag.",
         "topic": "Ämne",
         "publicQuestionExpl": "Tillåt offentlig åtkomst till din fråga för större synlighet",
         "tags": "Taggar",

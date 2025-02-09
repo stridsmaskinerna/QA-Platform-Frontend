@@ -1,5 +1,6 @@
 import {
     ChangeEventHandler,
+    CSSProperties,
     HTMLInputTypeAttribute,
     useId,
     useRef,
@@ -16,6 +17,7 @@ interface IInputProps {
     placeHolder?: string;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     defaultValue?: string;
+    labelStyle?: CSSProperties;
 }
 
 export function Input({
@@ -26,6 +28,7 @@ export function Input({
     placeHolder,
     onChange,
     defaultValue,
+    labelStyle,
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
     const id = useId();
@@ -35,6 +38,7 @@ export function Input({
         <div className={styles.container}>
             {label && (
                 <label
+                    style={labelStyle}
                     className={styles.label}
                     htmlFor={id}
                 >

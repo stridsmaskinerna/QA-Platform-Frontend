@@ -115,3 +115,16 @@ export interface IShouldShowFilters {
     subject: boolean;
     topic: boolean;
 }
+
+export interface ITeacher {
+    id: string;
+    email: string;
+    userName: string;
+}
+
+export interface ICourse {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers?: ITeacher[];
+}

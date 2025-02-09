@@ -8,7 +8,6 @@
     pointer-events: none;
     max-height: 0;
     overflow: hidden;
-    transform-origin: top; /* Ensures scaling happens from the top */
     transition: max-height 0.5s ease;
 }
 

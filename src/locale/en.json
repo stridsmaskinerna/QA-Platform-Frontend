@@ -61,6 +61,7 @@
         "questionDescriptionPlaceholder": "Describe your question in detail",
         "questionDescriptionExpl": "Provide all necessary details to help others understand and answer your question",
         "course": "Course",
+        "askQuestionCoursePlaceholder": "Pick a course. Suggestions will appear as you type.",
         "topic": "Topic",
         "publicQuestionExpl": "Allow public access to your question for greater visibility",
         "tags": "Tags",
