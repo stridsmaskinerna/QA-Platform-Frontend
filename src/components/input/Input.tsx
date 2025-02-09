@@ -1,24 +1,6 @@
-import {
-    ChangeEventHandler,
-    CSSProperties,
-    HTMLInputTypeAttribute,
-    useId,
-    useRef,
-    useState,
-} from "react";
+import { ChangeEvent, useId, useState } from "react";
 import styles from "./Input.module.css";
-import { useOnClickOutside } from "usehooks-ts";
-
-interface IInputProps {
-    inputType: HTMLInputTypeAttribute;
-    label?: string;
-    inputName: string;
-    minInputValueLength?: number;
-    placeHolder?: string;
-    onChange?: ChangeEventHandler<HTMLInputElement>;
-    defaultValue?: string;
-    labelStyle?: CSSProperties;
-}
+import { IInputProps } from "../../utils";
 
 export function Input({
     inputType,
@@ -29,11 +11,46 @@ export function Input({
     onChange,
     defaultValue,
     labelStyle,
+    children,
+    onBlur,
+    onFocus,
+    inputValue,
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
+
+    const [localInputValue, setLocalInputValue] = useState<string>(
+        inputValue ?? "",
+    );
     const id = useId();
-    const inputRef = useRef(null);
-    useOnClickOutside(inputRef, () => setIsActive(false));
+
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (!inputValue) {
+            setLocalInputValue(e.target.value);
+        }
+        if (onChange) {
+            onChange(e);
+        } else if (inputValue) {
+            console.error(
+                "You are providing an inputValue to Input component but not a onChange handler",
+            );
+        }
+    };
+
+    const handleBlur = () => {
+        setIsActive(false);
+        if (onBlur) {
+            onBlur();
+        }
+    };
+
+    const handleFocus = () => {
+        setIsActive(true);
+        if (onFocus) {
+            onFocus();
+        }
+    };
+
     return (
         <div className={styles.container}>
             {label && (
@@ -46,15 +63,16 @@ export function Input({
                 </label>
             )}
             <div
-                onClick={() => setIsActive(true)}
                 className={`${styles.inputWrapper} ${isActive ? styles.highlight : ""}`}
             >
                 <input
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={inputValue ?? localInputValue}
                     defaultValue={defaultValue}
-                    onChange={onChange}
+                    onChange={handleOnChange}
                     placeholder={placeHolder}
                     minLength={minInputValueLength}
-                    ref={inputRef}
                     required
                     id={id}
                     name={inputName}
@@ -62,6 +80,7 @@ export function Input({
                     className={styles.input}
                 />
             </div>
+            {children}
         </div>
     );
 }

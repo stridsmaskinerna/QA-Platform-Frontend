@@ -1,0 +1,32 @@
+.suggestionsContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 1rem;
+    margin-top: -6px;
+    border: 1px solid black;
+    border-top: none;
+    background-color: var(--btnLight-bg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    padding: 0px 5px 5px 5px;
+}
+
+.suggestionBtn {
+    border: none;
+    text-align: left;
+    padding-block: 4px;
+    padding-left: 4px;
+    background-color: var(--btnLight-bg);
+    color: var(--btnLight-text);
+}
+
+.suggestionBtn:hover {
+    background-color: var(--btnLight-hover);
+}
+
+.showSuggestions {
+    pointer-events: all;
+    opacity: 1;
+}

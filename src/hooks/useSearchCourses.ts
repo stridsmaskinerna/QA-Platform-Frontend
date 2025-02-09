@@ -42,5 +42,10 @@ export function useSearchCourses() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return { isLoadingCourses, debouncedOnCourseInputChange, filteredCourses };
+    return {
+        isLoadingCourses,
+        debouncedOnCourseInputChange,
+        filteredCourses,
+        courses,
+    };
 }

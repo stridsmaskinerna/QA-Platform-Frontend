@@ -10,3 +10,15 @@
     align-items: center;
     gap: clamp(20px, 3vw, 30px);
 }
+
+.submitBtn {
+    border: none;
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.submitBtn:hover {
+    background-color: var(--btnDark-hover);
+}

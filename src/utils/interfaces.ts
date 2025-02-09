@@ -2,6 +2,7 @@ import {
     ChangeEventHandler,
     CSSProperties,
     Dispatch,
+    HTMLInputTypeAttribute,
     ReactElement,
     SetStateAction,
 } from "react";
@@ -127,4 +128,24 @@ export interface ICourse {
     name: string;
     subjectCode?: string;
     teachers?: ITeacher[];
+}
+
+export interface IInputProps {
+    inputType: HTMLInputTypeAttribute;
+    inputName: string;
+    label?: string;
+    minInputValueLength?: number;
+    placeHolder?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    defaultValue?: string;
+    labelStyle?: CSSProperties;
+    children?: ReactElement;
+    onBlur?: () => void;
+    onFocus?: () => void;
+    inputValue?: string;
+}
+
+export interface ISuggestion {
+    name: string;
+    id: string;
 }

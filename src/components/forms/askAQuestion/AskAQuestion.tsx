@@ -1,8 +1,24 @@
-import { CSSProperties, useRef } from "react";
+import {
+    CSSProperties,
+    FormEventHandler,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import styles from "./AskAQuestion.module.css";
-import { Input } from "../..";
+import { Input, InputWithPrefetchedSuggestions } from "../..";
 import { useTranslation } from "react-i18next";
 import { useSearchCourses } from "../../../hooks";
+import { ISuggestion } from "../../../utils";
+
+interface IAskAQuestionFormValues {
+    title: string;
+    description: string;
+    courseId: string;
+    topicId: string;
+    isProtected: boolean;
+    tags: string[];
+}
 
 const labelStyle: CSSProperties = {
     fontWeight: "600",
@@ -10,16 +26,42 @@ const labelStyle: CSSProperties = {
 };
 
 export function AskAQuestion() {
-    const formRef = useRef<HTMLFormElement>(null);
     const { t } = useTranslation();
-    const { filteredCourses, isLoadingCourses, debouncedOnCourseInputChange } =
-        useSearchCourses();
+    const { courses } = useSearchCourses();
 
-    console.log(filteredCourses);
+    const [formValues, setFormValues] = useState<IAskAQuestionFormValues>({
+        title: "",
+        description: "",
+        courseId: "",
+        topicId: "",
+        isProtected: true,
+        tags: [],
+    });
+
+    const formRef = useRef<HTMLFormElement>(null);
+
+    const possibleCourseSuggestions: ISuggestion[] = useMemo(
+        () =>
+            courses.map(c => ({
+                id: c.id,
+                name: `${c.subjectCode} ${c.name}`,
+            })),
+        [courses],
+    );
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+        e.preventDefault();
+        console.log(formValues);
+    };
+
+    const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
+        setFormValues(prev => ({ ...prev, courseId: id }));
+    };
 
     return (
         <div className={styles.container}>
             <form
+                onSubmit={handleSubmit}
                 className={styles.form}
                 ref={formRef}
             >
@@ -32,15 +74,21 @@ export function AskAQuestion() {
                     placeHolder={t("questionTitlePlaceholder")}
                 />
 
-                <Input
-                    onChange={debouncedOnCourseInputChange}
+                <InputWithPrefetchedSuggestions
+                    onSuggestionClick={handleCourseSuggestionClick}
                     labelStyle={labelStyle}
                     inputName="course"
-                    minInputValueLength={1}
                     inputType="search"
                     label={t("course")}
                     placeHolder={t("askQuestionCoursePlaceholder")}
+                    possibleSuggestions={possibleCourseSuggestions}
                 />
+                <button
+                    className={styles.submitBtn}
+                    type="submit"
+                >
+                    {t("submitQuestion")}
+                </button>
             </form>
         </div>
     );
