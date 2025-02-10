@@ -268,7 +268,6 @@ export const useSearchQuestions = () => {
             prevUrlAppendixes.current = urlAppendixes;
             void updateQuestionsAndFilters("searchStr");
         }
-
         // Determine what changed
         const changedKey = Object.keys(urlAppendixes).find(
             key =>
@@ -281,7 +280,8 @@ export const useSearchQuestions = () => {
         if (changedKey) {
             void updateQuestionsAndFilters(changedKey);
         }
-    }, [isGuest, updateQuestionsAndFilters, urlAppendixes]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isGuest, urlAppendixes]);
 
     return {
         debouncedSearch,

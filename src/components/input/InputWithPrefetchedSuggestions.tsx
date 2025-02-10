@@ -6,7 +6,7 @@ import styles from "./InputWithPrefetchedSuggestions.module.css";
 interface IInputWithPrefetchedSuggestionsProps
     extends Omit<IInputProps, "children"> {
     possibleSuggestions: ISuggestion[];
-    onSuggestionClick: (arg: ISuggestion) => void;
+    onSuggestionClick?: (arg: ISuggestion) => void;
 }
 
 let hideSuggestionsTimeout: NodeJS.Timeout;
@@ -24,7 +24,9 @@ export function InputWithPrefetchedSuggestions(
     const handleSuggestionClick = ({ id, name }: ISuggestion) => {
         setInputValue(name);
         hideSuggestions();
-        props.onSuggestionClick({ id, name });
+        if (props.onSuggestionClick) {
+            props.onSuggestionClick({ id, name });
+        }
     };
 
     const handleOnChange: ChangeEventHandler<HTMLInputElement> = e => {

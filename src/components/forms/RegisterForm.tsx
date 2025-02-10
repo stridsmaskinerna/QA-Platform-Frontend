@@ -54,7 +54,6 @@ export function RegisterForm() {
     };
     return (
         <>
-            {" "}
             <form
                 ref={formRef}
                 className={styles.container}

@@ -7,7 +7,13 @@ import {
     useState,
 } from "react";
 import styles from "./AskAQuestion.module.css";
-import { Input, InputWithPrefetchedSuggestions, Loader, Select } from "../..";
+import {
+    Input,
+    InputWithPrefetchedSuggestions,
+    Loader,
+    Select,
+    Toggle,
+} from "../..";
 import { useTranslation } from "react-i18next";
 import { useFetchWithToken } from "../../../hooks";
 import { ICourse, IOption, ISuggestion } from "../../../utils";
@@ -16,9 +22,9 @@ import { BASE_URL } from "../../../data";
 interface IAskAQuestionFormValues {
     title: string;
     description: string;
-    courseId: string;
+    subjectId: string;
     topicId: string;
-    isProtected: boolean;
+    isProtected?: string;
     tags: string[];
 }
 
@@ -34,19 +40,11 @@ export function AskAQuestion() {
         useFetchWithToken<ICourse[]>();
     const { t } = useTranslation();
     const [courses, setCourses] = useState<ICourse[]>([]);
+    const [selectedCourseId, setSelectedCourseId] = useState<string>("");
     const [topics, setTopics] = useState<{
         options: IOption[];
         defaultValue: string;
     }>({ options: [], defaultValue: t("topicSelectDefault") });
-
-    const [formValues, setFormValues] = useState<IAskAQuestionFormValues>({
-        title: "",
-        description: "",
-        courseId: "",
-        topicId: "",
-        isProtected: true,
-        tags: [],
-    });
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -63,11 +61,18 @@ export function AskAQuestion() {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
-        console.log(formValues);
+        const formData = new FormData(e.currentTarget);
+        const formDetails = Object.fromEntries(
+            formData,
+        ) as unknown as IAskAQuestionFormValues;
+        if (!("isProtected" in formDetails)) {
+            formDetails.isProtected = "true";
+        }
+        console.log(formDetails);
     };
 
     const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
-        setFormValues(prev => ({ ...prev, courseId: id }));
+        setSelectedCourseId(id);
     };
 
     useEffect(() => {
@@ -98,7 +103,7 @@ export function AskAQuestion() {
             >
                 <Input
                     labelStyle={labelStyle}
-                    inputName="questionTitle"
+                    inputName="title"
                     minInputValueLength={5}
                     inputType="text"
                     label={t("questionTitle")}
@@ -108,20 +113,27 @@ export function AskAQuestion() {
                 <InputWithPrefetchedSuggestions
                     onSuggestionClick={handleCourseSuggestionClick}
                     labelStyle={labelStyle}
-                    inputName="course"
                     inputType="search"
                     label={t("course")}
                     placeHolder={t("askQuestionCoursePlaceholder")}
                     possibleSuggestions={possibleCourseSuggestions}
+                />
+                <input
+                    name="subjectId"
+                    type="hidden"
+                    value={selectedCourseId}
                 />
 
                 <Select
                     label={t("topic")}
                     defaultValue={topics.defaultValue}
                     options={topics.options}
-                    selectName="topic"
+                    selectName="topicId"
                     labelStyle={labelStyle}
                 />
+                <div className={styles.inputPair}>
+                    <Toggle inputName="isProtected" />
+                </div>
                 <button
                     className={styles.submitBtn}
                     type="submit"

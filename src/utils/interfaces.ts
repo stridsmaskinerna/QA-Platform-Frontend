@@ -132,7 +132,7 @@ export interface ICourse {
 
 export interface IInputProps {
     inputType: HTMLInputTypeAttribute;
-    inputName: string;
+    inputName?: string;
     label?: string;
     minInputValueLength?: number;
     placeHolder?: string;

@@ -18,6 +18,10 @@
     gap: clamp(20px, 3vw, 30px);
 }
 
+.inputPair {
+    width: 100%;
+}
+
 .submitBtn {
     border: none;
     background-color: var(--btnDark-bg);
