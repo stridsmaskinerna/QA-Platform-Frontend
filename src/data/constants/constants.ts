@@ -8,8 +8,10 @@ export const HOME_ROUTE = "/";
 export const ADMIN_ROUTE = "/admin/";
 export const LOGIN_REGISTER_ROUTE = "/login/";
 
-export const GUEST_QUESTION_DETAILS_ROUTE = "/guest/question/";
-export const QUESTION_DETAILS_ROUTE = "/question/";
+export const GUEST_QUESTION_DETAILS_ROUTE = "/guest/questions/";
+export const QUESTION_DETAILS_ROUTE = "/questions/";
+
+//URLS
 
 //Misc
 export const QUESTION_ID = ":questionId";
