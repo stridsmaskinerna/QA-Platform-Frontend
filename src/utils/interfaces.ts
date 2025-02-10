@@ -149,3 +149,8 @@ export interface ISuggestion {
     name: string;
     id: string;
 }
+
+export interface IOption {
+    id: string;
+    name: string;
+}

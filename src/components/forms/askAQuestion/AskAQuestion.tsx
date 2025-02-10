@@ -7,10 +7,10 @@ import {
     useState,
 } from "react";
 import styles from "./AskAQuestion.module.css";
-import { Input, InputWithPrefetchedSuggestions, Loader } from "../..";
+import { Input, InputWithPrefetchedSuggestions, Loader, Select } from "../..";
 import { useTranslation } from "react-i18next";
 import { useFetchWithToken } from "../../../hooks";
-import { ICourse, ISuggestion } from "../../../utils";
+import { ICourse, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
 
 interface IAskAQuestionFormValues {
@@ -32,8 +32,12 @@ const courseUrl = `${BASE_URL}/subject`;
 export function AskAQuestion() {
     const { requestHandler: fetchCourses, isLoading: isLoadingCourses } =
         useFetchWithToken<ICourse[]>();
-    const [courses, setCourses] = useState<ICourse[]>([]);
     const { t } = useTranslation();
+    const [courses, setCourses] = useState<ICourse[]>([]);
+    const [topics, setTopics] = useState<{
+        options: IOption[];
+        defaultValue: string;
+    }>({ options: [], defaultValue: t("topicSelectDefault") });
 
     const [formValues, setFormValues] = useState<IAskAQuestionFormValues>({
         title: "",
@@ -109,6 +113,14 @@ export function AskAQuestion() {
                     label={t("course")}
                     placeHolder={t("askQuestionCoursePlaceholder")}
                     possibleSuggestions={possibleCourseSuggestions}
+                />
+
+                <Select
+                    label={t("topic")}
+                    defaultValue={topics.defaultValue}
+                    options={topics.options}
+                    selectName="topic"
+                    labelStyle={labelStyle}
                 />
                 <button
                     className={styles.submitBtn}

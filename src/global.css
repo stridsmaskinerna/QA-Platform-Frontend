@@ -29,6 +29,7 @@ html {
     --btnLight-bg: white;
     --btnLight-text: black;
     --btnLight-hover: lightgray;
+    --inputIdle-text: rgb(114, 113, 113);
     overflow-y: scroll;
 }
 

@@ -63,6 +63,8 @@
         "course": "Course",
         "askQuestionCoursePlaceholder": "Pick a course. Suggestions will appear as you type.",
         "topic": "Topic",
+        "topicSelectDefault": "Choose a course to see topics",
+        "topicSelectActive": "Pick a topic",
         "publicQuestionExpl": "Allow public access to your question for greater visibility",
         "tags": "Tags",
         "addATag": "Add a tag",

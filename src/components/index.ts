@@ -11,3 +11,4 @@ export * from "./questionFinder";
 export * from "./modal";
 export * from "./questionCardList";
 export * from "./myQASection";
+export * from "./select";

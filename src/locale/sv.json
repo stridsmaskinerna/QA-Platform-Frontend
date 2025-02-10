@@ -63,6 +63,8 @@
         "course": "Kurs",
         "askQuestionCoursePlaceholder": "Välj en kurs. Börja skriva för att se förslag.",
         "topic": "Ämne",
+        "topicSelectDefault": "Välj en kurs för att se ämnen",
+        "topicSelectActive": "Välj ett ämne",
         "publicQuestionExpl": "Tillåt offentlig åtkomst till din fråga för större synlighet",
         "tags": "Taggar",
         "addATag": "Lägg till en tagg",
