@@ -65,6 +65,9 @@ export function AskAQuestion() {
         const formDetails = Object.fromEntries(
             formData,
         ) as unknown as IAskAQuestionFormValues;
+        //If the public toggle is off (which is the default), then no attribute for
+        //isProtected will be submitted. Therefore we append the missing isProtected:true here
+        //if there is no isProtected key in the formDetails object.
         if (!("isProtected" in formDetails)) {
             formDetails.isProtected = "true";
         }
