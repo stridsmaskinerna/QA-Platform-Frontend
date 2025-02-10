@@ -10,6 +10,7 @@ interface IInputWithPrefetchedSuggestionsProps
 }
 
 let hideSuggestionsTimeout: NodeJS.Timeout;
+let blurTimeout: NodeJS.Timeout;
 
 export function InputWithPrefetchedSuggestions(
     props: IInputWithPrefetchedSuggestionsProps,
@@ -22,8 +23,7 @@ export function InputWithPrefetchedSuggestions(
 
     const handleSuggestionClick = ({ id, name }: ISuggestion) => {
         setInputValue(name);
-        setDisplayedSuggestions([]);
-        setShowSuggestions(false);
+        hideSuggestions();
         props.onSuggestionClick({ id, name });
     };
 
@@ -41,20 +41,41 @@ export function InputWithPrefetchedSuggestions(
                       s.name.toLowerCase().includes(value.toLowerCase()),
                   )
                   .slice(0, 10);
+        //If user has typed in an exact match on one course, then handle it as a suggestionClick
+        //i.e set the input and send course info to parent component
+        if (
+            suggestions.length === 1 &&
+            suggestions[0].name.toLowerCase() === value.toLowerCase()
+        ) {
+            handleSuggestionClick(suggestions[0]);
+            return;
+        }
         if (suggestions.length) {
+            clearTimeout(hideSuggestionsTimeout);
             setDisplayedSuggestions(suggestions);
             setShowSuggestions(true);
         } else {
-            setShowSuggestions(false);
-            hideSuggestionsTimeout = setTimeout(() => {
-                setDisplayedSuggestions([]);
-            }, 500);
+            hideSuggestions();
         }
+    };
+
+    const onBlur = () => {
+        blurTimeout = setTimeout(() => {
+            setShowSuggestions(false);
+        }, 100);
+    };
+
+    const hideSuggestions = () => {
+        setShowSuggestions(false);
+        hideSuggestionsTimeout = setTimeout(() => {
+            setDisplayedSuggestions([]);
+        }, 500);
     };
 
     useEffect(() => {
         return () => {
             clearTimeout(hideSuggestionsTimeout);
+            clearTimeout(blurTimeout);
         };
     }, []);
 
@@ -69,6 +90,8 @@ export function InputWithPrefetchedSuggestions(
             labelStyle={props.labelStyle}
             onChange={handleOnChange}
             placeHolder={props.placeHolder}
+            onBlur={onBlur}
+            onFocus={() => updateDisplayedSuggestions(inputValue)}
         >
             <div
                 className={`${styles.suggestionsContainer} ${showSuggestions ? styles.showSuggestions : ""}`}

@@ -1,15 +1,17 @@
 import {
     CSSProperties,
     FormEventHandler,
+    useEffect,
     useMemo,
     useRef,
     useState,
 } from "react";
 import styles from "./AskAQuestion.module.css";
-import { Input, InputWithPrefetchedSuggestions } from "../..";
+import { Input, InputWithPrefetchedSuggestions, Loader } from "../..";
 import { useTranslation } from "react-i18next";
-import { useSearchCourses } from "../../../hooks";
-import { ISuggestion } from "../../../utils";
+import { useFetchWithToken } from "../../../hooks";
+import { ICourse, ISuggestion } from "../../../utils";
+import { BASE_URL } from "../../../data";
 
 interface IAskAQuestionFormValues {
     title: string;
@@ -25,9 +27,13 @@ const labelStyle: CSSProperties = {
     fontSize: "14px",
 };
 
+const courseUrl = `${BASE_URL}/subject`;
+
 export function AskAQuestion() {
+    const { requestHandler: fetchCourses, isLoading: isLoadingCourses } =
+        useFetchWithToken<ICourse[]>();
+    const [courses, setCourses] = useState<ICourse[]>([]);
     const { t } = useTranslation();
-    const { courses } = useSearchCourses();
 
     const [formValues, setFormValues] = useState<IAskAQuestionFormValues>({
         title: "",
@@ -44,10 +50,12 @@ export function AskAQuestion() {
         () =>
             courses.map(c => ({
                 id: c.id,
-                name: `${c.subjectCode} ${c.name}`,
+                name: `${c.subjectCode ? c.subjectCode + " " : ""}${c.name}`,
             })),
         [courses],
     );
+
+    const isLoading = isLoadingCourses;
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
@@ -57,6 +65,25 @@ export function AskAQuestion() {
     const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
         setFormValues(prev => ({ ...prev, courseId: id }));
     };
+
+    useEffect(() => {
+        void fetchCourses(courseUrl).then(data => {
+            if (data) {
+                setCourses(data);
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.loaderContainer}>
+                    <Loader />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
