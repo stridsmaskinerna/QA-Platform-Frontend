@@ -70,6 +70,8 @@
         "addATag": "Lägg till en tagg",
         "addATagExpl": "Lägg till relevanta taggar för att hjälpa till att kategorisera din fråga",
         "add": "Lägg till",
-        "submitQuestion": "Publicera Fråga"
+        "submitQuestion": "Publicera Fråga",
+        "public": "Offentlig",
+        "nonPublic": "Ej offentlig"
     }
 }

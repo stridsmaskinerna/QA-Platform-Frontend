@@ -7,17 +7,12 @@ import {
     useState,
 } from "react";
 import styles from "./AskAQuestion.module.css";
-import {
-    Input,
-    InputWithPrefetchedSuggestions,
-    Loader,
-    Select,
-    Toggle,
-} from "../..";
+import { Input, InputWithPrefetchedSuggestions, Loader, Select } from "../..";
 import { useTranslation } from "react-i18next";
 import { useFetchWithToken } from "../../../hooks";
 import { ICourse, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
+import { PublicQuestionToggle } from ".";
 
 interface IAskAQuestionFormValues {
     title: string;
@@ -41,10 +36,7 @@ export function AskAQuestion() {
     const { t } = useTranslation();
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [selectedCourseId, setSelectedCourseId] = useState<string>("");
-    const [topics, setTopics] = useState<{
-        options: IOption[];
-        defaultValue: string;
-    }>({ options: [], defaultValue: t("topicSelectDefault") });
+    const [topics, setTopics] = useState<IOption[]>([]);
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -121,6 +113,7 @@ export function AskAQuestion() {
                     placeHolder={t("askQuestionCoursePlaceholder")}
                     possibleSuggestions={possibleCourseSuggestions}
                 />
+                {/* Hidden input to carry the subjectId rather than the subject name shown to the user in above input */}
                 <input
                     name="subjectId"
                     type="hidden"
@@ -129,13 +122,18 @@ export function AskAQuestion() {
 
                 <Select
                     label={t("topic")}
-                    defaultValue={topics.defaultValue}
-                    options={topics.options}
+                    defaultValue={
+                        topics.length
+                            ? t("topicSelectActive")
+                            : t("topicSelectDefault")
+                    }
+                    options={topics}
                     selectName="topicId"
                     labelStyle={labelStyle}
                 />
                 <div className={styles.inputPair}>
-                    <Toggle inputName="isProtected" />
+                    <PublicQuestionToggle />
+                    <></>
                 </div>
                 <button
                     className={styles.submitBtn}

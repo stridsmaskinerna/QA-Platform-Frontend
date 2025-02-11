@@ -1,0 +1,43 @@
+.container {
+    border-radius: 6px;
+    border: 2px solid var(--input-idle);
+    padding-inline: clamp(0.6rem, 4vw, 1rem);
+    flex: 0.5;
+    display: flex;
+    justify-content: space-between;
+    padding-block: 2rem;
+    gap: 15px;
+}
+
+.itemsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.itemsWrapper > p {
+    color: var(--inputIdle-text);
+    font-size: clamp(12px, 2.5vw, 15px);
+}
+
+.itemsWrapper > h5 {
+    color: var(--text-default);
+    font-weight: 600;
+    font-size: clamp(15px, 3vw, 17px);
+}
+
+.center {
+    align-items: center;
+}
+
+.center > p {
+    text-wrap: nowrap;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}

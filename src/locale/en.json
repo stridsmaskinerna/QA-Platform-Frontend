@@ -70,6 +70,8 @@
         "addATag": "Add a tag",
         "addATagExpl": "Add relevant tags to help categorize your question",
         "add": "Add",
-        "submitQuestion": "Submit Question"
+        "submitQuestion": "Submit Question",
+        "public": "Public",
+        "nonPublic": "Not Public"
     }
 }
