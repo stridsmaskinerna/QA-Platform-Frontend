@@ -1,19 +1,19 @@
 export interface IQuestion {
-	id: string;
-	topicName: string;
-	topicId: string;
-	subjectId: string;
-	subjectName: string;
-	subjectCode: string;
-	userName: string;
-	title: string;
-	created: string;
-	isResolved: boolean;
-	isProtected: boolean;
-	isHidden: boolean;
-	answerCount: number;
-	tags: string[];
-	userId: string;
+    id: string;
+    topicName: string;
+    topicId: string;
+    subjectId: string;
+    subjectName: string;
+    subjectCode: string;
+    userName: string;
+    title: string;
+    created: string;
+    isResolved: boolean;
+    isProtected: boolean;
+    isHidden: boolean;
+    answerCount: number;
+    tags: string[];
+    userId: string;
 }
 
 export interface IDetailedQuestion extends IQuestion {

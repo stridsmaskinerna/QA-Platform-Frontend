@@ -21,7 +21,7 @@ export function QuestionDetailsExtended() {
             if (data) setQuestion(data);
         };
         void fetchQuestionDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questionId]);
 
     if (isLoading) return <div>Loading...</div>;
