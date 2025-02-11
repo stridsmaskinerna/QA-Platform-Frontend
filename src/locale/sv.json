@@ -72,6 +72,7 @@
         "add": "Lägg till",
         "submitQuestion": "Publicera Fråga",
         "public": "Offentlig",
-        "nonPublic": "Ej offentlig"
+        "nonPublic": "Ej offentlig",
+        "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5."
     }
 }

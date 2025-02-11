@@ -72,6 +72,7 @@
         "add": "Add",
         "submitQuestion": "Submit Question",
         "public": "Public",
-        "nonPublic": "Not Public"
+        "nonPublic": "Not Public",
+        "tagLimitWarning": "Please limit your tags to 5 or fewer."
     }
 }
