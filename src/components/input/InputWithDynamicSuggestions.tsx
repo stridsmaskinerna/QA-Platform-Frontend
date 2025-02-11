@@ -52,6 +52,7 @@ export function InputWithDynamicSuggestions(
 
     return (
         <Input
+            required={props.required}
             inputValue={props.inputValue}
             inputName={props.inputName}
             inputType={props.inputType}

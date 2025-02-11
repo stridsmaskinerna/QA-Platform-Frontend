@@ -15,17 +15,22 @@ export function Input({
     onBlur,
     onFocus,
     inputValue,
+    required,
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
 
-    const [localInputValue, setLocalInputValue] = useState<string>(
-        inputValue ?? "",
-    );
+    const [localInputValue, setLocalInputValue] = useState<string>("");
     const id = useId();
 
-    const localOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setLocalInputValue(e.target.value);
+        if (!inputValue) {
+            setLocalInputValue(e.target.value);
+        }
+
+        if (onChange) {
+            onChange(e);
+        }
     };
 
     const handleBlur = () => {
@@ -61,10 +66,10 @@ export function Input({
                     onBlur={handleBlur}
                     value={inputValue ?? localInputValue}
                     defaultValue={defaultValue}
-                    onChange={onChange ?? localOnChange}
+                    onChange={handleOnChange}
                     placeholder={placeHolder}
                     minLength={minInputValueLength}
-                    required
+                    required={required ?? true}
                     id={id}
                     name={inputName}
                     type={inputType}

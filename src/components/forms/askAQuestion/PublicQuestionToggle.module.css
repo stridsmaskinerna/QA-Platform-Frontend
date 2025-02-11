@@ -2,7 +2,7 @@
     border-radius: 6px;
     border: 2px solid var(--input-idle);
     padding-inline: clamp(0.6rem, 4vw, 1rem);
-    flex: 0.2;
+    flex: 0.25;
     display: flex;
     justify-content: space-between;
     padding-block: 2rem;

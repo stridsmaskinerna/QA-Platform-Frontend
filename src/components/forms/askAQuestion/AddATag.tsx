@@ -101,6 +101,7 @@ export function AddATag({
                 </div>
                 <div className={styles.inputContainer}>
                     <InputWithDynamicSuggestions
+                        required={false}
                         inputValue={inputValue}
                         onChange={onInputChange}
                         placeHolder={t("addATag")}

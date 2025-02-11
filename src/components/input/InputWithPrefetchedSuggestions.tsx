@@ -31,6 +31,9 @@ export function InputWithPrefetchedSuggestions(
         const value = e.target.value;
         setInputValue(value);
         updateDisplayedSuggestions(value);
+        if (props.onChange) {
+            props.onChange(e);
+        }
     };
 
     const updateDisplayedSuggestions = (value: string) => {
@@ -81,6 +84,7 @@ export function InputWithPrefetchedSuggestions(
 
     return (
         <Input
+            required={props.required}
             inputValue={inputValue}
             inputName={props.inputName}
             inputType={props.inputType}

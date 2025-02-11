@@ -123,14 +123,23 @@ export interface ITeacher {
     userName: string;
 }
 
+export interface ITopic {
+    id: string;
+    name: string;
+    isActive: boolean;
+    subjectId: string;
+}
+
 export interface ICourse {
     id: string;
     name: string;
     subjectCode?: string;
     teachers?: ITeacher[];
+    topics: ITopic[];
 }
 
 export interface IInputProps {
+    required?: boolean;
     inputType: HTMLInputTypeAttribute;
     inputName?: string;
     label?: string;

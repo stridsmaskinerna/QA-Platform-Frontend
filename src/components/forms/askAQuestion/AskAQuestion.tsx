@@ -1,4 +1,5 @@
 import {
+    ChangeEventHandler,
     CSSProperties,
     FormEventHandler,
     useEffect,
@@ -14,6 +15,7 @@ import { ICourse, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { PublicQuestionToggle } from ".";
 import { AddATag } from "./AddATag";
+import { useDebounceCallback } from "usehooks-ts";
 
 interface IAskAQuestionFormValues {
     title: string;
@@ -51,6 +53,11 @@ export function AskAQuestion() {
         [courses],
     );
 
+    const courseNames = useMemo(
+        () => possibleCourseSuggestions.map(c => c.name),
+        [possibleCourseSuggestions],
+    );
+
     const isLoading = isLoadingCourses;
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
@@ -65,12 +72,27 @@ export function AskAQuestion() {
         if (!("isProtected" in formDetails)) {
             formDetails.isProtected = "true";
         }
+        formDetails.tags = addedTags;
         console.log(formDetails);
     };
 
     const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
         setSelectedCourseId(id);
+        setTopics(courses.find(c => c.id === id)?.topics ?? []);
     };
+    const handleCourseOnChange: ChangeEventHandler<HTMLInputElement> = e => {
+        if (
+            courseNames.every(
+                n => n.toLowerCase() !== e.target.value.trim().toLowerCase(),
+            )
+        ) {
+            setTopics([]);
+        }
+    };
+    const debouncedHandleCourseOnChange = useDebounceCallback(
+        handleCourseOnChange,
+        400,
+    );
 
     const onAddTag = (tag: string) => setAddedTags(prev => [...prev, tag]);
     const onRemoveTag = (tag: string) =>
@@ -112,6 +134,7 @@ export function AskAQuestion() {
                 />
 
                 <InputWithPrefetchedSuggestions
+                    onChange={debouncedHandleCourseOnChange}
                     onSuggestionClick={handleCourseSuggestionClick}
                     labelStyle={labelStyle}
                     inputType="search"
@@ -139,7 +162,6 @@ export function AskAQuestion() {
                 />
                 <div className={styles.inputPair}>
                     <PublicQuestionToggle />
-
                     <AddATag
                         addedTags={addedTags}
                         onRemoveClick={onRemoveTag}

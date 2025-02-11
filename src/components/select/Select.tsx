@@ -8,6 +8,7 @@ interface ISelectProps {
     label: string;
     selectName: string;
     labelStyle?: CSSProperties;
+    required?: boolean;
 }
 
 export function Select({
@@ -16,6 +17,7 @@ export function Select({
     label,
     labelStyle,
     selectName,
+    required,
 }: ISelectProps) {
     const id = useId();
     return (
@@ -28,6 +30,7 @@ export function Select({
                 {label}
             </label>
             <select
+                required={required ?? true}
                 className={styles.select}
                 name={selectName}
                 id={id}

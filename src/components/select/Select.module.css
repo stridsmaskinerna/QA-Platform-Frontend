@@ -24,7 +24,7 @@
     border: 2px solid var(--input-idle);
     width: 100%;
     border-radius: 6px;
-    color: var(--inputIdle-text);
+    color: var(--text-default);
 }
 
 .select:focus {
@@ -36,8 +36,4 @@
     bottom: 5px;
     left: 10px;
     font-size: 18px;
-}
-
-.option {
-    background-color: var(--btnLight-bg);
 }
