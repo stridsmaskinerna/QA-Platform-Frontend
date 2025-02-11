@@ -56,7 +56,6 @@ export function AuthGuard({
             />
         );
     }
-
     //Otherwise return the aimed for route
     return children;
 }
