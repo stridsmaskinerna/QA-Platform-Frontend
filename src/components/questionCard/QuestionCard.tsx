@@ -6,7 +6,7 @@ import QuestionCardBottom from "./questionCardBottom/QuestionCardBottom";
 import { IQuestion } from "../../utils";
 import {
     QUESTION_DETAILS_ROUTE,
-    GUEST_QUESTION_DETAILS_ROUTE,
+    GUEST_QUESTION_DETAILS_ROUTE
 } from "../../data";
 import { Link } from "react-router";
 import { useRoles } from "../../hooks/useRoles";
