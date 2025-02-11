@@ -37,8 +37,3 @@
 .center > p {
     text-wrap: nowrap;
 }
-
-@media (max-width: 600px) {
-    .container {
-    }
-}
