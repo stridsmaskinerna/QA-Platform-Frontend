@@ -23,18 +23,9 @@ export function Input({
     );
     const id = useId();
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const localOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        if (!inputValue) {
-            setLocalInputValue(e.target.value);
-        }
-        if (onChange) {
-            onChange(e);
-        } else if (inputValue) {
-            console.error(
-                "You are providing an inputValue to Input component but not a onChange handler",
-            );
-        }
+        setLocalInputValue(e.target.value);
     };
 
     const handleBlur = () => {
@@ -70,7 +61,7 @@ export function Input({
                     onBlur={handleBlur}
                     value={inputValue ?? localInputValue}
                     defaultValue={defaultValue}
-                    onChange={handleOnChange}
+                    onChange={onChange ?? localOnChange}
                     placeholder={placeHolder}
                     minLength={minInputValueLength}
                     required

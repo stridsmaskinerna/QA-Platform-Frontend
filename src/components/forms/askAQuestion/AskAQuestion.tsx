@@ -13,6 +13,7 @@ import { useFetchWithToken } from "../../../hooks";
 import { ICourse, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { PublicQuestionToggle } from ".";
+import { AddATag } from "./AddATag";
 
 interface IAskAQuestionFormValues {
     title: string;
@@ -36,6 +37,7 @@ export function AskAQuestion() {
     const { t } = useTranslation();
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [selectedCourseId, setSelectedCourseId] = useState<string>("");
+    const [addedTags, setAddedTags] = useState<string[]>([]);
     const [topics, setTopics] = useState<IOption[]>([]);
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -69,6 +71,10 @@ export function AskAQuestion() {
     const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
         setSelectedCourseId(id);
     };
+
+    const onAddTag = (tag: string) => setAddedTags(prev => [...prev, tag]);
+    const onRemoveTag = (tag: string) =>
+        setAddedTags(prev => prev.filter(t => t !== tag));
 
     useEffect(() => {
         void fetchCourses(courseUrl).then(data => {
@@ -133,7 +139,12 @@ export function AskAQuestion() {
                 />
                 <div className={styles.inputPair}>
                     <PublicQuestionToggle />
-                    <></>
+
+                    <AddATag
+                        addedTags={addedTags}
+                        onRemoveClick={onRemoveTag}
+                        onAddClick={onAddTag}
+                    />
                 </div>
                 <button
                     className={styles.submitBtn}

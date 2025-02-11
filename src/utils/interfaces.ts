@@ -154,3 +154,8 @@ export interface IOption {
     id: string;
     name: string;
 }
+
+export interface ITag {
+    id: string;
+    value: string;
+}

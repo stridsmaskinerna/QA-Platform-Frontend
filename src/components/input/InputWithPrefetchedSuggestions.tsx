@@ -1,16 +1,13 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { IInputProps, ISuggestion } from "../../utils";
 import { Input } from ".";
-import styles from "./InputWithPrefetchedSuggestions.module.css";
+import styles from "./InputWithSuggestionsShared.module.css";
 
 interface IInputWithPrefetchedSuggestionsProps
     extends Omit<IInputProps, "children"> {
     possibleSuggestions: ISuggestion[];
     onSuggestionClick?: (arg: ISuggestion) => void;
 }
-
-let hideSuggestionsTimeout: NodeJS.Timeout;
-let blurTimeout: NodeJS.Timeout;
 
 export function InputWithPrefetchedSuggestions(
     props: IInputWithPrefetchedSuggestionsProps,
@@ -20,7 +17,8 @@ export function InputWithPrefetchedSuggestions(
     >([]);
     const [inputValue, setInputValue] = useState("");
     const [showSuggestions, setShowSuggestions] = useState(false);
-
+    const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const hideSuggestionsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const handleSuggestionClick = ({ id, name }: ISuggestion) => {
         setInputValue(name);
         hideSuggestions();
@@ -53,7 +51,7 @@ export function InputWithPrefetchedSuggestions(
             return;
         }
         if (suggestions.length) {
-            clearTimeout(hideSuggestionsTimeout);
+            clearTimeout(hideSuggestionsTimeoutRef.current ?? undefined);
             setDisplayedSuggestions(suggestions);
             setShowSuggestions(true);
         } else {
@@ -62,22 +60,22 @@ export function InputWithPrefetchedSuggestions(
     };
 
     const onBlur = () => {
-        blurTimeout = setTimeout(() => {
+        blurTimeoutRef.current = setTimeout(() => {
             setShowSuggestions(false);
         }, 100);
     };
 
     const hideSuggestions = () => {
         setShowSuggestions(false);
-        hideSuggestionsTimeout = setTimeout(() => {
+        hideSuggestionsTimeoutRef.current = setTimeout(() => {
             setDisplayedSuggestions([]);
         }, 500);
     };
 
     useEffect(() => {
         return () => {
-            clearTimeout(hideSuggestionsTimeout);
-            clearTimeout(blurTimeout);
+            clearTimeout(hideSuggestionsTimeoutRef.current ?? undefined);
+            clearTimeout(blurTimeoutRef.current ?? undefined);
         };
     }, []);
 

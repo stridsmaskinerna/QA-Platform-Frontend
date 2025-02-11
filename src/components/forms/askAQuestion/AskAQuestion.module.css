@@ -23,6 +23,29 @@
     display: flex;
     justify-content: space-between;
     gap: 15px;
+    height: fit-content;
+}
+
+.publicToggleContainer {
+    border-radius: 6px;
+    border: 2px solid var(--input-idle);
+    padding-inline: clamp(0.6rem, 4vw, 1rem);
+    flex: 0.5;
+    display: flex;
+    justify-content: space-between;
+    padding-block: 2rem;
+    gap: 15px;
+}
+
+.addATagContainer {
+    border-radius: 6px;
+    border: 2px solid var(--input-idle);
+    padding-inline: clamp(0.6rem, 4vw, 1rem);
+    flex: 0.5;
+    display: flex;
+    align-items: center;
+    padding-block: 2rem;
+    gap: 15px;
 }
 
 .submitBtn {

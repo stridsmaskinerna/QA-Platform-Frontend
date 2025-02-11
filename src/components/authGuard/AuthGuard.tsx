@@ -3,7 +3,6 @@ import { Navigate, Params, useParams } from "react-router";
 import { IRoleBasedRedirect } from "../../utils";
 import { useQAContext, useRoles } from "../../hooks";
 import { GUEST_QUESTION_DETAILS_ROUTE } from "../../data";
-import { Loader } from "..";
 
 interface IRequireAuthProps {
     children: ReactElement;
@@ -41,7 +40,7 @@ export function AuthGuard({
 
     //We wait for the AuthContext to load and decode a possible token into a roles before running validation logic
     if (isLoading) {
-        return <Loader />;
+        return <></>;
     }
 
     // //Check if roles include anything unexpected or lacks necessary roles for the route and redirect to fallback route in that case

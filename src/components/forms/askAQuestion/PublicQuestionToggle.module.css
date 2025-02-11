@@ -7,6 +7,7 @@
     justify-content: space-between;
     padding-block: 2rem;
     gap: 15px;
+    align-items: center;
 }
 
 .itemsWrapper {
@@ -17,13 +18,14 @@
 
 .itemsWrapper > p {
     color: var(--inputIdle-text);
-    font-size: clamp(12px, 2.5vw, 15px);
+    font-size: clamp(12px, 2.5vw, 14px);
 }
 
 .itemsWrapper > h5 {
     color: var(--text-default);
     font-weight: 600;
-    font-size: clamp(15px, 3vw, 17px);
+
+    font-size: 14px;
 }
 
 .center {
