@@ -31,7 +31,7 @@ export function SubjectListCard({
     <CardContainer>
       <h1>Your Courses</h1>
       <div>
-        {subjects.slice(0, 5).map((s, i) =>
+        {subjects.map((s, i) =>
           <div
             key={i}
             onClick={() => { selectSubject(s); }}>
@@ -73,7 +73,7 @@ function SubjectItem({
       {isSelected && <div>
         <button 
           onClick={() => { onSelectSubjectQuestions(subject) }}
-          className={styles.viewQuestions}>
+          className={styles.viewQuestionsBtn}>
           View questions
         </button>
       </div>}

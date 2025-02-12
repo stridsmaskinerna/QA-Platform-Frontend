@@ -21,7 +21,7 @@ export function TeacherDashboard() {
   useEffect(() => {
     const fetchQuestionDetails = async () => {
       const data = await fetchSubjects.requestHandler(
-        `${BASE_URL}${SUBJECT_URL}`,
+        `${BASE_URL}${SUBJECT_URL}/teacher`,
       );
 
       if (data != null) {
