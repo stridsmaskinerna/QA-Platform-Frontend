@@ -33,7 +33,7 @@ export function QuestionHeader(props: QuestionHeaderProps) {
     return (
         <div className={styles.container}>
             <h3 className={styles.courseTitle}>{subjectDisplay}</h3>
-            <div className={styles.icon_section}>
+            <div className={styles.iconSection}>
                 <div
                     className={`${styles.resolvedContainer} ${isResolvedClass}`}
                 >

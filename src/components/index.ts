@@ -12,3 +12,4 @@ export * from "./modal";
 export * from "./questionCardList";
 export * from "./myQASection";
 export * from "./select";
+export * from "./richText";

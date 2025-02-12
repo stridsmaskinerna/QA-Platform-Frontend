@@ -8,10 +8,15 @@ import {
     useState,
 } from "react";
 import styles from "./AskAQuestion.module.css";
-import { Input, InputWithPrefetchedSuggestions, Loader, Select } from "../..";
+import {
+    Input,
+    InputWithPrefetchedSuggestions,
+    RichTextEditor,
+    Select,
+} from "../..";
 import { useTranslation } from "react-i18next";
-import { useFetchWithToken } from "../../../hooks";
-import { ICourse, IOption, ISuggestion } from "../../../utils";
+import { useFetchWithToken, useQAContext } from "../../../hooks";
+import { CustomError, ICourse, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { PublicQuestionToggle } from ".";
 import { AddATag } from "./AddATag";
@@ -22,7 +27,7 @@ interface IAskAQuestionFormValues {
     description: string;
     subjectId: string;
     topicId: string;
-    isProtected?: string;
+    isProtected?: boolean;
     tags: string[];
 }
 
@@ -32,15 +37,20 @@ const labelStyle: CSSProperties = {
 };
 
 const courseUrl = `${BASE_URL}/subject`;
+const postQuestionUrl = `${BASE_URL}/questions`;
 
 export function AskAQuestion() {
-    const { requestHandler: fetchCourses, isLoading: isLoadingCourses } =
-        useFetchWithToken<ICourse[]>();
+    const { requestHandler: fetchCourses } = useFetchWithToken<ICourse[]>();
+    const { requestHandler: postQuestion } = useFetchWithToken<void>();
     const { t } = useTranslation();
+    const {
+        loaderContext: { setIsLoading },
+    } = useQAContext();
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [selectedCourseId, setSelectedCourseId] = useState<string>("");
     const [addedTags, setAddedTags] = useState<string[]>([]);
     const [topics, setTopics] = useState<IOption[]>([]);
+    const [description, setDescription] = useState("");
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -58,10 +68,9 @@ export function AskAQuestion() {
         [possibleCourseSuggestions],
     );
 
-    const isLoading = isLoadingCourses;
-
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
+        console.log("HERE");
         const formData = new FormData(e.currentTarget);
         const formDetails = Object.fromEntries(
             formData,
@@ -70,10 +79,33 @@ export function AskAQuestion() {
         //isProtected will be submitted. Therefore we append the missing isProtected:true here
         //if there is no isProtected key in the formDetails object.
         if (!("isProtected" in formDetails)) {
-            formDetails.isProtected = "true";
+            formDetails.isProtected = true;
+        } else {
+            formDetails.isProtected = false;
         }
         formDetails.tags = addedTags;
-        console.log(formDetails);
+        formDetails.description = description;
+        void (async () => {
+            setIsLoading(true);
+            try {
+                await postQuestion(postQuestionUrl, {
+                    method: "POST",
+                    body: JSON.stringify(formDetails),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                formRef.current?.reset();
+            } catch (e) {
+                if (e instanceof CustomError) {
+                    console.error(e);
+                } else {
+                    throw e;
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        })();
     };
 
     const handleCourseSuggestionClick = ({ id }: ISuggestion) => {
@@ -104,18 +136,9 @@ export function AskAQuestion() {
                 setCourses(data);
             }
         });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    if (isLoading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.loaderContainer}>
-                    <Loader />
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className={styles.container}>
@@ -132,6 +155,13 @@ export function AskAQuestion() {
                     label={t("questionTitle")}
                     placeHolder={t("questionTitlePlaceholder")}
                 />
+                <div className={styles.richTextWrapper}>
+                    <h5>{t("questionDetails")}</h5>
+                    <RichTextEditor
+                        placeholder={t("questionDescriptionExpl")}
+                        setEditorState={setDescription}
+                    />
+                </div>
 
                 <InputWithPrefetchedSuggestions
                     onChange={debouncedHandleCourseOnChange}

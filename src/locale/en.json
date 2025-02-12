@@ -57,7 +57,7 @@
         "commentedHeader": "Questions With Answers You've Commented On",
         "questionTitle": "Question Title",
         "questionTitlePlaceholder": "Enter your question title",
-        "questionDescription": "Question Description",
+        "questionDetails": "Question Details",
         "questionDescriptionPlaceholder": "Describe your question in detail",
         "questionDescriptionExpl": "Provide all necessary details to help others understand and answer your question",
         "course": "Course",

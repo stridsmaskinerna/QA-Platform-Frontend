@@ -16,11 +16,13 @@ import { useNavigate } from "react-router";
 interface IUseFetchWithTokenReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
-    requestHandler: (url: RequestInfo | URL) => Promise<T | void>;
+    requestHandler: (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => Promise<T | void>;
 }
 
 export function useFetchWithToken<T>(
-    options?: RequestInit,
     checkIfTokenNeedsRefresh = false,
 ): IUseFetchWithTokenReturn<T> {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,6 +38,7 @@ export function useFetchWithToken<T>(
         async <T>(
             accessToken: string | undefined,
             url: RequestInfo | URL,
+            options?: RequestInit,
         ): Promise<T> => {
             if (!accessToken) {
                 throw new Error("There is no accessToken in the tokens field");
@@ -52,11 +55,11 @@ export function useFetchWithToken<T>(
 
             return (await response.json()) as T;
         },
-        [options],
+        [],
     );
 
     const requestHandler = useCallback(
-        async (url: RequestInfo | URL) => {
+        async (url: RequestInfo | URL, options?: RequestInit) => {
             if (!tokens) {
                 throw new Error("There is no tokens to make this request");
             }
@@ -73,6 +76,7 @@ export function useFetchWithToken<T>(
                     const data = await generatedFetch<T>(
                         refreshedTokens.accessToken,
                         url,
+                        options,
                     );
                     return data;
                 } catch (error) {
@@ -99,6 +103,7 @@ export function useFetchWithToken<T>(
                     const data = await generatedFetch<T>(
                         tokens.accessToken,
                         url,
+                        options,
                     );
                     return data;
                 } catch (error) {

@@ -18,6 +18,19 @@
     gap: clamp(20px, 3vw, 30px);
 }
 
+.richTextWrapper {
+    width: 100%;
+}
+
+.richTextWrapper > h5 {
+    color: var(--text-default);
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+    bottom: 8px;
+    left: 10px;
+}
+
 .inputPair {
     width: 100%;
     display: flex;
@@ -54,6 +67,7 @@
     color: var(--btnDark-text);
     border-radius: 10px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .submitBtn:hover {

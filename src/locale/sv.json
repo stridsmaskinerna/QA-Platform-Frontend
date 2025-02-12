@@ -57,7 +57,7 @@
         "commentedHeader": "Frågor Med Svar Du Har Kommenterat",
         "questionTitle": "Frågetitel",
         "questionTitlePlaceholder": "Skriv in din frågetitel",
-        "questionDescription": "Frågebeskrivning",
+        "questionDetails": "Frågedetaljer",
         "questionDescriptionPlaceholder": "Beskriv din fråga i detalj",
         "questionDescriptionExpl": "Ange alla nödvändiga detaljer för att hjälpa andra att förstå och besvara din fråga",
         "course": "Kurs",
