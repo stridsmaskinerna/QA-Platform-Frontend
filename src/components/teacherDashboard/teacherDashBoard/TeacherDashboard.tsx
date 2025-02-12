@@ -4,7 +4,7 @@ import styles from "./TeacherDashboard.module.css";
 import { SubjectListCard } from "../subjectListCard";
 import { useFetchWithToken, useQAContext } from "../../../hooks";
 import { IQuestion, ISubject, Role } from "../../../utils";
-import { BASE_URL, GUEST_HOME_ROUTE } from "../../../data";
+import { BASE_URL, GUEST_HOME_ROUTE, SUBJECT_URL } from "../../../data";
 import { TopicManagerCard } from "../topicManagerCard/TopicManagerCard";
 import { QuestionCardList } from "../../questionCardList";
 import { AuthGuard } from "../../authGuard";
@@ -21,7 +21,7 @@ export function TeacherDashboard() {
   useEffect(() => {
     const fetchQuestionDetails = async () => {
       const data = await fetchSubjects.requestHandler(
-        `${BASE_URL}/subject`,
+        `${BASE_URL}${SUBJECT_URL}`,
       );
 
       if (data != null) {
@@ -50,7 +50,7 @@ export function TeacherDashboard() {
   const fetchQuestionDetails = (subject: ISubject) => {
     const fetch = async () => {
       const data = await fetchSubjectQuestions.requestHandler(
-        `${BASE_URL}/subject/${subject.id}/questions`
+        `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`
       );
 
       setQuestions(data ?? []);
