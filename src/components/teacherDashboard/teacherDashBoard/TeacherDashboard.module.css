@@ -12,5 +12,12 @@
 }
 
 .title {
-  font-weight: bolder;
+  font-size: clamp(1rem, 2.7vw, 1.7rem);
+  color: #000;
+}
+
+@media (max-width: 900px) {
+  .course-manager-container {
+    flex-direction: column;
+  }
 }

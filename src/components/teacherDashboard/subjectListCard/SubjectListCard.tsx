@@ -1,4 +1,5 @@
 import { ISubject } from "../../../utils";
+import { CardContainer } from "../cardContainer";
 
 import styles from "./SubjectListCard.module.css";
 
@@ -10,7 +11,6 @@ interface ISubjectListCardProps {
 }
 
 // TODO Update backend to send teachers subjects.
-// TODO Mobile UI.
 export function SubjectListCard({
   subjects,
   selectedSubject,
@@ -28,8 +28,8 @@ export function SubjectListCard({
 
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Your Courses</h1>
+    <CardContainer>
+      <h1>Your Courses</h1>
       <div>
         {subjects.slice(0, 5).map((s, i) =>
           <div
@@ -41,7 +41,7 @@ export function SubjectListCard({
               onSelectSubjectQuestions={onSelectSubjectQuestions}/>
           </div>)}
       </div>
-    </div>
+    </CardContainer>
   );
 }
 

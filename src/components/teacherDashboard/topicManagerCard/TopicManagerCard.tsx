@@ -1,4 +1,5 @@
 import { ISubject, ITopic } from "../../../utils";
+import { CardContainer } from "../cardContainer";
 
 import styles from "./TopicManagerCard.module.css";
 
@@ -11,12 +12,12 @@ export function TopicManagerCard({
 }: SubjectManagerCardProps) {
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Manage Topics for {subject.name}</h1>
+    <CardContainer>
+      <h1>Manage Topics for {subject.name}</h1>
       {subject.topics.map((topic, i) => <div key={i}>
         <TopicItem topic={topic}/>
       </div>)}
-    </div>
+    </CardContainer>
   );
 }
 

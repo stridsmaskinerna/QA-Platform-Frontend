@@ -42,7 +42,7 @@ export function HomeExtended() {
         ];
         if (isTeacher) {
             baseTabs.push({
-                content: <TeacherDashboard data="test"/>,
+                content: <TeacherDashboard />,
                 contentContainerStyle,
                 btnStyle,
                 title: t("teacher"),

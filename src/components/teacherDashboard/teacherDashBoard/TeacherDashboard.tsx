@@ -1,22 +1,20 @@
-import { useRoles } from "../../../hooks/useRoles";
 import { useEffect, useState } from "react";
 
 import styles from "./TeacherDashboard.module.css";
 import { SubjectListCard } from "../subjectListCard";
 import { useFetchWithToken, useQAContext } from "../../../hooks";
-import { IQuestion, ISubject } from "../../../utils";
-import { BASE_URL } from "../../../data";
+import { IQuestion, ISubject, Role } from "../../../utils";
+import { BASE_URL, GUEST_HOME_ROUTE } from "../../../data";
 import { TopicManagerCard } from "../topicManagerCard/TopicManagerCard";
 import { QuestionCardList } from "../../questionCardList";
+import { AuthGuard } from "../../authGuard";
 
 // TODO Update backend to send teachers subjects.
-// TODO Mobile UI.
 export function TeacherDashboard() {
   const context = useQAContext()
   const [subjects, setSubjects] = useState<ISubject[]>([])
   const [questions, setQuestions] = useState<IQuestion[]>([])
   const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null)
-  const roles = useRoles();
   const fetchSubjects = useFetchWithToken<ISubject[]>();
   const fetchSubjectQuestions = useFetchWithToken<IQuestion[]>();
 
@@ -25,7 +23,7 @@ export function TeacherDashboard() {
       const data = await fetchSubjects.requestHandler(
         `${BASE_URL}/subject`,
       );
-      
+
       if (data != null) {
         setSubjects(data ?? []);
         setSelectedSubject(data[0]);
@@ -60,7 +58,7 @@ export function TeacherDashboard() {
 
     context.loaderContext.setIsLoading(true)
     void fetch()
-    context.loaderContext.setIsLoading(false)   
+    context.loaderContext.setIsLoading(false)
   };
 
   if (fetchSubjects.error != null) {
@@ -68,28 +66,40 @@ export function TeacherDashboard() {
     console.log(fetchSubjects.error);
   }
 
-  if (!roles.isTeacher) {
-    // TODO navigate back.
-    console.log("only teacher");
+  if (fetchSubjectQuestions.error != null) {
+    // TODO handle error.
+    console.log(fetchSubjectQuestions.error);
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Teacher Dashboard</h1>
-      <div className={styles.courseManagerContainer}>
-        <SubjectListCard
-          subjects={subjects}
-          selectedSubject={selectedSubject}
-          onSelectSubject={displaySelectedSubject}
-          onSelectSubjectQuestions={fetchQuestionDetails} />
-        {selectedSubject != null && <TopicManagerCard subject={selectedSubject} />}
-      </div>
-      {questions.length != 0 && <QuestionCardList
+    <AuthGuard
+      roleBasedRedirect={{
+        allowedRoles: [Role.Teacher],
+        fallbackRoute: GUEST_HOME_ROUTE,
+      }}
+    >
+      <div className={styles.container}>
+        <h1 className={styles.title}>Teacher Dashboard</h1>
+        <div className={styles.courseManagerContainer}>
+          <SubjectListCard
+            subjects={subjects}
+            selectedSubject={selectedSubject}
+            onSelectSubject={displaySelectedSubject}
+            onSelectSubjectQuestions={fetchQuestionDetails} />
+          {selectedSubject != null &&
+          <TopicManagerCard
+            subject={selectedSubject} />
+          }
+        </div>
+        {questions.length != 0 && <QuestionCardList
           data={questions}
           activeResolvedFilter={null}
           onResolvedFilterClick={() => { return; }}
           isLoadingQuestions={false}
-          header={`Questions in course ${selectedSubject?.name}`} />}
-    </div>
+          header={`Questions in course ${selectedSubject?.name}`}
+          displayResolveFilter={false} />
+        }
+      </div>
+    </AuthGuard>
   );
 }
