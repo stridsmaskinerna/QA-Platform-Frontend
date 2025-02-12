@@ -113,7 +113,7 @@ export interface ITopic {
     subjectId: string;
 }
 
-export interface ICourse {
+export interface ISubject {
     id: string;
     name: string;
     subjectCode?: string;

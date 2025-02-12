@@ -1,9 +1,14 @@
 .container {
   margin-block: 1rem;
-  border: 1px dashed black;
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 2rem;
+}
+
+.course-manager-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .title {

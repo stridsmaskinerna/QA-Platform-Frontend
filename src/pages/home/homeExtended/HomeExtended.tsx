@@ -40,7 +40,7 @@ export function HomeExtended() {
                 title: t("askAQuestion"),
             },
         ];
-        if (!isTeacher) {
+        if (isTeacher) {
             baseTabs.push({
                 content: <TeacherDashboard data="test"/>,
                 contentContainerStyle,
