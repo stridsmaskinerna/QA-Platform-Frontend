@@ -1,6 +1,10 @@
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
 import { IDetailedQuestion } from "../../utils";
 import styles from "./QuestionDetailsViewer.module.css";
+import { RouteButton } from "..";
+import { useRoles } from "../../hooks";
+import { GUEST_HOME_ROUTE, HOME_ROUTE } from "../../data";
+import { useTranslation } from "react-i18next";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -9,8 +13,16 @@ interface QuestionDetailsViewerProps {
 export function QuestionDetailsViewer({
     question,
 }: QuestionDetailsViewerProps) {
+    const { isUser } = useRoles();
+    const { t } = useTranslation();
     return (
         <div className={styles.container}>
+            <div className={styles.backBtn}>
+                <RouteButton
+                    text={t("backToQA")}
+                    routeTo={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
+                />
+            </div>
             <QuestionCardDetails
                 id={question.id}
                 title={question.title}
