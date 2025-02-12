@@ -4,7 +4,8 @@ import { useParams } from "react-router";
 import { IDetailedQuestion } from "../../../utils";
 import { useEffect } from "react";
 import { BASE_URL, QUESTION_DETAILS_ROUTE } from "../../../data";
-import { QuestionCardDetails } from "../../../components/questionCard/questionCardDetails/QuestionCardDetails";
+import styles from "../questionDetailsShared.module.css";
+import { QuestionDetailsViewer } from "../../../components";
 
 export function QuestionDetailsExtended() {
     const { questionId } = useParams();
@@ -30,33 +31,8 @@ export function QuestionDetailsExtended() {
     if (!question) return <div>No question found.</div>;
 
     return (
-        <div>
-            <QuestionCardDetails
-                id={question.id}
-                title={question.title}
-                description={question.description}
-                topicName={question.topicName}
-                topicId={question.topicId}
-                subjectId={question.subjectId}
-                subjectName={question.subjectName}
-                subjectCode={question.subjectCode}
-                userName={question.userName}
-                created={question.created}
-                isResolved={question.isResolved}
-                isProtected={question.isProtected}
-                isHidden={question.isHidden}
-                answerCount={question.answerCount}
-                tags={question.tags}
-                userId={question.userId}
-            />
-            <h2>Answers</h2>
-            <ul>
-                {question.answers.map(answer => (
-                    <li key={answer.id}>
-                        <strong>{answer.userName}:</strong> {answer.value}
-                    </li>
-                ))}
-            </ul>
+        <div className={styles.container}>
+            <QuestionDetailsViewer question={question} />
         </div>
     );
 }
