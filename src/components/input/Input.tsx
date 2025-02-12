@@ -1,22 +1,6 @@
-import {
-    ChangeEventHandler,
-    HTMLInputTypeAttribute,
-    useId,
-    useRef,
-    useState,
-} from "react";
+import { ChangeEvent, useId, useState } from "react";
 import styles from "./Input.module.css";
-import { useOnClickOutside } from "usehooks-ts";
-
-interface IInputProps {
-    inputType: HTMLInputTypeAttribute;
-    label?: string;
-    inputName: string;
-    minInputValueLength?: number;
-    placeHolder?: string;
-    onChange?: ChangeEventHandler<HTMLInputElement>;
-    defaultValue?: string;
-}
+import { IInputProps } from "../../utils";
 
 export function Input({
     inputType,
@@ -26,15 +10,48 @@ export function Input({
     placeHolder,
     onChange,
     defaultValue,
+    labelStyle,
+    children,
+    onBlur,
+    onFocus,
+    inputValue,
+    required,
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
+
+    const [localInputValue, setLocalInputValue] = useState<string>("");
     const id = useId();
-    const inputRef = useRef(null);
-    useOnClickOutside(inputRef, () => setIsActive(false));
+
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (!inputValue) {
+            setLocalInputValue(e.target.value);
+        }
+
+        if (onChange) {
+            onChange(e);
+        }
+    };
+
+    const handleBlur = () => {
+        setIsActive(false);
+        if (onBlur) {
+            onBlur();
+        }
+    };
+
+    const handleFocus = () => {
+        setIsActive(true);
+        if (onFocus) {
+            onFocus();
+        }
+    };
+
     return (
         <div className={styles.container}>
             {label && (
                 <label
+                    style={labelStyle}
                     className={styles.label}
                     htmlFor={id}
                 >
@@ -42,22 +59,24 @@ export function Input({
                 </label>
             )}
             <div
-                onClick={() => setIsActive(true)}
                 className={`${styles.inputWrapper} ${isActive ? styles.highlight : ""}`}
             >
                 <input
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={inputValue ?? localInputValue}
                     defaultValue={defaultValue}
-                    onChange={onChange}
+                    onChange={handleOnChange}
                     placeholder={placeHolder}
                     minLength={minInputValueLength}
-                    ref={inputRef}
-                    required
+                    required={required ?? true}
                     id={id}
                     name={inputName}
                     type={inputType}
                     className={styles.input}
                 />
             </div>
+            {children}
         </div>
     );
 }

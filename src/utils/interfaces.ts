@@ -2,6 +2,7 @@ import {
     ChangeEventHandler,
     CSSProperties,
     Dispatch,
+    HTMLInputTypeAttribute,
     ReactElement,
     SetStateAction,
 } from "react";
@@ -97,4 +98,56 @@ export interface IQuestionCardListProps {
 export interface IShouldShowFilters {
     subject: boolean;
     topic: boolean;
+}
+
+export interface ITeacher {
+    id: string;
+    email: string;
+    userName: string;
+}
+
+export interface ITopic {
+    id: string;
+    name: string;
+    isActive: boolean;
+    subjectId: string;
+}
+
+export interface ICourse {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers?: ITeacher[];
+    topics: ITopic[];
+}
+
+export interface IInputProps {
+    required?: boolean;
+    inputType: HTMLInputTypeAttribute;
+    inputName?: string;
+    label?: string;
+    minInputValueLength?: number;
+    placeHolder?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    defaultValue?: string;
+    labelStyle?: CSSProperties;
+    children?: ReactElement;
+    onBlur?: () => void;
+    onFocus?: () => void;
+    inputValue?: string;
+}
+
+export interface ISuggestion {
+    name: string;
+    id: string;
+}
+
+export interface IOption {
+    id: string;
+    name: string;
+}
+
+export interface ITag {
+    id: string;
+    value: string;
 }

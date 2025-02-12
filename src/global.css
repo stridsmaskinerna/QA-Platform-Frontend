@@ -15,6 +15,7 @@ html {
     --btnDark-hover: gray;
     --grey-light: lightgray;
     --green-resolved: rgb(80, 200, 120);
+    --green-success: rgb(36, 125, 66);
     --yellow-not-resolved: rgb(255, 170, 51);
     --grey-strong: gray;
     --tabBtn-active: white;
@@ -29,6 +30,7 @@ html {
     --btnLight-bg: white;
     --btnLight-text: black;
     --btnLight-hover: lightgray;
+    --inputIdle-text: rgb(114, 113, 113);
     overflow-y: scroll;
 }
 

@@ -10,7 +10,7 @@ export default function QuestionCardBottom({ tags }: QuestionCardBottomProps) {
             {tags.map(tag => (
                 <p
                     key={tag}
-                    className={styles.tag_container}
+                    className={styles.tagContainer}
                 >
                     {tag}
                 </p>

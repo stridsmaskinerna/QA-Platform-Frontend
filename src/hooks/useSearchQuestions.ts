@@ -13,6 +13,9 @@ import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
+let timeout: NodeJS.Timeout;
+//If changes this, also change the transition time length accordingly in SearchWithFilters.module.css
+const ANIMATION_TIMER = 500;
 
 interface IUrlAppendixes {
     searchStr: string;
@@ -59,8 +62,6 @@ export const useSearchQuestions = () => {
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
-
-    const ANIMATION_TIMER = 500;
 
     const onSubjectFilterClick = (subjectId: string) => {
         //Set isLoadingQuestions to true here if activating a subject filter to prevent
@@ -211,14 +212,18 @@ export const useSearchQuestions = () => {
                 //If called by subject we only update the displayed topic filters.
                 if (caller === "subjectId") {
                     if (urlAppendixes.subjectId) {
-                        setShouldShowFilters({ subject: true, topic: true });
+                        clearTimeout(timeout);
+                        setShouldShowFilters({
+                            subject: true,
+                            topic: true,
+                        });
                         setDisplayedFilters(prev => ({
                             subject: prev.subject,
                             topic: updateDisplayedTopicFilters(data),
                         }));
                     } else {
                         setShouldShowFilters({ subject: true, topic: false });
-                        setTimeout(() => {
+                        timeout = setTimeout(() => {
                             setDisplayedFilters(prev => ({
                                 subject: prev.subject,
                                 topic: [],
@@ -263,7 +268,6 @@ export const useSearchQuestions = () => {
             prevUrlAppendixes.current = urlAppendixes;
             void updateQuestionsAndFilters("searchStr");
         }
-
         // Determine what changed
         const changedKey = Object.keys(urlAppendixes).find(
             key =>
@@ -276,7 +280,8 @@ export const useSearchQuestions = () => {
         if (changedKey) {
             void updateQuestionsAndFilters(changedKey);
         }
-    }, [isGuest, updateQuestionsAndFilters, urlAppendixes]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isGuest, urlAppendixes]);
 
     return {
         debouncedSearch,

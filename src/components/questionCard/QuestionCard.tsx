@@ -1,5 +1,4 @@
 import styles from "./QuestionCard.module.css";
-
 import { QuestionHeader } from ".";
 import { QuestionCardMiddle } from "./questionCardMiddle/QuestionCardMiddle";
 import QuestionCardBottom from "./questionCardBottom/QuestionCardBottom";

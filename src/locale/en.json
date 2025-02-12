@@ -54,6 +54,25 @@
         "noQuestionsFound": "No questions match those criteria",
         "createdHeader": "Questions You've Asked",
         "answeredHeader": "Questions You've Answered",
-        "commentedHeader": "Questions With Answers You've Commented On"
+        "commentedHeader": "Questions With Answers You've Commented On",
+        "questionTitle": "Question Title",
+        "questionTitlePlaceholder": "Enter your question title",
+        "questionDetails": "Question Details",
+        "questionDescriptionPlaceholder": "Describe your question in detail",
+        "questionDescriptionExpl": "Provide all necessary details to help others understand and answer your question",
+        "course": "Course",
+        "askQuestionCoursePlaceholder": "Pick a course. Suggestions will appear as you type.",
+        "topic": "Topic",
+        "topicSelectDefault": "Choose a course to see topics",
+        "topicSelectActive": "Pick a topic",
+        "publicQuestionExpl": "Allow public access to your question for greater visibility",
+        "tags": "Tags",
+        "addATag": "Add a tag",
+        "addATagExpl": "Add relevant tags to help categorize your question",
+        "add": "Add",
+        "submitQuestion": "Submit Question",
+        "public": "Public",
+        "nonPublic": "Not Public",
+        "tagLimitWarning": "Please limit your tags to 5 or fewer."
     }
 }

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { QuestionFinder, Tabs } from "../../../components";
+import { AskAQuestion, QuestionFinder, Tabs } from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
 import { ITab } from "../../../utils";
@@ -15,9 +15,9 @@ const btnStyle: CSSProperties = {
     paddingBlock: "5px",
 };
 
-const questionFinderContainerStyle: CSSProperties = {
-    marginTop: "1rem",
+const contentContainerStyle: CSSProperties = {
     width: "100%",
+    marginTop: "1.5rem",
 };
 const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
 
@@ -25,16 +25,17 @@ export function HomeExtended() {
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
 
-    const tabs: ITab[] = useMemo(() => {
-        const baseTabs = [
+    const tabs = useMemo(() => {
+        const baseTabs: ITab[] = [
             {
                 content: <QuestionFinder />,
-                contentContainerStyle: questionFinderContainerStyle,
+                contentContainerStyle,
                 btnStyle,
                 title: t("searchQuestions"),
             },
             {
-                content: <></>,
+                content: <AskAQuestion />,
+                contentContainerStyle,
                 btnStyle,
                 title: t("askAQuestion"),
             },

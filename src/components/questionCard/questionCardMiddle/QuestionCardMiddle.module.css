@@ -24,12 +24,12 @@
     .title {
         text-align: center;
     }
-    .question_section {
+    .question-section {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    .question_section > p {
+    .question-section > p {
         text-align: center;
     }
 }
@@ -44,7 +44,7 @@
     display: inline-block;
 }
 
-.time_section {
+.time-section {
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -61,6 +61,6 @@
     margin-bottom: 6px;
 }
 
-.question_section > p:last-child {
+.question-section > p:last-child {
     margin-top: clamp(20px, 3vw, 2rem);
 }
