@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { IDetailedQuestion } from "../../../utils";
 import { useEffect } from "react";
 import { BASE_URL, QUESTION_DETAILS_ROUTE } from "../../../data";
+import { QuestionCardDetails } from "../../../components/questionCard/questionCardDetails/QuestionCardDetails";
 
 export function QuestionDetailsExtended() {
     const { questionId } = useParams();
@@ -30,8 +31,24 @@ export function QuestionDetailsExtended() {
 
     return (
         <div>
-            <h1>{question.title}</h1>
-            <p>{question.description}</p>
+            <QuestionCardDetails
+                id={question.id}
+                title={question.title}
+                description={question.description}
+                topicName={question.topicName}
+                topicId={question.topicId}
+                subjectId={question.subjectId}
+                subjectName={question.subjectName}
+                subjectCode={question.subjectCode}
+                userName={question.userName}
+                created={question.created}
+                isResolved={question.isResolved}
+                isProtected={question.isProtected}
+                isHidden={question.isHidden}
+                answerCount={question.answerCount}
+                tags={question.tags}
+                userId={question.userId}
+            />
             <h2>Answers</h2>
             <ul>
                 {question.answers.map(answer => (

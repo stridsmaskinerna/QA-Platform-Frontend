@@ -4,7 +4,7 @@ interface QuestionCardBottomProps {
     tags: string[];
 }
 
-export default function QuestionCardBottom({ tags }: QuestionCardBottomProps) {
+export function QuestionCardBottom({ tags }: QuestionCardBottomProps) {
     return (
         <div className={styles.container}>
             {tags.map(tag => (
