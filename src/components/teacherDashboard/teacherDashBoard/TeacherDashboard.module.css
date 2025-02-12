@@ -1,0 +1,11 @@
+.container {
+  margin-block: 1rem;
+  border: 1px dashed black;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+}
+
+.title {
+  font-weight: bolder;
+}
