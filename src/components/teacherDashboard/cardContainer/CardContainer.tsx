@@ -3,16 +3,16 @@ import { ReactNode } from "react";
 import styles from "./CardContainer.module.css";
 
 interface CardContainerProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export function CardContainer({
-  children
+    children
 }: CardContainerProps) {
 
-  return (
-    <div className={styles.container}>
-      {children}
-    </div>
-  );
+    return (
+        <div className={styles.container}>
+            {children}
+        </div>
+    );
 }
