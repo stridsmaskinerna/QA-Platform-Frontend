@@ -27,7 +27,8 @@ export function SubjectManager({
                     subjects={subjects}
                     selectedSubject={selectedSubject}
                     onSelectSubject={onSelectSubject}
-                    onSelectSubjectQuestions={onSelectSubjectQuestions} />
+                    onSelectSubjectQuestions={onSelectSubjectQuestions}
+                />
             </div>
         </CardContainer>
     );
