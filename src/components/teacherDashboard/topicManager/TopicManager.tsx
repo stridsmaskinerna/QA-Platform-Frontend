@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 import { ISubject } from "../../../utils";
-import { CardContainer } from "../cardContainer";
-import { AddTopic } from "../addTopic";
+import { CardContainer } from "../components";
+import { TopicCreator } from "../topicCreator";
 import { TopicList } from "../topicList";
 
 interface SubjectManagerProps {
@@ -21,7 +21,7 @@ export function TopicManager({ subject }: SubjectManagerProps) {
             <h1>
                 {t("teacherDashboard.manageTopicsFor")} {`'${subject.name}'`}
             </h1>
-            <AddTopic onCreate={handleCreate} />
+            <TopicCreator onCreate={handleCreate} />
             <TopicList topics={subject.topics} />
         </CardContainer>
     );

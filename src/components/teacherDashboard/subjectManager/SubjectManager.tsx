@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { ISubject } from "../../../utils";
-import { CardContainer } from "../cardContainer";
+import { CardContainer } from "../components";
 import { SubjectList } from "../subjectList";
 
 interface ISubjectManagerProps {

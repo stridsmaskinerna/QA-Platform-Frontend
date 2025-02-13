@@ -1,12 +1,12 @@
 import { Input } from "../../input";
 import addIcon from "../../../assets/icons/add_white.svg";
-import styles from "./AddTopic.module.css";
+import styles from "./TopicCreator.module.css";
 
-interface IAddTopicProps {
+interface ITopicCreatorProps {
     onCreate: () => void;
 }
 
-export function AddTopic({ onCreate }: IAddTopicProps) {
+export function TopicCreator({ onCreate }: ITopicCreatorProps) {
     const selectCreate = () => {
         onCreate();
     };
