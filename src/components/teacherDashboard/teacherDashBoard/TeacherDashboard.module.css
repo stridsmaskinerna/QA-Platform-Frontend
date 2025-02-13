@@ -16,6 +16,13 @@
   color: #000;
 }
 
+.loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 900px) {
   .course-manager-container {
     flex-direction: column;

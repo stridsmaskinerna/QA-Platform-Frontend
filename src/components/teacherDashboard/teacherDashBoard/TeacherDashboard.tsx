@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { SubjectListCard } from "../subjectListCard";
-import { useFetchWithToken, useQAContext } from "../../../hooks";
+import { useFetchWithToken } from "../../../hooks";
 import { IQuestion, ISubject, Role } from "../../../utils";
 import { BASE_URL, GUEST_HOME_ROUTE, SUBJECT_URL } from "../../../data";
 import { TopicManagerCard } from "../topicManagerCard/TopicManagerCard";
 import { QuestionCardList } from "../../questionCardList";
 import { AuthGuard } from "../../authGuard";
 import styles from "./TeacherDashboard.module.css";
+import { Loader } from "../../loader";
 
-// TODO Update backend to send teachers subjects.
 export function TeacherDashboard() {
   const { t } = useTranslation();
-  const context = useQAContext();
   const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null);
@@ -35,10 +34,7 @@ export function TeacherDashboard() {
       }
     };
 
-    // TODO handle error ??
-    context.loaderContext.setIsLoading(true);
     void fetchTeacherSubjects();
-    context.loaderContext.setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,10 +55,7 @@ export function TeacherDashboard() {
     };
 
     // TODO handle error ??
-    context.loaderContext.setIsLoading(true);
-    try { void fetch(); }
-    catch (e) { console.log(e); }
-    finally { context.loaderContext.setIsLoading(false); }
+    void fetch();
   };
 
   return (
@@ -82,6 +75,9 @@ export function TeacherDashboard() {
           <TopicManagerCard
             subject={selectedSubject} />
           }
+        </div>
+        <div className={styles.loader}>
+          {fetchSubjects.isLoading || fetchSubjectQuestions.isLoading && <Loader />}
         </div>
         {questions.length != 0 && <QuestionCardList
           data={questions}
