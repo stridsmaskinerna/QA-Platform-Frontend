@@ -1,20 +1,20 @@
-import React, { ReactElement, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { IQuestion, ISubject } from "../../../utils";
 import { BASE_URL, SUBJECT_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
 
-interface Props {
+interface ITeacherDashboardProviderProps {
     children: ReactNode;
 }
 
 // TODO! Handle error globaly in errorBoundary or in local context ???
 // TODO! Add TOPIC CRUD functionality
 // TODO! Add english swedish text where missing.
-export const TeacherDashboardProvider: React.FC<Props> = ({
+export function TeacherDashboardProvider({
     children,
-}): ReactElement => {
+}: ITeacherDashboardProviderProps) {
     const [subjects, setSubjects] = useState<ISubject[]>([]);
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
@@ -68,4 +68,4 @@ export const TeacherDashboardProvider: React.FC<Props> = ({
             {children}
         </TeacherDashboardContext.Provider>
     );
-};
+}
