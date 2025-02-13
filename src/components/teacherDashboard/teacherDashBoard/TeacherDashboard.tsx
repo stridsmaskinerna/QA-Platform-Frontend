@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import styles from "./TeacherDashboard.module.css";
 import { SubjectListCard } from "../subjectListCard";
 import { useFetchWithToken, useQAContext } from "../../../hooks";
 import { IQuestion, ISubject, Role } from "../../../utils";
@@ -8,18 +8,20 @@ import { BASE_URL, GUEST_HOME_ROUTE, SUBJECT_URL } from "../../../data";
 import { TopicManagerCard } from "../topicManagerCard/TopicManagerCard";
 import { QuestionCardList } from "../../questionCardList";
 import { AuthGuard } from "../../authGuard";
+import styles from "./TeacherDashboard.module.css";
 
 // TODO Update backend to send teachers subjects.
 export function TeacherDashboard() {
-  const context = useQAContext()
-  const [subjects, setSubjects] = useState<ISubject[]>([])
-  const [questions, setQuestions] = useState<IQuestion[]>([])
-  const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null)
+  const { t } = useTranslation();
+  const context = useQAContext();
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
+  const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null);
   const fetchSubjects = useFetchWithToken<ISubject[]>();
   const fetchSubjectQuestions = useFetchWithToken<IQuestion[]>();
 
   useEffect(() => {
-    const fetchQuestionDetails = async () => {
+    const fetchTeacherSubjects = async () => {
       const data = await fetchSubjects.requestHandler(
         `${BASE_URL}${SUBJECT_URL}/teacher`,
       );
@@ -33,9 +35,10 @@ export function TeacherDashboard() {
       }
     };
 
-    context.loaderContext.setIsLoading(true)
-    void fetchQuestionDetails();
-    context.loaderContext.setIsLoading(false)
+    // TODO handle error ??
+    context.loaderContext.setIsLoading(true);
+    void fetchTeacherSubjects();
+    context.loaderContext.setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,7 +49,6 @@ export function TeacherDashboard() {
     setSelectedSubject(subject);
   };
 
-  // Get questions        
   const fetchQuestionDetails = (subject: ISubject) => {
     const fetch = async () => {
       const data = await fetchSubjectQuestions.requestHandler(
@@ -56,30 +58,20 @@ export function TeacherDashboard() {
       setQuestions(data ?? []);
     };
 
-    context.loaderContext.setIsLoading(true)
-    void fetch()
-    context.loaderContext.setIsLoading(false)
+    // TODO handle error ??
+    context.loaderContext.setIsLoading(true);
+    try { void fetch(); }
+    catch (e) { console.log(e); }
+    finally { context.loaderContext.setIsLoading(false); }
   };
 
-  if (fetchSubjects.error != null) {
-    // TODO handle error.
-    console.log(fetchSubjects.error);
-  }
-
-  if (fetchSubjectQuestions.error != null) {
-    // TODO handle error.
-    console.log(fetchSubjectQuestions.error);
-  }
-
   return (
-    <AuthGuard
-      roleBasedRedirect={{
+    <AuthGuard roleBasedRedirect={{
         allowedRoles: [Role.Teacher],
         fallbackRoute: GUEST_HOME_ROUTE,
-      }}
-    >
+      }}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Teacher Dashboard</h1>
+        <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
         <div className={styles.courseManagerContainer}>
           <SubjectListCard
             subjects={subjects}
@@ -96,7 +88,7 @@ export function TeacherDashboard() {
           activeResolvedFilter={null}
           onResolvedFilterClick={() => { return; }}
           isLoadingQuestions={false}
-          header={`Questions in course ${selectedSubject?.name}`}
+          header={`${t("teacherDashboard.questionsInCourse")} '${selectedSubject?.name}'`}
           displayResolveFilter={false} />
         }
       </div>

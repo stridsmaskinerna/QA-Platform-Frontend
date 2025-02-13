@@ -1,6 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 import { ISubject } from "../../../utils";
 import { CardContainer } from "../cardContainer";
-
 import styles from "./SubjectListCard.module.css";
 
 interface ISubjectListCardProps {
@@ -10,26 +11,25 @@ interface ISubjectListCardProps {
   onSelectSubjectQuestions: (subject: ISubject) => void;
 }
 
-// TODO Update backend to send teachers subjects.
 export function SubjectListCard({
   subjects,
   selectedSubject,
   onSelectSubject,
   onSelectSubjectQuestions
 }: ISubjectListCardProps) {
+  const { t } = useTranslation();
 
   const selectSubject = (subject: ISubject) => {
-    onSelectSubject(subject)
+    onSelectSubject(subject);
   };
 
   const isSubjectSelected = (subject: ISubject) => {
     return selectedSubject != null && selectedSubject.id == subject.id;
-  }
-
+  };
 
   return (
     <CardContainer>
-      <h1>Your Courses</h1>
+      <h1>{t("teacherDashboard.yourCourses")}</h1>
       <div>
         {subjects.map((s, i) =>
           <div
@@ -56,11 +56,13 @@ function SubjectItem({
   isSelected,
   onSelectSubjectQuestions
 }: ISubjectItemProps) {
+  const { t } = useTranslation();
+
   const getDerivedClassName = () => {
     return isSelected
       ? `${styles.selectedSubject} ${styles.subjectItem}`
       : styles.subjectItem;
-  }
+  };
 
   return (
     <div className={getDerivedClassName()}>
@@ -74,7 +76,7 @@ function SubjectItem({
         <button 
           onClick={() => { onSelectSubjectQuestions(subject) }}
           className={styles.viewQuestionsBtn}>
-          View questions
+          {t("teacherDashboard.viewQuestions")}
         </button>
       </div>}
     </div>

@@ -73,6 +73,14 @@
         "submitQuestion": "Submit Question",
         "public": "Public",
         "nonPublic": "Not Public",
-        "tagLimitWarning": "Please limit your tags to 5 or fewer."
+        "tagLimitWarning": "Please limit your tags to 5 or fewer.",
+
+        "teacherDashboard": {
+            "manageTopicsFor": "Manage Topics for",
+            "questionsInCourse": "Questions in course",
+            "title": "Teacher Dashboard",
+            "viewQuestions": "view questions",
+            "yourCourses": "Your Courses"
+        }
     }
 }
