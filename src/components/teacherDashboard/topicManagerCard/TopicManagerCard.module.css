@@ -1,1 +1,41 @@
-/* Style TopicManagerCard */
+.subject-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tool-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  gap: 2.5rem;
+}
+
+.create-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2.5rem;
+}
+
+.create-btn {
+  margin: 5px;
+  width: 12rem;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.icon {
+  padding: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icon:hover {
+  background-color: var(--grey-light);
+}
