@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { SubjectListCard } from "../subjectListCard";
+import { SubjectManager } from "../subjectManager";
 import { ISubject } from "../../../utils";
-import { TopicManagerCard } from "../topicManagerCard/TopicManagerCard";
+import { TopicManager } from "../topicManager";
 import { QuestionCardList } from "../../questionCardList";
 import { Loader } from "../../loader";
 import { useTeacherDashboardContext } from "../context";
@@ -33,14 +33,14 @@ export function TeacherDashboardContainer() {
         <div className={styles.container}>
             <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
             <div className={styles.courseManagerContainer}>
-                <SubjectListCard
+                <SubjectManager
                     subjects={context.subjects}
                     selectedSubject={context.selectedSubject}
                     onSelectSubject={displaySelectedSubject}
                     onSelectSubjectQuestions={fetchQuestionDetails}
                 />
                 {context.selectedSubject != null && (
-                    <TopicManagerCard subject={context.selectedSubject} />
+                    <TopicManager subject={context.selectedSubject} />
                 )}
             </div>
             <div className={styles.loader}>

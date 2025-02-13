@@ -5,11 +5,11 @@ import { CardContainer } from "../cardContainer";
 import { AddTopic } from "../addTopic";
 import { TopicList } from "../topicList";
 
-interface SubjectManagerCardProps {
+interface SubjectManagerProps {
     subject: ISubject;
 }
 
-export function TopicManagerCard({ subject }: SubjectManagerCardProps) {
+export function TopicManager({ subject }: SubjectManagerProps) {
     const { t } = useTranslation();
 
     const handleCreate = () => {
