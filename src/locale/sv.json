@@ -73,6 +73,14 @@
         "submitQuestion": "Publicera Fråga",
         "public": "Offentlig",
         "nonPublic": "Ej offentlig",
-        "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5."
+        "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
+
+        "teacherDashboard": {
+            "manageTopicsFor": "Hantera Frågor för",
+            "questionsInCourse": "Frågor i kurs",
+            "title": "Lärarpanel",
+            "viewQuestions": "granska frågor",
+            "yourCourses": "Dina Kurser"
+        }
     }
 }
