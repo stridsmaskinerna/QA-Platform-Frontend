@@ -1,21 +1,21 @@
 .add-container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	gap: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2px;
 }
 
 .add-btn {
-	display: flex;      
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;           
-	margin: 5px;
-	width: 12rem;
-	border-radius: 4px;
-	outline: none;
-	border: none;
-	background-color: #000;
-	color: #fff;
-	cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 5px;
+    width: 12rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
 }

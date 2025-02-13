@@ -7,7 +7,6 @@ interface IAddTopicProps {
 }
 
 export function AddTopic({ onCreate }: IAddTopicProps) {
-
     const selectCreate = () => {
         onCreate();
     };
@@ -16,15 +15,17 @@ export function AddTopic({ onCreate }: IAddTopicProps) {
         <div className={styles.addContainer}>
             <Input
                 inputType={"text"}
-                placeHolder="New topic name..." />
+                placeHolder="New topic name..."
+            />
             <button
                 className={styles.addBtn}
-                onClick={selectCreate}>
+                onClick={selectCreate}
+            >
                 <img
                     src={addIcon}
                     alt="Edit"
                     title="Edit"
-			    />
+                />
                 Add Topic
             </button>
         </div>

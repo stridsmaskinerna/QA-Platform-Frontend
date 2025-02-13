@@ -21,8 +21,8 @@ export function TopicManagerCard({ subject }: SubjectManagerCardProps) {
             <h1>
                 {t("teacherDashboard.manageTopicsFor")} {`'${subject.name}'`}
             </h1>
-            <AddTopic onCreate={handleCreate}/>
-            <TopicList topics={subject.topics}/>
+            <AddTopic onCreate={handleCreate} />
+            <TopicList topics={subject.topics} />
         </CardContainer>
     );
 }
