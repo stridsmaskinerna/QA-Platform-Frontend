@@ -1,0 +1,23 @@
+.subject-item {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.tool-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-inline: 1rem;
+	gap: 2.5rem;
+}
+
+.icon {
+	padding: 2px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.icon:hover {
+	background-color: var(--grey-light);
+}
