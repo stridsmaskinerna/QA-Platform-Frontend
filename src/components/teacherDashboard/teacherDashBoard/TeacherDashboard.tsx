@@ -15,7 +15,9 @@ export function TeacherDashboard() {
     const { t } = useTranslation();
     const [subjects, setSubjects] = useState<ISubject[]>([]);
     const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null);
+    const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
+        null,
+    );
     const fetchSubjects = useFetchWithToken<ISubject[]>();
     const fetchSubjectQuestions = useFetchWithToken<IQuestion[]>();
 
@@ -48,7 +50,7 @@ export function TeacherDashboard() {
     const fetchQuestionDetails = (subject: ISubject) => {
         const fetch = async () => {
             const data = await fetchSubjectQuestions.requestHandler(
-                `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`
+                `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
             );
 
             setQuestions(data ?? []);
@@ -59,10 +61,12 @@ export function TeacherDashboard() {
     };
 
     return (
-        <AuthGuard roleBasedRedirect={{
-            allowedRoles: [Role.Teacher],
-            fallbackRoute: GUEST_HOME_ROUTE,
-        }}>
+        <AuthGuard
+            roleBasedRedirect={{
+                allowedRoles: [Role.Teacher],
+                fallbackRoute: GUEST_HOME_ROUTE,
+            }}
+        >
             <div className={styles.container}>
                 <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
                 <div className={styles.courseManagerContainer}>
@@ -70,23 +74,28 @@ export function TeacherDashboard() {
                         subjects={subjects}
                         selectedSubject={selectedSubject}
                         onSelectSubject={displaySelectedSubject}
-                        onSelectSubjectQuestions={fetchQuestionDetails} />
-                    {selectedSubject != null &&
-                        <TopicManagerCard
-                            subject={selectedSubject} />
-                    }
+                        onSelectSubjectQuestions={fetchQuestionDetails}
+                    />
+                    {selectedSubject != null && (
+                        <TopicManagerCard subject={selectedSubject} />
+                    )}
                 </div>
                 <div className={styles.loader}>
-                    {fetchSubjects.isLoading || fetchSubjectQuestions.isLoading && <Loader />}
+                    {fetchSubjects.isLoading ||
+                        (fetchSubjectQuestions.isLoading && <Loader />)}
                 </div>
-                {questions.length != 0 && <QuestionCardList
-                    data={questions}
-                    activeResolvedFilter={null}
-                    onResolvedFilterClick={() => { return; }}
-                    isLoadingQuestions={false}
-                    header={`${t("teacherDashboard.questionsInCourse")} '${selectedSubject?.name}'`}
-                    displayResolveFilter={false} />
-                }
+                {questions.length != 0 && (
+                    <QuestionCardList
+                        data={questions}
+                        activeResolvedFilter={null}
+                        onResolvedFilterClick={() => {
+                            return;
+                        }}
+                        isLoadingQuestions={false}
+                        header={`${t("teacherDashboard.questionsInCourse")} '${selectedSubject?.name}'`}
+                        displayResolveFilter={false}
+                    />
+                )}
             </div>
         </AuthGuard>
     );

@@ -11,7 +11,7 @@ interface IQuestionCardListProps {
     onResolvedFilterClick: (arg: boolean | null) => void;
     isLoadingQuestions: boolean;
     header: string;
-    displayResolveFilter?: boolean
+    displayResolveFilter?: boolean;
 }
 
 export function QuestionCardList({
@@ -20,7 +20,7 @@ export function QuestionCardList({
     onResolvedFilterClick,
     isLoadingQuestions,
     header,
-    displayResolveFilter = true
+    displayResolveFilter = true,
 }: IQuestionCardListProps) {
     const { t } = useTranslation();
     if (isLoadingQuestions) {
@@ -37,10 +37,12 @@ export function QuestionCardList({
         <div className={styles.container}>
             <div className={styles.headerRow}>
                 <h3>{header}</h3>
-                {displayResolveFilter && <ResolvedFilters
-                    activeResolvedFilter={activeResolvedFilter}
-                    onResolvedFilterClick={onResolvedFilterClick}
-                />}
+                {displayResolveFilter && (
+                    <ResolvedFilters
+                        activeResolvedFilter={activeResolvedFilter}
+                        onResolvedFilterClick={onResolvedFilterClick}
+                    />
+                )}
             </div>
             {data.map(question => (
                 <QuestionCard

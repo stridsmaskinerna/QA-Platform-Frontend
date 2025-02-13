@@ -1,32 +1,32 @@
 .subject-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 1px;
-  padding: 0.5rem;
-  width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1px;
+    padding: 0.5rem;
+    width: 100%;
 }
 
 .subject-item:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
 }
 
 .selected-subject {
-  background-color: black;
-  color: #fff;
+    background-color: black;
+    color: #fff;
 }
 
 .selected-subject:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .subject-code {
-  font-weight: bolder;
+    font-weight: bolder;
 }
 
 .view-questions-btn {
-  padding-inline: 1rem;
-  cursor: pointer;
+    padding-inline: 1rem;
+    cursor: pointer;
 }

@@ -1,5 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { AskAQuestion, QuestionFinder, Tabs, TeacherDashboard } from "../../../components";
+import {
+    AskAQuestion,
+    QuestionFinder,
+    Tabs,
+    TeacherDashboard,
+} from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
 import { ITab } from "../../../utils";

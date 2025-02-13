@@ -6,13 +6,6 @@ interface CardContainerProps {
     children: ReactNode;
 }
 
-export function CardContainer({
-    children
-}: CardContainerProps) {
-
-    return (
-        <div className={styles.container}>
-            {children}
-        </div>
-    );
+export function CardContainer({ children }: CardContainerProps) {
+    return <div className={styles.container}>{children}</div>;
 }
