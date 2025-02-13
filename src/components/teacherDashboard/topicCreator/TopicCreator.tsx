@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { Input } from "../../input";
 import addIcon from "../../../assets/icons/add_white.svg";
 import styles from "./TopicCreator.module.css";
@@ -7,6 +9,8 @@ interface ITopicCreatorProps {
 }
 
 export function TopicCreator({ onCreate }: ITopicCreatorProps) {
+    const { t } = useTranslation();
+
     const selectCreate = () => {
         onCreate();
     };
@@ -15,7 +19,7 @@ export function TopicCreator({ onCreate }: ITopicCreatorProps) {
         <div className={styles.addContainer}>
             <Input
                 inputType={"text"}
-                placeHolder="New topic name..."
+                placeHolder={t("teacherDashboard.newTopicPlacholder")}
             />
             <button
                 className={styles.addBtn}
@@ -23,10 +27,9 @@ export function TopicCreator({ onCreate }: ITopicCreatorProps) {
             >
                 <img
                     src={addIcon}
-                    alt="Edit"
-                    title="Edit"
+                    alt="Add"
                 />
-                Add Topic
+                {t("teacherDashboard.createNewTopic")}
             </button>
         </div>
     );

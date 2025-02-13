@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { ITopic } from "../../../utils";
 import removeIcon from "../../../assets/icons/removeX.svg";
 import editIcon from "../../../assets/icons/edit.svg";
@@ -35,6 +37,8 @@ interface ITopicItemToolbarProps {
 }
 
 function TopicItemToolbar({ topic, onEdit, onDelete }: ITopicItemToolbarProps) {
+    const { t } = useTranslation();
+
     const selectEdit = (topic: ITopic) => {
         onEdit(topic);
     };
@@ -50,8 +54,8 @@ function TopicItemToolbar({ topic, onEdit, onDelete }: ITopicItemToolbarProps) {
                     selectEdit(topic);
                 }}
                 src={editIcon}
-                alt="Edit"
-                title="Edit"
+                alt={t("teacherDashboard.edit")}
+                title={t("teacherDashboard.edit")}
                 className={styles.icon}
             />
             <img
@@ -59,8 +63,8 @@ function TopicItemToolbar({ topic, onEdit, onDelete }: ITopicItemToolbarProps) {
                     selectDelete(topic);
                 }}
                 src={removeIcon}
-                alt="Delete"
-                title="Delete"
+                alt={t("teacherDashboard.delete")}
+                title={t("teacherDashboard.delete")}
                 className={styles.icon}
             />
         </div>
