@@ -6,13 +6,13 @@ import {
     useState,
 } from "react";
 import { useRoles } from "./useRoles";
-import { useDebounceCallback } from "usehooks-ts";
+import { useDebounceCallback, useIntersectionObserver } from "usehooks-ts";
 import { BASE_URL, fetchQuestions } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 
-const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
-const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
+const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
+const questionsBaseUrl = `${BASE_URL}/questions`;
 let timeout: NodeJS.Timeout;
 //If changes this, also change the transition time length accordingly in SearchWithFilters.module.css
 const ANIMATION_TIMER = 500;
@@ -40,6 +40,9 @@ interface IDisplayedFilters {
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(8);
+    const [hasApiMoreQuestions, setHasApiMoreQuestions] = useState(true);
     const [isLoadingQuestions, setIsLoadingQuestions] = useState(true);
     const [activeFilters, setActiveFilters] = useState<IActiveFilters>({
         subject: "",
@@ -60,6 +63,10 @@ export const useSearchQuestions = () => {
     const [shouldShowFilters, setShouldShowFilters] =
         useState<IShouldShowFilters>({ subject: false, topic: false });
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
+    const { isIntersecting: shouldLoadMoreQuestions, ref: loaderRef } =
+        useIntersectionObserver({
+            threshold: 0.5,
+        });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
 
@@ -157,26 +164,28 @@ export const useSearchQuestions = () => {
             }));
     };
 
-    //The "topic" arg isn't used at this point. Putting it there for clarities sake
-    // and possible future use.
     const updateQuestionsAndFilters = useCallback(
         async (caller: keyof IUrlAppendixes) => {
-            setIsLoadingQuestions(true);
-
             const queryParams =
+                `?limit=${limit}` +
+                `&pageNr=${urlAppendixes.pageNr}` +
                 urlAppendixes.searchStr +
                 (urlAppendixes.isResolved ?? "") +
                 (urlAppendixes.userInteraction ?? "") +
                 (urlAppendixes.subjectId ?? "") +
                 (urlAppendixes.topicId ?? "");
 
+            setIsLoadingQuestions(true);
             const data = isGuest
                 ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
                 : await authFetchQuestions(questionsBaseUrl + queryParams);
 
             if (data) {
-                setQuestions(data);
-
+                if (caller === "pageNr") {
+                    setQuestions(prev => [...prev, ...data]);
+                } else {
+                    setQuestions(data);
+                }
                 //If called by searchStr (which will also be the caller on initital render)
                 // we kind of reset the displayed filters. We update subject filter
                 //to mirror the fetched questions (if there is a searchStr)
@@ -247,10 +256,10 @@ export const useSearchQuestions = () => {
             }
             setIsLoadingQuestions(false);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [
             activeFilters.subject,
             activeFilters.topic,
-            authFetchQuestions,
             isGuest,
             updateDisplayedSubjectFilters,
             urlAppendixes.isResolved,
@@ -277,11 +286,17 @@ export const useSearchQuestions = () => {
 
         prevUrlAppendixes.current = urlAppendixes; // Update ref for next render
 
-        if (changedKey) {
-            void updateQuestionsAndFilters(changedKey);
+        if (changedKey || (hasApiMoreQuestions && shouldLoadMoreQuestions)) {
+            void updateQuestionsAndFilters(changedKey ?? );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes]);
+    }, [isGuest, urlAppendixes, shouldLoadMoreQuestions]);
+
+    // useEffect(() => {
+    //     if (shouldLoadMoreQuestions && hasApiMoreQuestions) {
+    //         setUrlAppendixes(prev => ({ ...prev, pageNr: prev.pageNr + 1 }));
+    //     }
+    // }, [hasApiMoreQuestions, shouldLoadMoreQuestions, page]);
 
     return {
         debouncedSearch,
@@ -301,5 +316,7 @@ export const useSearchQuestions = () => {
             activeFilter: activeFilters.topic,
         },
         shouldShowFilters,
+        loaderRef,
+        hasApiMoreQuestions,
     };
 };

@@ -4,6 +4,7 @@ import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
 import { ResolvedFilters } from "./ResolvedFilters";
 import { useTranslation } from "react-i18next";
+import { LegacyRef } from "react";
 
 interface IQuestionCardListProps {
     data: IQuestion[];
@@ -11,6 +12,8 @@ interface IQuestionCardListProps {
     onResolvedFilterClick: (arg: boolean | null) => void;
     isLoadingQuestions: boolean;
     header: string;
+    hasMore?: boolean;
+    loaderRef?: LegacyRef<HTMLDivElement>;
 }
 
 export function QuestionCardList({
@@ -19,6 +22,8 @@ export function QuestionCardList({
     onResolvedFilterClick,
     isLoadingQuestions,
     header,
+    hasMore,
+    loaderRef,
 }: IQuestionCardListProps) {
     const { t } = useTranslation();
     if (isLoadingQuestions) {
@@ -47,6 +52,11 @@ export function QuestionCardList({
                 />
             ))}
             {isNoData && <h3>{t("noQuestionsFound")}</h3>}
+            {hasMore && (
+                <div ref={loaderRef}>
+                    <Loader />
+                </div>
+            )}
         </div>
     );
 }
