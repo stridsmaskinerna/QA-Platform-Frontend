@@ -36,7 +36,7 @@ const labelStyle: CSSProperties = {
     fontSize: "14px",
 };
 
-const courseUrl = `${BASE_URL}/subject`;
+const courseUrl = `${BASE_URL}/subjects`;
 const postQuestionUrl = `${BASE_URL}/questions`;
 
 export function AskAQuestion() {

@@ -1,1 +1,0 @@
-export { SubjectListCard } from "./SubjectListCard";

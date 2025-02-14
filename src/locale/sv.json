@@ -80,7 +80,11 @@
             "questionsInCourse": "Frågor i kurs",
             "title": "Lärarpanel",
             "viewQuestions": "granska frågor",
-            "yourCourses": "Dina Kurser"
+            "yourCourses": "Dina Kurser",
+            "newTopicPlacholder": "Ny kursdel...",
+            "createNewTopic": "Ny kursdel",
+            "edit": "Uppdatera kursdel",
+            "delete": "Radera kursdel"
         }
     }
 }
