@@ -38,6 +38,7 @@ export function TeacherDashboardProvider({
     };
 
     const fetchQuestionDetails = async (subject: ISubject) => {
+        console.log("fetch questions in subject", subject.name)
         const data = await fetchSubjectQuestions.requestHandler(
             `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
         );

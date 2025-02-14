@@ -29,6 +29,12 @@ export function TeacherDashboardContainer() {
         void context.fetchQuestionDetails(subject);
     };
 
+    const getDerivedHeader = () => {
+        const questionInCourse = t("teacherDashboard.questionsInCourse");
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        return `${questionInCourse} '${context.selectedSubject?.name}'`
+    }
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
@@ -54,7 +60,7 @@ export function TeacherDashboardContainer() {
                         return;
                     }}
                     isLoadingQuestions={false}
-                    header={`${t("teacherDashboard.questionsInCourse")} '${context.selectedSubject?.name}'`}
+                    header={getDerivedHeader()}
                     displayResolveFilter={false}
                 />
             )}
