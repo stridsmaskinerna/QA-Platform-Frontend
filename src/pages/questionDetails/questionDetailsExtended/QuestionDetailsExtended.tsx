@@ -4,8 +4,8 @@ import { useParams } from "react-router";
 import { IDetailedQuestion } from "../../../utils";
 import { useEffect } from "react";
 import { BASE_URL, QUESTION_DETAILS_ROUTE } from "../../../data";
-import styles from "../questionDetailsShared.module.css";
 import { QuestionDetailsViewer } from "../../../components";
+import styles from "../questionDetailsShared.module.css";
 
 export function QuestionDetailsExtended() {
     const { questionId } = useParams();
