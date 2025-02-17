@@ -6,13 +6,13 @@ import {
     useState,
 } from "react";
 import { useRoles } from "./useRoles";
-import { useDebounceCallback, useIntersectionObserver } from "usehooks-ts";
+import { useDebounceCallback } from "usehooks-ts";
 import { BASE_URL, fetchQuestions } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 
-const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
-const questionsBaseUrl = `${BASE_URL}/questions`;
+const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
+const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
 let timeout: NodeJS.Timeout;
 //If changes this, also change the transition time length accordingly in SearchWithFilters.module.css
 const ANIMATION_TIMER = 500;
@@ -40,9 +40,6 @@ interface IDisplayedFilters {
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(8);
-    const [hasApiMoreQuestions, setHasApiMoreQuestions] = useState(true);
     const [isLoadingQuestions, setIsLoadingQuestions] = useState(true);
     const [activeFilters, setActiveFilters] = useState<IActiveFilters>({
         subject: "",
@@ -63,10 +60,6 @@ export const useSearchQuestions = () => {
     const [shouldShowFilters, setShouldShowFilters] =
         useState<IShouldShowFilters>({ subject: false, topic: false });
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
-    const { isIntersecting: shouldLoadMoreQuestions, ref: loaderRef } =
-        useIntersectionObserver({
-            threshold: 0.5,
-        });
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
 
@@ -308,7 +301,5 @@ export const useSearchQuestions = () => {
             activeFilter: activeFilters.topic,
         },
         shouldShowFilters,
-        loaderRef,
-        hasApiMoreQuestions,
     };
 };
