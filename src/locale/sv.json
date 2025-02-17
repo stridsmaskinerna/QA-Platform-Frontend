@@ -84,7 +84,11 @@
             "newTopicPlacholder": "Ny kursdel...",
             "createNewTopic": "Ny kursdel",
             "edit": "Uppdatera kursdel",
-            "delete": "Radera kursdel"
+            "activate": "Aktivera kursdel",
+            "deactivate": "Deaktivera kursdel",
+            "delete": "Radera kursdel",
+            "cancelUpdate": "Stäng",
+            "saveUpdate": "Spara"
         }
     }
 }

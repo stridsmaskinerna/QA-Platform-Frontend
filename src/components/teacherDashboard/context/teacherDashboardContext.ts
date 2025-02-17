@@ -8,7 +8,7 @@ export interface ITeacherDashboardContext {
     createTopic: (topic: ITopic) => Promise<void>;
     updateTopic: (topic: ITopic) => Promise<void>;
     deleteTopic: (topic: ITopic) => Promise<void>;
-    updateSelectedSubject: (subject: ISubject | null) => void;
+    updateSelectedSubject: (subject: ISubject) => void;
     updateSubjects: (subjects: ISubject[]) => void;
     updateQuestions: (questions: IQuestion[]) => void;
     fetchTeacherSubjects: () => Promise<void>;

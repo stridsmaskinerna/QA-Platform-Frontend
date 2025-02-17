@@ -76,6 +76,13 @@ export function TeacherDashboardProvider({
         });
     };
 
+    const updateSelectedSubject = (subject: ISubject) => {
+        if (selectedSubject?.id != subject.id) {
+            setQuestions([]);
+        }
+        setSelectedSubject(subject);
+    };
+
     const isLoading = () => {
         return fetchSubjectsReq.isLoading || fetchSubjectQuestionReq.isLoading;
     };
@@ -88,7 +95,7 @@ export function TeacherDashboardProvider({
             createTopic,
             updateTopic,
             deleteTopic,
-            updateSelectedSubject: setSelectedSubject,
+            updateSelectedSubject,
             updateSubjects: setSubjects,
             updateQuestions: setQuestions,
             fetchQuestionDetails,

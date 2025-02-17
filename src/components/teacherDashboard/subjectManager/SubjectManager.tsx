@@ -7,15 +7,11 @@ import { SubjectList } from "../subjectList";
 interface ISubjectManagerProps {
     subjects: ISubject[];
     selectedSubject: ISubject | null;
-    onSelectSubject: (subject: ISubject) => void;
-    onSelectSubjectQuestions: (subject: ISubject) => void;
 }
 
 export function SubjectManager({
     subjects,
-    selectedSubject,
-    onSelectSubject,
-    onSelectSubjectQuestions,
+    selectedSubject
 }: ISubjectManagerProps) {
     const { t } = useTranslation();
 
@@ -26,8 +22,6 @@ export function SubjectManager({
                 <SubjectList
                     subjects={subjects}
                     selectedSubject={selectedSubject}
-                    onSelectSubject={onSelectSubject}
-                    onSelectSubjectQuestions={onSelectSubjectQuestions}
                 />
             </div>
         </CardContainer>

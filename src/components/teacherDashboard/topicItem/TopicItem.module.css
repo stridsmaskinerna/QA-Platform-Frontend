@@ -8,15 +8,16 @@
     justify-content: space-between;
 }
 
-.toolbar-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-inline: 1rem;
-    gap: 2.5rem;
+.is-editing {
+    font-weight: bold;
 }
 
-.toolbar-edit-container {
+.is-deactivated {
+    color: var(--grey-light);
+    text-decoration: line-through;
+}
+
+.topic-edit-container {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -24,22 +25,8 @@
     gap: 0.5rem;
 }
 
-.icon {
-    padding: 2px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.edit-topic {
-    font-weight: bold;
-}
-
 .edit-container {
     border: 2px solid #2563eb;
     border-radius: 4px;
     padding: 1rem;
-}
-
-.icon:hover {
-    background-color: var(--grey-light);
 }

@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { ITopic } from "../../../utils";
 import { TopicItem } from "../topicItem";
 
@@ -6,10 +8,14 @@ interface ITopicListProps {
 }
 
 export function TopicList({ topics }: ITopicListProps) {
+    const sortedTopics = useMemo(() => {
+        return [...topics].sort((a, b) => a.name.localeCompare(b.name));
+    }, [topics]);
+
     return (
         <>
-            {topics.map((topic, i) => (
-                <div key={i}>
+            {sortedTopics.map(topic => (
+                <div key={topic.id}>
                     <TopicItem topic={topic} />
                 </div>
             ))}
