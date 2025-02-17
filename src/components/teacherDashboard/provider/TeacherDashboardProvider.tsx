@@ -86,6 +86,7 @@ export function TeacherDashboardProvider({
                 method: "DELETE",
             },
         );
+        await fetchTeacherSubjects();
     };
 
     const updateSelectedSubject = (subject: ISubject) => {

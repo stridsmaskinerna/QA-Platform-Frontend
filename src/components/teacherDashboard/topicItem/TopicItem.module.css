@@ -17,7 +17,14 @@
     text-decoration: line-through;
 }
 
-.topic-edit-container {
+.edit-container,
+.delete-container {
+    border: 2px solid #2563eb;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.topic-edit-btn-container {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -25,8 +32,17 @@
     gap: 0.5rem;
 }
 
-.edit-container {
-    border: 2px solid #2563eb;
-    border-radius: 4px;
-    padding: 1rem;
+.delete-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-delete-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 4px;
+    gap: 0.5rem;
 }

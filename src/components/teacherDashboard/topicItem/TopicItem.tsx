@@ -7,6 +7,7 @@ import { CancelButton, SaveButton } from "../../button";
 import { useTeacherDashboardContext } from "../context";
 import { TopicItemToolbar } from "../topicItemToolbar";
 import styles from "./TopicItem.module.css";
+import { DeleteButton } from "../../button/deleteButton";
 
 interface ITopicItemProps {
     topic: ITopic;
@@ -16,31 +17,43 @@ export function TopicItem({ topic }: ITopicItemProps) {
     const { t } = useTranslation();
     const context = useTeacherDashboardContext();
     const [isUpdating, setIsUpdating] = useState(false);
-    const [updatedTopic, setUpdatedTopic] = useState({ ...topic });
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [currentTopicValue, setCurrentTopicValue] = useState({ ...topic });
 
-    const handleEdit = () => {
-        void context.updateTopic(updatedTopic).then(() => {
-            setIsUpdating(false);
-        });
-    };
-
-    const handleCancelEdit = () => {
-        setIsUpdating(false);
-    };
-
-    const handleSetUpdatedTopic = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUpdatedTopic(prev => {
+    const handleSetCurrentTopicValue = (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setCurrentTopicValue(prev => {
             return { ...prev, name: e.target.value };
         });
     };
 
-    const selectManageEdit = () => {
+    const selectOpenUpdateManager = () => {
+        setIsDeleting(false);
         setIsUpdating(prev => !prev);
     };
 
-    const toggleActive = () => {
-        const topic = { ...updatedTopic, isActive: !updatedTopic.isActive };
-        setUpdatedTopic(topic);
+    const selectOpenDeleteManager = () => {
+        setIsUpdating(false);
+        setIsDeleting(prev => !prev);
+    };
+
+    const handleUpdate = () => {
+        void context.updateTopic(currentTopicValue).then(() => {
+            setIsUpdating(false);
+        });
+    };
+
+    const handleDelete = () => {
+        void context.deleteTopic(topic);
+    };
+
+    const toggleActivateTopic = () => {
+        const topic = {
+            ...currentTopicValue,
+            isActive: !currentTopicValue.isActive,
+        };
+        setCurrentTopicValue(topic);
         void context.updateTopic(topic);
     };
 
@@ -52,9 +65,10 @@ export function TopicItem({ topic }: ITopicItemProps) {
                 </p>
                 <TopicItemToolbar
                     topic={topic}
-                    onUpdate={selectManageEdit}
-                    onActivate={toggleActive}
-                    onDeactivate={toggleActive}
+                    onUpdate={selectOpenUpdateManager}
+                    onActivate={toggleActivateTopic}
+                    onDeactivate={toggleActivateTopic}
+                    onDelete={selectOpenDeleteManager}
                 />
             </div>
             {isUpdating && (
@@ -62,16 +76,35 @@ export function TopicItem({ topic }: ITopicItemProps) {
                     <Input
                         inputType={"text"}
                         defaultValue={topic.name}
-                        onChange={handleSetUpdatedTopic}
+                        onChange={handleSetCurrentTopicValue}
                     />
-                    <div className={styles.topicEditContainer}>
+                    <div className={styles.topicEditBtnContainer}>
                         <CancelButton
                             text={t("teacherDashboard.cancelUpdate")}
-                            onClick={handleCancelEdit}
+                            onClick={() => {
+                                setIsUpdating(false);
+                            }}
                         />
                         <SaveButton
                             text={t("teacherDashboard.saveUpdate")}
-                            onClick={handleEdit}
+                            onClick={handleUpdate}
+                        />
+                    </div>
+                </div>
+            )}
+            {isDeleting && (
+                <div className={styles.deleteContainer}>
+                    <p>Delete {`'${topic.name}'`} ?</p>
+                    <div className={styles.topicDeleteBtnContainer}>
+                        <CancelButton
+                            text={t("teacherDashboard.cancelUpdate")}
+                            onClick={() => {
+                                setIsDeleting(false);
+                            }}
+                        />
+                        <DeleteButton
+                            text="Delete"
+                            onClick={handleDelete}
                         />
                     </div>
                 </div>
