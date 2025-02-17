@@ -16,7 +16,7 @@ import {
 } from "../..";
 import { useTranslation } from "react-i18next";
 import { useFetchWithToken, useQAContext } from "../../../hooks";
-import { CustomError, ICourse, IOption, ISuggestion } from "../../../utils";
+import { CustomError, ISubject, IOption, ISuggestion } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { PublicQuestionToggle } from ".";
 import { AddATag } from "./AddATag";
@@ -36,17 +36,17 @@ const labelStyle: CSSProperties = {
     fontSize: "14px",
 };
 
-const courseUrl = `${BASE_URL}/subject`;
+const courseUrl = `${BASE_URL}/subjects`;
 const postQuestionUrl = `${BASE_URL}/questions`;
 
 export function AskAQuestion() {
-    const { requestHandler: fetchCourses } = useFetchWithToken<ICourse[]>();
+    const { requestHandler: fetchCourses } = useFetchWithToken<ISubject[]>();
     const { requestHandler: postQuestion } = useFetchWithToken<void>();
     const { t } = useTranslation();
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
-    const [courses, setCourses] = useState<ICourse[]>([]);
+    const [courses, setCourses] = useState<ISubject[]>([]);
     const [selectedCourseId, setSelectedCourseId] = useState<string>("");
     const [addedTags, setAddedTags] = useState<string[]>([]);
     const [topics, setTopics] = useState<IOption[]>([]);
