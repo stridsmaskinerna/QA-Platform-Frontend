@@ -24,25 +24,35 @@ export function TopicItemToolbar({
     return (
         <div className={styles.toolbarContainer}>
             <img
-                onClick={() => { onUpdate(topic); }}
+                onClick={() => {
+                    onUpdate(topic);
+                }}
                 src={editIcon}
                 alt={t("teacherDashboard.edit")}
                 title={t("teacherDashboard.edit")}
-                className={styles.toolbarIcon} />
-            {topic.isActive
-                ? <img
-                    onClick={() => { onDeactivate(topic); }}
+                className={styles.toolbarIcon}
+            />
+            {topic.isActive ? (
+                <img
+                    onClick={() => {
+                        onDeactivate(topic);
+                    }}
                     src={removeIcon}
                     alt={t("teacherDashboard.deactivate")}
                     title={t("teacherDashboard.deactivate")}
-                    className={styles.toolbarIcon} />
-                : <img
-                    onClick={() => { onActivate(topic); }}
+                    className={styles.toolbarIcon}
+                />
+            ) : (
+                <img
+                    onClick={() => {
+                        onActivate(topic);
+                    }}
                     src={checkBlack}
                     alt={t("teacherDashboard.activate")}
                     title={t("teacherDashboard.activate")}
-                    className={styles.toolbarIcon} />
-            }
+                    className={styles.toolbarIcon}
+                />
+            )}
         </div>
     );
 }

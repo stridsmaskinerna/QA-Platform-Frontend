@@ -21,9 +21,7 @@ export function TeacherDashboardInternal() {
             <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
             <div className={styles.courseManagerContainer}>
                 <SubjectManager />
-                {context.selectedSubject != null && (
-                    <TopicManager />
-                )}
+                {context.selectedSubject != null && <TopicManager />}
             </div>
             <div className={styles.loader}>
                 {context.isLoading() && <Loader />}

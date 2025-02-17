@@ -2,7 +2,7 @@ import { Role } from "../../../utils";
 import { GUEST_HOME_ROUTE } from "../../../data";
 import { AuthGuard } from "../../authGuard";
 import { TeacherDashboardProvider } from "../provider";
-import { TeacherDashboardInternal} from "../teacherDashboardInternal";
+import { TeacherDashboardInternal } from "../teacherDashboardInternal";
 
 export function TeacherDashboard() {
     return (

@@ -17,8 +17,10 @@ export function SubjectList() {
     };
 
     const isSubjectSelected = (subject: ISubject) => {
-        return context.selectedSubject != null &&
-            context.selectedSubject.id == subject.id;
+        return (
+            context.selectedSubject != null &&
+            context.selectedSubject.id == subject.id
+        );
     };
 
     return (
@@ -26,7 +28,9 @@ export function SubjectList() {
             {context.subjects.map(s => (
                 <div
                     key={s.id}
-                    onClick={() => { context.updateSelectedSubject(s); }}
+                    onClick={() => {
+                        context.updateSelectedSubject(s);
+                    }}
                 >
                     <SubjectItem
                         subject={s}

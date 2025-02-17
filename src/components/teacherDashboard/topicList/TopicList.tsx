@@ -10,9 +10,9 @@ export function TopicList() {
         if (context.selectedSubject?.topics == null) {
             return [];
         }
-        return [
-            ...context.selectedSubject.topics
-        ].sort((a, b) => a.name.localeCompare(b.name));
+        return [...context.selectedSubject.topics].sort((a, b) =>
+            a.name.localeCompare(b.name),
+        );
     }, [context.selectedSubject?.topics]);
 
     return (

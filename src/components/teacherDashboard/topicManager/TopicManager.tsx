@@ -12,7 +12,8 @@ export function TopicManager() {
     return (
         <CardContainer>
             <h1>
-                {t("teacherDashboard.manageTopicsFor")} {`'${context.selectedSubject?.name}'`}
+                {t("teacherDashboard.manageTopicsFor")}{" "}
+                {`'${context.selectedSubject?.name}'`}
             </h1>
             <TopicCreator />
             <TopicList />
