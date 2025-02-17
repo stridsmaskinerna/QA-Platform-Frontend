@@ -167,8 +167,6 @@ export const useSearchQuestions = () => {
     const updateQuestionsAndFilters = useCallback(
         async (caller: keyof IUrlAppendixes) => {
             const queryParams =
-                `?limit=${limit}` +
-                `&pageNr=${urlAppendixes.pageNr}` +
                 urlAppendixes.searchStr +
                 (urlAppendixes.isResolved ?? "") +
                 (urlAppendixes.userInteraction ?? "") +
@@ -181,15 +179,15 @@ export const useSearchQuestions = () => {
                 : await authFetchQuestions(questionsBaseUrl + queryParams);
 
             if (data) {
-                if (caller === "pageNr") {
-                    setQuestions(prev => [...prev, ...data]);
-                } else {
-                    setQuestions(data);
-                }
+                setQuestions(data);
+
                 //If called by searchStr (which will also be the caller on initital render)
                 // we kind of reset the displayed filters. We update subject filter
                 //to mirror the fetched questions (if there is a searchStr)
-                // and set displayed topic filters to none.
+                // and set displayed topic filters to none. To not jar the animation
+                //for hiding filters we wait for the animation to finish before
+                //removing the displayed and active filters if urlAppendixes.searchStr
+                //is empty.
                 if (caller === "searchStr") {
                     if (urlAppendixes.searchStr) {
                         setShouldShowFilters({ subject: true, topic: false });
@@ -272,7 +270,7 @@ export const useSearchQuestions = () => {
 
     useEffect(() => {
         //Initial render. Run the updateQuestionsAndFilters function with caller = search
-        // and now searchString. Will initiate filters and ust fetch the 10 most recent questions.
+        // and no searchString. Will initiate filters and just fetch the 10 most recent questions.
         if (!prevUrlAppendixes.current) {
             prevUrlAppendixes.current = urlAppendixes;
             void updateQuestionsAndFilters("searchStr");
@@ -286,17 +284,11 @@ export const useSearchQuestions = () => {
 
         prevUrlAppendixes.current = urlAppendixes; // Update ref for next render
 
-        if (changedKey || (hasApiMoreQuestions && shouldLoadMoreQuestions)) {
-            void updateQuestionsAndFilters(changedKey ?? );
+        if (changedKey) {
+            void updateQuestionsAndFilters(changedKey);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isGuest, urlAppendixes, shouldLoadMoreQuestions]);
-
-    // useEffect(() => {
-    //     if (shouldLoadMoreQuestions && hasApiMoreQuestions) {
-    //         setUrlAppendixes(prev => ({ ...prev, pageNr: prev.pageNr + 1 }));
-    //     }
-    // }, [hasApiMoreQuestions, shouldLoadMoreQuestions, page]);
+    }, [isGuest, urlAppendixes]);
 
     return {
         debouncedSearch,
