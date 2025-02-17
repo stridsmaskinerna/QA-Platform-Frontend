@@ -39,7 +39,7 @@ export function useFetchWithToken<T>(
             accessToken: string | undefined,
             url: RequestInfo | URL,
             options?: RequestInit,
-        ): Promise<T> => {
+        ): Promise<T | void> => {
             if (!accessToken) {
                 throw new Error("There is no accessToken in the tokens field");
             }
@@ -53,7 +53,14 @@ export function useFetchWithToken<T>(
                 throw new CustomError(response.status, response.statusText);
             }
 
-            return (await response.json()) as T;
+            console.log("response", response);
+
+            const contentType = response.headers.get("content-type");
+            if (contentType?.includes("application/json")) {
+                return (await response.json()) as T;
+            }
+
+            return;
         },
         [],
     );

@@ -1,10 +1,14 @@
-.subject-item {
+.topic-container {
+    margin-left: 0.5rem;
+}
+
+.topic-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.tool-container {
+.toolbar-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -12,10 +16,28 @@
     gap: 2.5rem;
 }
 
+.toolbar-edit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 4px;
+    gap: 0.5rem;
+}
+
 .icon {
     padding: 2px;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.edit-topic {
+    font-weight: bold;
+}
+
+.edit-container {
+    border: 2px solid #2563eb;
+    border-radius: 4px;
+    padding: 1rem;
 }
 
 .icon:hover {

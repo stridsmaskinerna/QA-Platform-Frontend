@@ -32,8 +32,8 @@ export function TeacherDashboardContainer() {
     const getDerivedHeader = () => {
         const questionInCourse = t("teacherDashboard.questionsInCourse");
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        return `${questionInCourse} '${context.selectedSubject?.name}'`
-    }
+        return `${questionInCourse} '${context.selectedSubject?.name}'`;
+    };
 
     return (
         <div className={styles.container}>

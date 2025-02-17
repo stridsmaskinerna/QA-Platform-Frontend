@@ -15,7 +15,6 @@ export function SubjectList({
     onSelectSubjectQuestions,
 }: ISubjectListProps) {
     const selectSubject = (subject: ISubject) => {
-        console.log("selected subject", subject.name)
         onSelectSubject(subject);
     };
 

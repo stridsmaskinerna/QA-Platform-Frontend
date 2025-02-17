@@ -1,18 +1,31 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Input } from "../../input";
 import addIcon from "../../../assets/icons/add_white.svg";
 import styles from "./TopicCreator.module.css";
+import { useTeacherDashboardContext } from "../context";
+import { ITopic } from "../../../utils";
 
-interface ITopicCreatorProps {
-    onCreate: () => void;
-}
-
-export function TopicCreator({ onCreate }: ITopicCreatorProps) {
+export function TopicCreator() {
     const { t } = useTranslation();
+    const context = useTeacherDashboardContext();
+    const [topic, setTopic] = useState<ITopic>({
+        id: "",
+        isActive: true,
+        subjectId: context.selectedSubject?.id ?? "",
+        name: "",
+    });
 
-    const selectCreate = () => {
-        onCreate();
+    const handleSelectCreate = () => {
+        void context.createTopic(topic);
+    };
+
+    // TODO UPSDATE BACKEND TO HAVE A SPECIFIC CREATE DTO
+    const handleSetTopic = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTopic(prev => {
+            return { ...prev, name: e.target.value };
+        });
     };
 
     return (
@@ -20,10 +33,11 @@ export function TopicCreator({ onCreate }: ITopicCreatorProps) {
             <Input
                 inputType={"text"}
                 placeHolder={t("teacherDashboard.newTopicPlacholder")}
+                onChange={handleSetTopic}
             />
             <button
                 className={styles.addBtn}
-                onClick={selectCreate}
+                onClick={handleSelectCreate}
             >
                 <img
                     src={addIcon}
