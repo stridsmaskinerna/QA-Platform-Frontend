@@ -4,15 +4,7 @@ import { ISubject } from "../../../utils";
 import { useTeacherDashboardContext } from "../context";
 import { SubjectItem } from "../subjectItem";
 
-interface ISubjectListProps {
-    subjects: ISubject[];
-    selectedSubject: ISubject | null;
-}
-
-export function SubjectList({
-    subjects,
-    selectedSubject
-}: ISubjectListProps) {
+export function SubjectList() {
     const context = useTeacherDashboardContext();
 
     useEffect(() => {
@@ -25,12 +17,13 @@ export function SubjectList({
     };
 
     const isSubjectSelected = (subject: ISubject) => {
-        return selectedSubject != null && selectedSubject.id == subject.id;
+        return context.selectedSubject != null &&
+            context.selectedSubject.id == subject.id;
     };
 
     return (
         <>
-            {subjects.map(s => (
+            {context.subjects.map(s => (
                 <div
                     key={s.id}
                     onClick={() => { context.updateSelectedSubject(s); }}

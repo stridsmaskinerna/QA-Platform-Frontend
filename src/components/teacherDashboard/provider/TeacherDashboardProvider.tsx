@@ -27,15 +27,19 @@ export function TeacherDashboardProvider({
     const fetchSubjectQuestionReq = useFetchWithToken<IQuestion[]>();
 
     const fetchTeacherSubjects = async () => {
+        console.log(selectedSubject)
+        
         const data = await fetchSubjectsReq.requestHandler(
             `${BASE_URL}${SUBJECT_URL}/teacher`,
         );
 
-        if (data != null) {
-            setSubjects(data ?? []);
+        setSubjects(data ?? []);
+
+        if (data != null && selectedSubject == null) {
             setSelectedSubject(data[0]);
-        } else {
-            setSubjects([]);
+        } else if (data != null && selectedSubject != null) {
+            setSelectedSubject(selectedSubject);
+        } else if (data == null) {
             setSelectedSubject(null);
         }
     };

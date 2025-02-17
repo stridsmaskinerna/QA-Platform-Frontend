@@ -1,24 +1,21 @@
 import { useTranslation } from "react-i18next";
 
-import { ISubject } from "../../../utils";
 import { CardContainer } from "../components";
 import { TopicCreator } from "../topicCreator";
 import { TopicList } from "../topicList";
+import { useTeacherDashboardContext } from "../context";
 
-interface SubjectManagerProps {
-    subject: ISubject;
-}
-
-export function TopicManager({ subject }: SubjectManagerProps) {
+export function TopicManager() {
+    const context = useTeacherDashboardContext();
     const { t } = useTranslation();
 
     return (
         <CardContainer>
             <h1>
-                {t("teacherDashboard.manageTopicsFor")} {`'${subject.name}'`}
+                {t("teacherDashboard.manageTopicsFor")} {`'${context.selectedSubject?.name}'`}
             </h1>
             <TopicCreator />
-            <TopicList topics={subject.topics} />
+            <TopicList />
         </CardContainer>
     );
 }

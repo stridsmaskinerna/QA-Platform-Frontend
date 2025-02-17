@@ -20,12 +20,9 @@ export function TeacherDashboardInternal() {
         <div className={styles.container}>
             <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
             <div className={styles.courseManagerContainer}>
-                <SubjectManager
-                    subjects={context.subjects}
-                    selectedSubject={context.selectedSubject}
-                />
+                <SubjectManager />
                 {context.selectedSubject != null && (
-                    <TopicManager subject={context.selectedSubject} />
+                    <TopicManager />
                 )}
             </div>
             <div className={styles.loader}>
