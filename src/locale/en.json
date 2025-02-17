@@ -83,12 +83,15 @@
             "yourCourses": "Your Courses",
             "newTopicPlacholder": "New topic name...",
             "createNewTopic": "Add Topic",
-            "edit": "Edit Topic",
-            "activate": "Activate Topic",
-            "deactivate": "Deactivate Topic",
-            "delete": "Delete Topic",
+            "editInfo": "Edit Topic",
+            "activateInfo": "Activate Topic",
+            "deactivateInfo": "Deactivate Topic",
+            "deleteInfo": "Delete Topic",
             "cancelUpdate": "Cancel",
-            "saveUpdate": "Save"
+            "saveUpdate": "Save",
+            "cancelDelete": "Cancel",
+            "confirmDelete": "Delete",
+            "questionDelete": "Delete"
         }
     }
 }

@@ -57,12 +57,16 @@ export function TopicItem({ topic }: ITopicItemProps) {
         void context.updateTopic(topic);
     };
 
+    const getDerivedStyleForName = () => {
+        const active = !topic.isActive ? styles.isDeactivated : "";
+        const manage = isDeleting || isUpdating ? styles.isManaging : "";
+        return `${active} ${manage}`;
+    };
+
     return (
         <div className={styles.topicContainer}>
             <div className={styles.topicItem}>
-                <p className={!topic.isActive ? styles.isDeactivated : ""}>
-                    {topic.name}
-                </p>
+                <p className={getDerivedStyleForName()}>{topic.name}</p>
                 <TopicItemToolbar
                     topic={topic}
                     onUpdate={selectOpenUpdateManager}
@@ -94,16 +98,19 @@ export function TopicItem({ topic }: ITopicItemProps) {
             )}
             {isDeleting && (
                 <div className={styles.deleteContainer}>
-                    <p>Delete {`'${topic.name}'`} ?</p>
+                    <p>
+                        {t("teacherDashboard.questionDelete")}{" "}
+                        {`'${topic.name}'`} ?
+                    </p>
                     <div className={styles.topicDeleteBtnContainer}>
                         <CancelButton
-                            text={t("teacherDashboard.cancelUpdate")}
+                            text={t("teacherDashboard.cancelDelete")}
                             onClick={() => {
                                 setIsDeleting(false);
                             }}
                         />
                         <DeleteButton
-                            text="Delete"
+                            text={t("teacherDashboard.confirmDelete")}
                             onClick={handleDelete}
                         />
                     </div>

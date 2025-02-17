@@ -5,6 +5,7 @@
     margin: 1px;
     padding: 0.5rem;
     width: 100%;
+    gap: 1rem;
 }
 
 .subject-item:hover {
@@ -29,4 +30,17 @@
 .view-questions-btn {
     padding-inline: 1rem;
     cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .subject-item {
+        flex-direction: column;
+    }
+
+    .view-questions-btn-ctr {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        width: 100%;
+    }
 }

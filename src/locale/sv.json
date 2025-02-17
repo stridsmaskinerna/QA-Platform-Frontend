@@ -83,12 +83,15 @@
             "yourCourses": "Dina Kurser",
             "newTopicPlacholder": "Ny kursdel...",
             "createNewTopic": "Ny kursdel",
-            "edit": "Uppdatera kursdel",
-            "activate": "Aktivera kursdel",
-            "deactivate": "Deaktivera kursdel",
-            "delete": "Radera kursdel",
+            "editInfo": "Uppdatera kursdel",
+            "activateInfo": "Aktivera kursdel",
+            "deactivateInfo": "Deaktivera kursdel",
+            "deleteInfo": "Radera kursdel",
             "cancelUpdate": "Stäng",
-            "saveUpdate": "Spara"
+            "saveUpdate": "Spara",
+            "cancelDelete": "Stäng",
+            "confirmDelete": "Radera",
+            "questionDelete": "Radera"
         }
     }
 }

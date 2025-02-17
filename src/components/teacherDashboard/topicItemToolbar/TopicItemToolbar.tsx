@@ -31,8 +31,8 @@ export function TopicItemToolbar({
                     onUpdate(topic);
                 }}
                 src={editIcon}
-                alt={t("teacherDashboard.edit")}
-                title={t("teacherDashboard.edit")}
+                alt={t("teacherDashboard.editInfo")}
+                title={t("teacherDashboard.editInfo")}
                 className={styles.toolbarIcon}
             />
             {topic.isActive ? (
@@ -41,8 +41,8 @@ export function TopicItemToolbar({
                         onDeactivate(topic);
                     }}
                     src={removeIcon}
-                    alt={t("teacherDashboard.deactivate")}
-                    title={t("teacherDashboard.deactivate")}
+                    alt={t("teacherDashboard.deactivateInfo")}
+                    title={t("teacherDashboard.deactivateInfo")}
                     className={styles.toolbarIcon}
                 />
             ) : (
@@ -51,8 +51,8 @@ export function TopicItemToolbar({
                         onActivate(topic);
                     }}
                     src={checkBlack}
-                    alt={t("teacherDashboard.activate")}
-                    title={t("teacherDashboard.activate")}
+                    alt={t("teacherDashboard.activateInfo")}
+                    title={t("teacherDashboard.activateInfo")}
                     className={styles.toolbarIcon}
                 />
             )}
@@ -61,8 +61,8 @@ export function TopicItemToolbar({
                     onDelete(topic);
                 }}
                 src={deleteIcon}
-                alt={t("teacherDashboard.delete")}
-                title={t("teacherDashboard.delete")}
+                alt={t("teacherDashboard.deleteInfo")}
+                title={t("teacherDashboard.deleteInfo")}
                 className={styles.toolbarIcon}
             />
         </div>
