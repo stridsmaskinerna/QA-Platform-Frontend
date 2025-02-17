@@ -53,8 +53,6 @@ export function useFetchWithToken<T>(
                 throw new CustomError(response.status, response.statusText);
             }
 
-            console.log("response", response);
-
             const contentType = response.headers.get("content-type");
             if (contentType?.includes("application/json")) {
                 return (await response.json()) as T;

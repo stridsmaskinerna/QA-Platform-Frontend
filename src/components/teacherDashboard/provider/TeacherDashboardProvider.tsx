@@ -11,14 +11,15 @@ interface ITeacherDashboardProviderProps {
 
 // TODO! Handle error globaly in errorBoundary or in local context ???
 // TODO! Add TOPIC CRUD functionality
+// TODO! UPDATE BACKEND TO HAVE A SPECIFIC CREATE DTO.
+// TODO! Update loading and error mgmt for different requests, e.g.,
+//       delete, create, and update topics.   
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
     const [subjects, setSubjects] = useState<ISubject[]>([]);
     const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
-        null,
-    );
+    const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(null);
     const createTopicReq = useFetchWithToken<void>();
     const updateTopicReq = useFetchWithToken<void>();
     const deleteTopicReq = useFetchWithToken<void>();
@@ -48,16 +49,13 @@ export function TeacherDashboardProvider({
     };
 
     const updateTopic = async (topic: ITopic) => {
-        await updateTopicReq.requestHandler(
-            `${BASE_URL}${TOPIC_URL}/${topic.id}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(topic),
+        await updateTopicReq.requestHandler(`${BASE_URL}${TOPIC_URL}/${topic.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
             },
-        );
+            body: JSON.stringify(topic),
+        });
         await fetchTeacherSubjects();
     };
 
@@ -73,12 +71,9 @@ export function TeacherDashboardProvider({
     };
 
     const deleteTopic = async (topic: ITopic) => {
-        await deleteTopicReq.requestHandler(
-            `${BASE_URL}${TOPIC_URL}/${topic.id}`,
-            {
-                method: "DELETE",
-            },
-        );
+        await deleteTopicReq.requestHandler(`${BASE_URL}${TOPIC_URL}/${topic.id}`, {
+            method: "DELETE",
+        });
     };
 
     const isLoading = () => {

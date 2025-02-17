@@ -21,7 +21,6 @@ export function TopicCreator() {
         void context.createTopic(topic);
     };
 
-    // TODO UPSDATE BACKEND TO HAVE A SPECIFIC CREATE DTO
     const handleSetTopic = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTopic(prev => {
             return { ...prev, name: e.target.value };
