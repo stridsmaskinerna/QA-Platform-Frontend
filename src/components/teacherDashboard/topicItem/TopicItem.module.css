@@ -8,6 +8,11 @@
     justify-content: space-between;
 }
 
+.topic-item-label {
+    width: 50%;
+    word-wrap: break-word;
+}
+
 .is-editing {
     font-weight: bold;
 }
@@ -23,13 +28,13 @@
     text-underline-offset: 4px;
 }
 
-.edit-container {
+.update-container {
     border: 2px solid #2563eb;
     border-radius: 4px;
     padding: 1rem;
 }
 
-.topic-edit-btn-container {
+.topic-update-btn-container {
     display: flex;
     flex-direction: row;
     justify-content: end;

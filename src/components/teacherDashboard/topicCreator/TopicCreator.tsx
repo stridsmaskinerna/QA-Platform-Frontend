@@ -1,24 +1,26 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Input } from "../../input";
 import addIcon from "../../../assets/icons/add_white.svg";
-import styles from "./TopicCreator.module.css";
 import { useTeacherDashboardContext } from "../context";
-import { ITopic } from "../../../utils";
+import { ITopicForCreation } from "../../../utils";
+import styles from "./TopicCreator.module.css";
 
 export function TopicCreator() {
     const { t } = useTranslation();
     const context = useTeacherDashboardContext();
-    const [topic, setTopic] = useState<ITopic>({
-        id: "",
-        isActive: true,
+    const [topic, setTopic] = useState<ITopicForCreation>({
         subjectId: context.selectedSubject?.id ?? "",
         name: "",
     });
 
-    const handleSelectCreate = () => {
+    const handleSelectCreate = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         void context.createTopic(topic);
+        setTopic(prev => {
+            return { ...prev, name: "" };
+        });
     };
 
     const handleSetTopic = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,22 +30,30 @@ export function TopicCreator() {
     };
 
     return (
-        <div className={styles.addContainer}>
+        <form
+            className={styles.addContainer}
+            onSubmit={handleSelectCreate}
+        >
             <Input
+                required
+                minInputValueLength={2}
                 inputType={"text"}
+                inputValue={topic.name}
                 placeHolder={t("teacherDashboard.newTopicPlacholder")}
                 onChange={handleSetTopic}
             />
             <button
+                type="submit"
                 className={styles.addBtn}
-                onClick={handleSelectCreate}
             >
                 <img
                     src={addIcon}
                     alt="Add"
                 />
-                {t("teacherDashboard.createNewTopic")}
+                <span className={styles.addBtnText}>
+                    {t("teacherDashboard.createNewTopic")}
+                </span>
             </button>
-        </div>
+        </form>
     );
 }

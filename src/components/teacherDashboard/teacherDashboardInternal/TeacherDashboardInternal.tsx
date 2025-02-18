@@ -5,8 +5,8 @@ import { TopicManager } from "../topicManager";
 import { QuestionCardList } from "../../questionCardList";
 import { Loader } from "../../loader";
 import { useTeacherDashboardContext } from "../context";
-import styles from "./TeacherDashboardInternal.module.css";
 import { H1 } from "../../text";
+import styles from "./TeacherDashboardInternal.module.css";
 
 export function TeacherDashboardInternal() {
     const { t } = useTranslation();

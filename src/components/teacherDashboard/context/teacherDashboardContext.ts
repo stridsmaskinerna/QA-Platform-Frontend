@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { IQuestion, ISubject, ITopic } from "../../../utils";
+import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 
 export interface ITeacherDashboardContext {
     selectedSubject: ISubject | null;
     subjects: ISubject[];
     questions: IQuestion[];
-    createTopic: (topic: ITopic) => Promise<void>;
+    createTopic: (topic: ITopicForCreation) => Promise<void>;
     updateTopic: (topic: ITopic) => Promise<void>;
     deleteTopic: (topic: ITopic) => Promise<void>;
     updateSelectedSubject: (subject: ISubject) => void;

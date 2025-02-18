@@ -6,8 +6,8 @@ import { Input } from "../../input";
 import { CancelButton, SaveButton } from "../../button";
 import { useTeacherDashboardContext } from "../context";
 import { TopicItemToolbar } from "../topicItemToolbar";
-import styles from "./TopicItem.module.css";
 import { DeleteButton } from "../../button/deleteButton";
+import styles from "./TopicItem.module.css";
 
 interface ITopicItemProps {
     topic: ITopic;
@@ -60,7 +60,7 @@ export function TopicItem({ topic }: ITopicItemProps) {
     const getDerivedStyleForName = () => {
         const active = !topic.isActive ? styles.isDeactivated : "";
         const manage = isDeleting || isUpdating ? styles.isManaging : "";
-        return `${active} ${manage}`;
+        return `${active} ${manage} ${styles.topicItemLabel}`;
     };
 
     return (
@@ -76,13 +76,13 @@ export function TopicItem({ topic }: ITopicItemProps) {
                 />
             </div>
             {isUpdating && (
-                <div className={styles.editContainer}>
+                <div className={styles.updateContainer}>
                     <Input
                         inputType={"text"}
                         defaultValue={topic.name}
                         onChange={handleSetCurrentTopicValue}
                     />
-                    <div className={styles.topicEditBtnContainer}>
+                    <div className={styles.topicUpdateBtnContainer}>
                         <CancelButton
                             text={t("teacherDashboard.cancelUpdate")}
                             onClick={() => {
@@ -98,7 +98,7 @@ export function TopicItem({ topic }: ITopicItemProps) {
             )}
             {isDeleting && (
                 <div className={styles.deleteContainer}>
-                    <p>
+                    <p className={styles.topicItemLabel}>
                         {t("teacherDashboard.questionDelete")}{" "}
                         {`'${topic.name}'`} ?
                     </p>
