@@ -7,9 +7,10 @@ import {
 } from "react";
 import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
-import { BASE_URL, fetchQuestions } from "../data";
+import { BASE_URL } from "../data";
 import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
+import { useFetchData } from "./useFetchData";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
 const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
@@ -62,7 +63,7 @@ export const useSearchQuestions = () => {
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
     const { requestHandler: authFetchQuestions } =
         useFetchWithToken<IQuestion[]>();
-
+    const { requestHandler: fetchQuestions } = useFetchData<IQuestion[]>();
     const onSubjectFilterClick = (subjectId: string) => {
         //Set isLoadingQuestions to true here if activating a subject filter to prevent
         // TopicFilters from the previous fetch to momentarily appear on screen before the

@@ -20,6 +20,12 @@ interface IUseFetchWithTokenReturn<T> {
         url: RequestInfo | URL,
         options?: RequestInit,
     ) => Promise<T | void>;
+    requestHandlerWithHeaderReturn: <K extends Record<string, unknown>>(
+        url: RequestInfo | URL,
+        expectedHeaders: (keyof K)[],
+        parser: { [U in keyof K]: (value: string | null) => K[U] },
+        options?: RequestInit,
+    ) => Promise<{ data: T | null; headers: K | null }>;
 }
 
 export function useFetchWithToken<T>(
@@ -35,11 +41,11 @@ export function useFetchWithToken<T>(
 
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
     const generatedFetch = useCallback(
-        async <T>(
+        async (
             accessToken: string | undefined,
             url: RequestInfo | URL,
             options?: RequestInit,
-        ): Promise<T | void> => {
+        ): Promise<Response> => {
             if (!accessToken) {
                 throw new Error("There is no accessToken in the tokens field");
             }
@@ -52,13 +58,7 @@ export function useFetchWithToken<T>(
             if (response.ok === false) {
                 throw new CustomError(response.status, response.statusText);
             }
-
-            const contentType = response.headers.get("content-type");
-            if (contentType?.includes("application/json")) {
-                return (await response.json()) as T;
-            }
-
-            return;
+            return response;
         },
         [],
     );
@@ -78,12 +78,16 @@ export function useFetchWithToken<T>(
                 try {
                     const refreshedTokens = await refreshTokens(tokens);
                     setTokens(refreshedTokens);
-                    const data = await generatedFetch<T>(
+                    const response = await generatedFetch(
                         refreshedTokens.accessToken,
                         url,
                         options,
                     );
-                    return data;
+                    const contentType = response.headers.get("content-type");
+                    if (contentType?.includes("application/json")) {
+                        return (await response.json()) as T;
+                    }
+                    return;
                 } catch (error) {
                     if (error instanceof CustomError) {
                         setError(error);
@@ -105,12 +109,16 @@ export function useFetchWithToken<T>(
                 // Else just fetch the data right away
             } else {
                 try {
-                    const data = await generatedFetch<T>(
+                    const response = await generatedFetch(
                         tokens.accessToken,
                         url,
                         options,
                     );
-                    return data;
+                    const contentType = response.headers.get("content-type");
+                    if (contentType?.includes("application/json")) {
+                        return (await response.json()) as T;
+                    }
+                    return;
                 } catch (error) {
                     if (error instanceof CustomError) {
                         //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
@@ -140,5 +148,62 @@ export function useFetchWithToken<T>(
         ],
     );
 
-    return { isLoading, error, requestHandler };
+    const requestHandlerWithHeaderReturn = useCallback(
+        async <K extends Record<string, unknown>>(
+            url: RequestInfo | URL,
+            expectedHeaders: (keyof K)[],
+            parser: { [U in keyof K]: (value: string | null) => K[U] },
+            options?: RequestInit,
+        ) => {
+            if (!tokens) {
+                throw new Error("There is no tokens to make this request");
+            }
+            setError(null);
+            setIsLoading(true);
+            try {
+                const response = await generatedFetch(
+                    tokens.accessToken,
+                    url,
+                    options,
+                );
+                // Extract headers
+                const headersObject = Object.fromEntries(
+                    expectedHeaders.map(header => [
+                        header,
+                        response.headers.get(header as string),
+                    ]),
+                ) as Record<string, string | null>;
+
+                const typedHeaders = Object.fromEntries(
+                    Object.entries(headersObject).map(([key, value]) => [
+                        key,
+                        parser[key as keyof K](value),
+                    ]),
+                ) as K;
+
+                const data = (await response.json()) as T;
+                return { data, headers: typedHeaders };
+            } catch (error) {
+                if (error instanceof CustomError) {
+                    //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
+                    if (error.errorCode === 401) {
+                        await navigate(LOGIN_REGISTER_ROUTE, {
+                            replace: true,
+                        });
+                        clearTokens();
+                    }
+                    //-------------------------------------------------------------------
+                    setError(error);
+                } else {
+                    throw error;
+                }
+                return { data: null, headers: null };
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [clearTokens, generatedFetch, navigate, tokens],
+    );
+
+    return { isLoading, error, requestHandler, requestHandlerWithHeaderReturn };
 }

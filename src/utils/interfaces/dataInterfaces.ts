@@ -42,3 +42,10 @@ export interface IComment {
     userName: string;
     value: string;
 }
+
+export interface IPaginationMeta {
+    pageNr: number;
+    limit: number;
+    totalItemCount: number;
+    totalPageCount: number;
+}
