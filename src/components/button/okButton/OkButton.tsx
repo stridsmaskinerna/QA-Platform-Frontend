@@ -1,4 +1,4 @@
-import styles from "./CancelButton.module.css";
+import styles from "./OkButton.module.css";
 
 interface ICancelButtonProps {
     onClick?: () => void;
@@ -7,11 +7,11 @@ interface ICancelButtonProps {
     className?: string;
 }
 
-export function CancelButton({
+export function OkButton({
     onClick = () => {
         return;
     },
-    text = "Cancel",
+    text = "Ok",
     disabled = false,
     className = "",
 }: ICancelButtonProps) {

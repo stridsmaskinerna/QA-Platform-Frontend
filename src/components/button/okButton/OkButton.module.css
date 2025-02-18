@@ -1,7 +1,7 @@
 .button {
-    padding: 8px 16px;
-    background-color: #2563eb;
-    color: white;
+    padding: 16px 64px;
+    background-color: var(--btnLight-bg);
+    color: var(--btnLight-text);
     border-radius: 6px;
     border: none;
     cursor: pointer;
@@ -10,10 +10,10 @@
 }
 
 .button:hover {
-    background-color: #1e40af;
+    background-color: #d1d5db;
 }
 
 .button:disabled {
-    background-color: #9ca3af;
+    opacity: 0.5;
     cursor: not-allowed;
 }

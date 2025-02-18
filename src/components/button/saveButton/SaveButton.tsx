@@ -3,8 +3,8 @@ import styles from "./SaveButton.module.css";
 interface ISaveButtonProps {
     onClick?: () => void;
     text?: string;
-    isSaving?: boolean;
     disabled?: boolean;
+    className?: string;
 }
 
 export function SaveButton({
@@ -12,17 +12,21 @@ export function SaveButton({
         return;
     },
     text = "Save",
-    isSaving = false,
     disabled = false,
+    className = "",
 }: ISaveButtonProps) {
+    const getDerivedClass = () => {
+        return className == "" ? styles.button : className;
+    };
+
     return (
         <button
             type="button"
             onClick={onClick}
-            disabled={disabled || isSaving}
-            className={styles.button}
+            disabled={disabled}
+            className={getDerivedClass()}
         >
-            {isSaving ? "Saving..." : text}
+            {text}
         </button>
     );
 }
