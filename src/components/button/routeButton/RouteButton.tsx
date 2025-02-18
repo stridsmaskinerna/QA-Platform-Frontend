@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import styles from "./RouteButton.module.css";
-import arrowRight from "../../assets/icons/arrow_right.svg";
+import arrowRight from "../../../assets/icons/arrow_right.svg";
 interface IRouteButtonProps {
     text: string;
     routeTo: string;
