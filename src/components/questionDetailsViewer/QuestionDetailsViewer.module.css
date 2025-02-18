@@ -6,3 +6,8 @@
     align-items: center;
     gap: clamp(25px, 3vw, 40px);
 }
+
+.backBtn {
+    align-self: flex-start;
+    margin-bottom: -10px;
+}
