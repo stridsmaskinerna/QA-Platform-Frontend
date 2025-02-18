@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRoles } from "./useRoles";
 import { useIntersectionObserver } from "usehooks-ts";
 import { useFetchData } from "./useFetchData";
@@ -32,47 +32,61 @@ export function useInfiniteScrolling<T>({
         isLoading: authIsLoading,
         error: authError,
     } = useFetchWithToken<T[]>();
-    const { isIntersecting, ref: loaderRef } = useIntersectionObserver();
+    const { ref: loaderRef } = useIntersectionObserver({
+        threshold: 0.8,
+        onChange(isIntersecting) {
+            if (isIntersecting) {
+                pageNrRef.current++;
+                void fetchMore(pageNrRef.current);
+            }
+        },
+    });
     const pageNrRef = useRef<number>(1);
-    const [hasMore, setHasMore] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
     const [paginatedData, setPaginatedData] = useState<T[]>([]);
 
     const preparedUrl = url.includes("?")
-        ? `${url}&limit=${limit}`
-        : `${url}?limit=${limit}`;
+        ? `${url}&Limit=${limit}`
+        : `${url}?Limit=${limit}`;
 
-    const fetchMore = async (pageNr: number) => {
-        const { data, headers } = isGuest
-            ? await unAuthRequestHandler(
-                  `${preparedUrl}&pageNr=${pageNr}`,
-                  [paginationHeader],
-                  headerParser,
-              )
-            : await authRequestHandler(
-                  `${preparedUrl}&pageNr=${pageNr}`,
-                  [paginationHeader],
-                  headerParser,
-              );
+    const fetchMore = useCallback(
+        async (pageNr: number) => {
+            const { data, headers } = isGuest
+                ? await unAuthRequestHandler(
+                      `${preparedUrl}&PageNr=${pageNr}`,
+                      [paginationHeader],
+                      headerParser,
+                  )
+                : await authRequestHandler(
+                      `${preparedUrl}&PageNr=${pageNr}`,
+                      [paginationHeader],
+                      headerParser,
+                  );
 
-        if (data && headers?.[paginationHeader]) {
-            const { totalPageCount } = headers[paginationHeader];
-            setHasMore(totalPageCount > pageNr);
-            setPaginatedData(prev => (pageNr > 1 ? [...prev, ...data] : data));
-        } else {
-            console.error(unAuthError ?? authError);
-        }
-    };
+            if (data && headers?.[paginationHeader]) {
+                const { TotalPageCount } = headers[paginationHeader];
+                setHasMore(TotalPageCount > pageNr);
+                setPaginatedData(prev =>
+                    pageNr > 1 ? [...prev, ...data] : data,
+                );
+            } else {
+                console.error(unAuthError ?? authError);
+            }
+        },
+        [
+            authError,
+            authRequestHandler,
+            isGuest,
+            preparedUrl,
+            unAuthError,
+            unAuthRequestHandler,
+        ],
+    );
 
     const fetchFromStart = async () => {
         pageNrRef.current = 1;
         await fetchMore(pageNrRef.current);
     };
-
-    useEffect(() => {
-        pageNrRef.current++;
-        void fetchMore(pageNrRef.current);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isIntersecting]);
 
     return {
         loaderRef,

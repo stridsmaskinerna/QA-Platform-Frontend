@@ -4,7 +4,6 @@ import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
 import { ResolvedFilters } from "./ResolvedFilters";
 import { useTranslation } from "react-i18next";
-import { MutableRefObject } from "react";
 
 interface IQuestionCardListProps {
     data: IQuestion[];
@@ -13,7 +12,7 @@ interface IQuestionCardListProps {
     isLoadingQuestions: boolean;
     header: string;
     hasMore?: boolean;
-    loaderRef?: MutableRefObject<HTMLDivElement>;
+    loaderRef?: (node?: Element | null) => void;
     displayResolveFilter?: boolean;
 }
 

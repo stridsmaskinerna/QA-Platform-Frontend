@@ -44,8 +44,8 @@ export interface IComment {
 }
 
 export interface IPaginationMeta {
-    pageNr: number;
-    limit: number;
-    totalItemCount: number;
-    totalPageCount: number;
+    PageNr: number;
+    Limit: number;
+    TotalItemCount: number;
+    TotalPageCount: number;
 }

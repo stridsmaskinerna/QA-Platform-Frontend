@@ -28,6 +28,8 @@ export function QuestionFinder() {
         activeFilters,
         onInterActionFilterClick,
         shouldShowFilters,
+        loaderRef,
+        hasMore,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
@@ -48,12 +50,16 @@ export function QuestionFinder() {
                 activeResolvedFilter={activeFilters.resolved}
                 data={questions}
                 isLoadingQuestions={isLoadingQuestions}
+                loaderRef={loaderRef}
+                hasMore={hasMore}
             />
         ),
         [
             activeFilters.resolved,
             activeFilters.userInteraction,
+            hasMore,
             isLoadingQuestions,
+            loaderRef,
             onResolvedFilterClick,
             questions,
             t,

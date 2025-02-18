@@ -6,9 +6,6 @@ import styles from "./SearchWithFilters.module.css";
 
 export function SearchWithFilters(props: ISearchWithFiltersProps) {
     const { t } = useTranslation();
-    // const showTopicFilters =
-    //     props.subjectFilter.activeFilter && !props.isLoadingQuestions;
-    // const showSubjectFilters = props.subjectFilter.displayedFilters.length > 0;
     return (
         <div className={styles.container}>
             <SearchBar
