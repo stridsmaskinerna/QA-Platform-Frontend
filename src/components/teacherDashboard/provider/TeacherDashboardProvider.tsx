@@ -1,12 +1,6 @@
 import { ReactNode, useState } from "react";
 
-import {
-    CustomError,
-    IQuestion,
-    ISubject,
-    ITopic,
-    ITopicForCreation,
-} from "../../../utils";
+import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
@@ -22,7 +16,6 @@ export function TeacherDashboardProvider({
 }: ITeacherDashboardProviderProps) {
     const [subjects, setSubjects] = useState<ISubject[]>([]);
     const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [error, setError] = useState<CustomError | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
         null,
     );
@@ -70,10 +63,6 @@ export function TeacherDashboardProvider({
             },
         );
         await fetchTeacherSubjects();
-
-        if (updateTopicReq.error != null) {
-            setError(updateTopicReq.error);
-        }
     };
 
     const createTopic = async (topic: ITopicForCreation) => {
@@ -85,10 +74,6 @@ export function TeacherDashboardProvider({
             body: JSON.stringify(topic),
         });
         await fetchTeacherSubjects();
-
-        if (createTopicReq.error != null) {
-            setError(createTopicReq.error);
-        }
     };
 
     const deleteTopic = async (topic: ITopic) => {
@@ -99,10 +84,6 @@ export function TeacherDashboardProvider({
             },
         );
         await fetchTeacherSubjects();
-
-        if (deleteTopicReq.error != null) {
-            setError(deleteTopicReq.error);
-        }
     };
 
     const updateSelectedSubject = (subject: ISubject) => {
@@ -133,14 +114,22 @@ export function TeacherDashboardProvider({
         };
     };
 
+    const clearErrors = () => {
+        updateTopicReq.clearError();
+        deleteTopicReq.clearError();
+        createTopicReq.clearError();
+    };
+
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
             {
                 <ErrorModal
-                    error={error}
-                    onClose={() => {
-                        setError(null);
-                    }}
+                    errors={[
+                        updateTopicReq.error,
+                        deleteTopicReq.error,
+                        createTopicReq.error,
+                    ]}
+                    onClearErrors={clearErrors}
                 />
             }
             {children}

@@ -1,12 +1,26 @@
+import { useEffect, useState } from "react";
+
 import { CustomError } from "../../../utils";
 import { Modal } from "../modal";
 
 interface IErrorModalProps {
-    error: CustomError | null;
-    onClose: () => void;
+    errors: (CustomError | null)[];
+    onClearErrors: () => void;
 }
 
-export function ErrorModal({ error, onClose }: IErrorModalProps) {
+export function ErrorModal({ errors, onClearErrors }: IErrorModalProps) {
+    const [error, setError] = useState<CustomError | null>(null);
+
+    useEffect(() => {
+        const firstError = errors.find(err => err != null) ?? null;
+        setError(firstError);
+    }, [errors]);
+
+    const closeModal = () => {
+        setError(null);
+        onClearErrors();
+    };
+
     return (
         <>
             {error != null && (
@@ -15,10 +29,10 @@ export function ErrorModal({ error, onClose }: IErrorModalProps) {
                     title={error.message}
                     message={error?.detail ?? ""}
                     okClick={() => {
-                        onClose();
+                        closeModal();
                     }}
                     onBackdropClick={() => {
-                        onClose();
+                        closeModal();
                     }}
                 />
             )}
