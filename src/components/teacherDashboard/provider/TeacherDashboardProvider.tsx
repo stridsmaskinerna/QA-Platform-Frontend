@@ -10,7 +10,6 @@ interface ITeacherDashboardProviderProps {
     children: ReactNode;
 }
 
-// TODO! Handle error globaly in errorBoundary or in local context ???
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
