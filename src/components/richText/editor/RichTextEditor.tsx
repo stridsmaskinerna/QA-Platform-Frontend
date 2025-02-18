@@ -21,43 +21,8 @@ import {
 } from "lexical";
 import styles from "../RichTextShared.module.css";
 import { ToolbarPlugin } from "../";
-import { Dispatch, SetStateAction } from "react";
-
-const exampleTheme = {
-    code: styles.editorCode,
-    heading: {
-        h1: styles.editorHeadingH1,
-        h2: styles.editorHeadingH2,
-        h3: styles.editorHeadingH3,
-        h4: styles.editorHeadingH4,
-        h5: styles.editorHeadingH5,
-    },
-    image: styles.editorImage,
-    link: styles.editorLink,
-    list: {
-        listitem: styles.editorListitem,
-        nested: {
-            listitem: styles.editorNestedNistitem,
-        },
-        ol: styles.editorListOl,
-        ul: styles.editorListUl,
-    },
-    ltr: styles.ltr,
-    paragraph: styles.editorParagraph,
-    placeholder: styles.editorPlaceholder,
-    quote: styles.editorQuote,
-    rtl: styles.rtl,
-    text: {
-        bold: styles.editorTextBold,
-        code: styles.editorTextCode,
-        hashtag: styles.editorTextHashtag,
-        italic: styles.editorTextItalic,
-        overflowed: styles.editorTextOverflowed,
-        strikethrough: styles.editorTextStrikethrough,
-        underline: styles.editorTextUnderline,
-        underlineStrikethrough: styles.editorTextUnderlineStrikethrough,
-    },
-};
+import { CSSProperties, Dispatch, SetStateAction } from "react";
+import exampleTheme from "../exampleTheme";
 
 const MIN_ALLOWED_FONT_SIZE = 8;
 const MAX_ALLOWED_FONT_SIZE = 72;
@@ -190,11 +155,13 @@ const editorConfig = {
 interface IRichTextEditorProps {
     setEditorState: Dispatch<SetStateAction<string>>;
     placeholder: string;
+    containerStyle?: CSSProperties;
 }
 
 export function RichTextEditor({
     setEditorState,
     placeholder,
+    containerStyle,
 }: IRichTextEditorProps) {
     const onChange = (editorState: EditorState) => {
         // Call toJSON on the EditorState object, which produces a serialization safe string
@@ -205,7 +172,10 @@ export function RichTextEditor({
 
     return (
         <LexicalComposer initialConfig={editorConfig}>
-            <div className={styles.editorContainer}>
+            <div
+                className={styles.editorContainer}
+                style={containerStyle}
+            >
                 <ToolbarPlugin />
                 <div className={styles.editorInner}>
                     <RichTextPlugin

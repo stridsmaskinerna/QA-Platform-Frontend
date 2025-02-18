@@ -62,7 +62,6 @@ h1 {
     text-align: left;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border: 2px solid var(--input-idle);
 }
 
 .editor-inner {

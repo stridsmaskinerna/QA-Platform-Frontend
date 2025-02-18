@@ -74,7 +74,7 @@
         "public": "Offentlig",
         "nonPublic": "Ej offentlig",
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
-
+        "backToQA": "Tillbaka till Frågor & Svar",
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",

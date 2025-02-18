@@ -3,13 +3,15 @@ import { useTranslation } from "react-i18next";
 import styles from "./QuestionCardMiddle.module.css";
 import clock_icon from "../../../assets/icons/clock_24dp_808080.svg";
 import { getTimeAgo } from "../../../utils";
+import { RichTextReader } from "../../richText";
 
 interface QuestionCardMiddleProps {
     title: string;
     created: string;
     username: string;
-    answerCount: number;
+    answerCount?: number;
     topicName: string;
+    description?: string;
 }
 
 export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
@@ -52,10 +54,14 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
                 <p>
                     {t("askedBy")}: {props.username}
                 </p>
-
-                <p>
-                    {props.answerCount} {answerLabel}
-                </p>
+                {props.description !== undefined && (
+                    <RichTextReader initialState={props.description} />
+                )}
+                {props.answerCount !== undefined && (
+                    <p>
+                        {props.answerCount} {answerLabel}
+                    </p>
+                )}
             </div>
         </div>
     );
