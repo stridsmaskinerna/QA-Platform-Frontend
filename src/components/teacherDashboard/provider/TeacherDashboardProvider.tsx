@@ -46,7 +46,6 @@ export function TeacherDashboardProvider({
         const data = await fetchSubjectQuestionReq.requestHandler(
             `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
         );
-
         setQuestions(data ?? []);
     };
 
@@ -93,7 +92,7 @@ export function TeacherDashboardProvider({
     };
 
     const isLoading = () => {
-        return fetchSubjectsReq.isLoading || fetchSubjectQuestionReq.isLoading;
+        return fetchSubjectQuestionReq.isLoading;
     };
 
     const getContext = (): ITeacherDashboardContext => {
