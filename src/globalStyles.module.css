@@ -1,0 +1,13 @@
+.container{
+	max-width: 1600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(25px, 3vw, 40px);
+}
+
+.containerBorder{
+	border: 2px solid var(--grey-strong);
+	border-radius: var(--border-radius);
+}

@@ -41,6 +41,8 @@ export function QuestionCard({ data }: IQuestionCardProps) {
                     topicName={data.topicName}
                 />
             </Link>
+            {/* {data.id} */}
+
             <QuestionCardBottom tags={data.tags} />
         </div>
     );

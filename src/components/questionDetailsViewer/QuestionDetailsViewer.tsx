@@ -1,6 +1,7 @@
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
 import { IDetailedQuestion } from "../../utils";
 import styles from "./QuestionDetailsViewer.module.css";
+import { AnswerCard } from "../answerCard";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -30,11 +31,12 @@ export function QuestionDetailsViewer({
                 userId={question.userId}
             />
             <h2>Answers</h2>
-            <ul>
+            <ul className={styles.container}>
                 {question.answers.map(answer => (
-                    <li key={answer.id}>
-                        <strong>{answer.userName}:</strong> {answer.value}
-                    </li>
+                    <AnswerCard
+                        key={answer.id}
+                        data={answer}
+                    />
                 ))}
             </ul>
         </div>
