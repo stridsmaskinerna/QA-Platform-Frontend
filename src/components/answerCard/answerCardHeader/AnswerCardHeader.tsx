@@ -5,6 +5,9 @@ interface IAnswerCardHeaderProps {
     answeredByTeacher: boolean;
 }
 
-export function AnswerCardHeader({ username, answeredByTeacher }: IAnswerCardHeaderProps) {
-    return <div className={styles.container}>{username}</div>;
+export function AnswerCardHeader({
+    username,
+    answeredByTeacher,
+}: IAnswerCardHeaderProps) {
+    return <div className={styles.container}>{username} {answeredByTeacher}</div>;
 }

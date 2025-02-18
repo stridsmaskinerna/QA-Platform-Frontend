@@ -74,6 +74,24 @@
         "public": "Offentlig",
         "nonPublic": "Ej offentlig",
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
-        "backToQA": "Tillbaka till Frågor & Svar"
+        "backToQA": "Tillbaka till Frågor & Svar",
+        "teacherDashboard": {
+            "manageTopicsFor": "Hantera Frågor för",
+            "questionsInCourse": "Frågor i kurs",
+            "title": "Lärarpanel",
+            "viewQuestions": "Granska frågor",
+            "yourCourses": "Dina Kurser",
+            "newTopicPlacholder": "Ny kursdel...",
+            "createNewTopic": "Ny kursdel",
+            "editInfo": "Uppdatera kursdel",
+            "activateInfo": "Aktivera kursdel",
+            "deactivateInfo": "Deaktivera kursdel",
+            "deleteInfo": "Radera kursdel",
+            "cancelUpdate": "Stäng",
+            "saveUpdate": "Spara",
+            "cancelDelete": "Stäng",
+            "confirmDelete": "Radera",
+            "questionDelete": "Radera"
+        }
     }
 }

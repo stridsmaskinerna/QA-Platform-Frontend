@@ -2,7 +2,6 @@ import { IAnswer } from "../../utils";
 import { AnswerCardBody } from "./answerCardBody";
 import { AnswerCardHeader } from "./answerCardHeader";
 import styles from "./AnswerCard.module.css";
-import gStyles from "../../globalStyles.module.css";
 
 interface IAnswerProps {
     data: IAnswer;

@@ -74,6 +74,24 @@
         "public": "Public",
         "nonPublic": "Not Public",
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
-        "backToQA": "Back to Q&A"
+        "backToQA": "Back to Q&A",
+        "teacherDashboard": {
+            "manageTopicsFor": "Manage Topics for",
+            "questionsInCourse": "Questions in course",
+            "title": "Teacher Dashboard",
+            "viewQuestions": "View questions",
+            "yourCourses": "Your Courses",
+            "newTopicPlacholder": "New topic name...",
+            "createNewTopic": "Add Topic",
+            "editInfo": "Edit Topic",
+            "activateInfo": "Activate Topic",
+            "deactivateInfo": "Deactivate Topic",
+            "deleteInfo": "Delete Topic",
+            "cancelUpdate": "Cancel",
+            "saveUpdate": "Save",
+            "cancelDelete": "Cancel",
+            "confirmDelete": "Delete",
+            "questionDelete": "Delete"
+        }
     }
 }

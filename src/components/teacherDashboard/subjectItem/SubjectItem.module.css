@@ -1,0 +1,46 @@
+.subject-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1px;
+    padding: 0.5rem;
+    width: 100%;
+    gap: 1rem;
+}
+
+.subject-item:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+}
+
+.selected-subject {
+    background-color: black;
+    color: #fff;
+}
+
+.selected-subject:hover {
+    text-decoration: none;
+}
+
+.subject-code {
+    font-weight: bold;
+}
+
+.view-questions-btn {
+    padding-inline: 1rem;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .subject-item {
+        flex-direction: column;
+    }
+
+    .view-questions-btn-ctr {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        width: 100%;
+    }
+}

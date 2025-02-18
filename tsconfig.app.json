@@ -20,7 +20,10 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true
+        "noUncheckedSideEffectImports": true,
+
+        /* Used for i18n language typesafety */
+        "typeRoots": ["./src/types", "./node_modules/@types"]
     },
     "include": ["src"]
 }

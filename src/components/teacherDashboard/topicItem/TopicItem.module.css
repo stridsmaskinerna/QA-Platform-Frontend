@@ -1,0 +1,74 @@
+.topic-container {
+    margin-left: 0.5rem;
+}
+
+.topic-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.topic-item-label {
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.is-editing {
+    font-weight: bold;
+}
+
+.is-deactivated {
+    color: var(--grey-light);
+    text-decoration: line-through;
+}
+
+.is-managing {
+    font-weight: bolder;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.update-container {
+    border: 2px solid #2563eb;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.topic-update-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 4px;
+    gap: 0.5rem;
+}
+
+.delete-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid var(--red-delete);
+    border-radius: 4px;
+    padding: 1.5rem;
+}
+
+.topic-delete-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 4px;
+    gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .delete-container {
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        padding: 0.5rem;
+    }
+
+    .topic-delete-btn-container {
+        width: 100%;
+    }
+}

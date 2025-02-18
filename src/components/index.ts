@@ -15,3 +15,5 @@ export * from "./select";
 export * from "./richText";
 export * from "./questionDetailsViewer";
 export * from "./buttons";
+export * from "./teacherDashboard";
+export * from "./text";

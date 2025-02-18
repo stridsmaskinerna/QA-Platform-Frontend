@@ -1,0 +1,25 @@
+.container {
+    margin-block: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.course-manager-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .course-manager-container {
+        flex-direction: column;
+    }
+}

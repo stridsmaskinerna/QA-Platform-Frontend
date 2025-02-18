@@ -8,6 +8,7 @@
 html {
     --blue-ltu: rgb(19, 48, 91);
     --red-delete: rgb(199, 0, 0);
+    --red-delete-dark: rgb(148, 4, 4);
     --btnDark-bg: black;
     --text-default: black;
     --textLight-default: white;

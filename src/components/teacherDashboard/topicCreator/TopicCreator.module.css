@@ -1,0 +1,37 @@
+.add-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2px;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 5px;
+    width: 12rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .toolbar-container {
+        gap: 0.5rem;
+        overflow-y: auto;
+    }
+
+    .add-btn {
+        width: auto;
+        padding-inline: 0.5rem;
+    }
+
+    .add-btn-text {
+        display: none;
+    }
+}

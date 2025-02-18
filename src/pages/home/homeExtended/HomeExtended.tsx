@@ -1,5 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { AskAQuestion, QuestionFinder, Tabs } from "../../../components";
+import {
+    AskAQuestion,
+    QuestionFinder,
+    Tabs,
+    TeacherDashboard,
+} from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
 import { ITab } from "../../../utils";
@@ -40,9 +45,10 @@ export function HomeExtended() {
                 title: t("askAQuestion"),
             },
         ];
-        if (!isTeacher) {
+        if (isTeacher) {
             baseTabs.push({
-                content: <></>,
+                content: <TeacherDashboard />,
+                contentContainerStyle,
                 btnStyle,
                 title: t("teacher"),
             });
