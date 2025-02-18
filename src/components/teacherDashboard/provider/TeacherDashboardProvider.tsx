@@ -1,9 +1,16 @@
 import { ReactNode, useState } from "react";
 
-import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
+import {
+    CustomError,
+    IQuestion,
+    ISubject,
+    ITopic,
+    ITopicForCreation,
+} from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
+import { ErrorModal } from "../../modal";
 
 interface ITeacherDashboardProviderProps {
     children: ReactNode;
@@ -15,6 +22,7 @@ export function TeacherDashboardProvider({
 }: ITeacherDashboardProviderProps) {
     const [subjects, setSubjects] = useState<ISubject[]>([]);
     const [questions, setQuestions] = useState<IQuestion[]>([]);
+    const [error, setError] = useState<CustomError | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
         null,
     );
@@ -62,6 +70,10 @@ export function TeacherDashboardProvider({
             },
         );
         await fetchTeacherSubjects();
+
+        if (updateTopicReq.error != null) {
+            setError(updateTopicReq.error);
+        }
     };
 
     const createTopic = async (topic: ITopicForCreation) => {
@@ -73,6 +85,10 @@ export function TeacherDashboardProvider({
             body: JSON.stringify(topic),
         });
         await fetchTeacherSubjects();
+
+        if (createTopicReq.error != null) {
+            setError(createTopicReq.error);
+        }
     };
 
     const deleteTopic = async (topic: ITopic) => {
@@ -83,6 +99,10 @@ export function TeacherDashboardProvider({
             },
         );
         await fetchTeacherSubjects();
+
+        if (deleteTopicReq.error != null) {
+            setError(deleteTopicReq.error);
+        }
     };
 
     const updateSelectedSubject = (subject: ISubject) => {
@@ -115,6 +135,14 @@ export function TeacherDashboardProvider({
 
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
+            {
+                <ErrorModal
+                    error={error}
+                    onClose={() => {
+                        setError(null);
+                    }}
+                />
+            }
             {children}
         </TeacherDashboardContext.Provider>
     );
