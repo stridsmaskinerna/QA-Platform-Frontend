@@ -79,12 +79,19 @@
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",
             "title": "Lärarpanel",
-            "viewQuestions": "granska frågor",
+            "viewQuestions": "Granska frågor",
             "yourCourses": "Dina Kurser",
             "newTopicPlacholder": "Ny kursdel...",
             "createNewTopic": "Ny kursdel",
-            "edit": "Uppdatera kursdel",
-            "delete": "Radera kursdel"
+            "editInfo": "Uppdatera kursdel",
+            "activateInfo": "Aktivera kursdel",
+            "deactivateInfo": "Deaktivera kursdel",
+            "deleteInfo": "Radera kursdel",
+            "cancelUpdate": "Stäng",
+            "saveUpdate": "Spara",
+            "cancelDelete": "Stäng",
+            "confirmDelete": "Radera",
+            "questionDelete": "Radera"
         }
     }
 }

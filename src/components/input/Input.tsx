@@ -19,7 +19,9 @@ export function Input({
 }: IInputProps) {
     const [isActive, setIsActive] = useState(false);
 
-    const [localInputValue, setLocalInputValue] = useState<string>("");
+    const [localInputValue, setLocalInputValue] = useState<string>(
+        defaultValue ?? "",
+    );
     const id = useId();
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +67,6 @@ export function Input({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     value={inputValue ?? localInputValue}
-                    defaultValue={defaultValue}
                     onChange={handleOnChange}
                     placeholder={placeHolder}
                     minLength={minInputValueLength}

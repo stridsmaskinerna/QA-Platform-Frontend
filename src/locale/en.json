@@ -79,12 +79,19 @@
             "manageTopicsFor": "Manage Topics for",
             "questionsInCourse": "Questions in course",
             "title": "Teacher Dashboard",
-            "viewQuestions": "view questions",
+            "viewQuestions": "View questions",
             "yourCourses": "Your Courses",
             "newTopicPlacholder": "New topic name...",
             "createNewTopic": "Add Topic",
-            "edit": "Edit Topic",
-            "delete": "Delete Topic"
+            "editInfo": "Edit Topic",
+            "activateInfo": "Activate Topic",
+            "deactivateInfo": "Deactivate Topic",
+            "deleteInfo": "Delete Topic",
+            "cancelUpdate": "Cancel",
+            "saveUpdate": "Save",
+            "cancelDelete": "Cancel",
+            "confirmDelete": "Delete",
+            "questionDelete": "Delete"
         }
     }
 }
