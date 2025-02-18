@@ -33,7 +33,7 @@ export function SubjectItem({
                 </p>
             </div>
             {isSelected && (
-                <div>
+                <div className={styles.viewQuestionsBtnCtr}>
                     <button
                         onClick={() => {
                             onSelectSubjectQuestions(subject);

@@ -1,0 +1,25 @@
+.toolbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1rem;
+    gap: 2rem;
+}
+
+.toolbar-icon {
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.toolbar-icon:hover {
+    background-color: var(--grey-light);
+}
+
+@media (max-width: 600px) {
+    .toolbar-container {
+        gap: 0.5rem;
+        overflow-y: auto;
+    }
+}

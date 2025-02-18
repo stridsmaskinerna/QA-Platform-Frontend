@@ -113,6 +113,11 @@ export interface ITopic {
     subjectId: string;
 }
 
+export interface ITopicForCreation {
+    name: string;
+    subjectId: string;
+}
+
 export interface ISubject {
     id: string;
     name: string;

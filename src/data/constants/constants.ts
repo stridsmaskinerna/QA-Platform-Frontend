@@ -14,6 +14,7 @@ export const QUESTION_DETAILS_ROUTE = "/questions/";
 //URLS
 export const QUESTION_URL = "/questions";
 export const SUBJECT_URL = "/subjects";
+export const TOPIC_URL = "/topics";
 export const PUBLIC_URL = "/public";
 
 //Misc

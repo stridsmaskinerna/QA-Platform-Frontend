@@ -1,40 +1,41 @@
+import { useEffect } from "react";
+
 import { ISubject } from "../../../utils";
+import { useTeacherDashboardContext } from "../context";
 import { SubjectItem } from "../subjectItem";
 
-interface ISubjectListProps {
-    subjects: ISubject[];
-    selectedSubject: ISubject | null;
-    onSelectSubject: (subject: ISubject) => void;
-    onSelectSubjectQuestions: (subject: ISubject) => void;
-}
+export function SubjectList() {
+    const context = useTeacherDashboardContext();
 
-export function SubjectList({
-    subjects,
-    selectedSubject,
-    onSelectSubject,
-    onSelectSubjectQuestions,
-}: ISubjectListProps) {
-    const selectSubject = (subject: ISubject) => {
-        onSelectSubject(subject);
+    useEffect(() => {
+        void context.fetchTeacherSubjects();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const fetchQuestionDetails = (subject: ISubject) => {
+        void context.fetchQuestionDetails(subject);
     };
 
     const isSubjectSelected = (subject: ISubject) => {
-        return selectedSubject != null && selectedSubject.id == subject.id;
+        return (
+            context.selectedSubject != null &&
+            context.selectedSubject.id == subject.id
+        );
     };
 
     return (
         <>
-            {subjects.map((s, i) => (
+            {context.subjects.map(s => (
                 <div
-                    key={i}
+                    key={s.id}
                     onClick={() => {
-                        selectSubject(s);
+                        context.updateSelectedSubject(s);
                     }}
                 >
                     <SubjectItem
                         subject={s}
                         isSelected={isSubjectSelected(s)}
-                        onSelectSubjectQuestions={onSelectSubjectQuestions}
+                        onSelectSubjectQuestions={fetchQuestionDetails}
                     />
                 </div>
             ))}

@@ -1,15 +1,24 @@
-import { ITopic } from "../../../utils";
+import { useMemo } from "react";
+
 import { TopicItem } from "../topicItem";
+import { useTeacherDashboardContext } from "../context";
 
-interface ITopicListProps {
-    topics: ITopic[];
-}
+export function TopicList() {
+    const context = useTeacherDashboardContext();
 
-export function TopicList({ topics }: ITopicListProps) {
+    const sortedTopics = useMemo(() => {
+        if (context.selectedSubject?.topics == null) {
+            return [];
+        }
+        return [...context.selectedSubject.topics].sort((a, b) =>
+            a.name.localeCompare(b.name),
+        );
+    }, [context.selectedSubject?.topics]);
+
     return (
         <>
-            {topics.map((topic, i) => (
-                <div key={i}>
+            {sortedTopics.map(topic => (
+                <div key={topic.id}>
                     <TopicItem topic={topic} />
                 </div>
             ))}
