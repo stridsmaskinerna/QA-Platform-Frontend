@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 
-import { IQuestion, ISubject, ITopic } from "../../../utils";
+import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
@@ -10,10 +10,6 @@ interface ITeacherDashboardProviderProps {
 }
 
 // TODO! Handle error globaly in errorBoundary or in local context ???
-// TODO! Add TOPIC CRUD functionality
-// TODO! UPDATE BACKEND TO HAVE A SPECIFIC CREATE DTO.
-// TODO! Update loading and error mgmt for different requests, e.g.,
-//       delete, create, and update topics.
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
@@ -68,7 +64,7 @@ export function TeacherDashboardProvider({
         await fetchTeacherSubjects();
     };
 
-    const createTopic = async (topic: ITopic) => {
+    const createTopic = async (topic: ITopicForCreation) => {
         await createTopicReq.requestHandler(`${BASE_URL}${TOPIC_URL}`, {
             method: "POST",
             headers: {
