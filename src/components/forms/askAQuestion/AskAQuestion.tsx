@@ -36,9 +36,12 @@ const labelStyle: CSSProperties = {
     fontSize: "14px",
 };
 
+
 const detailsContainerStyle: CSSProperties = {
     border: "2px solid var(--input-idle)",
 };
+
+
 
 const courseUrl = `${BASE_URL}/subjects`;
 
