@@ -9,5 +9,9 @@ export function AnswerCardHeader({
     username,
     answeredByTeacher,
 }: IAnswerCardHeaderProps) {
-    return <div className={styles.container}>{username} {answeredByTeacher}</div>;
+    return (
+        <div className={styles.container}>
+            {username} {answeredByTeacher}
+        </div>
+    );
 }
