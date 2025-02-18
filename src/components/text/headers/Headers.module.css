@@ -1,0 +1,4 @@
+.title {
+    font-size: clamp(1rem, 2.7vw, 1.7rem);
+    color: #000;
+}

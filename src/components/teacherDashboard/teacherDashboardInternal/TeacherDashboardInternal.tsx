@@ -6,6 +6,7 @@ import { QuestionCardList } from "../../questionCardList";
 import { Loader } from "../../loader";
 import { useTeacherDashboardContext } from "../context";
 import styles from "./TeacherDashboardInternal.module.css";
+import { H1 } from "../../text";
 
 export function TeacherDashboardInternal() {
     const { t } = useTranslation();
@@ -18,7 +19,7 @@ export function TeacherDashboardInternal() {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>{t("teacherDashboard.title")}</h1>
+            <H1 text={t("teacherDashboard.title")} />
             <div className={styles.courseManagerContainer}>
                 <SubjectManager />
                 {context.selectedSubject != null && <TopicManager />}
