@@ -79,7 +79,7 @@ export const useSearchQuestions = () => {
         isLoading: isLoadingQuestions,
     } = useInfiniteScrolling<IQuestion>({
         url,
-        limit: 10,
+        limit: 20,
     });
 
     const onSubjectFilterClick = (subjectId: string) => {
@@ -112,7 +112,6 @@ export const useSearchQuestions = () => {
 
     const onResolvedFilterClick = (newValue: boolean | null) => {
         setActiveFilters(prev => ({ ...prev, resolved: newValue }));
-        console.log(newValue);
         setUrlAppendixes(prev => ({
             ...prev,
             isResolved: newValue === null ? null : `&isResolved=${newValue}`,
@@ -174,79 +173,80 @@ export const useSearchQuestions = () => {
     const updateQuestionsAndFilters = useCallback(
         async (caller: keyof IUrlAppendixes) => {
             setIsLoading(true);
-            await fetchFromStart();
+            const data = await fetchFromStart();
 
-            //If called by searchStr (which will also be the caller on initital render)
-            // we kind of reset the displayed filters. We update subject filter
-            //to mirror the fetched questions (if there is a searchStr)
-            // and set displayed topic filters to none. To not jar the animation
-            //for hiding filters we wait for the animation to finish before
-            //removing the displayed and active filters if urlAppendixes.searchStr
-            //is empty.
-            if (caller === "searchStr") {
-                if (urlAppendixes.searchStr) {
-                    setShouldShowFilters({ subject: true, topic: false });
-                    setActiveFilters(prev => ({
-                        ...prev,
-                        subject: "",
-                        topic: "",
-                    }));
-                    setDisplayedFilters({
-                        subject: updateDisplayedSubjectFilters(paginatedData),
-                        topic: [],
-                    });
-                } else {
-                    setShouldShowFilters({ subject: false, topic: false });
-                    setTimeout(() => {
+            if (data) {
+                //If called by searchStr (which will also be the caller on initital render)
+                // we kind of reset the displayed filters. We update subject filter
+                //to mirror the fetched questions (if there is a searchStr)
+                // and set displayed topic filters to none. To not jar the animation
+                //for hiding filters we wait for the animation to finish before
+                //removing the displayed and active filters if urlAppendixes.searchStr
+                //is empty.
+                if (caller === "searchStr") {
+                    if (urlAppendixes.searchStr) {
+                        setShouldShowFilters({ subject: true, topic: false });
                         setActiveFilters(prev => ({
                             ...prev,
                             subject: "",
                             topic: "",
                         }));
                         setDisplayedFilters({
-                            subject: [],
+                            subject: updateDisplayedSubjectFilters(data),
                             topic: [],
                         });
-                    }, ANIMATION_TIMER);
+                    } else {
+                        setShouldShowFilters({ subject: false, topic: false });
+                        setTimeout(() => {
+                            setActiveFilters(prev => ({
+                                ...prev,
+                                subject: "",
+                                topic: "",
+                            }));
+                            setDisplayedFilters({
+                                subject: [],
+                                topic: [],
+                            });
+                        }, ANIMATION_TIMER);
+                    }
                 }
-            }
 
-            //If called by subject we only update the displayed topic filters.
-            if (caller === "subjectId") {
-                if (urlAppendixes.subjectId) {
-                    clearTimeout(timeout);
-                    setShouldShowFilters({
-                        subject: true,
-                        topic: true,
-                    });
-                    setDisplayedFilters(prev => ({
-                        subject: prev.subject,
-                        topic: updateDisplayedTopicFilters(paginatedData),
-                    }));
-                } else {
-                    setShouldShowFilters({ subject: true, topic: false });
-                    timeout = setTimeout(() => {
+                //If called by subject we only update the displayed topic filters.
+                if (caller === "subjectId") {
+                    if (urlAppendixes.subjectId) {
+                        clearTimeout(timeout);
+                        setShouldShowFilters({
+                            subject: true,
+                            topic: true,
+                        });
                         setDisplayedFilters(prev => ({
                             subject: prev.subject,
-                            topic: [],
+                            topic: updateDisplayedTopicFilters(data),
                         }));
-                    }, ANIMATION_TIMER);
+                    } else {
+                        setShouldShowFilters({ subject: true, topic: false });
+                        timeout = setTimeout(() => {
+                            setDisplayedFilters(prev => ({
+                                subject: prev.subject,
+                                topic: [],
+                            }));
+                        }, ANIMATION_TIMER);
+                    }
+                }
+
+                //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
+                //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
+                if (caller === "userInteraction" || caller === "isResolved") {
+                    setDisplayedFilters(prev => ({
+                        subject: activeFilters.subject
+                            ? prev.subject
+                            : updateDisplayedSubjectFilters(data),
+                        topic: activeFilters.topic
+                            ? prev.topic
+                            : updateDisplayedTopicFilters(data),
+                    }));
                 }
             }
-
-            //If called by interactionFilter or resolvedFilter we keep the displayed subject and topic filters
-            //if they have an active filter. A future improvement could be to only keep the active filter and refesh the rest
-            if (caller === "userInteraction" || caller === "isResolved") {
-                setDisplayedFilters(prev => ({
-                    subject: activeFilters.subject
-                        ? prev.subject
-                        : updateDisplayedSubjectFilters(paginatedData),
-                    topic: activeFilters.topic
-                        ? prev.topic
-                        : updateDisplayedTopicFilters(paginatedData),
-                }));
-            }
-            // }
             setIsLoading(false);
         },
 
@@ -254,7 +254,6 @@ export const useSearchQuestions = () => {
             activeFilters.subject,
             activeFilters.topic,
             fetchFromStart,
-            paginatedData,
             updateDisplayedSubjectFilters,
             urlAppendixes.searchStr,
             urlAppendixes.subjectId,

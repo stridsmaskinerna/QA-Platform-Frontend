@@ -44,6 +44,11 @@ export function useInfiniteScrolling<T>({
     const pageNrRef = useRef<number>(1);
     const [hasMore, setHasMore] = useState(false);
     const [paginatedData, setPaginatedData] = useState<T[]>([]);
+    //If loading additional questions (i.e pageNr.current > 1) we dont want to set
+    //loading state since that will be indicated by the loader at the bottom of
+    // the items list
+    const isLoading =
+        pageNrRef.current === 1 && (unAuthIsLoading || authIsLoading);
 
     const preparedUrl = url.includes("?")
         ? `${url}&Limit=${limit}`
@@ -69,6 +74,9 @@ export function useInfiniteScrolling<T>({
                 setPaginatedData(prev =>
                     pageNr > 1 ? [...prev, ...data] : data,
                 );
+                if (pageNr === 1) {
+                    return data;
+                }
             } else {
                 console.error(unAuthError ?? authError);
             }
@@ -85,7 +93,8 @@ export function useInfiniteScrolling<T>({
 
     const fetchFromStart = async () => {
         pageNrRef.current = 1;
-        await fetchMore(pageNrRef.current);
+        const data = await fetchMore(pageNrRef.current);
+        return data;
     };
 
     return {
@@ -93,6 +102,6 @@ export function useInfiniteScrolling<T>({
         paginatedData,
         hasMore,
         fetchFromStart,
-        isLoading: authIsLoading || unAuthIsLoading,
+        isLoading,
     };
 }
