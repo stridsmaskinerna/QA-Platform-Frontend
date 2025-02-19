@@ -1,8 +1,9 @@
 import { IAnswer } from "../../utils";
 import { AnswerCardBody } from "./answerCardBody";
 import { AnswerCardHeader } from "./answerCardHeader";
-import styles from "./AnswerCard.module.css";
+import { AnswerCardComments } from "../answerCardComments";
 import { AnswerCardBottom } from "./AnswerCardBottom";
+import styles from "./AnswerCard.module.css";
 
 interface IAnswerProps {
     data: IAnswer;
@@ -27,7 +28,7 @@ export function AnswerCard({ data }: IAnswerProps) {
                 voteCount={data.voteCount}
                 myVote={data.myVote}
             />
-            {/* <AnswerCardComments /> */}
+            <AnswerCardComments />
         </div>
     );
 }

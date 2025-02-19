@@ -1,0 +1,1 @@
+export { AnswerCardComments } from "./answerCardComment";
