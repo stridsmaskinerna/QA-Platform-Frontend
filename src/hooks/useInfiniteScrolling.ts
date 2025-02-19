@@ -6,7 +6,7 @@ import { useFetchWithToken } from "./useFetchWithToken";
 import { IPaginationMeta } from "../utils";
 
 interface IUseInfiniteScrollingProps {
-    url?: string;
+    url: string;
     limit: number;
 }
 
@@ -73,7 +73,7 @@ export function useInfiniteScrolling<T>({
                     "Used infinite scrolling hook without supplying url as neither prop nor argument",
                 );
             }
-            const baseUrl = (urlArg ?? urlProp)!;
+            const baseUrl = urlArg ?? urlProp;
 
             const preparedUrl = baseUrl.includes("?")
                 ? `${baseUrl}&Limit=${limit}&PageNr=${pageNr}`
