@@ -37,6 +37,9 @@ export function TeacherDashboardInternal() {
                     isLoadingQuestions={false}
                     header={getDerivedHeader()}
                     displayResolveFilter={false}
+                    hasMore={context.hasMore}
+                    loaderRef={context.loaderRef}
+                    totalItemCount={context.totalItemCount}
                 />
             )}
         </div>

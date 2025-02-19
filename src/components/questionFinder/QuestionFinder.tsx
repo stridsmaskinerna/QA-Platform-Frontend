@@ -4,7 +4,7 @@ import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
 import { ITab } from "../../utils";
-import { CSSProperties, useMemo } from "react";
+import { CSSProperties } from "react";
 import { MyQASection } from "../myQASection";
 
 const tabContainerStyle: CSSProperties = {
@@ -29,6 +29,8 @@ export function QuestionFinder() {
         onInterActionFilterClick,
         shouldShowFilters,
         loaderRef,
+        loaderRef2,
+        loaderRef3,
         hasMore,
         totalItemCount,
     } = useSearchQuestions();
@@ -41,68 +43,53 @@ export function QuestionFinder() {
         transition: "transform 0.5s ease",
     };
 
-    const questionListContent = useMemo(
-        () => (
-            <QuestionCardList
-                header={t(
-                    `${activeFilters.userInteraction ?? "questionList"}Header`,
-                )}
-                onResolvedFilterClick={onResolvedFilterClick}
-                activeResolvedFilter={activeFilters.resolved}
-                data={questions}
-                isLoadingQuestions={isLoadingQuestions}
-                loaderRef={loaderRef}
-                hasMore={hasMore}
-                totalItemCount={totalItemCount}
-            />
-        ),
-        [
-            activeFilters.resolved,
-            activeFilters.userInteraction,
-            hasMore,
-            isLoadingQuestions,
-            loaderRef,
-            onResolvedFilterClick,
-            questions,
-            t,
-            totalItemCount,
-        ],
-    );
-
-    const tabs: ITab[] = useMemo(
-        () => [
-            {
-                content: questionListContent,
-                title: t("recentQuestions"),
-                btnStyle: tabsBtnStyle,
-                contentContainerStyle: tabContainerStyle,
-                tabBtnClickSideEffect: () => onInterActionFilterClick(null),
-            },
-            {
-                content: (
-                    <MyQASection
-                        activeFilter={
-                            activeFilters.userInteraction ?? "created"
-                        }
-                        setActiveFilter={onInterActionFilterClick}
-                    >
-                        {questionListContent}
-                    </MyQASection>
-                ),
-                contentContainerStyle: tabContainerStyle,
-                title: t("myQa"),
-                btnStyle: tabsBtnStyle,
-                tabBtnClickSideEffect: () =>
-                    onInterActionFilterClick("created"),
-            },
-        ],
-        [
-            activeFilters.userInteraction,
-            onInterActionFilterClick,
-            questionListContent,
-            t,
-        ],
-    );
+    const tabs: ITab[] = [
+        {
+            content: (
+                <QuestionCardList
+                    header={t(
+                        `${activeFilters.userInteraction ?? "questionList"}Header`,
+                    )}
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={activeFilters.resolved}
+                    data={questions}
+                    isLoadingQuestions={isLoadingQuestions}
+                    loaderRef={loaderRef}
+                    hasMore={hasMore}
+                    totalItemCount={totalItemCount}
+                />
+            ),
+            title: t("recentQuestions"),
+            btnStyle: tabsBtnStyle,
+            contentContainerStyle: tabContainerStyle,
+            tabBtnClickSideEffect: () => onInterActionFilterClick(null),
+        },
+        {
+            content: (
+                <MyQASection
+                    activeFilter={activeFilters.userInteraction ?? "created"}
+                    setActiveFilter={onInterActionFilterClick}
+                >
+                    <QuestionCardList
+                        header={t(
+                            `${activeFilters.userInteraction ?? "questionList"}Header`,
+                        )}
+                        onResolvedFilterClick={onResolvedFilterClick}
+                        activeResolvedFilter={activeFilters.resolved}
+                        data={questions}
+                        isLoadingQuestions={isLoadingQuestions}
+                        loaderRef={loaderRef2}
+                        hasMore={hasMore}
+                        totalItemCount={totalItemCount}
+                    />
+                </MyQASection>
+            ),
+            contentContainerStyle: tabContainerStyle,
+            title: t("myQa"),
+            btnStyle: tabsBtnStyle,
+            tabBtnClickSideEffect: () => onInterActionFilterClick("created"),
+        },
+    ];
 
     return (
         <div className={styles.container}>
@@ -121,7 +108,18 @@ export function QuestionFinder() {
                     tabs={tabs}
                 />
             ) : (
-                questionListContent
+                <QuestionCardList
+                    header={t(
+                        `${activeFilters.userInteraction ?? "questionList"}Header`,
+                    )}
+                    onResolvedFilterClick={onResolvedFilterClick}
+                    activeResolvedFilter={activeFilters.resolved}
+                    data={questions}
+                    isLoadingQuestions={isLoadingQuestions}
+                    loaderRef={loaderRef3}
+                    hasMore={hasMore}
+                    totalItemCount={totalItemCount}
+                />
             )}
         </div>
     );

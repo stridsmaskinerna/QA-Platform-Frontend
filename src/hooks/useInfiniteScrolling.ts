@@ -6,7 +6,7 @@ import { useFetchWithToken } from "./useFetchWithToken";
 import { IPaginationMeta } from "../utils";
 
 interface IUseInfiniteScrollingProps {
-    url: string;
+    url?: string;
     limit: number;
 }
 
@@ -18,7 +18,7 @@ const headerParser = {
 };
 
 export function useInfiniteScrolling<T>({
-    url,
+    url: urlProp,
     limit,
 }: IUseInfiniteScrollingProps) {
     const { isGuest } = useRoles();
@@ -27,20 +27,35 @@ export function useInfiniteScrolling<T>({
         isLoading: unAuthIsLoading,
         error: unAuthError,
     } = useFetchData<T[]>();
+
     const {
         requestHandlerWithHeaderReturn: authRequestHandler,
         isLoading: authIsLoading,
         error: authError,
     } = useFetchWithToken<T[]>();
+
     const { ref: loaderRef } = useIntersectionObserver({
-        threshold: 0.8,
-        onChange(isIntersecting) {
-            if (isIntersecting) {
-                pageNrRef.current++;
-                void fetchMore(pageNrRef.current);
-            }
-        },
+        threshold: 0.5,
+        onChange,
     });
+
+    const { ref: loaderRef2 } = useIntersectionObserver({
+        threshold: 0.5,
+        onChange,
+    });
+
+    const { ref: loaderRef3 } = useIntersectionObserver({
+        threshold: 0.5,
+        onChange,
+    });
+
+    function onChange(isIntersecting: boolean) {
+        if (isIntersecting) {
+            pageNrRef.current++;
+            void fetchMore(pageNrRef.current);
+        }
+    }
+
     const pageNrRef = useRef<number>(1);
     const [hasMore, setHasMore] = useState(false);
     const [totalItemCount, setTotalItemCount] = useState<number>();
@@ -51,20 +66,27 @@ export function useInfiniteScrolling<T>({
     const isLoading =
         pageNrRef.current === 1 && (unAuthIsLoading || authIsLoading);
 
-    const preparedUrl = url.includes("?")
-        ? `${url}&Limit=${limit}`
-        : `${url}?Limit=${limit}`;
-
     const fetchMore = useCallback(
-        async (pageNr: number) => {
+        async (pageNr: number, urlArg?: string) => {
+            if (!urlArg && !urlProp) {
+                throw new Error(
+                    "Used infinite scrolling hook without supplying url as neither prop nor argument",
+                );
+            }
+            const baseUrl = (urlArg ?? urlProp)!;
+
+            const preparedUrl = baseUrl.includes("?")
+                ? `${baseUrl}&Limit=${limit}&PageNr=${pageNr}`
+                : `${baseUrl}?Limit=${limit}&PageNr=${pageNr}`;
+
             const { data, headers } = isGuest
                 ? await unAuthRequestHandler(
-                      `${preparedUrl}&PageNr=${pageNr}`,
+                      preparedUrl,
                       [paginationHeader],
                       headerParser,
                   )
                 : await authRequestHandler(
-                      `${preparedUrl}&PageNr=${pageNr}`,
+                      preparedUrl,
                       [paginationHeader],
                       headerParser,
                   );
@@ -88,24 +110,30 @@ export function useInfiniteScrolling<T>({
             authError,
             authRequestHandler,
             isGuest,
-            preparedUrl,
+            limit,
             unAuthError,
             unAuthRequestHandler,
+            urlProp,
         ],
     );
 
-    const fetchFromStart = async () => {
+    const resetPaginatedData = () => setPaginatedData([]);
+
+    const fetchFromStart = async (urlArg?: string) => {
         pageNrRef.current = 1;
-        const data = await fetchMore(pageNrRef.current);
+        const data = await fetchMore(pageNrRef.current, urlArg);
         return data;
     };
 
     return {
         loaderRef,
+        loaderRef2,
+        loaderRef3,
         paginatedData,
         hasMore,
         fetchFromStart,
         isLoading,
         totalItemCount,
+        resetPaginatedData,
     };
 }

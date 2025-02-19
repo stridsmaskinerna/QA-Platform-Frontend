@@ -74,6 +74,8 @@ export const useSearchQuestions = () => {
     const {
         paginatedData,
         loaderRef,
+        loaderRef2,
+        loaderRef3,
         hasMore,
         fetchFromStart,
         isLoading: isLoadingQuestions,
@@ -297,6 +299,8 @@ export const useSearchQuestions = () => {
         },
         shouldShowFilters,
         loaderRef,
+        loaderRef2,
+        loaderRef3,
         hasMore,
         totalItemCount,
     };
