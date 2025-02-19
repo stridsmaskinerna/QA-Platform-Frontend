@@ -1,1 +1,1 @@
-export { AnswerCardComments } from "./answerCardComment";
+export * from "./answerCardComments";

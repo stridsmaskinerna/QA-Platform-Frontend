@@ -75,6 +75,7 @@
         "nonPublic": "Ej offentlig",
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
         "backToQA": "Tillbaka till Frågor & Svar",
+
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",
@@ -92,6 +93,17 @@
             "cancelDelete": "Stäng",
             "confirmDelete": "Radera",
             "questionDelete": "Radera"
+        },
+
+        "answerCardComments": {
+            "title": "Kommentarer",
+            "viewCommentInfo": "Se kommentarer",
+            "hideCommentInfo": "Dölj kommentarer",
+            "updateCommentInfo": "Uppdatera kommentar",
+            "deleteCommentInfo": "Radera kommentar",
+            "submitCommentInfo": "Skapa kommentar",
+            "createCommentPlaceholder": "Skapa en kommentar..",
+            "submitComment": "Kommentera"
         }
     }
 }

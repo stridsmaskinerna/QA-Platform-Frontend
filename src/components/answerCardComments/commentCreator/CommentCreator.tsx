@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { TextArea } from "../../input";
 import chatIcon from "../../../assets/icons/chat_white.svg";
@@ -11,6 +12,7 @@ interface ICommentCreatorProps {
 }
 
 export function CommentCreator({ answerId }: ICommentCreatorProps) {
+    const { t } = useTranslation();
     const qaContext = useQAContext();
     const [commentValue, setCommentValue] = useState("");
 
@@ -39,13 +41,16 @@ export function CommentCreator({ answerId }: ICommentCreatorProps) {
                     rows={4}
                     inputValue={commentValue}
                     minInputValueLength={2}
-                    placeHolder="Add a comment.."
+                    placeHolder={t(
+                        "answerCardComments.createCommentPlaceholder",
+                    )}
                     inputType="text"
                     onChange={updateComment}
                 />
             </div>
             <div className={styles.commentBtnCtr}>
                 <button
+                    title={t("answerCardComments.submitCommentInfo")}
                     type="submit"
                     className={styles.commentBtn}
                 >
@@ -53,7 +58,9 @@ export function CommentCreator({ answerId }: ICommentCreatorProps) {
                         src={chatIcon}
                         alt="Add"
                     />
-                    <span className={styles.commentBtnText}>Comment</span>
+                    <span className={styles.commentBtnText}>
+                        {t("answerCardComments.submitComment")}
+                    </span>
                 </button>
             </div>
         </form>

@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { IComment } from "../../utils";
-import { H1 } from "../text";
-import viewIcon from "../../assets/icons/visibility_on.svg";
-import hideIcon from "../../assets/icons/visibility_off.svg";
-import { CommentCreator } from "./commentCreator";
-import { CommentList } from "./commentList";
+import { IComment } from "../../../utils";
+import { H2 } from "../../text";
+import viewIcon from "../../../assets/icons/visibility_on.svg";
+import hideIcon from "../../../assets/icons/visibility_off.svg";
+import { CommentCreator } from "../commentCreator";
+import { CommentList } from "../commentList";
 import styles from "./AnswerCardComments.module.css";
 
 interface IAnswerCardCommentsProps {
@@ -17,6 +18,7 @@ export function AnswerCardComments({
     answerId,
     comments,
 }: IAnswerCardCommentsProps) {
+    const { t } = useTranslation();
     const [hideComment, setHideComment] = useState(true);
 
     const toggleComments = () => {
@@ -26,15 +28,15 @@ export function AnswerCardComments({
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <H1 text="Comments" />
+                <H2 text={t("answerCardComments.title")} />
                 {hideComment ? (
                     <img
                         onClick={() => {
                             toggleComments();
                         }}
                         src={viewIcon}
-                        alt={"View comments"}
-                        title={"View comments"}
+                        alt={t("answerCardComments.viewCommentInfo")}
+                        title={t("answerCardComments.viewCommentInfo")}
                         className={styles.toolbarIcon}
                     />
                 ) : (
@@ -43,8 +45,8 @@ export function AnswerCardComments({
                             toggleComments();
                         }}
                         src={hideIcon}
-                        alt={"Hide comments"}
-                        title={"Hide comments"}
+                        alt={t("answerCardComments.hideCommentInfo")}
+                        title={t("answerCardComments.hideCommentInfo")}
                         className={styles.toolbarIcon}
                     />
                 )}

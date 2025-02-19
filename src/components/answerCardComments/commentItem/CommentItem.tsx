@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { useQAContext } from "../../../hooks";
 import { IComment } from "../../../utils";
 import updateIcon from "../../../assets/icons/edit.svg";
@@ -9,6 +11,7 @@ interface ICommentItemProps {
 }
 
 export function CommentItem({ comment }: ICommentItemProps) {
+    const { t } = useTranslation();
     const qaContext = useQAContext();
 
     const isMyQuestion = () => {
@@ -35,8 +38,8 @@ export function CommentItem({ comment }: ICommentItemProps) {
                                 handleUpdate();
                             }}
                             src={updateIcon}
-                            alt={"Update comment"}
-                            title={"Update comment"}
+                            alt={t("answerCardComments.updateCommentInfo")}
+                            title={t("answerCardComments.updateCommentInfo")}
                             className={styles.toolbarIcon}
                         />
                         <img
@@ -44,8 +47,8 @@ export function CommentItem({ comment }: ICommentItemProps) {
                                 handleDelete();
                             }}
                             src={deleteIcon}
-                            alt={"Delete comment"}
-                            title={"Delete comment"}
+                            alt={t("answerCardComments.deleteCommentInfo")}
+                            title={t("answerCardComments.deleteCommentInfo")}
                             className={styles.toolbarIcon}
                         />
                     </div>
