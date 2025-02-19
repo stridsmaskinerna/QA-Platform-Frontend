@@ -30,6 +30,7 @@ export function QuestionFinder() {
         shouldShowFilters,
         loaderRef,
         hasMore,
+        totalItemCount,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
@@ -52,6 +53,7 @@ export function QuestionFinder() {
                 isLoadingQuestions={isLoadingQuestions}
                 loaderRef={loaderRef}
                 hasMore={hasMore}
+                totalItemCount={totalItemCount}
             />
         ),
         [
@@ -63,6 +65,7 @@ export function QuestionFinder() {
             onResolvedFilterClick,
             questions,
             t,
+            totalItemCount,
         ],
     );
 

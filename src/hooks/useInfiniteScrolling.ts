@@ -43,6 +43,7 @@ export function useInfiniteScrolling<T>({
     });
     const pageNrRef = useRef<number>(1);
     const [hasMore, setHasMore] = useState(false);
+    const [totalItemCount, setTotalItemCount] = useState<number>();
     const [paginatedData, setPaginatedData] = useState<T[]>([]);
     //If loading additional questions (i.e pageNr.current > 1) we dont want to set
     //loading state since that will be indicated by the loader at the bottom of
@@ -69,7 +70,9 @@ export function useInfiniteScrolling<T>({
                   );
 
             if (data && headers?.[paginationHeader]) {
-                const { TotalPageCount } = headers[paginationHeader];
+                const { TotalPageCount, TotalItemCount } =
+                    headers[paginationHeader];
+                setTotalItemCount(TotalItemCount);
                 setHasMore(TotalPageCount > pageNr);
                 setPaginatedData(prev =>
                     pageNr > 1 ? [...prev, ...data] : data,
@@ -103,5 +106,6 @@ export function useInfiniteScrolling<T>({
         hasMore,
         fetchFromStart,
         isLoading,
+        totalItemCount,
     };
 }

@@ -77,6 +77,7 @@ export const useSearchQuestions = () => {
         hasMore,
         fetchFromStart,
         isLoading: isLoadingQuestions,
+        totalItemCount,
     } = useInfiniteScrolling<IQuestion>({
         url,
         limit: 20,
@@ -297,5 +298,6 @@ export const useSearchQuestions = () => {
         shouldShowFilters,
         loaderRef,
         hasMore,
+        totalItemCount,
     };
 };
