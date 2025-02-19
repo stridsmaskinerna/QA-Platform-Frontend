@@ -1,3 +1,26 @@
 .container {
     padding: 1rem;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toolbar-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    filter: invert(1);
+}
+
+.toolbar-icon:hover {
+    background-color: var(--grey-strong);
+    filter: invert(0);
 }
