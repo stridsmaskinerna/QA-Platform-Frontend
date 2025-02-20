@@ -34,6 +34,7 @@ html {
     --btnLight-text: black;
     --btnLight-hover: lightgray;
     --inputIdle-text: rgb(114, 113, 113);
+    --overlay-hiddenItem: rgba(144, 142, 142, 0.64);
     overflow-y: scroll;
 
     --border-radius: 10px;
