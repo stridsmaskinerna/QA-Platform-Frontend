@@ -1,0 +1,138 @@
+.container {
+    max-width: 1600px;
+    width: 100%;
+}
+
+.loaderContainer {
+    margin-top: 10rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.form {
+    border: 2px solid var(--border-color, lightgray); 
+    border-radius: 10px;
+    padding: 20px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vw, 30px);
+}
+
+
+.inputPair {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    height: fit-content;
+}
+
+
+.submitBtn {
+    
+    border: none;
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.submitBtn:hover {
+    background-color: var(--btnDark-hover);
+}
+table {
+    display: table;
+    width: 100%; 
+    border-collapse: collapse;
+    padding: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.deleteBtn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.deleteBtn:hover {
+    background-color: darkred;
+}
+
+.heading {
+    padding: 20px;
+    font-size: 1.5rem;  /* Increase font size for heading */
+}
+
+.manageCourse {
+    border: 2px solid var(--border-color, lightgray); 
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Media Query for Small Screens (Mobile) */
+@media (max-width: 600px) {
+    /* Make table a block-level element for mobile */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;  /* Enable horizontal scrolling for large tables */
+    }
+    
+    th, td {
+        display: block;  /* Stack th and td */
+        width: 100%;
+        text-align: right;  /* Align text to the right for readability */
+    }
+
+    th {
+        background-color: #f4f4f4;
+        position: sticky;
+        top: 0;  /* Keep header at the top when scrolling */
+    }
+
+    td {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .deleteBtn {
+        width: 100%;
+        padding: 10px 0;  /* Make delete button full width */
+        margin-top: 10px;
+    }
+
+    /* Stack heading and input pair */
+    .inputPair {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .heading {
+        font-size: 1.2rem;  /* Adjust font size for small screens */
+        padding: 15px;
+    }
+
+    /* Adjust manageCourse for smaller screens */
+    .manageCourse {
+        padding: 15px;
+    }
+}
+
