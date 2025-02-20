@@ -11,7 +11,7 @@ import { BASE_URL } from "../data";
 // import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
 // import { useFetchData } from "./useFetchData";
-import { useInfiniteScrolling } from "./useInfiniteScrolling";
+import { useInfiniteScrolling } from ".";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
 const questionsBaseUrl = `${BASE_URL}/questions`;

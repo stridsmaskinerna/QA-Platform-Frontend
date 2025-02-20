@@ -3,12 +3,8 @@ import { ReactNode, useRef, useState } from "react";
 import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
-import { useFetchWithToken } from "../../../hooks";
-<<<<<<< HEAD
-import { useInfiniteScrolling } from "../../../hooks/useInfiniteScrolling";
-=======
+import { useFetchWithToken, useInfiniteScrolling } from "../../../hooks";
 import { ErrorModal } from "../../modal";
->>>>>>> development
 
 interface ITeacherDashboardProviderProps {
     children: ReactNode;
@@ -35,7 +31,7 @@ export function TeacherDashboardProvider({
         resetPaginatedData,
         isLoading: fetchQuestionsLoading,
     } = useInfiniteScrolling<IQuestion>({
-        url: fetchQuestionUrl.current,
+        url: fetchQuestionUrl.current ?? "",
         limit: 20,
     });
 
@@ -58,15 +54,8 @@ export function TeacherDashboardProvider({
     };
 
     const fetchQuestionDetails = async (subject: ISubject) => {
-<<<<<<< HEAD
         fetchQuestionUrl.current = `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`;
         await fetchFromStart(fetchQuestionUrl.current);
-=======
-        const data = await fetchSubjectQuestionReq.requestHandler(
-            `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
-        );
-        setQuestions(data ?? []);
->>>>>>> development
     };
 
     const updateTopic = async (topic: ITopic) => {
@@ -112,11 +101,7 @@ export function TeacherDashboardProvider({
     };
 
     const isLoading = () => {
-<<<<<<< HEAD
         return fetchSubjectsReq.isLoading || fetchQuestionsLoading;
-=======
-        return fetchSubjectQuestionReq.isLoading;
->>>>>>> development
     };
 
     const getContext = (): ITeacherDashboardContext => {
