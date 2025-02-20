@@ -28,6 +28,7 @@ export function AnswerCard({ data }: IAnswerProps) {
                 isAccepted={data.isAccepted}
                 isHidden={data.isHidden}
             />
+            {data.id}
             <AnswerCardBody answer={data.value} />
             <AnswerCardBottom
                 answerId={data.id}

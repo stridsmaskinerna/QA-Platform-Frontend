@@ -27,6 +27,7 @@ export function AnswerCardVote({
     const downvoteToShow =
         currentVote === "dislike" ? ThumpDownFilled : ThumpDownNeutral;
 
+
     const sendVote = async (newVote: string) => {
         try {
             await putRequest(
@@ -70,6 +71,7 @@ export function AnswerCardVote({
                 alt=""
                 onClick={toggleLike}
                 className={`${styles.voteButton} ${isLoading ? styles.loading : ""}`}
+
             />
             <span className={styles.voteCount}>{voteCount}</span>
             <img
