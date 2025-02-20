@@ -97,7 +97,8 @@
         },
 
         "answerCardComments": {
-            "title": "Kommentarer",
+            "commentsListTitle": "Läs Kommentarer",
+            "commentsCreatorTitle": "Skapa Kommentar",
             "viewCommentInfo": "Se kommentarer",
             "hideCommentInfo": "Dölj kommentarer",
             "updateCommentInfo": "Uppdatera kommentar",

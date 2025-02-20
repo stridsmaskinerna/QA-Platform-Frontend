@@ -97,7 +97,8 @@
         },
 
         "answerCardComments": {
-            "title": "Comments",
+            "commentsListTitle": "View Comments",
+            "commentsCreatorTitle": "Create Comment",
             "viewCommentInfo": "View comments",
             "hideCommentInfo": "Hide comments",
             "updateCommentInfo": "Update comment",

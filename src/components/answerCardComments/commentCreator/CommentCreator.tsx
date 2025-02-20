@@ -9,9 +9,13 @@ import styles from "./CommentCreator.module.css";
 
 interface ICommentCreatorProps {
     answerId: string;
+    createComments: (comment: IComment) => Promise<void>;
 }
 
-export function CommentCreator({ answerId }: ICommentCreatorProps) {
+export function CommentCreator({
+    answerId,
+    createComments,
+}: ICommentCreatorProps) {
     const { t } = useTranslation();
     const qaContext = useQAContext();
     const [commentValue, setCommentValue] = useState("");
@@ -25,6 +29,7 @@ export function CommentCreator({ answerId }: ICommentCreatorProps) {
             value: commentValue,
         };
         console.log(`Submit comment ${comment.value} for answer ${answerId}`);
+        void createComments(comment);
     };
 
     const updateComment = (e: React.ChangeEvent<HTMLInputElement>) => {
