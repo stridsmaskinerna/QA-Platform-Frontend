@@ -1,16 +1,16 @@
 import { useFetchWithToken } from "./useFetchWithToken";
 import { CustomError } from "../utils";
  
-interface IUsePostReturn<T> {
+interface IUsePutReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
     clearError: () => void;
-    postRequest: (
+    putRequest: (
         url: RequestInfo | URL,
         body?: unknown,
         options?: RequestInit,
     ) => Promise<T | void>;
-    postRequestWithHeaderReturn: <K extends Record<string, unknown>>(
+    putRequestWithHeaderReturn: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
@@ -20,27 +20,27 @@ interface IUsePostReturn<T> {
 }
  
 /**
-* A custom hook to send POST requests with authentication tokens.
+* A custom hook to send PUT requests with authentication tokens.
 */
-export function usePostData<T>(checkIfTokenNeedsRefresh = false): IUsePostReturn<T> {
+export function usePut<T>(checkIfTokenNeedsRefresh = false): IUsePutReturn<T> {
     const fetchWithToken = useFetchWithToken<T>(checkIfTokenNeedsRefresh);
  
     /**
-     * Wrapper for making a POST request.
+     * Wrapper for making a PUT request.
      */
-    const postRequest = (url: RequestInfo | URL, body?: unknown, options?: RequestInit) => {
+    const putRequest = (url: RequestInfo | URL, body?: unknown, options?: RequestInit) => {
         return fetchWithToken.requestHandler(url, {
             ...options,
-            method: "POST",
+            method: "PUT",
             body: body ? JSON.stringify(body) : undefined,
             headers: { "Content-Type": "application/json", ...options?.headers },
         });
     };
  
     /**
-     * Wrapper for making a POST request that also extracts response headers.
+     * Wrapper for making a PUT request that also extracts response headers.
      */
-    const postRequestWithHeaderReturn = <K extends Record<string, unknown>>(
+    const putRequestWithHeaderReturn = <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
@@ -53,7 +53,7 @@ export function usePostData<T>(checkIfTokenNeedsRefresh = false): IUsePostReturn
             parser,
             {
                 ...options,
-                method: "POST",
+                method: "PUT",
                 body: body ? JSON.stringify(body) : undefined,
                 headers: { "Content-Type": "application/json", ...options?.headers },
             }
@@ -64,7 +64,7 @@ export function usePostData<T>(checkIfTokenNeedsRefresh = false): IUsePostReturn
         isLoading: fetchWithToken.isLoading,
         error: fetchWithToken.error,
         clearError: fetchWithToken.clearError,
-        postRequest,
-        postRequestWithHeaderReturn,
+        putRequest,
+        putRequestWithHeaderReturn,
     };
 }
