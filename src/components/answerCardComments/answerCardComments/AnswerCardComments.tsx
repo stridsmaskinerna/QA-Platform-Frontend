@@ -33,14 +33,12 @@ export function AnswerCardComments({
     const [hideCommentCreator, setHideCommentCreator] = useState(true);
     const [currentComments, setCurrentComments] = useState(comments);
 
-    const toggleCommentsCreator: MouseEventHandler<HTMLElement> = e => {
-        e.stopPropagation();
+    const toggleCommentsCreator = () => {
         setHideCommentCreator(prev => !prev);
         viewCommentsCreatorRef.current?.classList.toggle(styles.openIconHide);
     };
 
-    const toggleComments: MouseEventHandler<HTMLElement> = e => {
-        e.stopPropagation();
+    const toggleComments = () => {
         scrollPositionRef.current = window.scrollY;
 
         setHideComment(prev => !prev);
@@ -75,24 +73,24 @@ export function AnswerCardComments({
         <div className={styles.container}>
             <div
                 className={styles.header}
-                onClick={toggleCommentsCreator}
+                onClick={() => {
+                    toggleCommentsCreator();
+                }}
             >
                 <div className={styles.headerLabel}>
                     <img
-                        onClick={toggleCommentsCreator}
                         src={addCommentIcon}
-                        alt={t("answerCardComments.viewCommentInfo")}
-                        title={t("answerCardComments.viewCommentInfo")}
+                        alt={t("answerCardComments.createCommentInfo")}
+                        title={t("answerCardComments.createCommentInfo")}
                         className={styles.labelIcon}
                     />
                     <H2 text={t("answerCardComments.commentsCreatorTitle")} />
                 </div>
                 <img
                     ref={viewCommentsCreatorRef}
-                    onClick={toggleCommentsCreator}
                     src={openIcon}
-                    alt={t("answerCardComments.viewCommentInfo")}
-                    title={t("answerCardComments.viewCommentInfo")}
+                    alt={t("answerCardComments.createCommentInfo")}
+                    title={t("answerCardComments.createCommentInfo")}
                     className={styles.openIcon}
                 />
             </div>
@@ -104,11 +102,12 @@ export function AnswerCardComments({
             )}
             <div
                 className={styles.header}
-                onClick={toggleComments}
+                onClick={() => {
+                    toggleComments();
+                }}
             >
                 <div className={styles.headerLabel}>
                     <img
-                        onClick={toggleCommentsCreator}
                         src={commentListIcon}
                         alt={t("answerCardComments.viewCommentInfo")}
                         title={t("answerCardComments.viewCommentInfo")}
@@ -118,7 +117,6 @@ export function AnswerCardComments({
                 </div>
                 <img
                     ref={viewCommentsRef}
-                    onClick={toggleComments}
                     src={openIcon}
                     alt={t("answerCardComments.viewCommentInfo")}
                     title={t("answerCardComments.viewCommentInfo")}
