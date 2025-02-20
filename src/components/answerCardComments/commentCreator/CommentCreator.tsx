@@ -3,13 +3,12 @@ import { useTranslation } from "react-i18next";
 
 import { TextArea } from "../../input";
 import chatIcon from "../../../assets/icons/chat_white.svg";
-import { IComment } from "../../../utils";
-import { useQAContext } from "../../../hooks";
+import { ICommentForCreation } from "../../../utils";
 import styles from "./CommentCreator.module.css";
 
 interface ICommentCreatorProps {
     answerId: string;
-    createComments: (comment: IComment) => Promise<void>;
+    createComments: (comment: ICommentForCreation) => Promise<void>;
 }
 
 export function CommentCreator({
@@ -17,23 +16,20 @@ export function CommentCreator({
     createComments,
 }: ICommentCreatorProps) {
     const { t } = useTranslation();
-    const qaContext = useQAContext();
-    const [commentValue, setCommentValue] = useState("");
+    const [currentContent, setCurrentContent] = useState("");
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setCommentValue("");
-        const comment: IComment = {
-            id: "",
-            userName: qaContext.authContext.username ?? "",
-            value: commentValue,
+        setCurrentContent("");
+        const comment: ICommentForCreation = {
+            answerId,
+            value: currentContent,
         };
-        console.log(`Submit comment ${comment.value} for answer ${answerId}`);
         void createComments(comment);
     };
 
     const updateComment = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCommentValue(e.target.value);
+        setCurrentContent(e.target.value);
     };
 
     return (
@@ -44,7 +40,7 @@ export function CommentCreator({
             <div className={styles.textArea}>
                 <TextArea
                     rows={4}
-                    inputValue={commentValue}
+                    inputValue={currentContent}
                     minInputValueLength={2}
                     placeHolder={t(
                         "answerCardComments.createCommentPlaceholder",

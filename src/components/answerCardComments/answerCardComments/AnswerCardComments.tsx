@@ -1,7 +1,7 @@
-import { MouseEventHandler, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { IComment } from "../../../utils";
+import { IComment, ICommentForCreation } from "../../../utils";
 import { H2 } from "../../text";
 import openIcon from "../../../assets/icons/arrow_right.svg";
 import addCommentIcon from "../../../assets/icons/add_comment.svg";
@@ -9,8 +9,14 @@ import commentListIcon from "../../../assets/icons/comment_list.svg";
 import { CommentCreator } from "../commentCreator";
 import { CommentList } from "../commentList";
 import styles from "./AnswerCardComments.module.css";
-import { useDelete, useFetchWithToken, usePOST, usePUT } from "../../../hooks";
-import { BASE_URL, COMMENT_URL } from "../../../data";
+import {
+    useDelete,
+    usePOST,
+    usePUT,
+    useQAContext,
+    useGet,
+} from "../../../hooks";
+import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -22,9 +28,10 @@ export function AnswerCardComments({
     comments,
 }: IAnswerCardCommentsProps) {
     const { t } = useTranslation();
-    const createTopicReq = useFetchWithToken<void>();
+    const qaContext = useQAContext();
     const postComment = usePOST<IComment>();
     const deleteComment = useDelete<IComment>();
+    const getAnswerComments = useGet<IComment[]>();
     const putComment = usePUT<IComment>();
     const viewCommentsRef = useRef<HTMLImageElement | null>(null);
     const viewCommentsCreatorRef = useRef<HTMLImageElement | null>(null);
@@ -32,6 +39,11 @@ export function AnswerCardComments({
     const [hideComment, setHideComment] = useState(true);
     const [hideCommentCreator, setHideCommentCreator] = useState(true);
     const [currentComments, setCurrentComments] = useState(comments);
+
+    useEffect(() => {
+        console.log("answerId", answerId);
+        console.log("comments", comments);
+    });
 
     const toggleCommentsCreator = () => {
         setHideCommentCreator(prev => !prev);
@@ -49,17 +61,40 @@ export function AnswerCardComments({
         });
     };
 
-    const createComments = async (comment: IComment) => {
-        const res = await postComment.postRequest(
+    const createComments = async (comment: ICommentForCreation) => {
+        const postRes = await postComment.postRequest(
             `${BASE_URL}${COMMENT_URL}`,
             comment,
         );
+
+        // HAPPY PATH
+        const getRes = await getAnswerComments.getRequest(
+            `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
+        );
+        // 14dae759-bea3-454c-b76d-7c3e1b50a555
+        // setCurrentComments(prev => [...prev, {
+        //     id: generateTemporaryId(),
+        //     value: comment.value,
+        //     userName: qaContext.authContext.username ?? "unknown user"
+        // }])
+
+        console.log("getRes", getRes);
+        console.log(qaContext.authContext.username);
+        setCurrentComments(getRes ?? []);
     };
 
     const deleteComments = async (comment: IComment) => {
         const res = await deleteComment.deleteRequest(
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
         );
+
+        // HAPPY PATH
+
+        const commentsAfterDeletion = currentComments.filter(
+            c => c.id != comment.id,
+        );
+
+        setCurrentComments(commentsAfterDeletion);
     };
 
     const updateComments = async (comment: IComment) => {
@@ -67,6 +102,8 @@ export function AnswerCardComments({
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
             comment,
         );
+
+        // HAPPY PATH
     };
 
     return (

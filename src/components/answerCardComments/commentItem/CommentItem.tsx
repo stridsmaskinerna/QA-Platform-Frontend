@@ -21,16 +21,19 @@ export function CommentItem({
     const qaContext = useQAContext();
 
     const isMyQuestion = () => {
+        console.log(
+            "qaContext.authContext.username",
+            qaContext.authContext.username,
+        );
+        console.log("comment.userName", comment.userName);
         return qaContext.authContext.username === comment.userName;
     };
 
     const handleUpdate = () => {
-        console.log("handle update comment: ", comment);
         void updateComments(comment);
     };
 
     const handleDelete = () => {
-        console.log("handle delete comment:", comment);
         void deleteComments(comment);
     };
 

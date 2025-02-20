@@ -12,6 +12,7 @@ export const GUEST_QUESTION_DETAILS_ROUTE = "/guest/questions/";
 export const QUESTION_DETAILS_ROUTE = "/questions/";
 
 //URLS
+export const ANSWER_URL = "/answers";
 export const COMMENT_URL = "/comments";
 export const QUESTION_URL = "/questions";
 export const SUBJECT_URL = "/subjects";
