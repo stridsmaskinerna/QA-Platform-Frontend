@@ -41,8 +41,6 @@ export function AnswerCardHeader({
         return () => clearTimeout(initialTimeout); // Cleanup on unmount
     }, [created, t]);
 
-    console.log(isHidden);
-    //var toHide = isHidden ? "The question is hidden" : "";
     return (
         <div className={styles.container}>
             <div className={styles.left}>

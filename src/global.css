@@ -17,7 +17,7 @@ html {
     --btnDark-text: white;
     --btnDark-hover: gray;
     --grey-light: lightgray;
-    --green-resolved: rgb(80, 200, 120);
+    --green-resolved: #50c878;
     --green-success: rgb(36, 125, 66);
     --yellow-not-resolved: rgb(255, 170, 51);
     --grey-strong: gray;
