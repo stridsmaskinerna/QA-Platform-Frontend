@@ -7,6 +7,7 @@ import {
 } from "../../data";
 import { Link } from "react-router";
 import { useRoles } from "../../hooks/useRoles";
+import { useState } from "react";
 
 interface IQuestionCardProps {
     data: IQuestion;
@@ -14,7 +15,7 @@ interface IQuestionCardProps {
 
 export function QuestionCard({ data }: IQuestionCardProps) {
     const { isUser, isTeacher } = useRoles();
-
+    const [isHiddenOptimistic, setIsHiddenOptimistic] = useState(data.isHidden);
     const questionLink =
         isUser || isTeacher
             ? `${QUESTION_DETAILS_ROUTE}${data.id}`
@@ -23,17 +24,21 @@ export function QuestionCard({ data }: IQuestionCardProps) {
     return (
         <div className={styles.container}>
             <QuestionHeader
-                isHidden={data.isHidden}
                 isProtected={data.isProtected}
                 isResolved={data.isResolved}
                 subjectCode={data.subjectCode}
                 subjectName={data.subjectName}
+                isHideable={data.isHideable}
+                id={data.id}
+                isHiddenOptimistic={isHiddenOptimistic}
+                setIsHiddenOptimistic={setIsHiddenOptimistic}
             />
             <Link
                 to={questionLink}
                 className={styles.link}
             >
                 <QuestionCardMiddle
+                    isHiddenOptimistic={isHiddenOptimistic}
                     title={data.title}
                     created={data.created}
                     username={data.userName}
@@ -41,9 +46,10 @@ export function QuestionCard({ data }: IQuestionCardProps) {
                     topicName={data.topicName}
                 />
             </Link>
-            {/* {data.id} */}
-
-            <QuestionCardBottom tags={data.tags} />
+            <QuestionCardBottom
+                isHiddenOptimistic={isHiddenOptimistic}
+                tags={data.tags}
+            />
         </div>
     );
 }

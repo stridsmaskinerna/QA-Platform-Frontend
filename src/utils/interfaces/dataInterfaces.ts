@@ -11,6 +11,7 @@ export interface IQuestion {
     isResolved: boolean;
     isProtected: boolean;
     isHidden: boolean;
+    isHideable: boolean;
     answerCount: number;
     tags: string[];
     userId: string;

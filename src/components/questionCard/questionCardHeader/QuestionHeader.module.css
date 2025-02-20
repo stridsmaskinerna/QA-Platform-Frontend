@@ -53,12 +53,25 @@
     border: 1px solid black;
     border-radius: 1px;
     position: absolute;
-    right: 50%;
+    right: 100%;
     white-space: nowrap;
     font-size: 0.75rem;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     z-index: 4; /* Ensure it appears above everything */
+}
+
+.hideShowBtn {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.hideShowBtn:disabled {
+    cursor: not-allowed;
 }
 
 /* Show tooltip on hover */
