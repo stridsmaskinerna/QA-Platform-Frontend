@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { IDetailedQuestion } from "../../../utils";
 import { BASE_URL, PUBLIC_URL, QUESTION_URL } from "../../../data";
+import { QuestionDetailsViewer } from "../../../components";
+import styles from "../questionDetailsShared.module.css";
 
 export function QuestionDetailsLimited() {
     const { questionId } = useParams();
@@ -29,17 +31,8 @@ export function QuestionDetailsLimited() {
     if (!question) return <div>No question found.</div>;
 
     return (
-        <div>
-            <h1>{question.title}</h1>
-            <p>{question.description}</p>
-            <h2>Answers</h2>
-            <ul>
-                {question.answers.map(answer => (
-                    <li key={answer.id}>
-                        <strong>{answer.userName}:</strong> {answer.value}
-                    </li>
-                ))}
-            </ul>
+        <div className={styles.container}>
+            <QuestionDetailsViewer question={question} />
         </div>
     );
 }

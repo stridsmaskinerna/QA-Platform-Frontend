@@ -75,6 +75,7 @@
         "nonPublic": "Ej offentlig",
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
         "nrOfQuestionsFound": "Hittade {{count}} frågor",
+        "backToQA": "Tillbaka till Frågor & Svar",
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",

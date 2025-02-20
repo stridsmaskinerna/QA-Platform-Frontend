@@ -33,6 +33,7 @@ export default tseslint.config(
             ...react.configs.recommended.rules,
             ...react.configs["jsx-runtime"].rules,
             ...reactHooksPlugin.configs.recommended.rules,
+            "@typescript-eslint/no-unused-vars": "warn",
         },
     },
     {

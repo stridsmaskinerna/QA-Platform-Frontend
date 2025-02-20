@@ -13,5 +13,7 @@ export * from "./questionCardList";
 export * from "./myQASection";
 export * from "./select";
 export * from "./richText";
+export * from "./questionDetailsViewer";
+export * from "./button";
 export * from "./teacherDashboard";
 export * from "./text";

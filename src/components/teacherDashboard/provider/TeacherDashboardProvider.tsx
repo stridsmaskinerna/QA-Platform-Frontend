@@ -4,13 +4,16 @@ import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
+<<<<<<< HEAD
 import { useInfiniteScrolling } from "../../../hooks/useInfiniteScrolling";
+=======
+import { ErrorModal } from "../../modal";
+>>>>>>> development
 
 interface ITeacherDashboardProviderProps {
     children: ReactNode;
 }
 
-// TODO! Handle error globaly in errorBoundary or in local context ???
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
@@ -55,8 +58,15 @@ export function TeacherDashboardProvider({
     };
 
     const fetchQuestionDetails = async (subject: ISubject) => {
+<<<<<<< HEAD
         fetchQuestionUrl.current = `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`;
         await fetchFromStart(fetchQuestionUrl.current);
+=======
+        const data = await fetchSubjectQuestionReq.requestHandler(
+            `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
+        );
+        setQuestions(data ?? []);
+>>>>>>> development
     };
 
     const updateTopic = async (topic: ITopic) => {
@@ -102,7 +112,11 @@ export function TeacherDashboardProvider({
     };
 
     const isLoading = () => {
+<<<<<<< HEAD
         return fetchSubjectsReq.isLoading || fetchQuestionsLoading;
+=======
+        return fetchSubjectQuestionReq.isLoading;
+>>>>>>> development
     };
 
     const getContext = (): ITeacherDashboardContext => {
@@ -124,8 +138,24 @@ export function TeacherDashboardProvider({
         };
     };
 
+    const clearErrors = () => {
+        updateTopicReq.clearError();
+        deleteTopicReq.clearError();
+        createTopicReq.clearError();
+    };
+
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
+            {
+                <ErrorModal
+                    errors={[
+                        updateTopicReq.error,
+                        deleteTopicReq.error,
+                        createTopicReq.error,
+                    ]}
+                    onClearErrors={clearErrors}
+                />
+            }
             {children}
         </TeacherDashboardContext.Provider>
     );

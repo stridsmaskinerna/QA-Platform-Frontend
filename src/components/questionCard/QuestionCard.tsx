@@ -1,7 +1,5 @@
 import styles from "./QuestionCard.module.css";
-import { QuestionHeader } from ".";
-import { QuestionCardMiddle } from "./questionCardMiddle/QuestionCardMiddle";
-import QuestionCardBottom from "./questionCardBottom/QuestionCardBottom";
+import { QuestionHeader, QuestionCardMiddle, QuestionCardBottom } from ".";
 import { IQuestion } from "../../utils";
 import {
     QUESTION_DETAILS_ROUTE,
@@ -43,6 +41,8 @@ export function QuestionCard({ data }: IQuestionCardProps) {
                     topicName={data.topicName}
                 />
             </Link>
+            {/* {data.id} */}
+
             <QuestionCardBottom tags={data.tags} />
         </div>
     );

@@ -75,6 +75,7 @@
         "nonPublic": "Not Public",
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
         "nrOfQuestionsFound": "Found {{count}} questions",
+        "backToQA": "Back to Q&A",
         "teacherDashboard": {
             "manageTopicsFor": "Manage Topics for",
             "questionsInCourse": "Questions in course",

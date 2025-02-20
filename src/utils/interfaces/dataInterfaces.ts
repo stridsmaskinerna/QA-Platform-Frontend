@@ -14,10 +14,10 @@ export interface IQuestion {
     answerCount: number;
     tags: string[];
     userId: string;
+    description?: string;
 }
 
 export interface IDetailedQuestion extends IQuestion {
-    description: string;
     filePath: string;
     answers: IAnswer[];
 }

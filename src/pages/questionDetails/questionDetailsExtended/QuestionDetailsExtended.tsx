@@ -4,6 +4,8 @@ import { useParams } from "react-router";
 import { IDetailedQuestion } from "../../../utils";
 import { useEffect } from "react";
 import { BASE_URL, QUESTION_DETAILS_ROUTE } from "../../../data";
+import { QuestionDetailsViewer } from "../../../components";
+import styles from "../questionDetailsShared.module.css";
 
 export function QuestionDetailsExtended() {
     const { questionId } = useParams();
@@ -29,17 +31,8 @@ export function QuestionDetailsExtended() {
     if (!question) return <div>No question found.</div>;
 
     return (
-        <div>
-            <h1>{question.title}</h1>
-            <p>{question.description}</p>
-            <h2>Answers</h2>
-            <ul>
-                {question.answers.map(answer => (
-                    <li key={answer.id}>
-                        <strong>{answer.userName}:</strong> {answer.value}
-                    </li>
-                ))}
-            </ul>
+        <div className={styles.container}>
+            <QuestionDetailsViewer question={question} />
         </div>
     );
 }

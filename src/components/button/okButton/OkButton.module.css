@@ -1,0 +1,19 @@
+.button {
+    padding: 16px 64px;
+    background-color: var(--btnLight-bg);
+    color: var(--btnLight-text);
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: clamp(13px, 3vw, 17px);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #d1d5db;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

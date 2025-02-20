@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 interface IUseFetchWithTokenReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
+    clearError: () => void;
     requestHandler: (
         url: RequestInfo | URL,
         options?: RequestInit,
@@ -38,6 +39,10 @@ export function useFetchWithToken<T>(
     );
     const [error, setError] = useState<CustomError | null>(null);
     const navigate = useNavigate();
+
+    const clearError = () => {
+        setError(null);
+    };
 
     // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
     const generatedFetch = useCallback(
@@ -205,5 +210,11 @@ export function useFetchWithToken<T>(
         [clearTokens, generatedFetch, navigate, tokens],
     );
 
-    return { isLoading, error, requestHandler, requestHandlerWithHeaderReturn };
+    return {
+        isLoading,
+        error,
+        clearError,
+        requestHandler,
+        requestHandlerWithHeaderReturn,
+    };
 }

@@ -13,13 +13,18 @@ export function CancelButton({
     },
     text = "Cancel",
     disabled = false,
+    className = "",
 }: ICancelButtonProps) {
+    const getDerivedClass = () => {
+        return className == "" ? styles.button : className;
+    };
+
     return (
         <button
             type="button"
             onClick={onClick}
             disabled={disabled}
-            className={styles.button}
+            className={getDerivedClass()}
         >
             {text}
         </button>
