@@ -10,7 +10,7 @@ import styles from "./CommentItem.module.css";
 
 interface ICommentItemProps {
     comment: IComment;
-    highlightedCommentId: string | null
+    highlightedCommentId: string | null;
     deleteComment: (comment: IComment) => Promise<void>;
     updateComment: (comment: IComment) => Promise<void>;
 }
@@ -28,7 +28,10 @@ export function CommentItem({
 
     useEffect(() => {
         if (highlightedCommentId === comment.id && commentRef.current) {
-            commentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            commentRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
         }
     }, [highlightedCommentId, comment.id]);
 
@@ -37,7 +40,7 @@ export function CommentItem({
     };
 
     const handleIsUpdating = () => {
-        setIsUpdating(prev => !prev)
+        setIsUpdating(prev => !prev);
     };
 
     const handleDelete = () => {
@@ -47,19 +50,27 @@ export function CommentItem({
     const handleUpdate = async (comment: IComment) => {
         await updateComment(comment);
         setIsUpdating(false);
-    } 
+    };
 
     const getDerivedContainerClassName = () => {
         return highlightedCommentId == comment.id
             ? `${styles.container} ${styles.highlightedContainer}`
-            : styles.container
-    }
+            : styles.container;
+    };
 
     return (
-        <div ref={commentRef} className={getDerivedContainerClassName()}>
-            {!isUpdating 
-                ? <p className={styles.content}>{comment.value}</p>
-                : <CommentUpdater comment={comment} onUpdateComment={handleUpdate}/>}
+        <div
+            ref={commentRef}
+            className={getDerivedContainerClassName()}
+        >
+            {!isUpdating ? (
+                <p className={styles.content}>{comment.value}</p>
+            ) : (
+                <CommentUpdater
+                    comment={comment}
+                    onUpdateComment={handleUpdate}
+                />
+            )}
             <div className={styles.footer}>
                 <p className={styles.userName}>{comment.userName}</p>
                 {isMyQuestion() && (
@@ -86,7 +97,9 @@ export function CommentItem({
                 )}
             </div>
             {highlightedCommentId === comment.id && (
-                <span className={styles.commentLabel}>{t("answerCardComments.commentLabelMarker")}</span>
+                <span className={styles.commentLabel}>
+                    {t("answerCardComments.commentLabelMarker")}
+                </span>
             )}
         </div>
     );

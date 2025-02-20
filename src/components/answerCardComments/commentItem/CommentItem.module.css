@@ -7,7 +7,7 @@
 }
 
 .highlighted-container {
-    border: 2px solid #4A90E2;
+    border: 2px solid #4a90e2;
     background-color: rgba(74, 144, 226, 0.15);
     position: relative;
     padding: 10px;
@@ -17,22 +17,34 @@
 }
 
 @keyframes highlightFade {
-    0% { box-shadow: 0 0 24px rgba(74, 144, 226, 1); }
-    20% { box-shadow: 0 0 28px rgba(74, 144, 226, 0.9); }
-    40% { box-shadow: 0 0 24px rgba(74, 144, 226, 0.7); }
-    60% { box-shadow: 0 0 16px rgba(74, 144, 226, 0.5); }
-    80% { box-shadow: 0 0 8px rgba(74, 144, 226, 0.3); }
-    100% { box-shadow: 0 0 0 rgba(74, 144, 226, 0); }
+    0% {
+        box-shadow: 0 0 24px rgba(74, 144, 226, 1);
+    }
+    20% {
+        box-shadow: 0 0 28px rgba(74, 144, 226, 0.9);
+    }
+    40% {
+        box-shadow: 0 0 24px rgba(74, 144, 226, 0.7);
+    }
+    60% {
+        box-shadow: 0 0 16px rgba(74, 144, 226, 0.5);
+    }
+    80% {
+        box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 0 rgba(74, 144, 226, 0);
+    }
 }
 
 .comment-label {
     font-size: 0.8rem;
-    color: #1E5BA3;
+    color: #1e5ba3;
     font-weight: bold;
     position: absolute;
     bottom: -20px;
     left: 10px;
-    background: #E3F2FD;
+    background: #e3f2fd;
     padding: 3px 8px;
     border-radius: 4px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
@@ -40,8 +52,12 @@
 }
 
 @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .content {

@@ -7,20 +7,20 @@ import { CommentSubmitButton } from "../commentSubmitButton";
 import styles from "./CommentUpdater.module.css";
 
 interface ICommentUpdaterProps {
-    comment: IComment
+    comment: IComment;
     onUpdateComment: (comment: IComment) => Promise<void>;
 }
 
 export function CommentUpdater({
     comment,
-    onUpdateComment
+    onUpdateComment,
 }: ICommentUpdaterProps) {
     const { t } = useTranslation();
     const [currentContent, setCurrentContent] = useState(comment.value);
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         const commentForUpdate: IComment = {
             ...comment,
             value: currentContent,

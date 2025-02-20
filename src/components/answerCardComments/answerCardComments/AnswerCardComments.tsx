@@ -39,7 +39,9 @@ export function AnswerCardComments({
     const [hideComment, setHideComment] = useState(true);
     const [hideCommentCreator, setHideCommentCreator] = useState(true);
     const [currentComments, setCurrentComments] = useState(comments);
-    const [highlightedCommentId, setHighlightedCommentId] = useState<string | null>(null);
+    const [highlightedCommentId, setHighlightedCommentId] = useState<
+        string | null
+    >(null);
 
     const toggleCommentsCreator = () => {
         setHideCommentCreator(prev => !prev);
@@ -58,10 +60,7 @@ export function AnswerCardComments({
     };
 
     const createComment = async (comment: ICommentForCreation) => {
-        await postCommentReq.postRequest(
-            `${BASE_URL}${COMMENT_URL}`,
-            comment,
-        );
+        await postCommentReq.postRequest(`${BASE_URL}${COMMENT_URL}`, comment);
 
         const getRes = await getAnswerCommentsReq.getRequest(
             `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
@@ -74,8 +73,9 @@ export function AnswerCardComments({
 
     const markNewComment = (comments: IComment[], commentValue: string) => {
         const newComment = comments.find(
-            (c) => c.userName === qaContext.authContext.username &&
-            c.value === commentValue
+            c =>
+                c.userName === qaContext.authContext.username &&
+                c.value === commentValue,
         );
 
         if (newComment) {
@@ -86,7 +86,7 @@ export function AnswerCardComments({
                 setHighlightedCommentId(null);
             }, 10000);
         }
-    }
+    };
 
     const deleteComment = async (comment: IComment) => {
         await deleteCommentReq.deleteRequest(
@@ -105,12 +105,11 @@ export function AnswerCardComments({
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
             comment,
         );
-        
-        const commentsAfterUpdate = currentComments.map(c => c.id != comment.id
-            ? c
-            : comment
+
+        const commentsAfterUpdate = currentComments.map(c =>
+            c.id != comment.id ? c : comment,
         );
-        
+
         setCurrentComments(commentsAfterUpdate);
 
         markNewComment(commentsAfterUpdate, comment.value);

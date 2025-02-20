@@ -4,7 +4,7 @@ import styles from "./CommentList.module.css";
 
 interface ICommentListProps {
     comments: IComment[];
-    highlightedCommentId: string | null
+    highlightedCommentId: string | null;
     deleteComment: (comment: IComment) => Promise<void>;
     updateComment: (comment: IComment) => Promise<void>;
 }
