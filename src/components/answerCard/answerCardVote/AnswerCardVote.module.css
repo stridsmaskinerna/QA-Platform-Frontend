@@ -1,6 +1,24 @@
 .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     background-color: rgb(234, 234, 234);
-    padding: 1rem;
+    padding: 0.2rem 1rem;
     border-radius: 2rem;
-    margin: 2rem;
+    margin-left: 2rem;
+    font-size: x-large;
+    font-weight: 600;
+    width: 10rem;
+}
+
+.vote-button {
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+    width: 1rem;
+}
+
+.vote-button.loading {
+    opacity: 0.5;
+    pointer-events: none;
 }
