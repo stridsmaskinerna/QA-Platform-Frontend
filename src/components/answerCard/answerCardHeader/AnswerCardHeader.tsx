@@ -53,19 +53,3 @@ export function AnswerCardHeader({
         </div>
     );
 }
-/*
-<div
-className={`${styles.resolvedContainer} ${isResolvedClass}`}
->
-{props.isResolved && (
-    <img
-        src={check_circle_white}
-        alt="Resolved"
-        className={styles.icon}
-    />
-)}
-<span className={styles.resolvedTextContainer}>
-    {props.isResolved ? t("resolved") : t("unresolved")}
-</span>
-</div>
-*/
