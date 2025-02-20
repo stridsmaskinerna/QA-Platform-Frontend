@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IComment, ICommentForCreation } from "../../../utils";
@@ -13,8 +13,8 @@ import {
     useDelete,
     usePOST,
     usePUT,
-    useQAContext,
     useGet,
+    useQAContext,
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 
@@ -29,21 +29,17 @@ export function AnswerCardComments({
 }: IAnswerCardCommentsProps) {
     const { t } = useTranslation();
     const qaContext = useQAContext();
-    const postComment = usePOST<IComment>();
-    const deleteComment = useDelete<IComment>();
-    const getAnswerComments = useGet<IComment[]>();
-    const putComment = usePUT<IComment>();
+    const postCommentReq = usePOST<IComment>();
+    const deleteCommentReq = useDelete<IComment>();
+    const getAnswerCommentsReq = useGet<IComment[]>();
+    const putCommentReq = usePUT<IComment>();
     const viewCommentsRef = useRef<HTMLImageElement | null>(null);
     const viewCommentsCreatorRef = useRef<HTMLImageElement | null>(null);
     const scrollPositionRef = useRef<number>(0);
     const [hideComment, setHideComment] = useState(true);
     const [hideCommentCreator, setHideCommentCreator] = useState(true);
     const [currentComments, setCurrentComments] = useState(comments);
-
-    useEffect(() => {
-        console.log("answerId", answerId);
-        console.log("comments", comments);
-    });
+    const [highlightedCommentId, setHighlightedCommentId] = useState<string | null>(null);
 
     const toggleCommentsCreator = () => {
         setHideCommentCreator(prev => !prev);
@@ -61,34 +57,41 @@ export function AnswerCardComments({
         });
     };
 
-    const createComments = async (comment: ICommentForCreation) => {
-        const postRes = await postComment.postRequest(
+    const createComment = async (comment: ICommentForCreation) => {
+        await postCommentReq.postRequest(
             `${BASE_URL}${COMMENT_URL}`,
             comment,
         );
 
-        // HAPPY PATH
-        const getRes = await getAnswerComments.getRequest(
+        const getRes = await getAnswerCommentsReq.getRequest(
             `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
         );
-        // 14dae759-bea3-454c-b76d-7c3e1b50a555
-        // setCurrentComments(prev => [...prev, {
-        //     id: generateTemporaryId(),
-        //     value: comment.value,
-        //     userName: qaContext.authContext.username ?? "unknown user"
-        // }])
 
-        console.log("getRes", getRes);
-        console.log(qaContext.authContext.username);
         setCurrentComments(getRes ?? []);
+
+        markNewComment(getRes ?? [], comment.value);
     };
 
-    const deleteComments = async (comment: IComment) => {
-        const res = await deleteComment.deleteRequest(
-            `${BASE_URL}${COMMENT_URL}/${comment.id}`,
+    const markNewComment = (comments: IComment[], commentValue: string) => {
+        const newComment = comments.find(
+            (c) => c.userName === qaContext.authContext.username &&
+            c.value === commentValue
         );
 
-        // HAPPY PATH
+        if (newComment) {
+            setHideComment(false);
+            setHighlightedCommentId(newComment.id);
+
+            setTimeout(() => {
+                setHighlightedCommentId(null);
+            }, 10000);
+        }
+    }
+
+    const deleteComment = async (comment: IComment) => {
+        await deleteCommentReq.deleteRequest(
+            `${BASE_URL}${COMMENT_URL}/${comment.id}`,
+        );
 
         const commentsAfterDeletion = currentComments.filter(
             c => c.id != comment.id,
@@ -97,13 +100,20 @@ export function AnswerCardComments({
         setCurrentComments(commentsAfterDeletion);
     };
 
-    const updateComments = async (comment: IComment) => {
-        const res = await putComment.putRequest(
+    const updateComment = async (comment: IComment) => {
+        await putCommentReq.putRequest(
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
             comment,
         );
+        
+        const commentsAfterUpdate = currentComments.map(c => c.id != comment.id
+            ? c
+            : comment
+        );
+        
+        setCurrentComments(commentsAfterUpdate);
 
-        // HAPPY PATH
+        markNewComment(commentsAfterUpdate, comment.value);
     };
 
     return (
@@ -134,7 +144,7 @@ export function AnswerCardComments({
             {!hideCommentCreator && (
                 <CommentCreator
                     answerId={answerId}
-                    createComments={createComments}
+                    createComment={createComment}
                 />
             )}
             <div
@@ -162,9 +172,10 @@ export function AnswerCardComments({
             </div>
             {!hideComment && (
                 <CommentList
+                    highlightedCommentId={highlightedCommentId}
                     comments={currentComments}
-                    deleteComments={deleteComments}
-                    updateComments={updateComments}
+                    deleteComment={deleteComment}
+                    updateComment={updateComment}
                 />
             )}
         </div>

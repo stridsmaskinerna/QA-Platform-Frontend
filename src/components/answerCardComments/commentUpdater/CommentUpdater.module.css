@@ -7,11 +7,6 @@
 }
 
 .text-area {
+    background-color: white;
     flex: 1;
-}
-
-.comment-btn-ctr {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 }

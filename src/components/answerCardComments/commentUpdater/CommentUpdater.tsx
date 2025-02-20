@@ -2,33 +2,33 @@ import { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { TextArea } from "../../input";
-import { ICommentForCreation } from "../../../utils";
+import { IComment } from "../../../utils";
 import { CommentSubmitButton } from "../commentSubmitButton";
-import styles from "./CommentCreator.module.css";
+import styles from "./CommentUpdater.module.css";
 
-interface ICommentCreatorProps {
-    answerId: string;
-    createComment: (comment: ICommentForCreation) => Promise<void>;
+interface ICommentUpdaterProps {
+    comment: IComment
+    onUpdateComment: (comment: IComment) => Promise<void>;
 }
 
-export function CommentCreator({
-    answerId,
-    createComment,
-}: ICommentCreatorProps) {
+export function CommentUpdater({
+    comment,
+    onUpdateComment
+}: ICommentUpdaterProps) {
     const { t } = useTranslation();
-    const [currentContent, setCurrentContent] = useState("");
+    const [currentContent, setCurrentContent] = useState(comment.value);
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setCurrentContent("");
-        const comment: ICommentForCreation = {
-            answerId,
+        
+        const commentForUpdate: IComment = {
+            ...comment,
             value: currentContent,
         };
-        void createComment(comment);
+        void onUpdateComment(commentForUpdate);
     };
 
-    const updateComment = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updateContent = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentContent(e.target.value);
     };
 
@@ -46,7 +46,7 @@ export function CommentCreator({
                         "answerCardComments.createCommentPlaceholder",
                     )}
                     inputType="text"
-                    onChange={updateComment}
+                    onChange={updateContent}
                 />
             </div>
             <CommentSubmitButton />

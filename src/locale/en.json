@@ -97,6 +97,7 @@
         },
 
         "answerCardComments": {
+            "commentLabelMarker": "✔ Your latest comment",
             "commentsListTitle": "View Comments",
             "commentsCreatorTitle": "Create Comment",
             "viewCommentInfo": "View comments",

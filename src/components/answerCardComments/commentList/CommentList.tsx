@@ -4,23 +4,26 @@ import styles from "./CommentList.module.css";
 
 interface ICommentListProps {
     comments: IComment[];
-    deleteComments: (comment: IComment) => Promise<void>;
-    updateComments: (comment: IComment) => Promise<void>;
+    highlightedCommentId: string | null
+    deleteComment: (comment: IComment) => Promise<void>;
+    updateComment: (comment: IComment) => Promise<void>;
 }
 
 export function CommentList({
+    highlightedCommentId,
     comments,
-    deleteComments,
-    updateComments,
+    deleteComment,
+    updateComment,
 }: ICommentListProps) {
     return (
         <div className={styles.container}>
             {comments.map(c => (
                 <CommentItem
                     key={c.id}
+                    highlightedCommentId={highlightedCommentId}
                     comment={c}
-                    deleteComments={deleteComments}
-                    updateComments={updateComments}
+                    deleteComment={deleteComment}
+                    updateComment={updateComment}
                 />
             ))}
         </div>

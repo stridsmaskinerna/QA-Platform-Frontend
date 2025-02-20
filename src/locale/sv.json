@@ -97,6 +97,7 @@
         },
 
         "answerCardComments": {
+            "commentLabelMarker": "✔ Din senaste kommentar",
             "commentsListTitle": "Läs Kommentarer",
             "commentsCreatorTitle": "Skapa Kommentar",
             "viewCommentInfo": "Se kommentarer",
