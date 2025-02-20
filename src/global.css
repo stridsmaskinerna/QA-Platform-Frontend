@@ -8,8 +8,9 @@
 html {
     --blue-ltu: rgb(19, 48, 91);
     --blue-light: rgb(219, 234, 255);
-    --blue-text: rgb(34, 66, 175) --red-delete: rgb(199, 0, 0)
-        --red-delete-dark: rgb(148, 4, 4);
+    --blue-text: rgb(34, 66, 175) --red-delete: rgb(199, 0, 0);
+    --red-delete: rgb(185, 4, 4);
+    --red-delete-dark: rgb(148, 4, 4);
     --btnDark-bg: black;
     --text-default: black;
     --textLight-default: white;
