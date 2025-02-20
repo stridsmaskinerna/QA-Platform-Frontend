@@ -80,6 +80,7 @@ export function AnswerCardComments({
 
         if (newComment) {
             setHideComment(false);
+            viewCommentsRef.current?.classList.add(styles.openIconHide);
             setHighlightedCommentId(newComment.id);
 
             setTimeout(() => {
