@@ -1,8 +1,10 @@
 import { IAnswer } from "../../utils";
 import { AnswerCardBody } from "./answerCardBody";
 import { AnswerCardHeader } from "./answerCardHeader";
-import styles from "./AnswerCard.module.css";
+import { AnswerCardComments } from "../answerCardComments";
 import { AnswerCardBottom } from "./AnswerCardBottom";
+import styles from "./AnswerCard.module.css";
+import { useEffect } from "react";
 
 interface IAnswerProps {
     data: IAnswer;
@@ -12,6 +14,10 @@ export function AnswerCard({ data }: IAnswerProps) {
     const borderStyle = data.isAccepted
         ? styles.borderAccepted
         : styles.borderDefault;
+
+    useEffect(() => {
+        console.log(data);
+    });
 
     return (
         <div className={`${styles.container} ${borderStyle}`}>
@@ -27,7 +33,10 @@ export function AnswerCard({ data }: IAnswerProps) {
                 voteCount={data.voteCount}
                 myVote={data.myVote}
             />
-            {/* <AnswerCardComments /> */}
+            <AnswerCardComments
+                answerId={data.id}
+                comments={data.comments}
+            />
         </div>
     );
 }

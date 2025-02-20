@@ -76,10 +76,11 @@
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
         "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
+
         "teacherDashboard": {
+            "title": "Teacher Dashboard",
             "manageTopicsFor": "Manage Topics for",
             "questionsInCourse": "Questions in course",
-            "title": "Teacher Dashboard",
             "viewQuestions": "View questions",
             "yourCourses": "Your Courses",
             "newTopicPlacholder": "New topic name...",
@@ -93,6 +94,17 @@
             "cancelDelete": "Cancel",
             "confirmDelete": "Delete",
             "questionDelete": "Delete"
+        },
+
+        "answerCardComments": {
+            "title": "Comments",
+            "viewCommentInfo": "View comments",
+            "hideCommentInfo": "Hide comments",
+            "updateCommentInfo": "Update comment",
+            "deleteCommentInfo": "Delete comment",
+            "submitCommentInfo": "Submit comment",
+            "createCommentPlaceholder": "Add a comment..",
+            "submitComment": "Comment"
         }
     }
 }

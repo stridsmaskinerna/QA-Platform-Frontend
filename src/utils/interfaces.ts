@@ -133,7 +133,7 @@ export interface IInputProps {
     label?: string;
     minInputValueLength?: number;
     placeHolder?: string;
-    onChange?: ChangeEventHandler<HTMLInputElement>;
+    onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     defaultValue?: string;
     labelStyle?: CSSProperties;
     children?: ReactElement;
