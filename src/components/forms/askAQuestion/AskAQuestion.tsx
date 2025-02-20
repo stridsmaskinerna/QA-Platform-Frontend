@@ -75,7 +75,6 @@ export function AskAQuestion() {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
-        console.log("HERE");
         const formData = new FormData(e.currentTarget);
         const formDetails = Object.fromEntries(
             formData,

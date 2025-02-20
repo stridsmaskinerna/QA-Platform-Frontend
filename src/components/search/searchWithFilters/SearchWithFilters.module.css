@@ -8,6 +8,7 @@
     pointer-events: none;
     max-height: 0;
     overflow: hidden;
+    /* If changing this, also change the ANIMATION_TIMER in useSearchQuestions accordingly*/
     transition: max-height 0.5s ease;
 }
 
