@@ -5,6 +5,13 @@
     flex-direction: column;
     align-items: flex-start;
     gap: clamp(25px, 3vw, 40px);
-    border: 2px solid var(--grey-strong);
     border-radius: var(--border-radius);
+}
+
+.borderDefault {
+    border: 2px solid var(--grey-strong);
+}
+
+.borderAccepted {
+    border: 3px solid var(--green-resolved);
 }

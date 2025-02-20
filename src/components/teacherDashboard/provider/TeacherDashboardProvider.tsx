@@ -4,12 +4,12 @@ import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
 import { useFetchWithToken } from "../../../hooks";
+import { ErrorModal } from "../../modal";
 
 interface ITeacherDashboardProviderProps {
     children: ReactNode;
 }
 
-// TODO! Handle error globaly in errorBoundary or in local context ???
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
@@ -46,7 +46,6 @@ export function TeacherDashboardProvider({
         const data = await fetchSubjectQuestionReq.requestHandler(
             `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
         );
-
         setQuestions(data ?? []);
     };
 
@@ -93,7 +92,7 @@ export function TeacherDashboardProvider({
     };
 
     const isLoading = () => {
-        return fetchSubjectsReq.isLoading || fetchSubjectQuestionReq.isLoading;
+        return fetchSubjectQuestionReq.isLoading;
     };
 
     const getContext = (): ITeacherDashboardContext => {
@@ -113,8 +112,24 @@ export function TeacherDashboardProvider({
         };
     };
 
+    const clearErrors = () => {
+        updateTopicReq.clearError();
+        deleteTopicReq.clearError();
+        createTopicReq.clearError();
+    };
+
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
+            {
+                <ErrorModal
+                    errors={[
+                        updateTopicReq.error,
+                        deleteTopicReq.error,
+                        createTopicReq.error,
+                    ]}
+                    onClearErrors={clearErrors}
+                />
+            }
             {children}
         </TeacherDashboardContext.Provider>
     );

@@ -5,6 +5,7 @@
     border-radius: 6px;
     border: none;
     cursor: pointer;
+    font-size: clamp(13px, 3vw, 17px);
     transition: background-color 0.2s ease-in-out;
 }
 
