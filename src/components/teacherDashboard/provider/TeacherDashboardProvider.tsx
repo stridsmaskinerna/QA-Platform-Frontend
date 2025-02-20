@@ -1,20 +1,19 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 
 import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
 import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
-import { useFetchWithToken } from "../../../hooks";
+import { useFetchWithToken, useInfiniteScrolling } from "../../../hooks";
+import { ErrorModal } from "../../modal";
 
 interface ITeacherDashboardProviderProps {
     children: ReactNode;
 }
 
-// TODO! Handle error globaly in errorBoundary or in local context ???
 export function TeacherDashboardProvider({
     children,
 }: ITeacherDashboardProviderProps) {
     const [subjects, setSubjects] = useState<ISubject[]>([]);
-    const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
         null,
     );
@@ -22,7 +21,19 @@ export function TeacherDashboardProvider({
     const updateTopicReq = useFetchWithToken<void>();
     const deleteTopicReq = useFetchWithToken<void>();
     const fetchSubjectsReq = useFetchWithToken<ISubject[]>();
-    const fetchSubjectQuestionReq = useFetchWithToken<IQuestion[]>();
+    const fetchQuestionUrl = useRef<string>();
+    const {
+        fetchFromStart,
+        loaderRef,
+        hasMore,
+        paginatedData,
+        totalItemCount,
+        resetPaginatedData,
+        isLoading: fetchQuestionsLoading,
+    } = useInfiniteScrolling<IQuestion>({
+        url: fetchQuestionUrl.current ?? "",
+        limit: 20,
+    });
 
     const fetchTeacherSubjects = async () => {
         const data = await fetchSubjectsReq.requestHandler(
@@ -43,11 +54,8 @@ export function TeacherDashboardProvider({
     };
 
     const fetchQuestionDetails = async (subject: ISubject) => {
-        const data = await fetchSubjectQuestionReq.requestHandler(
-            `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`,
-        );
-
-        setQuestions(data ?? []);
+        fetchQuestionUrl.current = `${BASE_URL}${SUBJECT_URL}/${subject.id}/questions`;
+        await fetchFromStart(fetchQuestionUrl.current);
     };
 
     const updateTopic = async (topic: ITopic) => {
@@ -87,34 +95,52 @@ export function TeacherDashboardProvider({
 
     const updateSelectedSubject = (subject: ISubject) => {
         if (selectedSubject?.id != subject.id) {
-            setQuestions([]);
+            resetPaginatedData();
         }
         setSelectedSubject(subject);
     };
 
     const isLoading = () => {
-        return fetchSubjectsReq.isLoading || fetchSubjectQuestionReq.isLoading;
+        return fetchSubjectsReq.isLoading || fetchQuestionsLoading;
     };
 
     const getContext = (): ITeacherDashboardContext => {
         return {
             selectedSubject,
             subjects,
-            questions,
+            questions: paginatedData,
             createTopic,
             updateTopic,
             deleteTopic,
             updateSelectedSubject,
             updateSubjects: setSubjects,
-            updateQuestions: setQuestions,
             fetchQuestionDetails,
             fetchTeacherSubjects,
             isLoading,
+            loaderRef,
+            hasMore,
+            totalItemCount,
         };
+    };
+
+    const clearErrors = () => {
+        updateTopicReq.clearError();
+        deleteTopicReq.clearError();
+        createTopicReq.clearError();
     };
 
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
+            {
+                <ErrorModal
+                    errors={[
+                        updateTopicReq.error,
+                        deleteTopicReq.error,
+                        createTopicReq.error,
+                    ]}
+                    onClearErrors={clearErrors}
+                />
+            }
             {children}
         </TeacherDashboardContext.Provider>
     );

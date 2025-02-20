@@ -18,18 +18,14 @@
 
 /* Style for the tab content */
 .tabContent {
-    transition: opacity 0.8s ease;
     position: absolute;
 }
 
 .tabContent.hide {
-    opacity: 0;
-    visibility: hidden; /* Hide all tab content initially */
-    pointer-events: none;
+    display: none;
 }
 
 /* Display the active tab content */
 .tabContent.show {
-    opacity: 1;
-    visibility: visible;
+    display: block;
 }

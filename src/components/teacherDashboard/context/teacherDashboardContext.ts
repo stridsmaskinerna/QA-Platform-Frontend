@@ -10,10 +10,12 @@ export interface ITeacherDashboardContext {
     deleteTopic: (topic: ITopic) => Promise<void>;
     updateSelectedSubject: (subject: ISubject) => void;
     updateSubjects: (subjects: ISubject[]) => void;
-    updateQuestions: (questions: IQuestion[]) => void;
     fetchTeacherSubjects: () => Promise<void>;
     fetchQuestionDetails: (subject: ISubject) => Promise<void>;
     isLoading: () => boolean;
+    loaderRef: (node?: Element | null) => void;
+    hasMore: boolean;
+    totalItemCount: number | undefined;
 }
 
 export const TeacherDashboardContext = createContext<ITeacherDashboardContext>(

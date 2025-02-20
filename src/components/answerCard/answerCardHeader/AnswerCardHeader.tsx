@@ -41,7 +41,6 @@ export function AnswerCardHeader({
         return () => clearTimeout(initialTimeout); // Cleanup on unmount
     }, [created, t]);
 
-    //var toHide = isHidden ? "The question is hidden" : "";
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -54,3 +53,19 @@ export function AnswerCardHeader({
         </div>
     );
 }
+/*
+<div
+className={`${styles.resolvedContainer} ${isResolvedClass}`}
+>
+{props.isResolved && (
+    <img
+        src={check_circle_white}
+        alt="Resolved"
+        className={styles.icon}
+    />
+)}
+<span className={styles.resolvedTextContainer}>
+    {props.isResolved ? t("resolved") : t("unresolved")}
+</span>
+</div>
+*/

@@ -3,8 +3,8 @@ import styles from "./DeleteButton.module.css";
 interface ISaveButtonProps {
     onClick?: () => void;
     text?: string;
-    isSaving?: boolean;
     disabled?: boolean;
+    className?: string;
 }
 
 export function DeleteButton({
@@ -12,17 +12,21 @@ export function DeleteButton({
         return;
     },
     text = "Delete",
-    isSaving = false,
     disabled = false,
+    className = "",
 }: ISaveButtonProps) {
+    const getDerivedClass = () => {
+        return className == "" ? styles.button : className;
+    };
+
     return (
         <button
             type="button"
             onClick={onClick}
-            disabled={disabled || isSaving}
-            className={styles.button}
+            disabled={disabled}
+            className={getDerivedClass()}
         >
-            {isSaving ? "Deleting..." : text}
+            {text}
         </button>
     );
 }

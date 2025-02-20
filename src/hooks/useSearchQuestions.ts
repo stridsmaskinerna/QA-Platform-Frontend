@@ -7,12 +7,14 @@ import {
 } from "react";
 import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
-import { BASE_URL, fetchQuestions } from "../data";
-import { useFetchWithToken } from "./useFetchWithToken";
+import { BASE_URL } from "../data";
+// import { useFetchWithToken } from "./useFetchWithToken";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
+// import { useFetchData } from "./useFetchData";
+import { useInfiniteScrolling } from ".";
 
-const publicQuestionsBaseUrl = `${BASE_URL}/questions/public?limit=10`;
-const questionsBaseUrl = `${BASE_URL}/questions?limit=10`;
+const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
+const questionsBaseUrl = `${BASE_URL}/questions`;
 let timeout: NodeJS.Timeout;
 //If changes this, also change the transition time length accordingly in SearchWithFilters.module.css
 const ANIMATION_TIMER = 500;
@@ -39,8 +41,8 @@ interface IDisplayedFilters {
 
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
-    const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [isLoadingQuestions, setIsLoadingQuestions] = useState(true);
+    // const [questions, setQuestions] = useState<IQuestion[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [activeFilters, setActiveFilters] = useState<IActiveFilters>({
         subject: "",
         topic: "",
@@ -60,16 +62,30 @@ export const useSearchQuestions = () => {
     const [shouldShowFilters, setShouldShowFilters] =
         useState<IShouldShowFilters>({ subject: false, topic: false });
     const prevUrlAppendixes = useRef<typeof urlAppendixes>();
-    const { requestHandler: authFetchQuestions } =
-        useFetchWithToken<IQuestion[]>();
+
+    const baseUrl = isGuest ? publicQuestionsBaseUrl : questionsBaseUrl;
+    const queryParams =
+        urlAppendixes.searchStr +
+        (urlAppendixes.isResolved ?? "") +
+        (urlAppendixes.userInteraction ?? "") +
+        (urlAppendixes.subjectId ?? "") +
+        (urlAppendixes.topicId ?? "");
+    const url = `${baseUrl}${queryParams ? "?" + queryParams : ""}`;
+    const {
+        paginatedData,
+        loaderRef,
+        loaderRef2,
+        loaderRef3,
+        hasMore,
+        fetchFromStart,
+        isLoading: isLoadingQuestions,
+        totalItemCount,
+    } = useInfiniteScrolling<IQuestion>({
+        url,
+        limit: 20,
+    });
 
     const onSubjectFilterClick = (subjectId: string) => {
-        //Set isLoadingQuestions to true here if activating a subject filter to prevent
-        // TopicFilters from the previous fetch to momentarily appear on screen before the
-        // new data has been fetched and parsed
-        if (activeFilters.subject !== subjectId) {
-            setIsLoadingQuestions(true);
-        }
         setUrlAppendixes(prev => ({
             ...prev,
             subjectId:
@@ -157,30 +173,19 @@ export const useSearchQuestions = () => {
             }));
     };
 
-    //The "topic" arg isn't used at this point. Putting it there for clarities sake
-    // and possible future use.
     const updateQuestionsAndFilters = useCallback(
         async (caller: keyof IUrlAppendixes) => {
-            setIsLoadingQuestions(true);
-
-            const queryParams =
-                urlAppendixes.searchStr +
-                (urlAppendixes.isResolved ?? "") +
-                (urlAppendixes.userInteraction ?? "") +
-                (urlAppendixes.subjectId ?? "") +
-                (urlAppendixes.topicId ?? "");
-
-            const data = isGuest
-                ? await fetchQuestions(publicQuestionsBaseUrl + queryParams)
-                : await authFetchQuestions(questionsBaseUrl + queryParams);
+            setIsLoading(true);
+            const data = await fetchFromStart();
 
             if (data) {
-                setQuestions(data);
-
                 //If called by searchStr (which will also be the caller on initital render)
                 // we kind of reset the displayed filters. We update subject filter
                 //to mirror the fetched questions (if there is a searchStr)
-                // and set displayed topic filters to none.
+                // and set displayed topic filters to none. To not jar the animation
+                //for hiding filters we wait for the animation to finish before
+                //removing the displayed and active filters if urlAppendixes.searchStr
+                //is empty.
                 if (caller === "searchStr") {
                     if (urlAppendixes.searchStr) {
                         setShouldShowFilters({ subject: true, topic: false });
@@ -245,29 +250,20 @@ export const useSearchQuestions = () => {
                     }));
                 }
             }
-            setIsLoadingQuestions(false);
+            setIsLoading(false);
         },
+
         [
             activeFilters.subject,
             activeFilters.topic,
-            authFetchQuestions,
-            isGuest,
+            fetchFromStart,
             updateDisplayedSubjectFilters,
-            urlAppendixes.isResolved,
             urlAppendixes.searchStr,
             urlAppendixes.subjectId,
-            urlAppendixes.topicId,
-            urlAppendixes.userInteraction,
         ],
     );
 
     useEffect(() => {
-        //Initial render. Run the updateQuestionsAndFilters function with caller = search
-        // and now searchString. Will initiate filters and ust fetch the 10 most recent questions.
-        if (!prevUrlAppendixes.current) {
-            prevUrlAppendixes.current = urlAppendixes;
-            void updateQuestionsAndFilters("searchStr");
-        }
         // Determine what changed
         const changedKey = Object.keys(urlAppendixes).find(
             key =>
@@ -280,13 +276,14 @@ export const useSearchQuestions = () => {
         if (changedKey) {
             void updateQuestionsAndFilters(changedKey);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGuest, urlAppendixes]);
 
     return {
         debouncedSearch,
-        questions,
-        isLoadingQuestions,
+        questions: paginatedData,
+        isLoadingQuestions: isLoadingQuestions || isLoading,
         onResolvedFilterClick,
         activeFilters,
         onInterActionFilterClick,
@@ -301,5 +298,10 @@ export const useSearchQuestions = () => {
             activeFilter: activeFilters.topic,
         },
         shouldShowFilters,
+        loaderRef,
+        loaderRef2,
+        loaderRef3,
+        hasMore,
+        totalItemCount,
     };
 };
