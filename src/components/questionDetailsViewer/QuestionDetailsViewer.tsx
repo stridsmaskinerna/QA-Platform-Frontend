@@ -25,6 +25,7 @@ export function QuestionDetailsViewer({
                 />
             </div>
             <QuestionCardDetails
+                isHideable={question.isHideable}
                 id={question.id}
                 title={question.title}
                 description={question.description}
