@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { BASE_URL } from "../../data";
 import { IQuestion } from "../../utils";
-import { mockAPI } from "../../tests/testUtils";
+import { mockAPI, paginationMetaJSON } from "../../tests/testUtils";
 
 export const handlers = [
     http.get(`${BASE_URL}/questions/public`, ({ request }) => {
@@ -11,17 +11,22 @@ export const handlers = [
 
         if (subjectId === "subject-1") {
             mockAPI(subjectId);
-            return HttpResponse.json([questions[0]]);
+            return HttpResponse.json([questions[0]], {
+                headers: { "X-Pagination": paginationMetaJSON },
+            });
         }
 
         if (searchString === "subj") {
             mockAPI(searchString);
-            return HttpResponse.json(questions);
+            return HttpResponse.json(questions, {
+                headers: { "X-Pagination": paginationMetaJSON },
+            });
         }
 
         mockAPI();
-
-        return HttpResponse.json(questions);
+        return HttpResponse.json(questions, {
+            headers: { "X-Pagination": paginationMetaJSON },
+        });
     }),
     http.get(`${BASE_URL}/questions`, () => {
         return HttpResponse.json(questions);
@@ -56,7 +61,7 @@ const questions: IQuestion[] = Array.from({ length: 10 }, (_, index) => ({
     created: randomDate(),
     isResolved: index % 2 === 0, // Alternate between resolved and unresolved
     isProtected: index % 3 === 0, // Every third question is protected
-    isHidden: index % 4 === 0, // Every fourth question is hidden
+    isHidden: false,
     answerCount: Math.floor(Math.random() * 10), // Random answer count
     tags: [`tag${index + 1}-1`, `tag${index + 1}-2`], // Example tags
     userId: `user-${index + 1}`,
