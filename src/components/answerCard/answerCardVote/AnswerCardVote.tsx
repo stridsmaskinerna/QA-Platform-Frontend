@@ -39,8 +39,6 @@ export function AnswerCardVote({
 
     const toggleLike = () => {
         const newVote = currentVote === "like" ? "neutral" : "like";
-
-        // Adjust vote count based on rules
         setVoteCount(prevCount => {
             if (currentVote === "neutral") return prevCount + 1;
             if (currentVote === "like") return prevCount - 1;
@@ -54,8 +52,6 @@ export function AnswerCardVote({
 
     const toggleDislike = () => {
         const newVote = currentVote === "dislike" ? "neutral" : "dislike";
-
-        // Adjust vote count based on rules
         setVoteCount(prevCount => {
             if (currentVote === "neutral") return prevCount - 1;
             if (currentVote === "dislike") return prevCount + 1;
