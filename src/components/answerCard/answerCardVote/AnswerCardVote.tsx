@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePostData } from "../../../hooks/usePostData";
+import { usePUT } from "../../../hooks";
 import styles from "./AnswerCardVote.module.css";
 import ThumpUpNeutral from "../../../assets/icons/thumb_up_neutral.svg";
 import ThumpUpFilled from "../../../assets/icons/thumb_up_filled.svg";
@@ -19,7 +19,7 @@ export function AnswerCardVote({
     myVote,
 }: IAnswerCardVoteProps) {
     const [currentVote, setCurrentVote] = useState<string>(myVote);
-    const { isLoading, error, postHandler } = usePostData();
+    const { isLoading, error, putRequest } = usePUT();
 
     const upvoteToShow =
         currentVote === "like" ? ThumpUpFilled : ThumpUpNeutral;
@@ -28,10 +28,9 @@ export function AnswerCardVote({
 
     const sendVote = async (vote: string) => {
         try {
-            await postHandler(`${BASE_URL}${QUESTION_DETAILS_ROUTE}/${answerId}/${currentVote}`, {
-                vote,
-            });
-            setCurrentVote(vote);
+            await putRequest(
+                `${BASE_URL}${QUESTION_DETAILS_ROUTE}${answerId}/rating?vote=${currentVote}`,
+            );
         } catch (err) {
             console.error("Failed to submit vote:", err);
         }

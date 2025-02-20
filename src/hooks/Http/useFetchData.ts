@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { CustomError } from "../utils";
+import { CustomError } from "../../utils";
 
 interface IUseFetchDataReturn<T> {
     error: CustomError | null;

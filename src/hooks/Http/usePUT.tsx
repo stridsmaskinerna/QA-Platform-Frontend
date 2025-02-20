@@ -1,6 +1,6 @@
 import { useFetchWithToken } from "./useFetchWithToken";
-import { CustomError } from "../utils";
- 
+import { CustomError } from "../../utils";
+
 interface IUsePutReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
@@ -18,25 +18,32 @@ interface IUsePutReturn<T> {
         options?: RequestInit,
     ) => Promise<{ data: T | null; headers: K | null }>;
 }
- 
+
 /**
-* A custom hook to send PUT requests with authentication tokens.
-*/
-export function usePut<T>(checkIfTokenNeedsRefresh = false): IUsePutReturn<T> {
-    const fetchWithToken = useFetchWithToken<T>(checkIfTokenNeedsRefresh);
- 
+ * A custom hook to send PUT requests with authentication tokens.
+ */
+export function usePUT<T>(): IUsePutReturn<T> {
+    const fetchWithToken = useFetchWithToken<T>();
+
     /**
      * Wrapper for making a PUT request.
      */
-    const putRequest = (url: RequestInfo | URL, body?: unknown, options?: RequestInit) => {
+    const putRequest = (
+        url: RequestInfo | URL,
+        body?: unknown,
+        options?: RequestInit,
+    ) => {
         return fetchWithToken.requestHandler(url, {
             ...options,
             method: "PUT",
             body: body ? JSON.stringify(body) : undefined,
-            headers: { "Content-Type": "application/json", ...options?.headers },
+            headers: {
+                "Content-Type": "application/json",
+                ...options?.headers,
+            },
         });
     };
- 
+
     /**
      * Wrapper for making a PUT request that also extracts response headers.
      */
@@ -55,11 +62,14 @@ export function usePut<T>(checkIfTokenNeedsRefresh = false): IUsePutReturn<T> {
                 ...options,
                 method: "PUT",
                 body: body ? JSON.stringify(body) : undefined,
-                headers: { "Content-Type": "application/json", ...options?.headers },
-            }
+                headers: {
+                    "Content-Type": "application/json",
+                    ...options?.headers,
+                },
+            },
         );
     };
- 
+
     return {
         isLoading: fetchWithToken.isLoading,
         error: fetchWithToken.error,

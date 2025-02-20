@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from "react";
 import { useRoles } from "./useRoles";
 import { useIntersectionObserver } from "usehooks-ts";
-import { useFetchData } from "./useFetchData";
-import { useFetchWithToken } from "./useFetchWithToken";
+import { useFetchData } from "./Http/useFetchData";
+import { useFetchWithToken } from "./Http/useFetchWithToken";
 import { IPaginationMeta } from "../utils";
 
 interface IUseInfiniteScrollingProps {

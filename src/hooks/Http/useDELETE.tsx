@@ -1,6 +1,6 @@
 import { useFetchWithToken } from "./useFetchWithToken";
-import { CustomError } from "../utils";
- 
+import { CustomError } from "../../utils";
+
 interface IUseDeleteReturn<T> {
     error: CustomError | null;
     isLoading: boolean;
@@ -16,20 +16,23 @@ interface IUseDeleteReturn<T> {
         options?: RequestInit,
     ) => Promise<{ data: T | null; headers: K | null }>;
 }
- 
+
 /**
  * A custom hook to send DELETE requests with authentication tokens.
  */
-export function useDelete<T>(checkIfTokenNeedsRefresh = false): IUseDeleteReturn<T> {
-    const fetchWithToken = useFetchWithToken<T>(checkIfTokenNeedsRefresh);
- 
+export function useDelete<T>(): IUseDeleteReturn<T> {
+    const fetchWithToken = useFetchWithToken<T>();
+
     /**
      * Wrapper for making a DELETE request.
      */
     const deleteRequest = (url: RequestInfo | URL, options?: RequestInit) => {
-        return fetchWithToken.requestHandler(url, { ...options, method: "DELETE" });
+        return fetchWithToken.requestHandler(url, {
+            ...options,
+            method: "DELETE",
+        });
     };
- 
+
     /**
      * Wrapper for making a DELETE request that also extracts response headers.
      */
@@ -43,10 +46,10 @@ export function useDelete<T>(checkIfTokenNeedsRefresh = false): IUseDeleteReturn
             url,
             expectedHeaders,
             parser,
-            { ...options, method: "DELETE" }
+            { ...options, method: "DELETE" },
         );
     };
- 
+
     return {
         isLoading: fetchWithToken.isLoading,
         error: fetchWithToken.error,
