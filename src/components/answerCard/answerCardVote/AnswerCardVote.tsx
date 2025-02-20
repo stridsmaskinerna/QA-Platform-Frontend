@@ -15,10 +15,11 @@ interface IAnswerCardVoteProps {
 
 export function AnswerCardVote({
     answerId,
-    voteCount,
+    voteCount: initialVoteCount, // Rename the prop to avoid conflicts
     myVote,
 }: IAnswerCardVoteProps) {
     const [currentVote, setCurrentVote] = useState<string>(myVote);
+    const [voteCount, setVoteCount] = useState<number>(initialVoteCount);
     const { isLoading, error, putRequest } = usePUT();
 
     const upvoteToShow =
@@ -26,10 +27,10 @@ export function AnswerCardVote({
     const downvoteToShow =
         currentVote === "dislike" ? ThumpDownFilled : ThumpDownNeutral;
 
-    const sendVote = async (vote: string) => {
+    const sendVote = async (newVote: string) => {
         try {
             await putRequest(
-                `${BASE_URL}${QUESTION_DETAILS_ROUTE}${answerId}/rating?vote=${currentVote}`,
+                `${BASE_URL}${QUESTION_DETAILS_ROUTE}${answerId}/rating?vote=${newVote}`,
             );
         } catch (err) {
             console.error("Failed to submit vote:", err);
@@ -38,14 +39,32 @@ export function AnswerCardVote({
 
     const toggleLike = () => {
         const newVote = currentVote === "like" ? "neutral" : "like";
+
+        // Adjust vote count based on rules
+        setVoteCount(prevCount => {
+            if (currentVote === "neutral") return prevCount + 1;
+            if (currentVote === "like") return prevCount - 1;
+            if (currentVote === "dislike") return prevCount + 2;
+            return prevCount;
+        });
+
         setCurrentVote(newVote);
-        sendVote(newVote).catch(console.error);
+        void sendVote(newVote);
     };
 
     const toggleDislike = () => {
         const newVote = currentVote === "dislike" ? "neutral" : "dislike";
+
+        // Adjust vote count based on rules
+        setVoteCount(prevCount => {
+            if (currentVote === "neutral") return prevCount - 1;
+            if (currentVote === "dislike") return prevCount + 1;
+            if (currentVote === "like") return prevCount - 2;
+            return prevCount;
+        });
+
         setCurrentVote(newVote);
-        sendVote(newVote).catch(console.error);
+        void sendVote(newVote);
     };
 
     return (
@@ -54,16 +73,15 @@ export function AnswerCardVote({
                 src={upvoteToShow}
                 alt=""
                 onClick={toggleLike}
-                style={{ cursor: "pointer", opacity: isLoading ? 0.5 : 1 }}
+                className={`${styles.voteButton} ${isLoading ? styles.loading : ""}`}
             />
             <span className={styles.voteCount}>{voteCount}</span>
             <img
                 src={downvoteToShow}
                 alt=""
                 onClick={toggleDislike}
-                style={{ cursor: "pointer", opacity: isLoading ? 0.5 : 1 }}
+                className={`${styles.voteButton} ${isLoading ? styles.loading : ""} ${styles.downButton}`}
             />
-            {currentVote}
         </div>
     );
 }
