@@ -97,9 +97,12 @@
         },
 
         "answerCardComments": {
-            "title": "Comments",
+            "commentLabelMarker": "✔ Your latest comment",
+            "commentsListTitle": "View Comments",
+            "commentsCreatorTitle": "Create Comment",
             "viewCommentInfo": "View comments",
             "hideCommentInfo": "Hide comments",
+            "createCommentInfo": "Create comment",
             "updateCommentInfo": "Update comment",
             "deleteCommentInfo": "Delete comment",
             "submitCommentInfo": "Submit comment",

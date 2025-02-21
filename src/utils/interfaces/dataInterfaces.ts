@@ -38,6 +38,11 @@ export interface IAnswer {
     answeredByTeacher: boolean;
 }
 
+export interface ICommentForCreation {
+    answerId: string;
+    value: string;
+}
+
 export interface IComment {
     id: string;
     userName: string;
