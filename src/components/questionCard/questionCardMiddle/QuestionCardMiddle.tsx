@@ -51,7 +51,9 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
                         src={clock_icon}
                         alt=""
                     />
-                    <div>{timeAgo}</div>
+                    <div>
+                        <p>{timeAgo}</p>
+                    </div>
                 </div>
             </div>
             <div className={styles.questionSection}>

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { H1 } from "../../text";
@@ -7,7 +7,7 @@ import styles from "./Modal.module.css";
 
 interface IModalProps {
     title: string;
-    message: string;
+    message: ReactNode;
     type?: "info" | "warning";
     okClick: () => void;
     onBackdropClick: () => void;

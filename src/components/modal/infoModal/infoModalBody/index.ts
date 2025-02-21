@@ -1,0 +1,1 @@
+export { InfoModalBody } from "./InfoModalBody";
