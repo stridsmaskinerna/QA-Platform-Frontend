@@ -22,6 +22,9 @@ export function CourseManagement() {
     const { requestHandler: deleteCourse } = useFetchWithToken<void>();
     const { t } = useTranslation();
     const { loaderContext: { setIsLoading } } = useQAContext();
+    const [allCourses, setAllCourses] = useState<ISubject[]>([]); // Store all courses
+    const [filteredCourses, setFilteredCourses] = useState<ISubject[]>([]); // Store filtered courses
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [courses, setCourses] = useState<ISubject[]>([]);
     const formRef = useRef<HTMLFormElement>(null);
@@ -29,7 +32,8 @@ export function CourseManagement() {
     useEffect(() => {
         void fetchCourses(courseUrl).then(data => {
             if (data) {
-                setCourses(data);
+                setAllCourses(data);
+                setFilteredCourses(data); 
             }
         });
     }, []);
@@ -38,13 +42,21 @@ export function CourseManagement() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const formDetails = Object.fromEntries(formData);
-        console.log(formDetails);
+        const teachers = typeof formDetails.teachers === "string"
+            ? formDetails.teachers.split(",").map(t => t.trim())
+            : [];
+
+        const formattedData = {
+            ...formDetails,
+            teachers,
+        };
+        console.log(formattedData);
         setIsLoading(true);
         try {
             await postCourse(postCourseUrl, {
                 
                 method: "POST",
-                body: JSON.stringify(formDetails),
+                body: JSON.stringify(formattedData),
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -64,7 +76,19 @@ export function CourseManagement() {
         }
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const term = event.target.value;
+        setSearchTerm(term);
+
+        const filtered = allCourses.filter(course => {
+            const searchString = `${course.subjectCode} ${course.name} ${course.teachers?.map(t => t.email).join(" ")}`.toLowerCase(); // Include teachers in search
+            return searchString.includes(term.toLowerCase());
+        });
+        setFilteredCourses(filtered);
+    };
+
     const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this course?")) return;
         setIsLoading(true);
         try {
             await deleteCourse(deleteCourseUrl(id), { method: "DELETE" });
@@ -80,19 +104,19 @@ export function CourseManagement() {
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.form} ref={formRef}>
                 <Input
-                    inputName="courseCode"
+                    inputName="subjectCode"
                     inputType="text"
                     label={t("addNewCourse")}
                     placeHolder={t("courseCodePlaceHolder")}
                 />
                 <Input
-                    inputName="courseName"
+                    inputName="name"
                     inputType="text"
                     label={t("courseName")}
                     placeHolder={t("courseNamePlaceHolder")}
                 />
                 <Input
-                    inputName="teacherName"
+                    inputName="teachers"
                     inputType="text"
                     label={t("teacherName")}
                     placeHolder={t("teacherNamePlaceHolder")}
@@ -107,6 +131,8 @@ export function CourseManagement() {
                     inputName="manageCourse"
                     inputType="text"
                     placeHolder={t("manageCourse")}
+                    inputValue={searchTerm} 
+                    onChange={handleSearchChange} 
                 />
 
                 <table className={styles.courseTable}>
@@ -119,22 +145,19 @@ export function CourseManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {courses.map(course => (
+                        {filteredCourses.map(course => ( // Use filteredCourses here
                             <tr key={course.id}>
-                                <td>{course.subjectCode}</td>
-                                <td>{course.name}</td>
-                                <td>
+                                <td data-label="Course Code">{course.subjectCode}</td>
+                                <td data-label="Course Name">{course.name}</td>
+                                <td data-label="Teachers">
                                     {course.teachers?.map(teacher => (
                                         <span key={teacher.id} className={styles.teacherTag}>
                                             {teacher.email}
                                         </span>
                                     ))}
                                 </td>
-                                <td>
-                                    <button
-                                        className={styles.deleteBtn}
-                                        onClick={() => handleDelete(course.id)}
-                                    >
+                                <td data-label="Actions">
+                                    <button className={styles.deleteBtn} onClick={() => handleDelete(course.id)}>
                                         <img src={delete_icon} alt="Delete Icon" className="delete-icon" />
                                     </button>
                                 </td>

@@ -86,19 +86,19 @@ th {
     padding: 20px;
 }
 
-/* Media Query for Small Screens (Mobile) */
+
 @media (max-width: 600px) {
-    /* Make table a block-level element for mobile */
+
     table {
         display: block;
         width: 100%;
-        overflow-x: auto;  /* Enable horizontal scrolling for large tables */
+        overflow-x: auto; 
     }
     
     th, td {
-        display: block;  /* Stack th and td */
+        display: block; 
         width: 100%;
-        text-align: right;  /* Align text to the right for readability */
+        text-align: right;  
     }
 
     th {

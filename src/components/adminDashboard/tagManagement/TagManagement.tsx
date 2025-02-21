@@ -6,7 +6,7 @@ import styles from "./TagManagement.module.css";
 import { Input } from "../..";
 import { useTranslation } from "react-i18next";
 import { useFetchWithToken, useQAContext } from "../../../hooks";
-import {  ITag } from "../../../utils";
+import { ITag } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import delete_icon from "../../../assets/icons/delete.svg";
 
@@ -19,21 +19,27 @@ export function TagManagement() {
     const { t } = useTranslation();
     const { loaderContext: { setIsLoading } } = useQAContext();
 
-    const [Tags, setTags] = useState<ITag[]>([]);
+    const [allTags, setAllTags] = useState<ITag[]>([]); // Store all tags
+    const [filteredTags, setFilteredTags] = useState<ITag[]>([]); // Store filtered tags
+    const [searchTerm, setSearchTerm] = useState("");
+
 
     useEffect(() => {
         void fetchTags(tagUrl).then(data => {
             if (data) {
-                setTags(data);
+                setAllTags(data);
+                setFilteredTags(data); // Initially, show all tags
             }
         });
     }, []);
 
     const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this course?")) return;
         setIsLoading(true);
         try {
             await deletetag(deletetagUrl(id), { method: "DELETE" });
-            setTags(prev => prev.filter(tag => tag.id !== id));
+            setAllTags(prev => prev.filter(tag => tag.id !== id));
+            setFilteredTags(prev => prev.filter(tag => tag.id !== id)); // Update filtered tags too
         } catch (error) {
             console.error("Error deleting tag:", error);
         } finally {
@@ -41,37 +47,49 @@ export function TagManagement() {
         }
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const term = event.target.value;
+        setSearchTerm(term);
+
+        const filtered = allTags.filter(tag =>
+            tag.value.toLowerCase().includes(term.toLowerCase())
+        );
+        setFilteredTags(filtered);
+    };
+
     return (
         <div className={styles.container}>
-                <Input
-                    inputName="manageTag"
-                    inputType="text"
-                    placeHolder={t("manageTag")}
-                />
+            <Input
+                inputName="manageTag"
+                inputType="text"
+                placeHolder={t("manageTag")}
+                inputValue={searchTerm} 
+                onChange={handleSearchChange} 
+            />
 
-                <table className={styles.tagTable}>
-                    <thead>
-                        <tr>
-                            <th>Tag Name</th>
-                            <th>Actions</th>
+            <table className={styles.tagTable}>
+                <thead>
+                    <tr>
+                        <th>Tag Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredTags.map(tag => ( // Use filteredTags for rendering
+                        <tr key={tag.id}>
+                            <td>{tag.value}</td>
+                            <td>
+                                <button
+                                    className={styles.deleteBtn}
+                                    onClick={() => handleDelete(tag.id)}
+                                >
+                                    <img src={delete_icon} alt="Delete Icon" className="delete-icon" />
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {Tags.map(tag => (
-                            <tr key={tag.id}>
-                                <td>{tag.value}</td>
-                                <td>
-                                    <button
-                                        className={styles.deleteBtn}
-                                        onClick={() => handleDelete(tag.id)}
-                                    >
-                                        <img src={delete_icon} alt="Delete Icon" className="delete-icon" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
