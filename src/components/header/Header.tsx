@@ -9,7 +9,7 @@ export function Header() {
         <header className={styles.container}>
             <h1>{t("headerHeadline")}</h1>
             <NavMenu />
-            <InfoModal />
+            <InfoModal open={true} />
         </header>
     );
 }

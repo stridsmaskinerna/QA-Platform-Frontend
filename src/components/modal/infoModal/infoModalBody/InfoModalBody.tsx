@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import { QuestionCard } from "../../../questionCard";
 import { DynamicTooltip } from "../dynamicTooltip";
-import styles from "./InfoModalBody.module.css";
 import { H2 } from "../../../text";
 import { IQuestionWithInformationTitle } from "../types";
+import { useTooltip } from "../hooks";
+import styles from "./InfoModalBody.module.css";
 
 interface Props {
     questionCards: IQuestionWithInformationTitle[];
@@ -13,10 +14,7 @@ interface Props {
 
 export function InfoModalBody({ questionCards }: Props) {
     const { t } = useTranslation();
-    const [tooltipData, setTooltipData] = useState<{
-        text: string;
-        position: { top: number; left: number };
-    } | null>(null);
+    const tooltipHook = useTooltip();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -49,90 +47,48 @@ export function InfoModalBody({ questionCards }: Props) {
         e.currentTarget.style.cursor = "pointer";
     };
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const targetElement = e.target as HTMLElement;
-        e.stopPropagation();
-
-        const keywordDescriptions: Record<string, string> = {
-            [questionCards[0].userName]:
-                "The person who created this question.",
-            [questionCards[0].title]: "The main title of the question.",
-            [questionCards[0].topicName]: "The topic this question belongs to.",
-            [questionCards[0].subjectName]:
-                "The subject name and code associated with this question.",
-            [questionCards[0].subjectCode]:
-                "The subject name and code associated with this question.",
-            [questionCards[0].answerCount]: "The number of answers.",
-            [t("oneDayAgo")]: "How long time ago the question was asked.",
-            [t("resolved")]:
-                "If the author of the question have accepted an anwsers.",
-            [t("unresolved")]:
-                "If the author of the question have accepted an anwsers.",
-            [t("publicQuestion")]:
-                "The question can only be viewwd by authenticated users.",
-            [t("nonPublicQuestion")]: "The question can be viewwd by everyone.",
-        };
-
-        const matchedKey = Object.keys(keywordDescriptions).find(key =>
-            targetElement.textContent?.includes(key),
-        );
-
-        if (
-            matchedKey &&
-            (targetElement instanceof HTMLParagraphElement ||
-                targetElement instanceof HTMLHeadingElement ||
-                targetElement instanceof HTMLSpanElement)
-        ) {
-            setTooltipData({
-                text: keywordDescriptions[matchedKey],
-                position: { top: e.clientY + 10, left: e.clientX + 10 },
-            });
-        } else {
-            setTooltipData(null);
-        }
-    };
-
     return (
-        <>
+        <div className={styles.container}>
             <H2
                 text={`Question Cards - ${questionCards[currentIndex].informationTitle}`}
                 color="white"
             />
-            <div className={styles.container}>
+            <div className={styles.body}>
+                <button
+                    onClick={prevSlide}
+                    disabled={currentIndex === 0}
+                >
+                    {"<"}
+                </button>
                 <div
                     className={styles.slideContainer}
-                    onMouseMove={handleMouseMove}
+                    onMouseMove={tooltipHook.handleMouseMove}
                     onMouseEnter={overrideCursor}
-                    onMouseLeave={() => setTooltipData(null)}
+                    onMouseLeave={() => {
+                        tooltipHook.clearTooltipData();
+                    }}
                     onMouseDown={hidePointerEvens}
                 >
                     <QuestionCard data={questionCards[currentIndex]} />
                 </div>
-
-                <div className={styles.navigation}>
-                    <button
-                        onClick={prevSlide}
-                        disabled={currentIndex === 0}
-                    >
-                        ⬅ Previous
-                    </button>
-                    <span>
-                        {currentIndex + 1} / {questionCards.length}
-                    </span>
-                    <button
-                        onClick={nextSlide}
-                        disabled={currentIndex === questionCards.length - 1}
-                    >
-                        Next ➡
-                    </button>
-                </div>
-                {tooltipData && (
+                <button
+                    onClick={nextSlide}
+                    disabled={currentIndex === questionCards.length - 1}
+                >
+                    {">"}
+                </button>
+                {tooltipHook.tooltipData && (
                     <DynamicTooltip
-                        position={tooltipData.position}
-                        content={tooltipData.text}
+                        position={tooltipHook.tooltipData.position}
+                        content={tooltipHook.tooltipData.text}
                     />
                 )}
             </div>
-        </>
+            <div className={styles.footer}>
+                <span>
+                    {currentIndex + 1} / {questionCards.length}
+                </span>
+            </div>
+        </div>
     );
 }
