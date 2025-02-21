@@ -50,7 +50,7 @@
     gap: 15px;
 }
 
-.addATagContainer {
+.teacherTag {
     border-radius: 6px;
     border: 2px solid var(--input-idle);
     padding-inline: clamp(0.6rem, 4vw, 1rem);
