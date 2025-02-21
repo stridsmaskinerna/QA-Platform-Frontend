@@ -33,7 +33,7 @@
     border: 2px solid rgb(61, 1, 1);
 }
 
-.text {
+.text-container {
     color: var(--textLight-default);
     font-size: clamp(15px, 4vw, 20px);
     font-weight: 600;

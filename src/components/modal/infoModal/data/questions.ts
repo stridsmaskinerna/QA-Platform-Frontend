@@ -17,7 +17,7 @@ const questionCardUnresolved: IQuestionWithInformationTitle = {
     isHidden: false,
     isHideable: false,
     answerCount: 10,
-    tags: [],
+    tags: ["A Tag"],
     userId: "userId",
 };
 

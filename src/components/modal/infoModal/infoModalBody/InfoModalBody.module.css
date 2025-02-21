@@ -17,6 +17,12 @@
     pointer-events: none;
 }
 
+.highlight:hover {
+    color: black;
+    background-color: yellow;
+    outline: 4px solid red;
+}
+
 .slide-container {
     width: 100%;
     display: flex;

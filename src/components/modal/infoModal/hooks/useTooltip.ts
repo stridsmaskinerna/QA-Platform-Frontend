@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { questionCards } from "../data";
 import stylesQuestionHeader from "../../../questionCard/questionCardHeader/QuestionHeader.module.css";
+import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
 
 export function useTooltip() {
     const { t } = useTranslation();
@@ -64,21 +65,35 @@ export function useTooltip() {
             `.${stylesQuestionHeader.tooltip}`,
         );
 
+        const iconElement = document.querySelector(
+            `img.${stylesQuestionHeader.icon}[alt=""]`,
+        );
+
         if (
             matchedKey &&
             (targetElement instanceof HTMLParagraphElement ||
                 targetElement instanceof HTMLHeadingElement ||
                 targetElement instanceof HTMLSpanElement)
         ) {
+            targetElement.classList.add(styelsInfoModalBody.highlight);
             setTooltipData({
                 text: keywordDescriptions[matchedKey],
                 position: { top: e.clientY + 10, left: e.clientX + 10 },
             });
-        } else if (tooltipElements.length != 0) {
-            setTooltipData({
-                text: "Decide if question should be protected or public.",
-                position: { top: e.clientY + 10, left: e.clientX + 10 },
-            });
+        } else if (iconElement != null) {
+            // targetElement.classList.add(styelsInfoModalBody.highlight);
+            // setTooltipData({
+            //     text: "Decide if question should be protected or public.",
+            //     position: { top: e.clientY + 10, left: e.clientX + 10 },
+            // });
+            // tooltipElements.forEach(e => {
+            //     console.log(e)
+            //     e.classList.add(styelsInfoModalBody.highlight);
+            // });
+            // setTooltipData({
+            //     text: "Decide if question should be protected or public.",
+            //     position: { top: e.clientY + 10, left: e.clientX + 10 },
+            // });
         } else {
             setTooltipData(null);
         }
