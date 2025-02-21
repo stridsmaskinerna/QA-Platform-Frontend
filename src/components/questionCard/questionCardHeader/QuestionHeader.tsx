@@ -5,30 +5,46 @@ import public_icon from "../../../assets/icons/public.svg";
 import non_public_icon from "../../../assets/icons/non_public.svg";
 import visibility_off from "../../../assets/icons/visibility_off.svg";
 import visibility_on from "../../../assets/icons/visibility_on.svg";
-import { useRoles } from "../../../hooks";
+import { usePUT } from "../../../hooks";
+import { BASE_URL, QUESTION_URL } from "../../../data";
+import { Dispatch, SetStateAction } from "react";
 
 interface QuestionHeaderProps {
     subjectName: string;
     subjectCode: string;
     isProtected: boolean;
     isResolved: boolean;
-    isHidden: boolean;
+    isHideable: boolean;
+    id: string;
+    setIsHiddenOptimistic: Dispatch<SetStateAction<boolean>>;
+    isHiddenOptimistic: boolean;
 }
 
 export function QuestionHeader(props: QuestionHeaderProps) {
     const { t } = useTranslation();
+    const {
+        putRequest,
+        isLoading: isVisibilityToggleLoading,
+        error: toggleVisibilityError,
+    } = usePUT();
 
-    //TODO Replace isTeacher with isTeacher from server later on
-    const { isTeacher } = useRoles();
     const isResolvedClass = props.isResolved
         ? styles.resolved
         : styles.notResolved;
     const isPublic = !props.isProtected ? public_icon : non_public_icon;
-    const isVisible = !props.isHidden ? visibility_on : visibility_off;
 
     const subjectDisplay = props.subjectCode
         ? `${props.subjectCode} - ${props.subjectName}`
         : props.subjectName;
+
+    const toggleVisibility = async () => {
+        await putRequest(`${BASE_URL}${QUESTION_URL}/${props.id}/visibility`);
+        if (!toggleVisibilityError) {
+            props.setIsHiddenOptimistic(prev => !prev);
+        } else {
+            console.error(toggleVisibilityError);
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -60,15 +76,25 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                             : t("publicQuestion")}
                     </span>
                 </div>
-                {!isTeacher && (
+                {props.isHideable && (
                     <div className={styles.iconWrapper}>
-                        <img
-                            className={styles.icon}
-                            src={isVisible}
-                            alt=""
-                        />
+                        <button
+                            className={styles.hideShowBtn}
+                            disabled={isVisibilityToggleLoading}
+                            onClick={() => void toggleVisibility()}
+                        >
+                            <img
+                                className={styles.icon}
+                                src={
+                                    props.isHiddenOptimistic
+                                        ? visibility_off
+                                        : visibility_on
+                                }
+                                alt=""
+                            />
+                        </button>
                         <span className={styles.tooltip}>
-                            {props.isHidden
+                            {props.isHiddenOptimistic
                                 ? t("clickToShow")
                                 : t("clickToHide")}
                         </span>

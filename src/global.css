@@ -8,15 +8,16 @@
 html {
     --blue-ltu: rgb(19, 48, 91);
     --blue-light: rgb(219, 234, 255);
-    --blue-text: rgb(34, 66, 175) --red-delete: rgb(199, 0, 0)
-        --red-delete-dark: rgb(148, 4, 4);
+    --blue-text: rgb(34, 66, 175) --red-delete: rgb(199, 0, 0);
+    --red-delete: rgb(185, 4, 4);
+    --red-delete-dark: rgb(148, 4, 4);
     --btnDark-bg: black;
     --text-default: black;
     --textLight-default: white;
     --btnDark-text: white;
     --btnDark-hover: gray;
     --grey-light: lightgray;
-    --green-resolved: rgb(80, 200, 120);
+    --green-resolved: #50c878;
     --green-success: rgb(36, 125, 66);
     --yellow-not-resolved: rgb(255, 170, 51);
     --grey-strong: gray;
@@ -33,6 +34,7 @@ html {
     --btnLight-text: black;
     --btnLight-hover: lightgray;
     --inputIdle-text: rgb(114, 113, 113);
+    --overlay-hiddenItem: rgba(144, 142, 142, 0.64);
     overflow-y: scroll;
 
     --border-radius: 10px;

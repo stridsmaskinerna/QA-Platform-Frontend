@@ -11,6 +11,9 @@ interface IQuestionCardListProps {
     onResolvedFilterClick: (arg: boolean | null) => void;
     isLoadingQuestions: boolean;
     header: string;
+    totalItemCount?: number;
+    hasMore?: boolean;
+    loaderRef?: (node?: Element | null) => void;
     displayResolveFilter?: boolean;
 }
 
@@ -20,6 +23,9 @@ export function QuestionCardList({
     onResolvedFilterClick,
     isLoadingQuestions,
     header,
+    totalItemCount,
+    hasMore,
+    loaderRef,
     displayResolveFilter = true,
 }: IQuestionCardListProps) {
     const { t } = useTranslation();
@@ -36,7 +42,15 @@ export function QuestionCardList({
     return (
         <div className={styles.container}>
             <div className={styles.headerRow}>
-                <h3>{header}</h3>
+                <div className={styles.headerWrapper}>
+                    <h3>{header}</h3>
+                    {totalItemCount !== undefined && (
+                        <span>
+                            {t("nrOfQuestionsFound", { count: totalItemCount })}
+                        </span>
+                    )}
+                </div>
+
                 {displayResolveFilter && (
                     <ResolvedFilters
                         activeResolvedFilter={activeResolvedFilter}
@@ -51,6 +65,11 @@ export function QuestionCardList({
                 />
             ))}
             {isNoData && <h3>{t("noQuestionsFound")}</h3>}
+            {hasMore && (
+                <div ref={loaderRef}>
+                    <Loader />
+                </div>
+            )}
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./QuestionCardMiddle.module.css";
+import sharedStyles from "../QuestionCardSharedStyles.module.css";
 import clock_icon from "../../../assets/icons/clock_24dp_808080.svg";
 import { getTimeAgo } from "../../../utils";
 import { RichTextReader } from "../../richText";
@@ -12,6 +13,7 @@ interface QuestionCardMiddleProps {
     answerCount?: number;
     topicName: string;
     description?: string;
+    isHiddenOptimistic: boolean;
 }
 
 export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
@@ -38,6 +40,9 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
 
     return (
         <div className={styles.container}>
+            {props.isHiddenOptimistic && (
+                <div className={sharedStyles.isHidden} />
+            )}
             <div className={styles.header}>
                 <span className={styles.topicName}>{props.topicName}</span>
                 <div className={styles.timeSection}>

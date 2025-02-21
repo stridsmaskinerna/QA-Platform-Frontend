@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    width: 100%; /* Ensures it takes full width */
+}
+
+@media (max-width: 600px) {
+    .container {
+        justify-content: center;
+    }
+}

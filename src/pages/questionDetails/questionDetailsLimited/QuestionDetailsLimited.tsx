@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useFetchData } from "../../../hooks/useFetchData";
+import { useFetchData } from "../../../hooks/Http/useFetchData";
 import { IDetailedQuestion } from "../../../utils";
 import { BASE_URL, PUBLIC_URL, QUESTION_URL } from "../../../data";
 import { QuestionDetailsViewer } from "../../../components";

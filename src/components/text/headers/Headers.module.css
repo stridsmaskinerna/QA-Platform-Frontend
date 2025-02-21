@@ -1,5 +1,9 @@
-.title {
+.h1 {
     font-size: clamp(1rem, 2.7vw, 1.7rem);
+}
+
+.h2 {
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
 }
 
 .color-black {

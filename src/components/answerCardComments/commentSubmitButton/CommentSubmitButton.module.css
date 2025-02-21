@@ -1,0 +1,31 @@
+.comment-btn-ctr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .comment-btn {
+        width: auto;
+        padding-inline: 0.5rem;
+    }
+
+    .comment-btn-text {
+        display: none;
+    }
+}

@@ -74,11 +74,13 @@
         "public": "Public",
         "nonPublic": "Not Public",
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
+        "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
+
         "teacherDashboard": {
+            "title": "Teacher Dashboard",
             "manageTopicsFor": "Manage Topics for",
             "questionsInCourse": "Questions in course",
-            "title": "Teacher Dashboard",
             "viewQuestions": "View questions",
             "yourCourses": "Your Courses",
             "newTopicPlacholder": "New topic name...",
@@ -104,6 +106,20 @@
         "teacherNamePlaceHolder": "Enter the teacher(s) name",
         "addCourse": "+ Add Course",
         "manageCourse": "Enter the course code or Name",
-        "manageTag": "Search tags"
+        "manageTag": "Search tags",
+        "answerCardComments": {
+            "commentLabelMarker": "✔ Your latest comment",
+            "commentsListTitle": "View Comments",
+            "commentsCreatorTitle": "Create Comment",
+            "viewCommentInfo": "View comments",
+            "hideCommentInfo": "Hide comments",
+            "createCommentInfo": "Create comment",
+            "updateCommentInfo": "Update comment",
+            "deleteCommentInfo": "Delete comment",
+            "submitCommentInfo": "Submit comment",
+            "createCommentPlaceholder": "Add a comment..",
+            "submitComment": "Comment"
+        }
+
     }
 }

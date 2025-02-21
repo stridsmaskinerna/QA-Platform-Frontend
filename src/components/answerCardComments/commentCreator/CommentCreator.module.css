@@ -1,0 +1,17 @@
+.container {
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.text-area {
+    flex: 1;
+}
+
+.comment-btn-ctr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

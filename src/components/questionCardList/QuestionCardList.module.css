@@ -14,6 +14,12 @@
     margin-bottom: -15px;
 }
 
+.headerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .loader {
     margin-top: 15rem;
 }
@@ -23,8 +29,12 @@
     margin-top: 4rem;
 }
 
-.headerRow > h3 {
+.headerWrapper > h3 {
     font-size: clamp(1rem, 2.7vw, 1.7rem);
+}
+
+.headerWrapper > span {
+    color: var(--inputIdle-text);
 }
 
 @media (max-width: 600px) {
@@ -33,7 +43,8 @@
         gap: 12px;
     }
 
-    .headerRow > h3 {
+    .headerWrapper > h3,
+    span {
         text-align: center;
     }
 }
