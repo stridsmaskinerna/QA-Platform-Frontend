@@ -7,7 +7,7 @@ export const HOME_ROUTE = "/";
 
 export const ADMIN_ROUTE = "/admin/";
 export const LOGIN_REGISTER_ROUTE = "/login/";
-
+export const EDIT_QUESTION_ROUTE = "/questions/edit/";
 export const GUEST_QUESTION_DETAILS_ROUTE = "/guest/questions/";
 export const QUESTION_DETAILS_ROUTE = "/questions/";
 

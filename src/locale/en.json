@@ -108,6 +108,9 @@
             "submitCommentInfo": "Submit comment",
             "createCommentPlaceholder": "Add a comment..",
             "submitComment": "Comment"
-        }
+        },
+
+        "deleteQuestion": "Delete question",
+        "deleteQuestionPrompt": "Are you sure you want to delete this question?"
     }
 }

@@ -108,6 +108,9 @@
             "submitCommentInfo": "Skapa kommentar",
             "createCommentPlaceholder": "Skapa en kommentar..",
             "submitComment": "Kommentera"
-        }
+        },
+
+        "deleteQuestion": "Radera fråga",
+        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?"
     }
 }

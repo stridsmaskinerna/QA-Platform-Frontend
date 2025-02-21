@@ -33,6 +33,7 @@ export function QuestionFinder() {
         loaderRef3,
         hasMore,
         totalItemCount,
+        handleDeleteClick,
     } = useSearchQuestions();
     const { t } = useTranslation();
     const { isUser } = useRoles();
@@ -47,6 +48,7 @@ export function QuestionFinder() {
         {
             content: (
                 <QuestionCardList
+                    handleDeleteClick={handleDeleteClick}
                     header={t(
                         `${activeFilters.userInteraction ?? "questionList"}Header`,
                     )}
@@ -71,6 +73,7 @@ export function QuestionFinder() {
                     setActiveFilter={onInterActionFilterClick}
                 >
                     <QuestionCardList
+                        handleDeleteClick={handleDeleteClick}
                         header={t(
                             `${activeFilters.userInteraction ?? "questionList"}Header`,
                         )}

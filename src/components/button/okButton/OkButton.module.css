@@ -1,5 +1,6 @@
 .button {
-    padding: 16px 64px;
+    padding-block: 16px;
+    padding-inline: clamp(35px, 10vw, 64px);
     background-color: var(--btnLight-bg);
     color: var(--btnLight-text);
     border-radius: 6px;
