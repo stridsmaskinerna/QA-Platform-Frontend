@@ -111,6 +111,10 @@
         },
 
         "deleteQuestion": "Radera fråga",
-        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?"
+        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
+        "delete": "Radera",
+        "edit": "Ändra",
+        "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
+        "editQuestion": "Ändra din fråga"
     }
 }

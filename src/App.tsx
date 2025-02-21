@@ -12,9 +12,11 @@ import {
     HomeLimited,
     QuestionDetailsExtended,
     QuestionDetailsLimited,
+    EditQuestion,
 } from "./pages";
 import {
     ADMIN_ROUTE,
+    EDIT_QUESTION_ROUTE,
     GUEST_HOME_ROUTE,
     GUEST_QUESTION_DETAILS_ROUTE,
     HOME_ROUTE,
@@ -32,8 +34,8 @@ function App() {
 
     return (
         <ErrorBoundary>
-            {isLoading && <FullScreenLoader />}
             <main className="app">
+                {isLoading && <FullScreenLoader />}
                 <Header />
                 <Routes>
                     <Route
@@ -79,6 +81,21 @@ function App() {
                             </AuthGuard>
                         }
                     />
+
+                    <Route
+                        path={EDIT_QUESTION_ROUTE + QUESTION_ID}
+                        element={
+                            <AuthGuard
+                                roleBasedRedirect={{
+                                    allowedRoles: [Role.User],
+                                    fallbackRoute: HOME_ROUTE,
+                                }}
+                            >
+                                <EditQuestion />
+                            </AuthGuard>
+                        }
+                    />
+
                     <Route
                         path={ADMIN_ROUTE}
                         element={

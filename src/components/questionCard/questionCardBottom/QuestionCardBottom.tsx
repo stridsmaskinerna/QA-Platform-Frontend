@@ -1,14 +1,17 @@
 import styles from "./QuestionCardBottom.module.css";
 import sharedStyles from "../QuestionCardSharedStyles.module.css";
-import { DeleteButton, Modal } from "../..";
+import { DeleteButton, EditButton, Modal } from "../..";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
+import { EDIT_QUESTION_ROUTE } from "../../../data";
 
 interface QuestionCardBottomProps {
     tags: string[];
     isPostedByUser: boolean;
     isHiddenOptimistic: boolean;
     handleDeleteClick: () => void;
+    questionId: string;
 }
 
 export function QuestionCardBottom({
@@ -16,8 +19,10 @@ export function QuestionCardBottom({
     isHiddenOptimistic,
     isPostedByUser,
     handleDeleteClick,
+    questionId,
 }: QuestionCardBottomProps) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
     const closeModal = () => setShowConfirmDeleteModal(false);
 
@@ -25,6 +30,9 @@ export function QuestionCardBottom({
         closeModal();
         handleDeleteClick();
     };
+
+    const onEditClick = async () =>
+        await navigate(`${EDIT_QUESTION_ROUTE}${questionId}`);
 
     return (
         <>
@@ -44,7 +52,12 @@ export function QuestionCardBottom({
                 </div>
                 {isPostedByUser && (
                     <div className={styles.btnsContainer}>
+                        <EditButton
+                            onClick={() => void onEditClick()}
+                            text={t("edit")}
+                        />
                         <DeleteButton
+                            text={t("delete")}
                             onClick={() => setShowConfirmDeleteModal(true)}
                         />
                     </div>

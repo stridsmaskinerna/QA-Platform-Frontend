@@ -111,6 +111,10 @@
         },
 
         "deleteQuestion": "Delete question",
-        "deleteQuestionPrompt": "Are you sure you want to delete this question?"
+        "deleteQuestionPrompt": "Are you sure you want to delete this question?",
+        "delete": "Delete",
+        "edit": "Edit",
+        "couldNotFindQuestion": "Oops! We could not find this question",
+        "editQuestion": "Edit your question"
     }
 }

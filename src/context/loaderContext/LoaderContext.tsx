@@ -8,7 +8,7 @@ interface ILoaderProviderProps {
 const LoaderContext = createContext<ILoaderContext>({} as ILoaderContext);
 
 function LoaderProvider({ children }: ILoaderProviderProps): ReactElement {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <LoaderContext.Provider value={{ isLoading, setIsLoading }}>

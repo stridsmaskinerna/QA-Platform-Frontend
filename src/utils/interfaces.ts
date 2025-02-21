@@ -20,6 +20,7 @@ export interface IAuthContext {
     register: (
         formData: Omit<IRegisterFormData, "confirmPassword">,
     ) => Promise<RegisterErrorMessage | void>;
+    isLoading: boolean;
 }
 
 export interface IUserDetails {

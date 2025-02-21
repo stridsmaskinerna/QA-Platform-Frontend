@@ -65,3 +65,7 @@
 .question-section > p:last-child {
     margin-top: clamp(20px, 3vw, 2rem);
 }
+
+.container:hover .title {
+    text-decoration: underline;
+}

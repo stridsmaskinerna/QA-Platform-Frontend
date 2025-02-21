@@ -53,6 +53,7 @@ export function QuestionCard({
                 />
             </Link>
             <QuestionCardBottom
+                questionId={data.id}
                 handleDeleteClick={handleDeleteClick}
                 isPostedByUser={isPostedByUser}
                 isHiddenOptimistic={isHiddenOptimistic}

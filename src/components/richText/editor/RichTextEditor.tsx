@@ -156,12 +156,14 @@ interface IRichTextEditorProps {
     setEditorState: Dispatch<SetStateAction<string>>;
     placeholder: string;
     containerStyle?: CSSProperties;
+    initialState?: string;
 }
 
 export function RichTextEditor({
     setEditorState,
     placeholder,
     containerStyle,
+    initialState,
 }: IRichTextEditorProps) {
     const onChange = (editorState: EditorState) => {
         // Call toJSON on the EditorState object, which produces a serialization safe string
@@ -171,7 +173,9 @@ export function RichTextEditor({
     };
 
     return (
-        <LexicalComposer initialConfig={editorConfig}>
+        <LexicalComposer
+            initialConfig={{ ...editorConfig, editorState: initialState }}
+        >
             <div
                 className={styles.editorContainer}
                 style={containerStyle}
