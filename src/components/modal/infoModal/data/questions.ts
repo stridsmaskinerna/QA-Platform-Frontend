@@ -3,7 +3,7 @@ import { IQuestionWithInformationTitle } from "../types";
 import { getOneDayOldTimestamp } from "../utility";
 
 const questionCardUnresolved: IQuestionWithInformationTitle = {
-    informationTitle: "An unresolved question",
+    informationTitle: "An Unresolved Question",
     defaultMarker: highlights.resolvedQuestion,
     id: "id",
     topicName: "A Topic Name",
@@ -23,11 +23,25 @@ const questionCardUnresolved: IQuestionWithInformationTitle = {
     userId: "userId",
 };
 
+const questionCardSubject: IQuestionWithInformationTitle = {
+    ...questionCardUnresolved,
+    informationTitle: "The course code and name.",
+    defaultMarker: highlights.subjectTitle,
+    isResolved: true,
+};
+
 const questionCardResolved: IQuestionWithInformationTitle = {
     ...questionCardUnresolved,
     informationTitle: "A Resolved Question",
     defaultMarker: highlights.resolvedQuestion,
     isResolved: true,
+};
+
+const questionCardPublic: IQuestionWithInformationTitle = {
+    ...questionCardResolved,
+    informationTitle: "A Public Question",
+    defaultMarker: highlights.publicQuestion,
+    isProtected: false,
 };
 
 const questionCardProtected: IQuestionWithInformationTitle = {
@@ -80,8 +94,10 @@ const questionCardTags: IQuestionWithInformationTitle = {
 };
 
 export const questionCards = [
+    questionCardSubject,
     questionCardUnresolved,
     questionCardResolved,
+    questionCardPublic,
     questionCardProtected,
     questionCardTopic,
     questionCardDate,
