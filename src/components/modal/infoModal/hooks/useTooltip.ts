@@ -1,55 +1,75 @@
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
 import { questionCards } from "../data";
-import stylesQuestionHeader from "../../../questionCard/questionCardHeader/QuestionHeader.module.css";
+import { highlightAttribute, highlights } from "../../../questionCard";
 import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
 
-export function useTooltip() {
-    const { t } = useTranslation();
+export function useTooltip(currentIndex: number) {
+    const [highlightElements, setHighlightElements] = useState<(HTMLElement)[]>([]);
     const [tooltipData, setTooltipData] = useState<{
         text: string;
         position: { top: number; left: number };
     } | null>(null);
 
     const keywordDescriptions: Record<string, string> = {
-        [questionCards[0].userName]: "The person who created this question.",
-        [questionCards[0].title]: "The main title of the question.",
-        [questionCards[0].topicName]: "The topic this question belongs to.",
+        [highlights.userName]: "The person who created this question.",
+        [highlights.titleQuestion]: "The main title of the question.",
+        [highlights.topicName]: "The topic this question belongs to.",
         [questionCards[0].subjectName]:
             "The subject name and code associated with this question.",
-        [questionCards[0].subjectCode]:
+        [highlights.subjectTitle]:
             "The subject name and code associated with this question.",
-        [questionCards[0].answerCount]: "The number of answers.",
-        [t("oneDayAgo")]: "How long time ago the question was asked.",
-        [t("resolved")]:
+        [highlights.answerCount]: "The number of answers.",
+        [highlights.creationDate]: "How long time ago the question was asked.",
+        [highlights.resolvedQuestion]:
             "If the author of the question have accepted an anwsers.",
-        [t("unresolved")]:
-            "If the author of the question have accepted an anwsers.",
-        [t("publicQuestion")]:
+        [highlights.publicQuestion]:
             "The question can only be viewwd by authenticated users.",
-        [t("nonPublicQuestion")]: "The question can be viewwd by everyone.",
+        [highlights.tags]:
+            "Tags used to mark the question."
     };
 
     useEffect(() => {
-        const tooltipElements = document.querySelectorAll(
-            `.${stylesQuestionHeader.tooltip}`,
+        highlightElements.forEach(e => e.classList.remove(
+            styelsInfoModalBody.highlightDefault
+        ))
+        const defaultHiglightElement = document.querySelector(
+            `[${highlightAttribute}=${questionCards[currentIndex].defaultMarker}]`);
+        (defaultHiglightElement as HTMLElement).classList.add(
+            styelsInfoModalBody.highlightDefault
         );
-        const originalDisplays = new Map<Element, string>();
+        
+    }, [currentIndex, highlightElements])
 
-        tooltipElements.forEach(el => {
-            const element = el as HTMLElement;
-            originalDisplays.set(element, element.style.display);
-            element.style.display = "none";
-        });
+    useEffect(() => {
+        const highlightElements: (HTMLElement | null)[] = [
+            document.querySelector(`[${highlightAttribute}=${highlights.subjectTitle}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.resolvedQuestion}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.publicQuestion}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.publicQuestionTooltip}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.topicName}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.creationDate}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.titleQuestion}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.userName}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.answerCount}]`),
+            document.querySelector(`[${highlightAttribute}=${highlights.tags}]`),
+        ];
+
+        const highlightElementsChecked = highlightElements.filter(e => e != null);
+
+        setHighlightElements(highlightElementsChecked);
+    }, []);
+
+    useEffect(() => {
+        const tooltipElement = document.querySelector(`[
+            ${highlightAttribute}=${highlights.publicQuestionTooltip}]`);
+
+        const origDisplay = (tooltipElement as HTMLElement).style.display;
+
+        (tooltipElement as HTMLElement).style.display = "none";
 
         return () => {
-            tooltipElements.forEach(el => {
-                const element = el as HTMLElement;
-                if (originalDisplays.has(element)) {
-                    element.style.display = originalDisplays.get(element) ?? "";
-                }
-            });
+            (tooltipElement as HTMLElement).style.display = origDisplay
         };
     });
 
@@ -57,45 +77,18 @@ export function useTooltip() {
         const targetElement = e.target as HTMLElement;
         e.stopPropagation();
 
-        const matchedKey = Object.keys(keywordDescriptions).find(key =>
-            targetElement.textContent?.includes(key),
-        );
+        const highlightValue = targetElement.getAttribute(highlightAttribute);
 
-        const tooltipElements = targetElement.querySelectorAll(
-            `.${stylesQuestionHeader.tooltip}`,
-        );
-
-        const iconElement = document.querySelector(
-            `img.${stylesQuestionHeader.icon}[alt=""]`,
-        );
-
-        if (
-            matchedKey &&
-            (targetElement instanceof HTMLParagraphElement ||
-                targetElement instanceof HTMLHeadingElement ||
-                targetElement instanceof HTMLSpanElement)
-        ) {
+        if (highlightElements.find(e => e === targetElement) &&
+            highlightValue != null) {
             targetElement.classList.add(styelsInfoModalBody.highlight);
             setTooltipData({
-                text: keywordDescriptions[matchedKey],
+                text: keywordDescriptions[highlightValue],
                 position: { top: e.clientY + 10, left: e.clientX + 10 },
             });
-        } else if (iconElement != null) {
-            // targetElement.classList.add(styelsInfoModalBody.highlight);
-            // setTooltipData({
-            //     text: "Decide if question should be protected or public.",
-            //     position: { top: e.clientY + 10, left: e.clientX + 10 },
-            // });
-            // tooltipElements.forEach(e => {
-            //     console.log(e)
-            //     e.classList.add(styelsInfoModalBody.highlight);
-            // });
-            // setTooltipData({
-            //     text: "Decide if question should be protected or public.",
-            //     position: { top: e.clientY + 10, left: e.clientX + 10 },
-            // });
-        } else {
-            setTooltipData(null);
+        }
+        else {
+            clearTooltipData();
         }
     };
 

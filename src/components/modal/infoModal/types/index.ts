@@ -1,7 +1,8 @@
 import { IQuestion } from "../../../../utils";
 
-interface InformationTitle {
+interface MetaInformation {
     informationTitle: string;
+    defaultMarker: string
 }
 
-export type IQuestionWithInformationTitle = IQuestion & InformationTitle;
+export type IQuestionWithInformationTitle = IQuestion & MetaInformation;

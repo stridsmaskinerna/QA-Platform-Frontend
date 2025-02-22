@@ -1,5 +1,6 @@
 import styles from "./QuestionCardBottom.module.css";
 import sharedStyles from "../QuestionCardSharedStyles.module.css";
+import { highlights } from "../constants";
 
 interface QuestionCardBottomProps {
     tags: string[];
@@ -17,6 +18,7 @@ export function QuestionCardBottom({
                 <p
                     key={tag}
                     className={styles.tagContainer}
+                    data-hl={highlights.tags}
                 >
                     {tag}
                 </p>

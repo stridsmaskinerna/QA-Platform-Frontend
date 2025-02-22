@@ -17,9 +17,15 @@
     pointer-events: none;
 }
 
+.highlight-default {
+    color: black;
+    background-color: rgb(255, 255, 0, 0.5);
+    outline: 4px solid red;
+}
+
 .highlight:hover {
     color: black;
-    background-color: yellow;
+    background-color: rgb(255, 255, 0, 0.5);
     outline: 4px solid red;
 }
 

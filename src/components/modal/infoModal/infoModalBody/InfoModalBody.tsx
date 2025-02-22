@@ -14,9 +14,9 @@ interface Props {
 
 export function InfoModalBody({ questionCards }: Props) {
     const { t } = useTranslation();
-    const tooltipHook = useTooltip();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const tooltipHook = useTooltip(currentIndex);
 
     const nextSlide = () => {
         setCurrentIndex(prevIndex => (prevIndex + 1) % questionCards.length);
@@ -49,10 +49,10 @@ export function InfoModalBody({ questionCards }: Props) {
 
     return (
         <div className={styles.container}>
-            <H2
-                text={`Question Cards - ${questionCards[currentIndex].informationTitle}`}
-                color="white"
-            />
+
+            <span>
+                {currentIndex + 1} / {questionCards.length}
+            </span>
             <div className={styles.body}>
                 <button
                     onClick={prevSlide}
@@ -85,9 +85,10 @@ export function InfoModalBody({ questionCards }: Props) {
                 )}
             </div>
             <div className={styles.footer}>
-                <span>
-                    {currentIndex + 1} / {questionCards.length}
-                </span>
+                <H2
+                    text={`Question Cards - ${questionCards[currentIndex].informationTitle}`}
+                    color="white"
+                />
             </div>
         </div>
     );
