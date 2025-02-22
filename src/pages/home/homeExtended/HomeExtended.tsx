@@ -3,6 +3,7 @@ import {
     AskAQuestion,
     QuestionFinder,
     Tabs,
+    TabsProvider,
     TeacherDashboard,
 } from "../../../components";
 import { useRoles } from "../../../hooks";
@@ -57,11 +58,13 @@ export function HomeExtended() {
 
     return (
         <section className={styles.container}>
-            <Tabs
-                containerStyle={tabsContainerStyle}
-                tabs={tabs}
-                tabBtnsContainerStyle={tabBtnsContainerStyle}
-            />
+            <TabsProvider>
+                <Tabs
+                    containerStyle={tabsContainerStyle}
+                    tabs={tabs}
+                    tabBtnsContainerStyle={tabBtnsContainerStyle}
+                />
+            </TabsProvider>
         </section>
     );
 }
