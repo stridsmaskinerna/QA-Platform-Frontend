@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Modal } from "../..";
 import { InfoModalBody } from "../infoModalBody";
-import { questionCards } from "../data";
+import { useQuestionCards } from "../hooks";
 
 interface IInfoModalProps {
     open: boolean;
@@ -10,6 +10,7 @@ interface IInfoModalProps {
 
 export function InfoModal({ open }: IInfoModalProps) {
     const [isOpen, setIsOpen] = useState(open);
+    const questionCards = useQuestionCards();
 
     const closeModal = () => {
         setIsOpen(false);
@@ -20,7 +21,9 @@ export function InfoModal({ open }: IInfoModalProps) {
             {isOpen && (
                 <Modal
                     title={"Fast Facts You Shouldn't Miss"}
-                    message={<InfoModalBody questionCards={questionCards} />}
+                    message={
+                        <InfoModalBody questionCards={questionCards.all} />
+                    }
                     okClick={() => {
                         closeModal();
                     }}

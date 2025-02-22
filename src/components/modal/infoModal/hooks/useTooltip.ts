@@ -1,91 +1,34 @@
 import { useEffect, useState } from "react";
 
-import { questionCards } from "../data";
-import { highlightAttribute, highlights } from "../../../questionCard";
+import { highlightAttribute, highlights as hl } from "../../../questionCard";
 import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
+import { useQuestionCards } from "./useQuestionCard";
 
-export function useTooltip(currentIndex: number) {
-    const [highlightElements, setHighlightElements] = useState<HTMLElement[]>(
-        [],
-    );
+export function useTooltip(highlightElements: HTMLElement[]) {
+    const cards = useQuestionCards();
     const [tooltipData, setTooltipData] = useState<{
         text: string;
         position: { top: number; left: number };
     } | null>(null);
 
+    // TODO! Update to mark unresolved and protected correctly
+    // Maybe neeed a third meta filed called tooltipDescription.
     const keywordDescriptions: Record<string, string> = {
-        [highlights.userName]: "The person who created this question.",
-        [highlights.titleQuestion]: "The main title of the question.",
-        [highlights.topicName]: "The topic this question belongs to.",
-        [questionCards[0].subjectName]:
-            "The subject name and code associated with this question.",
-        [highlights.subjectTitle]:
-            "The subject name and code associated with this question.",
-        [highlights.answerCount]: "The number of answers.",
-        [highlights.creationDate]: "How long time ago the question was asked.",
-        [highlights.resolvedQuestion]:
-            "If the author of the question have accepted an anwsers.",
-        [highlights.publicQuestion]:
-            "The question can only be viewwd by authenticated users.",
-        [highlights.tags]: "Tags used to mark the question.",
+        [hl.userName]: cards.questionCardAuthor.informationDescription,
+        [hl.titleQuestion]: cards.questionCardTitle.informationDescription,
+        [hl.topicName]: cards.questionCardTopic.informationDescription,
+        [hl.subjectTitle]: cards.questionCardSubject.informationDescription,
+        [hl.answerCount]: cards.questionCardAnswers.informationDescription,
+        [hl.creationDate]: cards.questionCardDate.informationDescription,
+        [hl.resolvedQuestion]:
+            cards.questionCardResolved.informationDescription,
+        [hl.publicQuestion]: cards.questionCardPublic.informationDescription,
+        [hl.tags]: cards.questionCardTags.informationDescription,
     };
 
     useEffect(() => {
-        highlightElements.forEach(e =>
-            e.classList.remove(styelsInfoModalBody.highlightDefault),
-        );
-        const defaultHiglightElement = document.querySelector(
-            `[${highlightAttribute}=${questionCards[currentIndex].defaultMarker}]`,
-        );
-        (defaultHiglightElement as HTMLElement).classList.add(
-            styelsInfoModalBody.highlightDefault,
-        );
-    }, [currentIndex, highlightElements]);
-
-    useEffect(() => {
-        const highlightElements: (HTMLElement | null)[] = [
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.subjectTitle}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.resolvedQuestion}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.publicQuestion}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.publicQuestionTooltip}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.topicName}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.creationDate}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.titleQuestion}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.userName}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.answerCount}]`,
-            ),
-            document.querySelector(
-                `[${highlightAttribute}=${highlights.tags}]`,
-            ),
-        ];
-
-        const highlightElementsChecked = highlightElements.filter(
-            e => e != null,
-        );
-
-        setHighlightElements(highlightElementsChecked);
-    }, []);
-
-    useEffect(() => {
         const tooltipElement = document.querySelector(`[
-            ${highlightAttribute}=${highlights.publicQuestionTooltip}]`);
+            ${highlightAttribute}=${hl.publicQuestionTooltip}]`);
 
         const origDisplay = (tooltipElement as HTMLElement).style.display;
 

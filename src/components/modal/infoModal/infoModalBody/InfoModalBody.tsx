@@ -4,19 +4,23 @@ import { useTranslation } from "react-i18next";
 import { QuestionCard } from "../../../questionCard";
 import { DynamicTooltip } from "../dynamicTooltip";
 import { H2 } from "../../../text";
-import { IQuestionWithInformationTitle } from "../types";
-import { useTooltip } from "../hooks";
+import { IQuestionWithInformationMeta } from "../types";
+import { useHighlightEffect, useTooltip } from "../hooks";
 import styles from "./InfoModalBody.module.css";
 
 interface Props {
-    questionCards: IQuestionWithInformationTitle[];
+    questionCards: IQuestionWithInformationMeta[];
 }
 
 export function InfoModalBody({ questionCards }: Props) {
     const { t } = useTranslation();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const tooltipHook = useTooltip(currentIndex);
+    const { highlightElements } = useHighlightEffect(
+        currentIndex,
+        questionCards,
+    );
+    const tooltipHook = useTooltip(highlightElements);
 
     const nextSlide = () => {
         setCurrentIndex(prevIndex => (prevIndex + 1) % questionCards.length);
@@ -85,9 +89,10 @@ export function InfoModalBody({ questionCards }: Props) {
             </div>
             <div className={styles.footer}>
                 <H2
-                    text={`Question Cards - ${questionCards[currentIndex].informationTitle}`}
+                    text={`Question Card - ${questionCards[currentIndex].informationTitle}`}
                     color="white"
                 />
+                <p>{questionCards[currentIndex].informationDescription}</p>
             </div>
         </div>
     );
