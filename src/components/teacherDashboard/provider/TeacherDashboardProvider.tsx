@@ -1,9 +1,13 @@
 import { ReactNode, useRef, useState } from "react";
 
 import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
-import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
+import { BASE_URL, QUESTION_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
-import { useFetchWithToken, useInfiniteScrolling } from "../../../hooks";
+import {
+    useDelete,
+    useFetchWithToken,
+    useInfiniteScrolling,
+} from "../../../hooks";
 import { ErrorModal } from "../../modal";
 
 interface ITeacherDashboardProviderProps {
@@ -21,6 +25,7 @@ export function TeacherDashboardProvider({
     const updateTopicReq = useFetchWithToken<void>();
     const deleteTopicReq = useFetchWithToken<void>();
     const fetchSubjectsReq = useFetchWithToken<ISubject[]>();
+    const { deleteRequest } = useDelete();
     const fetchQuestionUrl = useRef<string>();
     const {
         fetchFromStart,
@@ -30,6 +35,7 @@ export function TeacherDashboardProvider({
         totalItemCount,
         resetPaginatedData,
         isLoading: fetchQuestionsLoading,
+        removeIdFromPaginatedData,
     } = useInfiniteScrolling<IQuestion>({
         url: fetchQuestionUrl.current ?? "",
         limit: 20,
@@ -100,6 +106,12 @@ export function TeacherDashboardProvider({
         setSelectedSubject(subject);
     };
 
+    const handleDeleteQuestion = async (id: string) => {
+        //TODO Handle error
+        await deleteRequest(`${BASE_URL}${QUESTION_URL}/${id}`);
+        removeIdFromPaginatedData(id);
+    };
+
     const isLoading = () => {
         return fetchSubjectsReq.isLoading || fetchQuestionsLoading;
     };
@@ -120,6 +132,7 @@ export function TeacherDashboardProvider({
             loaderRef,
             hasMore,
             totalItemCount,
+            handleDeleteQuestion,
         };
     };
 

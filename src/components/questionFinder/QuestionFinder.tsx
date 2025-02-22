@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { SearchWithFilters, Tabs } from "..";
+import { SearchWithFilters, Tabs, TabsProvider } from "..";
 import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
@@ -48,7 +48,9 @@ export function QuestionFinder() {
         {
             content: (
                 <QuestionCardList
-                    handleDeleteClick={handleDeleteClick}
+                    handleDeleteClick={(id: string) =>
+                        void handleDeleteClick(id)
+                    }
                     header={t(
                         `${activeFilters.userInteraction ?? "questionList"}Header`,
                     )}
@@ -73,7 +75,9 @@ export function QuestionFinder() {
                     setActiveFilter={onInterActionFilterClick}
                 >
                     <QuestionCardList
-                        handleDeleteClick={handleDeleteClick}
+                        handleDeleteClick={(id: string) =>
+                            void handleDeleteClick(id)
+                        }
                         header={t(
                             `${activeFilters.userInteraction ?? "questionList"}Header`,
                         )}
@@ -106,10 +110,12 @@ export function QuestionFinder() {
             />
 
             {isUser ? (
-                <Tabs
-                    containerStyle={tabsOuterContainerStyle}
-                    tabs={tabs}
-                />
+                <TabsProvider>
+                    <Tabs
+                        containerStyle={tabsOuterContainerStyle}
+                        tabs={tabs}
+                    />
+                </TabsProvider>
             ) : (
                 <QuestionCardList
                     header={t(

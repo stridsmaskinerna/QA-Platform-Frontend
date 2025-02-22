@@ -40,6 +40,9 @@ export function TeacherDashboardInternal() {
                     hasMore={context.hasMore}
                     loaderRef={context.loaderRef}
                     totalItemCount={context.totalItemCount}
+                    handleDeleteClick={(id: string) =>
+                        void context.handleDeleteQuestion(id)
+                    }
                 />
             )}
         </div>

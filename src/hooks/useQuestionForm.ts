@@ -96,18 +96,6 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
     const onRemoveTag = (tag: string) =>
         setAddedTags(prev => prev.filter(t => t !== tag));
 
-    // const resetForm = () => {
-    //     formRef.current?.reset();
-    //     setAddedTags([]);
-    //     setCourses([]);
-    //     setTopics([]);
-    //     if (richTextEditorHandle.current) {
-    //         console.log("finns");
-    //     }
-    //     richTextEditorHandle.current?.clearEditor();
-    //     setQuestionForEdit(undefined);
-    // };
-
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
