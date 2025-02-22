@@ -17,3 +17,4 @@ export * from "./questionDetailsViewer";
 export * from "./button";
 export * from "./teacherDashboard";
 export * from "./text";
+export * from "./navlinkTabs";

@@ -46,6 +46,7 @@
     padding-inline: 18px;
     border: 5px solid white;
     cursor: pointer;
+    text-wrap: nowrap;
 }
 
 .addBtn:hover {

@@ -20,6 +20,7 @@ interface ITabsProps {
     tabBtnsContainerStyle?: CSSProperties;
     containerStyle?: CSSProperties;
     collapseWidth?: number;
+    startingTabIdx?: number;
 }
 
 //You can optionally pass styles to most elements of this component. But most
@@ -42,12 +43,18 @@ export function Tabs({
     //top attribute to the content to ensure the content is rendered UNDERNEATH the tab buttons.
     const btnsContainerRef = useRef<HTMLDivElement>(null);
     const tabsWithIdx = tabs.map((t, idx) => ({ ...t, idx }));
-    const [activeTab, setActiveTab] = useState<number>(tabsWithIdx[0].idx);
+    const [activeTab, setActiveTab] = useState<number>(0);
     const [contentTopAttribute, setContentTopAttribute] = useState(0);
     const isViewportSmall = useMediaQuery(`(max-width: ${collapseWidth}px`);
+    const tab = tabsWithIdx.find(t => t.idx === activeTab);
+    if (!tab) {
+        throw new Error("Tabs components cant find the tab index");
+    }
+    const { content, contentContainerStyle } = tab;
 
     const handleTabClick = (idx: number) => {
         setActiveTab(idx);
+
         if (tabsWithIdx[idx].tabBtnClickSideEffect) {
             tabsWithIdx[idx].tabBtnClickSideEffect();
         }
@@ -82,20 +89,15 @@ export function Tabs({
                 )}
             </div>
 
-            {tabsWithIdx.map(({ content, idx, contentContainerStyle }) => (
-                <div
-                    style={{
-                        ...contentContainerStyle,
-                        top: contentTopAttribute,
-                    }}
-                    key={`tabContent-${idx}`}
-                    className={`${styles.tabContent} ${
-                        activeTab === idx ? styles.show : styles.hide
-                    }`}
-                >
-                    {content}
-                </div>
-            ))}
+            <div
+                style={{
+                    ...contentContainerStyle,
+                    top: contentTopAttribute,
+                }}
+                className={styles.tabContent}
+            >
+                {content}
+            </div>
         </div>
     );
 }

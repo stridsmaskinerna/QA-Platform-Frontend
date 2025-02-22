@@ -1,3 +1,3 @@
 export * from "./LoginForm";
 export * from "./RegisterForm";
-export * from "./askAQuestion";
+export * from "./questionForms";

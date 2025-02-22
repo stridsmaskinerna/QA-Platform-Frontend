@@ -411,41 +411,41 @@ pre::-webkit-scrollbar-thumb {
 }
 
 i.undo {
-    background-image: url(./src/assets/icons/richTextEditor/undo.svg);
+    background-image: url(/richTextEditor/undo.svg);
 }
 
 i.redo {
-    background-image: url(./src/assets/icons/richTextEditor/redo.svg);
+    background-image: url(/richTextEditor/redo.svg);
 }
 
 i.bold {
-    background-image: url(./src/assets/icons/richTextEditor/bold.svg);
+    background-image: url(/richTextEditor/bold.svg);
 }
 
 i.italic {
-    background-image: url(./src/assets/icons/richTextEditor/italic.svg);
+    background-image: url(/richTextEditor/italic.svg);
 }
 
 i.underline {
-    background-image: url(./src/assets/icons/richTextEditor/underline.svg);
+    background-image: url(/richTextEditor/underline.svg);
 }
 
 i.strikethrough {
-    background-image: url(./src/assets/icons/richTextEditor/strikethrough.svg);
+    background-image: url(/richTextEditor/strikethrough.svg);
 }
 
 i.left-align {
-    background-image: url(./src/assets/icons/richTextEditor/alignLeft.svg);
+    background-image: url(/richTextEditor/alignLeft.svg);
 }
 
 i.center-align {
-    background-image: url(./src/assets/icons/richTextEditor/alignCenter.svg);
+    background-image: url(/richTextEditor/alignCenter.svg);
 }
 
 i.right-align {
-    background-image: url(./src/assets/icons/richTextEditor/alignRight.svg);
+    background-image: url(/richTextEditor/alignRight.svg);
 }
 
 i.justify-align {
-    background-image: url(./src/assets/icons/richTextEditor/alignJustify.svg);
+    background-image: url(/richTextEditor/alignJustify.svg);
 }
