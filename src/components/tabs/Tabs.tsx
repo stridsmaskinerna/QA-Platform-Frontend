@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import styles from "./Tabs.module.css";
-import { TabButtons, TabButtonsMobile, useTabs } from ".";
+import { TabButtons, TabButtonsMobile } from ".";
 import { ITab } from "../../utils";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -39,15 +39,11 @@ export function Tabs({
     if (!tabs.length) {
         throw new Error("Must supply at least on element in tabs prop");
     }
-    const tabsContext = useTabs();
     //We use btnsContainerRef to read the height of the buttonsContainer and apply it as
     //top attribute to the content to ensure the content is rendered UNDERNEATH the tab buttons.
     const btnsContainerRef = useRef<HTMLDivElement>(null);
     const tabsWithIdx = tabs.map((t, idx) => ({ ...t, idx }));
-    const [activeTabLocal, setActiveTabLocal] = useState<number>(
-        tabsContext?.activeTab ?? 0,
-    );
-    const activeTab = tabsContext?.activeTab ?? activeTabLocal;
+    const [activeTab, setActiveTab] = useState<number>(0);
     const [contentTopAttribute, setContentTopAttribute] = useState(0);
     const isViewportSmall = useMediaQuery(`(max-width: ${collapseWidth}px`);
     const tab = tabsWithIdx.find(t => t.idx === activeTab);
@@ -57,11 +53,8 @@ export function Tabs({
     const { content, contentContainerStyle } = tab;
 
     const handleTabClick = (idx: number) => {
-        if (tabsContext) {
-            tabsContext.setActiveTab(idx);
-        } else {
-            setActiveTabLocal(idx);
-        }
+        setActiveTab(idx);
+
         if (tabsWithIdx[idx].tabBtnClickSideEffect) {
             tabsWithIdx[idx].tabBtnClickSideEffect();
         }

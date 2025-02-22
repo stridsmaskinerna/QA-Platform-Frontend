@@ -4,6 +4,9 @@ import {
     Header,
     ErrorBoundary,
     FullScreenLoader,
+    QuestionFinder,
+    AskAQuestion,
+    TeacherDashboard,
 } from "./components";
 import {
     Admin,
@@ -62,7 +65,20 @@ function App() {
                                 <HomeExtended />
                             </AuthGuard>
                         }
-                    />
+                    >
+                        <Route
+                            index
+                            element={<QuestionFinder />}
+                        />
+                        <Route
+                            path="ask"
+                            element={<AskAQuestion />}
+                        />
+                        <Route
+                            path="teacher"
+                            element={<TeacherDashboard />}
+                        />
+                    </Route>
                     <Route
                         path={QUESTION_DETAILS_ROUTE + QUESTION_ID}
                         element={

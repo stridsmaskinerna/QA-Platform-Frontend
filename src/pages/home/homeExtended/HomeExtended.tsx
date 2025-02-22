@@ -1,70 +1,35 @@
 import { useTranslation } from "react-i18next";
-import {
-    AskAQuestion,
-    QuestionFinder,
-    Tabs,
-    TabsProvider,
-    TeacherDashboard,
-} from "../../../components";
+import { NavLinkTabs } from "../../../components";
 import { useRoles } from "../../../hooks";
 import styles from "../HomeSharedStyle.module.css";
-import { ITab } from "../../../utils";
-import { CSSProperties, useMemo } from "react";
-
-const tabBtnsContainerStyle: CSSProperties = {
-    maxWidth: "100%",
-};
-
-const btnStyle: CSSProperties = {
-    fontSize: "13px",
-    width: "max-content",
-    paddingBlock: "5px",
-};
-
-const contentContainerStyle: CSSProperties = {
-    width: "100%",
-    marginTop: "1.5rem",
-};
-const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
+import { useMemo } from "react";
+import { Outlet } from "react-router";
+import { HOME_ROUTE } from "../../../data";
 
 export function HomeExtended() {
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
-    const tabs = useMemo(() => {
-        const baseTabs: ITab[] = [
-            {
-                content: <QuestionFinder />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("searchQuestions"),
-            },
-            {
-                content: <AskAQuestion />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("askAQuestion"),
-            },
+    const navTabs = useMemo(() => {
+        const baseNavTabs = [
+            { title: t("searchQuestions"), to: HOME_ROUTE },
+            { title: t("askAQuestion"), to: "ask" },
         ];
         if (isTeacher) {
-            baseTabs.push({
-                content: <TeacherDashboard />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("teacher"),
-            });
+            baseNavTabs.push({ title: t("teacher"), to: "teacher" });
         }
-        return baseTabs;
+        return baseNavTabs;
     }, [isTeacher, t]);
 
     return (
         <section className={styles.container}>
-            <TabsProvider>
-                <Tabs
-                    containerStyle={tabsContainerStyle}
-                    tabs={tabs}
-                    tabBtnsContainerStyle={tabBtnsContainerStyle}
+            <div className={styles.contentWrapper}>
+                <NavLinkTabs
+                    btnClass={styles.tabBtn}
+                    containerClass={styles.navTabsContainer}
+                    navTabs={navTabs}
                 />
-            </TabsProvider>
+                <Outlet />
+            </div>
         </section>
     );
 }

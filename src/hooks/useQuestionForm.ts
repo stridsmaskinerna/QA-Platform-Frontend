@@ -18,7 +18,6 @@ import { useGet, usePOST, usePUT } from "./Http";
 import { useQAContext } from ".";
 import { useDebounceCallback } from "usehooks-ts";
 import { useNavigate } from "react-router";
-import { useTabs } from "../components";
 
 interface IQuestionFormValues {
     title: string;
@@ -50,7 +49,6 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
-    const tabsContext = useTabs();
     const navigate = useNavigate();
     const [courses, setCourses] = useState<ISubject[]>([]);
     const [addedTags, setAddedTags] = useState<string[]>([]);
@@ -116,10 +114,7 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
             setIsLoading(true);
             if (action === "ask") {
                 await postQuestion(postQuestionUrl, formDetails);
-                await navigate(HOME_ROUTE, { replace: true });
-                if (tabsContext) {
-                    tabsContext.setActiveTab(0);
-                }
+                await navigate(HOME_ROUTE);
             } else {
                 await editQuestion(
                     `${postQuestionUrl}/${questionId}`,

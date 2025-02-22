@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { SearchWithFilters, Tabs, TabsProvider } from "..";
+import { SearchWithFilters, Tabs } from "..";
 import { useRoles, useSearchQuestions } from "../../hooks";
 import { QuestionCardList } from "../questionCardList";
 import styles from "./QuestionFinder.module.css";
@@ -110,12 +110,10 @@ export function QuestionFinder() {
             />
 
             {isUser ? (
-                <TabsProvider>
-                    <Tabs
-                        containerStyle={tabsOuterContainerStyle}
-                        tabs={tabs}
-                    />
-                </TabsProvider>
+                <Tabs
+                    containerStyle={tabsOuterContainerStyle}
+                    tabs={tabs}
+                />
             ) : (
                 <QuestionCardList
                     header={t(
