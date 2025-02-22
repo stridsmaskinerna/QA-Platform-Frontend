@@ -51,7 +51,7 @@ export function EditAQuestion({ questionId }: IEditAQuestionProps) {
                 ref={formRef}
             >
                 <Input
-                    inputValue={questionForEdit.title}
+                    defaultValue={questionForEdit.title}
                     labelStyle={labelStyle}
                     inputName="title"
                     minInputValueLength={5}
@@ -110,7 +110,7 @@ export function EditAQuestion({ questionId }: IEditAQuestionProps) {
                     className={styles.submitBtn}
                     type="submit"
                 >
-                    {t("submitQuestion")}
+                    {t("saveChanges")}
                 </button>
             </form>
         </div>

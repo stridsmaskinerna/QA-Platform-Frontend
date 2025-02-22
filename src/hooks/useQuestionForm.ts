@@ -6,11 +6,18 @@ import {
     useRef,
     useState,
 } from "react";
-import { BASE_URL, QUESTION_URL } from "../data";
-import { IOption, IQuestionForEdit, ISubject, ISuggestion } from "../utils";
+import { BASE_URL, HOME_ROUTE, QUESTION_URL } from "../data";
+import {
+    IOption,
+    IQuestionForEdit,
+    IRichTextEditorHandle,
+    ISubject,
+    ISuggestion,
+} from "../utils";
 import { useGet, usePOST, usePUT } from "./Http";
 import { useQAContext } from ".";
 import { useDebounceCallback } from "usehooks-ts";
+import { useNavigate } from "react-router";
 
 interface IQuestionFormValues {
     title: string;
@@ -42,12 +49,14 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
+    const navigate = useNavigate();
     const [courses, setCourses] = useState<ISubject[]>([]);
     const [addedTags, setAddedTags] = useState<string[]>([]);
     const [topics, setTopics] = useState<IOption[]>([]);
     const [description, setDescription] = useState("");
     const [questionForEdit, setQuestionForEdit] = useState<IQuestionForEdit>();
     const formRef = useRef<HTMLFormElement>(null);
+    const richTextEditorHandle = useRef<IRichTextEditorHandle>(null);
 
     const possibleCourseSuggestions: ISuggestion[] = useMemo(
         () =>
@@ -82,8 +91,21 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
     );
 
     const onAddTag = (tag: string) => setAddedTags(prev => [...prev, tag]);
+
     const onRemoveTag = (tag: string) =>
         setAddedTags(prev => prev.filter(t => t !== tag));
+
+    // const resetForm = () => {
+    //     formRef.current?.reset();
+    //     setAddedTags([]);
+    //     setCourses([]);
+    //     setTopics([]);
+    //     if (richTextEditorHandle.current) {
+    //         console.log("finns");
+    //     }
+    //     richTextEditorHandle.current?.clearEditor();
+    //     setQuestionForEdit(undefined);
+    // };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
@@ -105,14 +127,14 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
             setIsLoading(true);
             if (action === "ask") {
                 await postQuestion(postQuestionUrl, formDetails);
+                await navigate(HOME_ROUTE, { replace: true });
             } else {
                 await editQuestion(
                     `${postQuestionUrl}/${questionId}`,
                     formDetails,
                 );
+                await navigate(-1);
             }
-            formRef.current?.reset();
-
             setIsLoading(false);
         })();
     };
@@ -156,5 +178,6 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
         formRef,
         handleSubmit,
         questionForEdit,
+        richTextEditorHandle,
     };
 }

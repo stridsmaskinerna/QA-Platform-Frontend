@@ -157,3 +157,7 @@ export interface ITag {
     id: string;
     value: string;
 }
+
+export interface IRichTextEditorHandle {
+    clearEditor: () => void;
+}

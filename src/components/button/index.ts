@@ -1,6 +1,6 @@
 export * from "./cancelButton";
 export * from "./deleteButton";
-export * from "./routeButton";
+export * from "./goBackButton";
 export * from "./saveButton";
 export * from "./okButton";
 export * from "./editButton";

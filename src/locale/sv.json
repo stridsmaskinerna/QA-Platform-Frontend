@@ -115,6 +115,7 @@
         "delete": "Radera",
         "edit": "Ändra",
         "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
-        "editQuestion": "Ändra din fråga"
+        "editQuestion": "Ändra din fråga",
+        "saveChanges": "Spara ändringar"
     }
 }

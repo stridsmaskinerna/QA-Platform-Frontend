@@ -29,7 +29,6 @@ const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
 export function HomeExtended() {
     const { t } = useTranslation();
     const { isTeacher } = useRoles();
-
     const tabs = useMemo(() => {
         const baseTabs: ITab[] = [
             {

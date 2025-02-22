@@ -11,7 +11,7 @@ export function Toggle({ inputName, onClick, defaultChecked }: IToggleProps) {
     return (
         <label className={styles.switch}>
             <input
-                checked={defaultChecked}
+                defaultChecked={defaultChecked}
                 onChange={onClick}
                 value="false"
                 name={inputName}
