@@ -20,7 +20,7 @@ export function InfoModal({ open }: IInfoModalProps) {
         <>
             {isOpen && (
                 <Modal
-                    title={"Fast Facts You Shouldn't Miss"}
+                    title={""}
                     message={
                         <InfoModalBody questionCards={questionCards.all} />
                     }

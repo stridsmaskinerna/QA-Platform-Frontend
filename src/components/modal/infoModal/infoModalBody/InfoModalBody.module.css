@@ -29,7 +29,12 @@
     outline: 4px solid red;
 }
 
-.slide-container {
+.slide-container-outer {
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-container-inner {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -57,4 +62,68 @@ button {
 button:disabled {
     background: gray;
     cursor: not-allowed;
+}
+
+.nextEnter {
+    animation: slideInFromRight 0.3s forwards;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.nextExit {
+    animation: slideOutToLeft 0.2s forwards;
+}
+
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.prevEnter {
+    animation: slideInFromLeft 0.2s forwards;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.prevExit {
+    animation: slideOutToRight 0.2s forwards;
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }

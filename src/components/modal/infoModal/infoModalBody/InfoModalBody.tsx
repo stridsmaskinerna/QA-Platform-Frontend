@@ -14,6 +14,7 @@ interface Props {
 
 export function InfoModalBody({ questionCards }: Props) {
     const { t } = useTranslation();
+    const [animation, setAnimation] = useState(styles.nextEnter);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const { highlightElements } = useHighlightEffect(
@@ -23,17 +24,28 @@ export function InfoModalBody({ questionCards }: Props) {
     const tooltipHook = useTooltip(highlightElements);
 
     const nextSlide = () => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % questionCards.length);
+        setAnimation(styles.nextExit);
+        setTimeout(() => {
+            setCurrentIndex(
+                prevIndex => (prevIndex + 1) % questionCards.length,
+            );
+            setAnimation(styles.nextEnter);
+        }, 200);
     };
 
     const prevSlide = () => {
-        setCurrentIndex(
-            prevIndex =>
-                (prevIndex - 1 + questionCards.length) % questionCards.length,
-        );
+        setAnimation(styles.prevExit);
+        setTimeout(() => {
+            setCurrentIndex(
+                prevIndex =>
+                    (prevIndex - 1 + questionCards.length) %
+                    questionCards.length,
+            );
+            setAnimation(styles.prevEnter);
+        }, 200);
     };
 
-    const hidePointerEvens: MouseEventHandler<HTMLDivElement> = e => {
+    const hidePointerEvents: MouseEventHandler<HTMLDivElement> = e => {
         e.stopPropagation();
         const target = e.currentTarget;
         target.classList.add(styles.hidePointerEvents);
@@ -53,9 +65,12 @@ export function InfoModalBody({ questionCards }: Props) {
 
     return (
         <div className={styles.container}>
-            <span>
-                {currentIndex + 1} / {questionCards.length}
-            </span>
+            <H2
+                text={`Question Card - ${questionCards[currentIndex].informationTitle}`}
+                color="white"
+            />
+            <p>{questionCards[currentIndex].informationDescription}</p>
+
             <div className={styles.body}>
                 <button
                     onClick={prevSlide}
@@ -63,16 +78,18 @@ export function InfoModalBody({ questionCards }: Props) {
                 >
                     {"<"}
                 </button>
-                <div
-                    className={styles.slideContainer}
-                    onMouseMove={tooltipHook.handleMouseMove}
-                    onMouseEnter={overrideCursor}
-                    onMouseLeave={() => {
-                        tooltipHook.clearTooltipData();
-                    }}
-                    onMouseDown={hidePointerEvens}
-                >
-                    <QuestionCard data={questionCards[currentIndex]} />
+                <div className={styles.slideContainerOuter}>
+                    <div
+                        className={`${styles.slideContainerInner} ${animation}`}
+                        onMouseMove={tooltipHook.handleMouseMove}
+                        onMouseEnter={overrideCursor}
+                        onMouseLeave={() => {
+                            tooltipHook.clearTooltipData();
+                        }}
+                        onMouseDown={hidePointerEvents}
+                    >
+                        <QuestionCard data={questionCards[currentIndex]} />
+                    </div>
                 </div>
                 <button
                     onClick={nextSlide}
@@ -88,11 +105,9 @@ export function InfoModalBody({ questionCards }: Props) {
                 )}
             </div>
             <div className={styles.footer}>
-                <H2
-                    text={`Question Card - ${questionCards[currentIndex].informationTitle}`}
-                    color="white"
-                />
-                <p>{questionCards[currentIndex].informationDescription}</p>
+                <span>
+                    {currentIndex + 1} / {questionCards.length}
+                </span>
             </div>
         </div>
     );
