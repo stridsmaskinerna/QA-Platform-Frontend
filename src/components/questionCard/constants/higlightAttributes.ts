@@ -9,6 +9,6 @@ export const highlights = {
     publicQuestion: "public-question",
     publicQuestionTooltip: "public-question-span",
     tags: "tags",
-} as const;  
+} as const;
 
 export const highlightAttribute = "data-hl";

@@ -81,7 +81,7 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                         data-hl={highlights.publicQuestion}
                     />
                     <span
-                        className={styles.tooltip}    
+                        className={styles.tooltip}
                         data-hl={highlights.publicQuestionTooltip}
                     >
                         {props.isProtected

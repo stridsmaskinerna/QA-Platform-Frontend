@@ -5,7 +5,9 @@ import { highlightAttribute, highlights } from "../../../questionCard";
 import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
 
 export function useTooltip(currentIndex: number) {
-    const [highlightElements, setHighlightElements] = useState<(HTMLElement)[]>([]);
+    const [highlightElements, setHighlightElements] = useState<HTMLElement[]>(
+        [],
+    );
     const [tooltipData, setTooltipData] = useState<{
         text: string;
         position: { top: number; left: number };
@@ -25,37 +27,58 @@ export function useTooltip(currentIndex: number) {
             "If the author of the question have accepted an anwsers.",
         [highlights.publicQuestion]:
             "The question can only be viewwd by authenticated users.",
-        [highlights.tags]:
-            "Tags used to mark the question."
+        [highlights.tags]: "Tags used to mark the question.",
     };
 
     useEffect(() => {
-        highlightElements.forEach(e => e.classList.remove(
-            styelsInfoModalBody.highlightDefault
-        ))
-        const defaultHiglightElement = document.querySelector(
-            `[${highlightAttribute}=${questionCards[currentIndex].defaultMarker}]`);
-        (defaultHiglightElement as HTMLElement).classList.add(
-            styelsInfoModalBody.highlightDefault
+        highlightElements.forEach(e =>
+            e.classList.remove(styelsInfoModalBody.highlightDefault),
         );
-        
-    }, [currentIndex, highlightElements])
+        const defaultHiglightElement = document.querySelector(
+            `[${highlightAttribute}=${questionCards[currentIndex].defaultMarker}]`,
+        );
+        (defaultHiglightElement as HTMLElement).classList.add(
+            styelsInfoModalBody.highlightDefault,
+        );
+    }, [currentIndex, highlightElements]);
 
     useEffect(() => {
         const highlightElements: (HTMLElement | null)[] = [
-            document.querySelector(`[${highlightAttribute}=${highlights.subjectTitle}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.resolvedQuestion}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.publicQuestion}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.publicQuestionTooltip}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.topicName}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.creationDate}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.titleQuestion}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.userName}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.answerCount}]`),
-            document.querySelector(`[${highlightAttribute}=${highlights.tags}]`),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.subjectTitle}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.resolvedQuestion}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.publicQuestion}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.publicQuestionTooltip}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.topicName}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.creationDate}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.titleQuestion}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.userName}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.answerCount}]`,
+            ),
+            document.querySelector(
+                `[${highlightAttribute}=${highlights.tags}]`,
+            ),
         ];
 
-        const highlightElementsChecked = highlightElements.filter(e => e != null);
+        const highlightElementsChecked = highlightElements.filter(
+            e => e != null,
+        );
 
         setHighlightElements(highlightElementsChecked);
     }, []);
@@ -69,7 +92,7 @@ export function useTooltip(currentIndex: number) {
         (tooltipElement as HTMLElement).style.display = "none";
 
         return () => {
-            (tooltipElement as HTMLElement).style.display = origDisplay
+            (tooltipElement as HTMLElement).style.display = origDisplay;
         };
     });
 
@@ -79,15 +102,16 @@ export function useTooltip(currentIndex: number) {
 
         const highlightValue = targetElement.getAttribute(highlightAttribute);
 
-        if (highlightElements.find(e => e === targetElement) &&
-            highlightValue != null) {
+        if (
+            highlightElements.find(e => e === targetElement) &&
+            highlightValue != null
+        ) {
             targetElement.classList.add(styelsInfoModalBody.highlight);
             setTooltipData({
                 text: keywordDescriptions[highlightValue],
                 position: { top: e.clientY + 10, left: e.clientX + 10 },
             });
-        }
-        else {
+        } else {
             clearTooltipData();
         }
     };

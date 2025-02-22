@@ -51,8 +51,10 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
                 >
                     {props.topicName}
                 </span>
-                <div className={styles.timeSection}
-                    data-hl={highlights.creationDate}>
+                <div
+                    className={styles.timeSection}
+                    data-hl={highlights.creationDate}
+                >
                     <img
                         className={styles.icon}
                         src={clock_icon}
@@ -64,7 +66,10 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
                 </div>
             </div>
             <div className={styles.questionSection}>
-                <h2 className={styles.title} data-hl={highlights.titleQuestion}>
+                <h2
+                    className={styles.title}
+                    data-hl={highlights.titleQuestion}
+                >
                     {props.title}
                 </h2>
                 <p data-hl={highlights.userName}>

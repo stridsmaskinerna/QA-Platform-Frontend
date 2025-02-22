@@ -49,7 +49,6 @@ export function InfoModalBody({ questionCards }: Props) {
 
     return (
         <div className={styles.container}>
-
             <span>
                 {currentIndex + 1} / {questionCards.length}
             </span>
