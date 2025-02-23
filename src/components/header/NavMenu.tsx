@@ -56,11 +56,12 @@ export function NavMenu() {
                             />
                         </li>
                     )}
-                    <li
-                        className={styles.menuLinks}
-                        onClick={toggleUserGuide}
-                    >
-                        {t("header.linkHelp")}
+                    <li onClick={toggleUserGuide}>
+                        <NavLink
+                            to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
+                            onClickSideEffect={closeMenu}
+                            title={t("header.linkHelp")}
+                        />
                     </li>
                     <li>
                         <NavLink
