@@ -127,7 +127,7 @@
             "descriptionResolvedQuestion": "The author of the question has accepted an answer as acceptable.",
             "descriptionPublicQuestion": "The question can be viewed by everyone, including users who are not logged in.",
             "descriptionProtectedQuestion": "The question can only be viewed by logged-in users.",
-            "descriptionTopic": "The topic this question belongs to.",
+            "descriptionTopic": "The course topic this question belongs to.",
             "descriptionCreationDate": "How long time ago the question was asked.",
             "descriptionQuestionTitle": "The title of the question.",
             "descriptionAuthor": "The user who created this question.",

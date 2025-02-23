@@ -11,10 +11,12 @@ import {
     HOME_ROUTE,
     LOGIN_REGISTER_ROUTE,
 } from "../../data";
+import { UserGuideModal } from "../userGuide";
 
 export function NavMenu() {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
+    const [isUserGuideOpen, setUserGuideIsOpen] = useState(false);
     const { isAdmin, isGuest, isUser } = useRoles();
     const {
         authContext: { logout },
@@ -27,6 +29,10 @@ export function NavMenu() {
 
     const closeMenu = () => {
         setIsOpen(false);
+    };
+
+    const toggleUserGuide = () => {
+        setUserGuideIsOpen(prev => !prev);
     };
 
     useOnClickOutside(menuRef, () => {
@@ -50,7 +56,12 @@ export function NavMenu() {
                             />
                         </li>
                     )}
-
+                    <li
+                        className={styles.menuLinks}
+                        onClick={toggleUserGuide}
+                    >
+                        Help?
+                    </li>
                     <li>
                         <NavLink
                             to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
@@ -92,6 +103,10 @@ export function NavMenu() {
                 <span className={styles.burgerLine}></span>
                 <span className={styles.burgerLine}></span>
             </button>
+            <UserGuideModal
+                open={isUserGuideOpen}
+                onToggle={toggleUserGuide}
+            />
         </nav>
     );
 }

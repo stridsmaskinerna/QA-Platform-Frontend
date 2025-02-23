@@ -1,32 +1,26 @@
-import { useState } from "react";
-
 import { Modal } from "../../modal";
 import { UserGuide } from "../userGuide";
 import { useQuestionCards } from "../hooks";
 
 interface IInfoModalProps {
     open: boolean;
+    onToggle: () => void;
 }
 
-export function UserGuideModal({ open }: IInfoModalProps) {
-    const [isOpen, setIsOpen] = useState(open);
+export function UserGuideModal({ open, onToggle }: IInfoModalProps) {
     const questionCards = useQuestionCards();
-
-    const closeModal = () => {
-        setIsOpen(false);
-    };
 
     return (
         <>
-            {isOpen && (
+            {open && (
                 <Modal
                     title={""}
                     message={<UserGuide questionCards={questionCards.all} />}
                     okClick={() => {
-                        closeModal();
+                        onToggle();
                     }}
                     onBackdropClick={() => {
-                        closeModal();
+                        onToggle();
                     }}
                 />
             )}

@@ -17,7 +17,7 @@ export function useQuestionCards() {
         defaultMarker: highlights.subjectTitle,
         isResolved: true,
         id: "id",
-        topicName: "A Topic Name",
+        topicName: "A Course Topic",
         topicId: "topicId",
         subjectId: "subjectId",
         subjectName: "A Course Name",
@@ -29,7 +29,7 @@ export function useQuestionCards() {
         isHidden: false,
         isHideable: false,
         answerCount: 10,
-        tags: ["A Tag"],
+        tags: ["A Question Tag"],
         userId: "userId",
     } as const;
 

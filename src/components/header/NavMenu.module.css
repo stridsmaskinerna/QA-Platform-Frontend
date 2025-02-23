@@ -17,12 +17,18 @@
     gap: 20px;
 }
 
+li.menuLinks {
+    cursor: pointer;
+}
+
+li.menuLinks,
 .menuLinks ul li a {
     text-decoration: none;
     color: white;
     font-size: clamp(1rem, 15px, 1.5rem);
 }
 
+li.menuLinks:hover,
 .menuLinks ul li a:hover {
     color: var(--grey-light);
 }

@@ -9,6 +9,7 @@
     font-size: 14px;
     white-space: nowrap;
     z-index: 100;
-    transform: translate(-50%, -170%);
+    transform: translate(-50%, calc(-100% - 20px));
     opacity: 1;
+    text-wrap: wrap;
 }
