@@ -75,10 +75,10 @@
 
         "header": {
             "headerHeadline": "LTU Frågor & Svar",
+            "linkLoginRegister": "Logga in/Registrering",
             "linkAdmin": "Admin",
             "linkLogout": "Logga ut",
             "linkQA": "Frågor & Svar",
-            "loginRegister": "Logga in/Registrering",
             "linkHelp": "Hjälp?"
         },
 
@@ -142,7 +142,7 @@
             "defaultTopicName": "Kursdel",
             "defaultSubjectName": "Namnet på kursen ",
             "defaultSubjectCode": "Koden för kursen",
-            "defaultQuestionTitle": " How do you prevent retain cycles in Swift closures?",
+            "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
             "defaultTag": "En Markör"
         }
     }

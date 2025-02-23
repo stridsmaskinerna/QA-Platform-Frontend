@@ -78,7 +78,7 @@
             "linkAdmin": "Admin",
             "linkLogout": "Log out",
             "linkQA": "Q&A",
-            "loginRegister": "Login/Register",
+            "linkLoginRegister": "Login/Register",
             "linkHelp": "Help?"
         },
 

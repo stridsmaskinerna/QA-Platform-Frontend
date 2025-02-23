@@ -74,7 +74,7 @@ export function NavMenu() {
                             <NavLink
                                 to={LOGIN_REGISTER_ROUTE}
                                 onClickSideEffect={closeMenu}
-                                title={t("header.loginRegister")}
+                                title={t("header.linkLoginRegister")}
                             />
                         </li>
                     ) : (
