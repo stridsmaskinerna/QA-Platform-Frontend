@@ -52,7 +52,7 @@ export function NavMenu() {
                             <NavLink
                                 to={ADMIN_ROUTE}
                                 onClickSideEffect={closeMenu}
-                                title={t("admin")}
+                                title={t("header.linkAdmin")}
                             />
                         </li>
                     )}
@@ -60,13 +60,13 @@ export function NavMenu() {
                         className={styles.menuLinks}
                         onClick={toggleUserGuide}
                     >
-                        Help?
+                        {t("header.linkHelp")}
                     </li>
                     <li>
                         <NavLink
                             to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
                             onClickSideEffect={closeMenu}
-                            title={t("qa")}
+                            title={t("header.linkQA")}
                         />
                     </li>
                     {isGuest ? (
@@ -74,7 +74,7 @@ export function NavMenu() {
                             <NavLink
                                 to={LOGIN_REGISTER_ROUTE}
                                 onClickSideEffect={closeMenu}
-                                title={t("loginRegister")}
+                                title={t("header.loginRegister")}
                             />
                         </li>
                     ) : (
@@ -85,7 +85,7 @@ export function NavMenu() {
                                     logout();
                                     closeMenu();
                                 }}
-                                title={t("logout")}
+                                title={t("header.linkLogout")}
                             />
                         </li>
                     )}

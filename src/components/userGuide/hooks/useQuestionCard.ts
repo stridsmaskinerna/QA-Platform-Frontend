@@ -8,7 +8,7 @@ export function useQuestionCards() {
     const { t } = useTranslation();
 
     const createTitle = (subTitle: string) => {
-        return `Question Card - ${subTitle}`;
+        return `${t("userGuide.title")} - ${subTitle}`;
     };
 
     const subject: IQuestionWithInformationMeta = {
@@ -16,20 +16,20 @@ export function useQuestionCards() {
         informationDescription: t("userGuide.descriptionSubject"),
         defaultMarker: highlights.subjectTitle,
         isResolved: true,
-        id: "id",
-        topicName: "A Course Topic",
+        id: "questionId",
+        topicName: t("userGuide.defaultTopicName"),
         topicId: "topicId",
         subjectId: "subjectId",
-        subjectName: "A Course Name",
-        subjectCode: "A Course Code",
+        subjectName: t("userGuide.defaultSubjectName"),
+        subjectCode: t("userGuide.defaultSubjectCode"),
         userName: "Luca",
-        title: "How do you prevent retain cycles in Swift closures?",
+        title: t("userGuide.defaultQuestionTitle"),
         created: getOneDayOldTimestamp(),
         isProtected: false,
         isHidden: false,
         isHideable: false,
         answerCount: 10,
-        tags: ["A Question Tag"],
+        tags: [t("userGuide.defaultTag")],
         userId: "userId",
     } as const;
 

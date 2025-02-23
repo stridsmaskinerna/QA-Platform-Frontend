@@ -1,10 +1,6 @@
 {
     "translation": {
         "login": "Login",
-        "headerHeadline": "LTU Q&A",
-        "admin": "Admin",
-        "logout": "Log out",
-        "qa": "Q&A",
         "loginRegister": "Login/Register",
         "resolved": "Resolved",
         "resolvedPlural": "Resolved",
@@ -77,6 +73,15 @@
         "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
 
+        "header": {
+            "headerHeadline": "LTU Q&A",
+            "linkAdmin": "Admin",
+            "linkLogout": "Log out",
+            "linkQA": "Q&A",
+            "loginRegister": "Login/Register",
+            "linkHelp": "Help?"
+        },
+
         "teacherDashboard": {
             "title": "Teacher Dashboard",
             "manageTopicsFor": "Manage Topics for",
@@ -111,6 +116,7 @@
         },
 
         "userGuide": {
+            "title": "Question Card",
             "subtitleSubject": "Course",
             "subtitleUnresolvedQuestion": "Unresolved Question",
             "subtitleResolvedQuestion": "Resolved Question",
@@ -132,7 +138,12 @@
             "descriptionQuestionTitle": "The title of the question.",
             "descriptionAuthor": "The user who created this question.",
             "descriptionAnswercount": "The number of answers.",
-            "descriptionTags": "Tags used to mark the question."
+            "descriptionTags": "Tags used to mark the question.",
+            "defaultTopicName": "A Course Topic",
+            "defaultSubjectName": "A Course Name",
+            "defaultSubjectCode": "A Course Code",
+            "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
+            "defaultTag": "A Question Tag"
         }
     }
 }
