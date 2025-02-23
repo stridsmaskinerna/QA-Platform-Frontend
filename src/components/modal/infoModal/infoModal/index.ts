@@ -1,1 +1,0 @@
-export { InfoModal } from "./InfoModal";

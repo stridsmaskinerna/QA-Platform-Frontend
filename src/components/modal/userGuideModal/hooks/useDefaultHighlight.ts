@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { highlightAttribute, highlights } from "../../../questionCard";
 import { IQuestionWithInformationMeta } from "../types";
-import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
+import styelsInfoModalBody from "../userGuide/UserGuide.module.css";
 
 export function useHighlightEffect(
     currentIndex: number,
@@ -13,15 +13,24 @@ export function useHighlightEffect(
     );
 
     useEffect(() => {
-        highlightElements.forEach(e =>
-            e.classList.remove(styelsInfoModalBody.highlightDefault),
-        );
+        highlightElements.forEach(e => {
+            e.classList.remove(styelsInfoModalBody.highlightDefault);
+            e.classList.remove(styelsInfoModalBody.highlightDefaultImage);
+        });
+
         const defaultHiglightElement = document.querySelector(
             `[${highlightAttribute}=${questionCards[currentIndex].defaultMarker}]`,
         );
-        (defaultHiglightElement as HTMLElement).classList.add(
-            styelsInfoModalBody.highlightDefault,
-        );
+
+        if (defaultHiglightElement instanceof HTMLImageElement) {
+            (defaultHiglightElement as HTMLElement).classList.add(
+                styelsInfoModalBody.highlightDefaultImage,
+            );
+        } else {
+            (defaultHiglightElement as HTMLElement).classList.add(
+                styelsInfoModalBody.highlightDefault,
+            );
+        }
     }, [currentIndex, highlightElements, questionCards]);
 
     useEffect(() => {
@@ -69,3 +78,7 @@ export function useHighlightEffect(
         highlightElements,
     };
 }
+
+export type UseHighlightEffectReturnType = ReturnType<
+    typeof useHighlightEffect
+>;

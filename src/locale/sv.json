@@ -108,6 +108,31 @@
             "submitCommentInfo": "Skapa kommentar",
             "createCommentPlaceholder": "Skapa en kommentar..",
             "submitComment": "Kommentera"
+        },
+
+        "userGuide": {
+            "subtitleSubject": "Course",
+            "subtitleUnresolvedQuestion": "Unresolved Question",
+            "subtitleResolvedQuestion": "Resolved Question",
+            "subtitlePublicQuestion": "A Public Question",
+            "subtitleProtectedQuestion": "A Protected Question",
+            "subtitleTopic": "Topic",
+            "subtitleCreationDate": "Date",
+            "subtitleQuestionTitle": "Title",
+            "subtitleAuthor": "Author",
+            "subtitleAnswercount": "Answercount",
+            "subtitleTags": "Tags",
+            "descriptionSubject": "The course name and code associated with this question.",
+            "descriptionUnresolvedQuestion": "The author of the question has NOT accepted an answer as acceptable.",
+            "descriptionResolvedQuestion": "The author of the question has accepted an answer as acceptable.",
+            "descriptionPublicQuestion": "The question can be viewed by everyone, including users who are not logged in.",
+            "descriptionProtectedQuestion": "The question can only be viewed by logged-in users.",
+            "descriptionTopic": "The topic this question belongs to.",
+            "descriptionCreationDate": "How long time ago the question was asked.",
+            "descriptionQuestionTitle": "The title of the question.",
+            "descriptionAuthor": "The user who created this question.",
+            "descriptionAnswercount": "The number of answers.",
+            "descriptionTags": "Tags used to mark the question."
         }
     }
 }

@@ -1,19 +1,17 @@
 import { MouseEventHandler, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import { QuestionCard } from "../../../questionCard";
 import { DynamicTooltip } from "../dynamicTooltip";
 import { H2 } from "../../../text";
 import { IQuestionWithInformationMeta } from "../types";
 import { useHighlightEffect, useTooltip } from "../hooks";
-import styles from "./InfoModalBody.module.css";
+import styles from "./UserGuide.module.css";
 
-interface Props {
+interface IUserGuideProps {
     questionCards: IQuestionWithInformationMeta[];
 }
 
-export function InfoModalBody({ questionCards }: Props) {
-    const { t } = useTranslation();
+export function UserGuide({ questionCards }: IUserGuideProps) {
     const [animation, setAnimation] = useState(styles.nextEnter);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +19,10 @@ export function InfoModalBody({ questionCards }: Props) {
         currentIndex,
         questionCards,
     );
-    const tooltipHook = useTooltip(highlightElements);
+    const tooltipHook = useTooltip(
+        highlightElements,
+        questionCards[currentIndex],
+    );
 
     const nextSlide = () => {
         setAnimation(styles.nextExit);
@@ -59,14 +60,13 @@ export function InfoModalBody({ questionCards }: Props) {
     };
 
     const overrideCursor: MouseEventHandler<HTMLDivElement> = e => {
-        e.stopPropagation();
         e.currentTarget.style.cursor = "pointer";
     };
 
     return (
         <div className={styles.container}>
             <H2
-                text={`Question Card - ${questionCards[currentIndex].informationTitle}`}
+                text={`${questionCards[currentIndex].informationTitle}`}
                 color="white"
             />
             <p>{questionCards[currentIndex].informationDescription}</p>

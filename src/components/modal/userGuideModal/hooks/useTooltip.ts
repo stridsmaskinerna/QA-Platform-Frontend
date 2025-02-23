@@ -1,29 +1,42 @@
 import { useEffect, useState } from "react";
 
 import { highlightAttribute, highlights as hl } from "../../../questionCard";
-import styelsInfoModalBody from "../infoModalBody/InfoModalBody.module.css";
+import styelsInfoModalBody from "../userGuide/UserGuide.module.css";
 import { useQuestionCards } from "./useQuestionCard";
+import { IQuestionWithInformationMeta } from "../types";
 
-export function useTooltip(highlightElements: HTMLElement[]) {
-    const cards = useQuestionCards();
+export function useTooltip(
+    highlightElements: HTMLElement[],
+    currentQuestionCard: IQuestionWithInformationMeta,
+) {
+    const questionCards = useQuestionCards();
     const [tooltipData, setTooltipData] = useState<{
         text: string;
         position: { top: number; left: number };
     } | null>(null);
 
-    // TODO! Update to mark unresolved and protected correctly
-    // Maybe neeed a third meta filed called tooltipDescription.
+    const descriptionPublicOrProtected =
+        currentQuestionCard.informationDescription ===
+        questionCards.protected.informationDescription
+            ? currentQuestionCard.informationDescription
+            : questionCards.public.informationDescription;
+
+    const descriptionResolvedOrUnresolved =
+        currentQuestionCard.informationDescription ===
+        questionCards.unresolved.informationDescription
+            ? currentQuestionCard.informationDescription
+            : questionCards.resolved.informationDescription;
+
     const keywordDescriptions: Record<string, string> = {
-        [hl.userName]: cards.questionCardAuthor.informationDescription,
-        [hl.titleQuestion]: cards.questionCardTitle.informationDescription,
-        [hl.topicName]: cards.questionCardTopic.informationDescription,
-        [hl.subjectTitle]: cards.questionCardSubject.informationDescription,
-        [hl.answerCount]: cards.questionCardAnswers.informationDescription,
-        [hl.creationDate]: cards.questionCardDate.informationDescription,
-        [hl.resolvedQuestion]:
-            cards.questionCardResolved.informationDescription,
-        [hl.publicQuestion]: cards.questionCardPublic.informationDescription,
-        [hl.tags]: cards.questionCardTags.informationDescription,
+        [hl.userName]: questionCards.author.informationDescription,
+        [hl.titleQuestion]: questionCards.title.informationDescription,
+        [hl.topicName]: questionCards.topic.informationDescription,
+        [hl.subjectTitle]: questionCards.subject.informationDescription,
+        [hl.answerCount]: questionCards.answers.informationDescription,
+        [hl.creationDate]: questionCards.creationDate.informationDescription,
+        [hl.resolvedQuestion]: descriptionResolvedOrUnresolved,
+        [hl.publicQuestion]: descriptionPublicOrProtected,
+        [hl.tags]: questionCards.tags.informationDescription,
     };
 
     useEffect(() => {
@@ -41,7 +54,6 @@ export function useTooltip(highlightElements: HTMLElement[]) {
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const targetElement = e.target as HTMLElement;
-        e.stopPropagation();
 
         const highlightValue = targetElement.getAttribute(highlightAttribute);
 
@@ -69,3 +81,5 @@ export function useTooltip(highlightElements: HTMLElement[]) {
         handleMouseMove,
     };
 }
+
+export type UseTooltipReturnType = ReturnType<typeof useTooltip>;

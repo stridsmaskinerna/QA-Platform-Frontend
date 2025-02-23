@@ -1,3 +1,3 @@
 export * from "./modal";
 export * from "./errorModal";
-export * from "./infoModal";
+export * from "./userGuideModal";
