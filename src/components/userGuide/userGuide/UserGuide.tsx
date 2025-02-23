@@ -5,6 +5,8 @@ import { DynamicTooltip } from "../dynamicTooltip";
 import { H2 } from "../../text";
 import { IQuestionWithInformationMeta } from "../types";
 import { useHighlightEffect, useTooltip } from "../hooks";
+import nextSlideIcon from "../../../assets/icons/arrow_right_white.svg";
+import prevSlideIcon from "../../../assets/icons/arrow_left_white.svg";
 import styles from "./UserGuide.module.css";
 
 interface IUserGuideProps {
@@ -72,12 +74,6 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
             <p>{questionCards[currentIndex].informationDescription}</p>
 
             <div className={styles.body}>
-                <button
-                    onClick={prevSlide}
-                    disabled={currentIndex === 0}
-                >
-                    {"<"}
-                </button>
                 <div className={styles.slideContainerOuter}>
                     <div
                         className={`${styles.slideContainerInner} ${animation}`}
@@ -91,12 +87,6 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                         <QuestionCard data={questionCards[currentIndex]} />
                     </div>
                 </div>
-                <button
-                    onClick={nextSlide}
-                    disabled={currentIndex === questionCards.length - 1}
-                >
-                    {">"}
-                </button>
                 {tooltipHook.tooltipData && (
                     <DynamicTooltip
                         position={tooltipHook.tooltipData.position}
@@ -105,9 +95,28 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                 )}
             </div>
             <div className={styles.footer}>
-                <span>
-                    {currentIndex + 1} / {questionCards.length}
-                </span>
+                <img
+                    className={styles.navigationBtn}
+                    onClick={() => {
+                        prevSlide();
+                    }}
+                    src={prevSlideIcon}
+                    alt={""}
+                    title={""}
+                />
+                <H2
+                    color="white"
+                    text={`${currentIndex + 1} / ${questionCards.length}`}
+                />
+                <img
+                    className={styles.navigationBtn}
+                    onClick={() => {
+                        nextSlide();
+                    }}
+                    src={nextSlideIcon}
+                    alt={""}
+                    title={""}
+                />
             </div>
         </div>
     );
