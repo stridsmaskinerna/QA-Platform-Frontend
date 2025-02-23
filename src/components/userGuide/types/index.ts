@@ -1,4 +1,4 @@
-import { IQuestion } from "../../../../utils";
+import { IQuestion } from "../../../utils";
 
 interface MetaInformation {
     informationTitle: string;

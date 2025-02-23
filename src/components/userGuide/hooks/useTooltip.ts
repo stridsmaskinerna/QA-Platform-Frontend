@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { highlightAttribute, highlights as hl } from "../../../questionCard";
+import { highlightAttribute, highlights as hl } from "../../questionCard";
 import styelsInfoModalBody from "../userGuide/UserGuide.module.css";
 import { useQuestionCards } from "./useQuestionCard";
 import { IQuestionWithInformationMeta } from "../types";

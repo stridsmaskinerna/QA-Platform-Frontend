@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Modal } from "../..";
+import { Modal } from "../../modal";
 import { UserGuide } from "../userGuide";
 import { useQuestionCards } from "../hooks";
 

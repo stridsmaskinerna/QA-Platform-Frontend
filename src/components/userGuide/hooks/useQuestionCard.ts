@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { highlights } from "../../../questionCard";
+import { highlights } from "../../questionCard";
 import { IQuestionWithInformationMeta } from "../types";
 import { getOneDayOldTimestamp } from "../utility";
 

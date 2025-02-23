@@ -1,8 +1,8 @@
 import { MouseEventHandler, useRef, useState } from "react";
 
-import { QuestionCard } from "../../../questionCard";
+import { QuestionCard } from "../../questionCard";
 import { DynamicTooltip } from "../dynamicTooltip";
-import { H2 } from "../../../text";
+import { H2 } from "../../text";
 import { IQuestionWithInformationMeta } from "../types";
 import { useHighlightEffect, useTooltip } from "../hooks";
 import styles from "./UserGuide.module.css";

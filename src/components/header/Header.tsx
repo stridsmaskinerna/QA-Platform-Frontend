@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { UserGuideModal } from "../userGuide";
 import styles from "./Header.module.css";
 import { NavMenu } from ".";
-import { UserGuideModal } from "../modal";
 
 export function Header() {
     const { t } = useTranslation();
