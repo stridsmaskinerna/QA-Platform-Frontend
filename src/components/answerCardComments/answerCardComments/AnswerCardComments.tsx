@@ -9,7 +9,7 @@ import {
     useDELETE,
     usePOST,
     usePUT,
-    useGet as useGET,
+    useGET,
     useQAContext,
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
@@ -29,10 +29,10 @@ export function AnswerCardComments({
     const qaContext = useQAContext();
     const scrollPositionRef = useRef<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
-    const postCommentReq = usePOST<IComment>();
-    const deleteCommentReq = useDELETE<IComment>();
+    const postCommentReq = usePOST<void>();
+    const deleteCommentReq = useDELETE<void>();
     const getAnswerCommentsReq = useGET<IComment[]>();
-    const putCommentReq = usePUT<IComment>();
+    const putCommentReq = usePUT<void>();
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
     const [isCommentCreatorOpen, setIsCommentCreatorOpen] = useState(false);
     const [currentComments, setCurrentComments] = useState(comments);

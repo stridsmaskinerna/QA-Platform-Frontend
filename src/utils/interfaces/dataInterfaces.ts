@@ -43,6 +43,12 @@ export interface ICommentForCreation {
     value: string;
 }
 
+export interface IAnswerForCreation {
+    questionId: string;
+    value: string;
+    filePath?: string | undefined;
+}
+
 export interface IComment {
     id: string;
     userName: string;

@@ -5,6 +5,10 @@ import chatIcon from "../../../assets/icons/chat_white.svg";
 import { RichTextEditor } from "../../richText";
 import styles from "./AnswerCreator.module.css";
 import { TabLabelContainer } from "../../utility";
+import { usePOST, useGET } from "../../../hooks";
+import { ANSWER_URL, BASE_URL } from "../../../data";
+import { IAnswerForCreation } from "../../../utils";
+import { LexicalEditor } from "lexical";
 
 interface IAnswerCreatorProps {
     questionId: string;
@@ -18,14 +22,34 @@ const detailsContainerStyle: CSSProperties = {
 // See AskAQuestion, EditAQuestion, and RichTextEditor
 export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
     const { t } = useTranslation();
-    const [description, setDescription] = useState("");
+    const [value, setValue] = useState("");
     const [isAnswerCreatorOpen, setIsAnswerCreatorOpen] = useState(false);
+    const postAnswerReq = usePOST<void>();
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("currentContent", description);
-        console.log("questionId", questionId);
-        setDescription("");
+
+        const runSubmit = async () => {
+            const answer: IAnswerForCreation = {
+                questionId,
+                value,
+            };
+
+            const postRes = await postAnswerReq.postRequestWithError(
+                `${BASE_URL}${ANSWER_URL}`,
+                answer,
+            );
+
+            if (postRes.error != null) {
+                return;
+            }
+
+            setValue("");
+            // TODO! Update to more clean solution;
+            window.location.reload();
+        };
+
+        void runSubmit();
     };
 
     return (
@@ -43,7 +67,7 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
                 <div className={styles.editor}>
                     <RichTextEditor
                         placeholder={"Create you answer..."}
-                        setEditorState={setDescription}
+                        setEditorState={setValue}
                         containerStyle={detailsContainerStyle}
                     />
                 </div>
@@ -61,6 +85,7 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
                     </button>
                 </div>
             </form>
+            {/* <EditorController setEditor={setEditor} /> */}
         </TabLabelContainer>
     );
 }
