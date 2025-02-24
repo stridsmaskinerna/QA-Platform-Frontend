@@ -4,7 +4,7 @@ import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
 import { GoBackButton } from "..";
 import { useTranslation } from "react-i18next";
-import { AnswerCreator } from "../answerCreator";
+import { AnswerCreator } from "./answerCreator";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;

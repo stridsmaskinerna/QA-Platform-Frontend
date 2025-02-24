@@ -1,0 +1,44 @@
+.container {
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.editor {
+    flex: 1;
+}
+
+.answer-btn-ctr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.answer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .answer-btn {
+        width: auto;
+        padding-inline: 0.5rem;
+    }
+
+    .answer-btn-text {
+        display: none;
+    }
+}

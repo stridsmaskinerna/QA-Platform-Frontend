@@ -18,6 +18,7 @@ import {
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
+import { TabLabelContainer } from "../../utility";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -153,66 +154,25 @@ export function AnswerCardComments({
                 ]}
                 onClearErrors={clearErrors}
             />
-            <div
-                className={styles.header}
-                onClick={() => {
-                    toggleCommentsCreator();
-                }}
+            <TabLabelContainer
+                label={t("answerCardComments.commentsCreatorTitle")}
             >
-                <div className={styles.headerLabel}>
-                    <img
-                        src={addCommentIcon}
-                        alt={t("answerCardComments.createCommentInfo")}
-                        title={t("answerCardComments.createCommentInfo")}
-                        className={styles.labelIcon}
-                    />
-                    <H2 text={t("answerCardComments.commentsCreatorTitle")} />
-                </div>
-                <img
-                    ref={viewCommentsCreatorRef}
-                    src={openIcon}
-                    alt={t("answerCardComments.createCommentInfo")}
-                    title={t("answerCardComments.createCommentInfo")}
-                    className={styles.openIcon}
-                />
-            </div>
-            {!hideCommentCreator && (
                 <CommentCreator
                     answerId={answerId}
                     createComment={createComment}
                 />
-            )}
-            <div
-                className={styles.header}
-                onClick={() => {
-                    toggleComments();
-                }}
+            </TabLabelContainer>
+
+            <TabLabelContainer
+                label={t("answerCardComments.commentsListTitle")}
             >
-                <div className={styles.headerLabel}>
-                    <img
-                        src={commentListIcon}
-                        alt={t("answerCardComments.viewCommentInfo")}
-                        title={t("answerCardComments.viewCommentInfo")}
-                        className={styles.labelIcon}
-                    />
-                    <H2 text={t("answerCardComments.commentsListTitle")} />
-                </div>
-                <img
-                    ref={viewCommentsRef}
-                    src={openIcon}
-                    alt={t("answerCardComments.viewCommentInfo")}
-                    title={t("answerCardComments.viewCommentInfo")}
-                    className={styles.openIcon}
-                />
-            </div>
-            {!hideComment && (
                 <CommentList
                     highlightedCommentId={highlightedCommentId}
                     comments={currentComments}
                     deleteComment={deleteComment}
                     updateComment={updateComment}
                 />
-            )}
+            </TabLabelContainer>
         </div>
     );
 }
