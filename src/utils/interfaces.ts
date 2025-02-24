@@ -20,6 +20,13 @@ export interface IAuthContext {
     register: (
         formData: Omit<IRegisterFormData, "confirmPassword">,
     ) => Promise<RegisterErrorMessage | void>;
+    isLoading: boolean;
+}
+
+export interface IProblemDetail {
+    status: number;
+    title: string;
+    detail: string | undefined;
 }
 
 export interface IUserDetails {
@@ -155,4 +162,8 @@ export interface IOption {
 export interface ITag {
     id: string;
     value: string;
+}
+
+export interface IRichTextEditorHandle {
+    clearEditor: () => void;
 }

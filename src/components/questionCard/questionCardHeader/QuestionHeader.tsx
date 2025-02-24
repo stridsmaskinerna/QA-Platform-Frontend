@@ -8,6 +8,7 @@ import visibility_on from "../../../assets/icons/visibility_on.svg";
 import { usePUT } from "../../../hooks";
 import { BASE_URL, QUESTION_URL } from "../../../data";
 import { Dispatch, SetStateAction } from "react";
+import { highlights } from "../constants";
 
 interface QuestionHeaderProps {
     subjectName: string;
@@ -48,7 +49,12 @@ export function QuestionHeader(props: QuestionHeaderProps) {
 
     return (
         <div className={styles.container}>
-            <h3 className={styles.courseTitle}>{subjectDisplay}</h3>
+            <h3
+                className={styles.courseTitle}
+                data-hl={highlights.subjectTitle}
+            >
+                {subjectDisplay}
+            </h3>
             <div className={styles.iconSection}>
                 <div
                     className={`${styles.resolvedContainer} ${isResolvedClass}`}
@@ -60,7 +66,10 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                             className={styles.icon}
                         />
                     )}
-                    <span className={styles.resolvedTextContainer}>
+                    <span
+                        className={styles.resolvedTextContainer}
+                        data-hl={highlights.resolvedQuestion}
+                    >
                         {props.isResolved ? t("resolved") : t("unresolved")}
                     </span>
                 </div>
@@ -69,8 +78,12 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                         className={styles.icon}
                         src={isPublic}
                         alt=""
+                        data-hl={highlights.publicQuestion}
                     />
-                    <span className={styles.tooltip}>
+                    <span
+                        className={styles.tooltip}
+                        data-hl={highlights.publicQuestionTooltip}
+                    >
                         {props.isProtected
                             ? t("nonPublicQuestion")
                             : t("publicQuestion")}

@@ -1,9 +1,15 @@
 import { ReactNode, useRef, useState } from "react";
 
 import { IQuestion, ISubject, ITopic, ITopicForCreation } from "../../../utils";
-import { BASE_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
+import { BASE_URL, QUESTION_URL, SUBJECT_URL, TOPIC_URL } from "../../../data";
 import { ITeacherDashboardContext, TeacherDashboardContext } from "../context";
-import { useFetchWithToken, useInfiniteScrolling } from "../../../hooks";
+import {
+    useDELETE,
+    useFetchWithToken,
+    useInfiniteScrolling,
+    usePOST,
+    usePUT,
+} from "../../../hooks";
 import { ErrorModal } from "../../modal";
 
 interface ITeacherDashboardProviderProps {
@@ -17,10 +23,11 @@ export function TeacherDashboardProvider({
     const [selectedSubject, setSelectedSubject] = useState<ISubject | null>(
         null,
     );
-    const createTopicReq = useFetchWithToken<void>();
-    const updateTopicReq = useFetchWithToken<void>();
-    const deleteTopicReq = useFetchWithToken<void>();
+    const createTopicReq = usePOST<void>();
+    const updateTopicReq = usePUT<void>();
+    const deleteTopicReq = useDELETE<void>();
     const fetchSubjectsReq = useFetchWithToken<ISubject[]>();
+    const deleteQuestionReq = useDELETE<void>();
     const fetchQuestionUrl = useRef<string>();
     const {
         fetchFromStart,
@@ -30,22 +37,29 @@ export function TeacherDashboardProvider({
         totalItemCount,
         resetPaginatedData,
         isLoading: fetchQuestionsLoading,
+        removeIdFromPaginatedData,
     } = useInfiniteScrolling<IQuestion>({
         url: fetchQuestionUrl.current ?? "",
         limit: 20,
     });
 
     const fetchTeacherSubjects = async () => {
-        const data = await fetchSubjectsReq.requestHandler(
-            `${BASE_URL}${SUBJECT_URL}/teacher`,
-        );
+        const { response, error } =
+            await fetchSubjectsReq.requestHandlerWithError(
+                `${BASE_URL}${SUBJECT_URL}/teacher`,
+            );
 
-        if (data != null && selectedSubject == null) {
-            setSubjects(data);
-            setSelectedSubject(data[0]);
-        } else if (data != null && selectedSubject != null) {
-            setSubjects(data);
-            const subject = data.find(s => s.id === selectedSubject.id) ?? null;
+        if (error != null) {
+            return;
+        }
+
+        if (response != null && selectedSubject == null) {
+            setSubjects(response);
+            setSelectedSubject(response[0]);
+        } else if (response != null && selectedSubject != null) {
+            setSubjects(response);
+            const subject =
+                response.find(s => s.id === selectedSubject.id) ?? null;
             setSelectedSubject(subject);
         } else {
             setSubjects([]);
@@ -59,37 +73,40 @@ export function TeacherDashboardProvider({
     };
 
     const updateTopic = async (topic: ITopic) => {
-        await updateTopicReq.requestHandler(
+        const { error } = await updateTopicReq.putRequestWithError(
             `${BASE_URL}${TOPIC_URL}/${topic.id}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(topic),
-            },
+            topic,
         );
+
+        if (error != null) {
+            return;
+        }
+
         await fetchTeacherSubjects();
     };
 
     const createTopic = async (topic: ITopicForCreation) => {
-        await createTopicReq.requestHandler(`${BASE_URL}${TOPIC_URL}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(topic),
-        });
+        const { error } = await createTopicReq.postRequestWithError(
+            `${BASE_URL}${TOPIC_URL}`,
+            topic,
+        );
+
+        if (error != null) {
+            return;
+        }
+
         await fetchTeacherSubjects();
     };
 
     const deleteTopic = async (topic: ITopic) => {
-        await deleteTopicReq.requestHandler(
+        const { error } = await deleteTopicReq.deleteRequestWithError(
             `${BASE_URL}${TOPIC_URL}/${topic.id}`,
-            {
-                method: "DELETE",
-            },
         );
+
+        if (error != null) {
+            return;
+        }
+
         await fetchTeacherSubjects();
     };
 
@@ -98,6 +115,18 @@ export function TeacherDashboardProvider({
             resetPaginatedData();
         }
         setSelectedSubject(subject);
+    };
+
+    const handleDeleteQuestion = async (id: string) => {
+        const { error } = await deleteQuestionReq.deleteRequestWithError(
+            `${BASE_URL}${QUESTION_URL}/${id}`,
+        );
+
+        if (error != null) {
+            return;
+        }
+
+        removeIdFromPaginatedData(id);
     };
 
     const isLoading = () => {
@@ -120,6 +149,7 @@ export function TeacherDashboardProvider({
             loaderRef,
             hasMore,
             totalItemCount,
+            handleDeleteQuestion,
         };
     };
 
@@ -127,20 +157,22 @@ export function TeacherDashboardProvider({
         updateTopicReq.clearError();
         deleteTopicReq.clearError();
         createTopicReq.clearError();
+        fetchSubjectsReq.clearError();
+        deleteQuestionReq.clearError();
     };
 
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
-            {
-                <ErrorModal
-                    errors={[
-                        updateTopicReq.error,
-                        deleteTopicReq.error,
-                        createTopicReq.error,
-                    ]}
-                    onClearErrors={clearErrors}
-                />
-            }
+            <ErrorModal
+                errors={[
+                    updateTopicReq.error,
+                    deleteTopicReq.error,
+                    createTopicReq.error,
+                    fetchSubjectsReq.error,
+                    deleteQuestionReq.error,
+                ]}
+                onClearErrors={clearErrors}
+            />
             {children}
         </TeacherDashboardContext.Provider>
     );

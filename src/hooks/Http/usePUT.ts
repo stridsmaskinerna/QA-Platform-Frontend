@@ -17,6 +17,22 @@ interface IUsePutReturn<T> {
         body?: unknown,
         options?: RequestInit,
     ) => Promise<{ data: T | null; headers: K | null }>;
+    putRequestWithError: (
+        url: RequestInfo | URL,
+        body?: unknown,
+        options?: RequestInit,
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
+    putRequestWithHeaderAndError: <K extends Record<string, unknown>>(
+        url: RequestInfo | URL,
+        expectedHeaders: (keyof K)[],
+        parser: { [U in keyof K]: (value: string | null) => K[U] },
+        body?: unknown,
+        options?: RequestInit,
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 /**
@@ -70,11 +86,58 @@ export function usePUT<T>(): IUsePutReturn<T> {
         );
     };
 
+    /**
+     * Wrapper for making a PUT request with error.
+     */
+    const putRequestWithError = (
+        url: RequestInfo | URL,
+        body?: unknown,
+        options?: RequestInit,
+    ) => {
+        return fetchWithToken.requestHandlerWithError(url, {
+            ...options,
+            method: "PUT",
+            body: body ? JSON.stringify(body) : undefined,
+            headers: {
+                "Content-Type": "application/json",
+                ...options?.headers,
+            },
+        });
+    };
+
+    /**
+     * Wrapper for making a PUT request that also extracts response headers.
+     */
+    const putRequestWithHeaderAndError = <K extends Record<string, unknown>>(
+        url: RequestInfo | URL,
+        expectedHeaders: (keyof K)[],
+        parser: { [U in keyof K]: (value: string | null) => K[U] },
+        body?: unknown,
+        options?: RequestInit,
+    ) => {
+        return fetchWithToken.requestHandlerWithHeaderAndError<K>(
+            url,
+            expectedHeaders,
+            parser,
+            {
+                ...options,
+                method: "PUT",
+                body: body ? JSON.stringify(body) : undefined,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...options?.headers,
+                },
+            },
+        );
+    };
+
     return {
         isLoading: fetchWithToken.isLoading,
         error: fetchWithToken.error,
         clearError: fetchWithToken.clearError,
         putRequest,
         putRequestWithHeaderReturn,
+        putRequestWithError,
+        putRequestWithHeaderAndError,
     };
 }

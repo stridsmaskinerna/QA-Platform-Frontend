@@ -6,7 +6,7 @@ export function Header() {
     const { t } = useTranslation();
     return (
         <header className={styles.container}>
-            <h1>{t("headerHeadline")}</h1>
+            <h1>{t("header.headerHeadline")}</h1>
             <NavMenu />
         </header>
     );

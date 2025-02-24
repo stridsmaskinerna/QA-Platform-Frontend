@@ -1,10 +1,6 @@
 {
     "translation": {
         "login": "Login",
-        "headerHeadline": "LTU Q&A",
-        "admin": "Admin",
-        "logout": "Log out",
-        "qa": "Q&A",
         "loginRegister": "Login/Register",
         "resolved": "Resolved",
         "resolvedPlural": "Resolved",
@@ -77,6 +73,15 @@
         "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
 
+        "header": {
+            "headerHeadline": "LTU Q&A",
+            "linkAdmin": "Admin",
+            "linkLogout": "Log out",
+            "linkQA": "Q&A",
+            "linkLoginRegister": "Login/Register",
+            "linkHelp": "Help?"
+        },
+
         "teacherDashboard": {
             "title": "Teacher Dashboard",
             "manageTopicsFor": "Manage Topics for",
@@ -108,6 +113,46 @@
             "submitCommentInfo": "Submit comment",
             "createCommentPlaceholder": "Add a comment..",
             "submitComment": "Comment"
-        }
+        },
+
+        "userGuide": {
+            "title": "Question Card",
+            "subtitleSubject": "Course",
+            "subtitleUnresolvedQuestion": "Unresolved Question",
+            "subtitleResolvedQuestion": "Resolved Question",
+            "subtitlePublicQuestion": "A Public Question",
+            "subtitleProtectedQuestion": "A Protected Question",
+            "subtitleTopic": "Topic",
+            "subtitleCreationDate": "Date",
+            "subtitleQuestionTitle": "Title",
+            "subtitleAuthor": "Author",
+            "subtitleAnswercount": "Answercount",
+            "subtitleTags": "Tags",
+            "descriptionSubject": "The course name and code the question belongs to.",
+            "descriptionUnresolvedQuestion": "The author of the question has NOT accepted an answer as acceptable.",
+            "descriptionResolvedQuestion": "The author of the question has accepted an answer as acceptable.",
+            "descriptionPublicQuestion": "The question can be viewed by everyone, including users who are not logged in.",
+            "descriptionProtectedQuestion": "The question can only be viewed by logged-in users.",
+            "descriptionTopic": "The course topic the question belongs to.",
+            "descriptionCreationDate": "How long time ago the question was asked.",
+            "descriptionQuestionTitle": "The title of the question.",
+            "descriptionAuthor": "The user who created this question.",
+            "descriptionAnswercount": "The number of answers.",
+            "descriptionTags": "Tags used to mark the question.",
+            "defaultTopicName": "A Course Topic",
+            "defaultSubjectName": "A Course Name",
+            "defaultSubjectCode": "A Course Code",
+            "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
+            "defaultTag": "A Question Tag",
+            "previousButtonInfo": "Previous",
+            "nextButtonInfo": "Next"
+        },
+        "deleteQuestion": "Delete question",
+        "deleteQuestionPrompt": "Are you sure you want to delete this question?",
+        "delete": "Delete",
+        "edit": "Edit",
+        "couldNotFindQuestion": "Oops! We could not find this question",
+        "editQuestion": "Edit your question",
+        "saveChanges": "Save changes"
     }
 }

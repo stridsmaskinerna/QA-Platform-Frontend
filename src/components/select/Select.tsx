@@ -3,7 +3,8 @@ import styles from "./Select.module.css";
 import { IOption } from "../../utils";
 
 interface ISelectProps {
-    defaultValue: string;
+    defaultOption?: string;
+    placeholderValue: string;
     options: IOption[];
     label: string;
     selectName: string;
@@ -12,12 +13,13 @@ interface ISelectProps {
 }
 
 export function Select({
-    defaultValue,
+    placeholderValue,
     options,
     label,
     labelStyle,
     selectName,
     required,
+    defaultOption,
 }: ISelectProps) {
     const id = useId();
     return (
@@ -30,6 +32,7 @@ export function Select({
                 {label}
             </label>
             <select
+                defaultValue={defaultOption}
                 required={required ?? true}
                 className={styles.select}
                 name={selectName}
@@ -39,7 +42,7 @@ export function Select({
                     value=""
                     className={`${styles.option} ${styles.defaultOption}`}
                 >
-                    {defaultValue}
+                    {placeholderValue}
                 </option>
                 {options.map(o => (
                     <option
