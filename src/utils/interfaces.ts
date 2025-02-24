@@ -23,6 +23,12 @@ export interface IAuthContext {
     isLoading: boolean;
 }
 
+export interface IProblemDetail {
+    status: number;
+    title: string;
+    detail: string | undefined;
+}
+
 export interface IUserDetails {
     username: string;
     userId: string;

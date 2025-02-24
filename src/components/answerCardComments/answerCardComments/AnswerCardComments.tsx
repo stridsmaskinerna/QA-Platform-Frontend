@@ -10,7 +10,7 @@ import { CommentCreator } from "../commentCreator";
 import { CommentList } from "../commentList";
 import styles from "./AnswerCardComments.module.css";
 import {
-    useDelete as useDELETE,
+    useDELETE,
     usePOST,
     usePUT,
     useGet as useGET,
@@ -62,15 +62,21 @@ export function AnswerCardComments({
 
     const createComment = async (comment: ICommentForCreation) => {
         const postRes = await postCommentReq.postRequestWithError(
-            `${BASE_URL}${COMMENT_URL}`, comment);
+            `${BASE_URL}${COMMENT_URL}`,
+            comment,
+        );
 
         if (postRes.error != null) {
             return;
         }
 
-        const getRes  = await getAnswerCommentsReq.getRequestWithError(
+        const getRes = await getAnswerCommentsReq.getRequestWithError(
             `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
         );
+
+        if (getRes.error != null) {
+            return;
+        }
 
         setCurrentComments(getRes.response ?? []);
 
@@ -126,7 +132,6 @@ export function AnswerCardComments({
         );
 
         setCurrentComments(commentsAfterUpdate);
-
         markNewComment(commentsAfterUpdate, comment.value);
     };
 
@@ -134,7 +139,7 @@ export function AnswerCardComments({
         deleteCommentReq.clearError();
         putCommentReq.clearError();
         postCommentReq.clearError();
-        getAnswerCommentsReq.clearError()
+        getAnswerCommentsReq.clearError();
     };
 
     return (
@@ -144,7 +149,7 @@ export function AnswerCardComments({
                     deleteCommentReq.error,
                     putCommentReq.error,
                     postCommentReq.error,
-                    getAnswerCommentsReq.error
+                    getAnswerCommentsReq.error,
                 ]}
                 onClearErrors={clearErrors}
             />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { QuestionHeader, QuestionCardMiddle, QuestionCardBottom } from "..";
 import { IQuestion } from "../../../utils";
 import styles from "../QuestionCard.module.css";
-import { useDelete, useQAContext } from "../../../hooks";
+import { useDELETE, useQAContext } from "../../../hooks";
 import { BASE_URL, HOME_ROUTE, QUESTION_URL } from "../../../data";
 import { useNavigate } from "react-router";
 
@@ -10,7 +10,7 @@ export function QuestionCardDetails(data: IQuestion) {
     const {
         authContext: { username },
     } = useQAContext();
-    const { deleteRequest } = useDelete();
+    const { deleteRequest } = useDELETE();
     const [isHiddenOptimistic, setIsHiddenOptimistic] = useState(data.isHidden);
     const navigate = useNavigate();
     const handleDeleteClick = async () => {

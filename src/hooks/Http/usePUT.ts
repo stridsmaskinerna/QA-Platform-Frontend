@@ -21,14 +21,18 @@ interface IUsePutReturn<T> {
         url: RequestInfo | URL,
         body?: unknown,
         options?: RequestInit,
-    ) => Promise<{ response: T | void, error: CustomError | null }>;
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
     putRequestWithHeaderAndError: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         body?: unknown,
         options?: RequestInit,
-    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 /**
@@ -88,7 +92,7 @@ export function usePUT<T>(): IUsePutReturn<T> {
     const putRequestWithError = (
         url: RequestInfo | URL,
         body?: unknown,
-        options?: RequestInit
+        options?: RequestInit,
     ) => {
         return fetchWithToken.requestHandlerWithError(url, {
             ...options,
@@ -134,6 +138,6 @@ export function usePUT<T>(): IUsePutReturn<T> {
         putRequest,
         putRequestWithHeaderReturn,
         putRequestWithError,
-        putRequestWithHeaderAndError
+        putRequestWithHeaderAndError,
     };
 }

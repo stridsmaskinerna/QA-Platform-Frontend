@@ -18,19 +18,23 @@ interface IUseDeleteReturn<T> {
     deleteRequestWithError: (
         url: RequestInfo | URL,
         options?: RequestInit,
-    ) => Promise<{ response: T | void, error: CustomError | null }>;
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
     deleteRequestWithHeaderAndError: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         options?: RequestInit,
-    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 /**
  * A custom hook to send DELETE requests with authentication tokens.
  */
-export function useDelete<T>(): IUseDeleteReturn<T> {
+export function useDELETE<T>(): IUseDeleteReturn<T> {
     const fetchWithToken = useFetchWithToken<T>();
 
     /**
@@ -63,7 +67,10 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
     /**
      * Wrapper for making a DELETE request with error.
      */
-    const deleteRequestWithError = (url: RequestInfo | URL, options?: RequestInit) => {
+    const deleteRequestWithError = (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => {
         return fetchWithToken.requestHandlerWithError(url, {
             ...options,
             method: "DELETE",
@@ -94,6 +101,6 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
         deleteRequest,
         deleteRequestWithHeaderReturn,
         deleteRequestWithError,
-        deleteRequestWithHeaderAndError
+        deleteRequestWithHeaderAndError,
     };
 }

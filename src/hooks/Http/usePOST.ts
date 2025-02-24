@@ -21,14 +21,18 @@ interface IUsePostReturn<T> {
         url: RequestInfo | URL,
         body?: unknown,
         options?: RequestInit,
-    ) => Promise<{ response: T | void, error: CustomError | null }>;
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
     postRequestWithHeaderAndError: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         body?: unknown,
         options?: RequestInit,
-    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 /**
@@ -88,7 +92,7 @@ export function usePOST<T>(): IUsePostReturn<T> {
     const postRequestWithError = (
         url: RequestInfo | URL,
         body?: unknown,
-        options?: RequestInit
+        options?: RequestInit,
     ) => {
         return fetchWithToken.requestHandlerWithError(url, {
             ...options,
@@ -134,6 +138,6 @@ export function usePOST<T>(): IUsePostReturn<T> {
         postRequest,
         postRequestWithHeaderReturn,
         postRequestWithError,
-        postRequestWithHeaderAndError
+        postRequestWithHeaderAndError,
     };
 }

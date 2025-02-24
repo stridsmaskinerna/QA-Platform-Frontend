@@ -3,13 +3,11 @@ import {
     addTokenToRequestInit,
     CustomError,
     hasTokenExpired,
+    IProblemDetail,
     ITokens,
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
-import {
-    LOCAL_STORAGE_TOKEN_KEY,
-    LOGIN_REGISTER_ROUTE
-} from "../../data";
+import { LOCAL_STORAGE_TOKEN_KEY, LOGIN_REGISTER_ROUTE } from "../../data";
 import { useNavigate } from "react-router";
 
 interface IUseFetchWithTokenReturn<T> {
@@ -29,13 +27,17 @@ interface IUseFetchWithTokenReturn<T> {
     requestHandlerWithError: (
         url: RequestInfo | URL,
         options?: RequestInit,
-    ) => Promise<{ response: T | void, error: CustomError | null }>;
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
     requestHandlerWithHeaderAndError: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         options?: RequestInit,
-    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
@@ -67,11 +69,16 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
             );
 
             const response = await fetch(url, requestInit);
+            if (response.ok === false) {
+                const erroBody = (await response.json()) as IProblemDetail;
 
-                if (response.ok === false) {
-                    throw new CustomError(response.status, response.statusText);
-                }
-            
+                throw new CustomError(
+                    response.status,
+                    response.statusText,
+                    erroBody.detail,
+                );
+            }
+
             return response;
         },
         [],
@@ -90,7 +97,7 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
             let responseError: CustomError | null = null;
 
             const tokenIsExpired: boolean = hasTokenExpired(tokens.accessToken);
-            
+
             if (tokenIsExpired) {
                 await navigate(LOGIN_REGISTER_ROUTE, {
                     replace: true,
@@ -103,9 +110,9 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
                         url,
                         options,
                     );
-                    
+
                     const contentType = response.headers.get("content-type");
-                    
+
                     if (contentType?.includes("application/json")) {
                         responseResult = (await response.json()) as T;
                     }
@@ -126,14 +133,9 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
                     setIsLoading(false);
                 }
             }
-            return { response: responseResult, error: responseError }
+            return { response: responseResult, error: responseError };
         },
-        [
-            clearTokens,
-            generatedFetch,
-            navigate,
-            tokens,
-        ],
+        [clearTokens, generatedFetch, navigate, tokens],
     );
 
     const requestHandlerWithHeaderAndError = useCallback(
@@ -198,7 +200,10 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
 
     const requestHandler = useCallback(
         async (url: RequestInfo | URL, options?: RequestInit) => {
-            const { response: result } = await requestHandlerWithError(url, options);
+            const { response: result } = await requestHandlerWithError(
+                url,
+                options,
+            );
             return result;
         },
         [requestHandlerWithError],
@@ -211,8 +216,12 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
             parser: { [U in keyof K]: (value: string | null) => K[U] },
             options?: RequestInit,
         ) => {
-            const { data, headers, } = await requestHandlerWithHeaderAndError(
-                url, expectedHeaders, parser, options);
+            const { data, headers } = await requestHandlerWithHeaderAndError(
+                url,
+                expectedHeaders,
+                parser,
+                options,
+            );
             return { data, headers };
         },
         [requestHandlerWithHeaderAndError],
@@ -225,6 +234,6 @@ export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
         requestHandler,
         requestHandlerWithHeaderReturn,
         requestHandlerWithError,
-        requestHandlerWithHeaderAndError
+        requestHandlerWithHeaderAndError,
     };
 }

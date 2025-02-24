@@ -18,14 +18,18 @@ interface IUseGetReturn<T> {
     getRequestWithError: (
         url: RequestInfo | URL,
         options?: RequestInit,
-    ) => Promise<{ response: T | void, error: CustomError | null }>;
-    
+    ) => Promise<{ response: T | void; error: CustomError | null }>;
+
     getRequestWithHeaderAndError: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         options?: RequestInit,
-    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
+    ) => Promise<{
+        data: T | null;
+        headers: K | null;
+        error: CustomError | null;
+    }>;
 }
 
 /**
@@ -67,7 +71,10 @@ export function useGet<T>(): IUseGetReturn<T> {
     /**
      * Wrapper for making a GET request with error.
      */
-    const getRequestWithError = (url: RequestInfo | URL, options?: RequestInit) => {
+    const getRequestWithError = (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => {
         return fetchWithToken.requestHandlerWithError(url, {
             ...options,
             method: "GET",
@@ -98,6 +105,6 @@ export function useGet<T>(): IUseGetReturn<T> {
         getRequest,
         getRequestWithHeaderReturn,
         getRequestWithError,
-        getRequestWithHeaderAndError
+        getRequestWithHeaderAndError,
     };
 }
