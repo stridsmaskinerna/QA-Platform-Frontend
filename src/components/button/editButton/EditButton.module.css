@@ -1,6 +1,5 @@
 .button {
-    padding-block: 16px;
-    padding-inline: clamp(35px, 10vw, 64px);
+    padding: 8px 16px;
     background-color: var(--btnLight-bg);
     color: var(--btnLight-text);
     border-radius: 6px;
@@ -8,10 +7,11 @@
     cursor: pointer;
     font-size: clamp(13px, 3vw, 17px);
     transition: background-color 0.2s ease-in-out;
+    border: 2px solid var(--grey-light);
 }
 
 .button:hover {
-    background-color: #d1d5db;
+    background-color: var(--btnLight-hover);
 }
 
 .button:disabled {

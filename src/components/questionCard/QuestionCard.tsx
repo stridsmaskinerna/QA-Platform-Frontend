@@ -11,9 +11,15 @@ import { useState } from "react";
 
 interface IQuestionCardProps {
     data: IQuestion;
+    isPostedByUser: boolean;
+    handleDeleteClick: () => void;
 }
 
-export function QuestionCard({ data }: IQuestionCardProps) {
+export function QuestionCard({
+    data,
+    isPostedByUser,
+    handleDeleteClick,
+}: IQuestionCardProps) {
     const { isUser, isTeacher } = useRoles();
     const [isHiddenOptimistic, setIsHiddenOptimistic] = useState(data.isHidden);
     const questionLink =
@@ -47,6 +53,9 @@ export function QuestionCard({ data }: IQuestionCardProps) {
                 />
             </Link>
             <QuestionCardBottom
+                questionId={data.id}
+                handleDeleteClick={handleDeleteClick}
+                isPostedByUser={isPostedByUser}
                 isHiddenOptimistic={isHiddenOptimistic}
                 tags={data.tags}
             />

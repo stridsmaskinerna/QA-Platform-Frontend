@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styles from "./AddATag.module.css";
-import { InputWithDynamicSuggestions, Modal } from "../..";
+import { InputWithDynamicSuggestions, Modal } from "../../..";
 import {
     ChangeEventHandler,
     useCallback,
@@ -8,11 +8,11 @@ import {
     useRef,
     useState,
 } from "react";
-import { useFetchWithToken } from "../../../hooks";
-import { BASE_URL } from "../../../data";
-import { ISuggestion, ITag } from "../../../utils";
+import { useFetchWithToken } from "../../../../hooks";
+import { BASE_URL } from "../../../../data";
+import { ISuggestion, ITag } from "../../../../utils";
 import { useDebounceCallback } from "usehooks-ts";
-import removeX from "../../../assets/icons/removeX.svg";
+import removeX from "../../../../assets/icons/removeX.svg";
 
 const url = `${BASE_URL}/tags`;
 
@@ -63,11 +63,13 @@ export function AddATag({
     );
 
     const handleAddClick = () => {
+        if (!inputValue.trim()) {
+            return;
+        }
         if (addedTags.includes(inputValue.trim().toUpperCase())) {
             return;
         }
-
-        if (addedTags.length === 5) {
+        if (addedTags.length >= 5) {
             setShowWarning(true);
             return;
         }
@@ -134,6 +136,8 @@ export function AddATag({
             </div>
             {showWarning && (
                 <Modal
+                    title=""
+                    onBackdropClick={() => setShowWarning(false)}
                     okClick={() => setShowWarning(false)}
                     message={t("tagLimitWarning")}
                 />

@@ -4,6 +4,7 @@ import { QuestionCard } from "../questionCard/QuestionCard";
 import styles from "./QuestionCardList.module.css";
 import { ResolvedFilters } from "./ResolvedFilters";
 import { useTranslation } from "react-i18next";
+import { useQAContext } from "../../hooks";
 
 interface IQuestionCardListProps {
     data: IQuestion[];
@@ -15,6 +16,7 @@ interface IQuestionCardListProps {
     hasMore?: boolean;
     loaderRef?: (node?: Element | null) => void;
     displayResolveFilter?: boolean;
+    handleDeleteClick?: (id: string) => void;
 }
 
 export function QuestionCardList({
@@ -27,8 +29,14 @@ export function QuestionCardList({
     hasMore,
     loaderRef,
     displayResolveFilter = true,
+    handleDeleteClick = () => {
+        return;
+    },
 }: IQuestionCardListProps) {
     const { t } = useTranslation();
+    const {
+        authContext: { username },
+    } = useQAContext();
     if (isLoadingQuestions) {
         return (
             <div className={styles.container}>
@@ -60,6 +68,8 @@ export function QuestionCardList({
             </div>
             {data.map(question => (
                 <QuestionCard
+                    handleDeleteClick={() => handleDeleteClick(question.id)}
+                    isPostedByUser={username === question.userName}
                     key={question.id}
                     data={question}
                 />

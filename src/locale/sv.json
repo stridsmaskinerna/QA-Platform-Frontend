@@ -146,6 +146,14 @@
             "defaultTag": "En Markör",
             "previousButtonInfo": "Tillbaka",
             "nextButtonInfo": "Nästa"
-        }
+        },
+
+        "deleteQuestion": "Radera fråga",
+        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
+        "delete": "Radera",
+        "edit": "Ändra",
+        "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
+        "editQuestion": "Ändra din fråga",
+        "saveChanges": "Spara ändringar"
     }
 }

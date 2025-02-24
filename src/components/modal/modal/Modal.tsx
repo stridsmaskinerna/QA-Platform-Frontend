@@ -2,23 +2,27 @@ import { ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { H1 } from "../../text";
-import { OkButton } from "../../button";
+import { CancelButton, OkButton } from "../../button";
 import styles from "./Modal.module.css";
 
 interface IModalProps {
     title: string;
     message: ReactNode;
     type?: "info" | "warning";
+    okDisabled?: boolean;
     okClick: () => void;
     onBackdropClick: () => void;
+    cancelClick?: () => void;
 }
 
 export function Modal({
     title,
     message,
     type = "info",
+    okDisabled = false,
     okClick,
     onBackdropClick,
+    cancelClick,
 }: IModalProps) {
     const { t } = useTranslation();
     const modalRef = useRef<HTMLDivElement | null>(null);
@@ -55,10 +59,19 @@ export function Modal({
                     color="white"
                 />
                 <div className={styles.body}>{message}</div>
-                <OkButton
-                    text={t("ok")}
-                    onClick={okClick}
-                />
+                <div className={styles.btnsContainer}>
+                    {cancelClick !== undefined && (
+                        <CancelButton
+                            onClick={cancelClick}
+                            className={styles.cancelButton}
+                        />
+                    )}
+                    <OkButton
+                        disabled={okDisabled}
+                        text={t("ok")}
+                        onClick={okClick}
+                    />
+                </div>
             </div>
         </div>
     );

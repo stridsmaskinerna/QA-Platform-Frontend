@@ -20,12 +20,3 @@
 .tabContent {
     position: absolute;
 }
-
-.tabContent.hide {
-    display: none;
-}
-
-/* Display the active tab content */
-.tabContent.show {
-    display: block;
-}

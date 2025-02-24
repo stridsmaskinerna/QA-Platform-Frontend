@@ -55,3 +55,12 @@ export interface IPaginationMeta {
     TotalItemCount: number;
     TotalPageCount: number;
 }
+
+export interface IQuestionForEdit {
+    topicId: string;
+    subjectId: string;
+    tags: string[];
+    description?: string;
+    title: string;
+    isProtected: boolean;
+}
