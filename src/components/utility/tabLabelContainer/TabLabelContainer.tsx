@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
 import addCommentIcon from "../../../assets/icons/add_comment.svg";
 import openIcon from "../../../assets/icons/arrow_right.svg";
@@ -8,25 +8,36 @@ import styles from "./TabLabelContainer.module.css";
 interface ITabLabelContainerProps {
     label: string;
     children: ReactNode;
+    isOpen: boolean;
+    toggleOpen: () => void;
 }
 
 export function TabLabelContainer({
     label,
     children,
+    isOpen,
+    toggleOpen,
 }: ITabLabelContainerProps) {
     const viewBodyRef = useRef<HTMLImageElement | null>(null);
-    const [hideBody, setHideBody] = useState(true);
 
-    const toggleBody = () => {
-        setHideBody(prev => !prev);
-        viewBodyRef.current?.classList.toggle(styles.openIconHide);
-    };
+    useEffect(() => {
+        if (viewBodyRef.current == null) {
+            return;
+        }
+
+        if (isOpen) {
+            viewBodyRef.current.classList.add(styles.openIconHide);
+        } else {
+            viewBodyRef.current.classList.remove(styles.openIconHide);
+        }
+    }, [isOpen]);
+
     return (
         <div className={styles.container}>
             <div
                 className={styles.header}
                 onClick={() => {
-                    toggleBody();
+                    toggleOpen();
                 }}
             >
                 <div className={styles.headerLabel}>
@@ -46,7 +57,7 @@ export function TabLabelContainer({
                     className={styles.openIcon}
                 />
             </div>
-            <div className={styles.body}>{!hideBody && <>{children}</>}</div>
+            <div className={styles.body}>{isOpen && <>{children}</>}</div>
         </div>
     );
 }

@@ -19,6 +19,7 @@ const detailsContainerStyle: CSSProperties = {
 export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
     const { t } = useTranslation();
     const [description, setDescription] = useState("");
+    const [isAnswerCreatorOpen, setIsAnswerCreatorOpen] = useState(false);
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,7 +29,13 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
     };
 
     return (
-        <TabLabelContainer label={"Create Answer"}>
+        <TabLabelContainer
+            label={"Create Answer"}
+            isOpen={isAnswerCreatorOpen}
+            toggleOpen={() => {
+                setIsAnswerCreatorOpen(prev => !prev);
+            }}
+        >
             <form
                 className={styles.container}
                 onSubmit={submit}
