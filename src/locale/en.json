@@ -143,7 +143,9 @@
             "defaultSubjectName": "A Course Name",
             "defaultSubjectCode": "A Course Code",
             "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
-            "defaultTag": "A Question Tag"
+            "defaultTag": "A Question Tag",
+            "previousButtonInfo": "Previous",
+            "nextButtonInfo": "Next"
         }
     }
 }

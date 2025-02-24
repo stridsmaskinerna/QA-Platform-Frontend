@@ -143,7 +143,9 @@
             "defaultSubjectName": "Namnet på kursen ",
             "defaultSubjectCode": "Koden för kursen",
             "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
-            "defaultTag": "En Markör"
+            "defaultTag": "En Markör",
+            "previousButtonInfo": "Tillbaka",
+            "nextButtonInfo": "Nästa"
         }
     }
 }

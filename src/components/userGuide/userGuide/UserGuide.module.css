@@ -14,6 +14,29 @@
     gap: 1rem;
 }
 
+.slide-container-outer {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.slide-container-inner {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
 .hide-pointer-events {
     pointer-events: none;
 }
@@ -29,28 +52,6 @@
     color: black;
     background-color: rgb(255, 255, 0, 0.5);
     outline: 4px solid red;
-}
-
-.slide-container-outer {
-    position: relative;
-    overflow: hidden;
-}
-
-.slide-container-inner {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
-}
-
-.footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    color: white;
 }
 
 .navigation-btn {

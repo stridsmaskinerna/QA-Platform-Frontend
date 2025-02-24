@@ -1,4 +1,5 @@
 import { MouseEventHandler, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { QuestionCard } from "../../questionCard";
 import { DynamicTooltip } from "../dynamicTooltip";
@@ -13,9 +14,13 @@ interface IUserGuideProps {
     questionCards: IQuestionWithInformationMeta[];
 }
 
+// Duration should be the same amount of time as CSS animation keyframes.
+const animationTimeDuration = 200;
+
 export function UserGuide({ questionCards }: IUserGuideProps) {
-    const [animation, setAnimation] = useState(styles.nextEnter);
+    const { t } = useTranslation();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const [animation, setAnimation] = useState(styles.nextEnter);
     const [currentIndex, setCurrentIndex] = useState(0);
     const { highlightElements } = useHighlightEffect(
         currentIndex,
@@ -33,7 +38,7 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                 prevIndex => (prevIndex + 1) % questionCards.length,
             );
             setAnimation(styles.nextEnter);
-        }, 200);
+        }, animationTimeDuration);
     };
 
     const prevSlide = () => {
@@ -45,7 +50,7 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                     questionCards.length,
             );
             setAnimation(styles.prevEnter);
-        }, 200);
+        }, animationTimeDuration);
     };
 
     const hidePointerEvents: MouseEventHandler<HTMLDivElement> = e => {
@@ -101,8 +106,8 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                         prevSlide();
                     }}
                     src={prevSlideIcon}
-                    alt={""}
-                    title={""}
+                    alt={t("userGuide.previousButtonInfo")}
+                    title={t("userGuide.previousButtonInfo")}
                 />
                 <H2
                     color="white"
@@ -114,8 +119,8 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                         nextSlide();
                     }}
                     src={nextSlideIcon}
-                    alt={""}
-                    title={""}
+                    alt={t("userGuide.nextButtonInfo")}
+                    title={t("userGuide.nextButtonInfo")}
                 />
             </div>
         </div>

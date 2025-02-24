@@ -54,7 +54,7 @@ export function Modal({
                     text={title}
                     color="white"
                 />
-                <div className={styles.textContainer}>{message}</div>
+                <div className={styles.body}>{message}</div>
                 <OkButton
                     text={t("ok")}
                     onClick={okClick}
