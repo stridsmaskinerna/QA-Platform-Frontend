@@ -4,6 +4,7 @@ import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
 import { GoBackButton } from "..";
 import { useTranslation } from "react-i18next";
+import { AnswerCreator } from "../answerCreator";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -38,6 +39,7 @@ export function QuestionDetailsViewer({
                 userId={question.userId}
             />
             <h2>Answers</h2>
+            <AnswerCreator questionId={question.id} />
             <ul className={styles.container}>
                 {question.answers.map(answer => (
                     <AnswerCard
