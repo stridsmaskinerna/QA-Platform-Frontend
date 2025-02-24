@@ -16,6 +16,7 @@ export interface ITeacherDashboardContext {
     loaderRef: (node?: Element | null) => void;
     hasMore: boolean;
     totalItemCount: number | undefined;
+    handleDeleteQuestion: (id: string) => Promise<void>;
 }
 
 export const TeacherDashboardContext = createContext<ITeacherDashboardContext>(

@@ -24,7 +24,6 @@ import {
     registerReq,
     USERNAME_TAKEN,
 } from "../../data";
-import { useQAContext } from "../../hooks";
 
 interface IAuthProviderProps {
     children: ReactNode;
@@ -37,10 +36,8 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         LOCAL_STORAGE_TOKEN_KEY,
         null,
     );
-    const {
-        loaderContext: { setIsLoading },
-    } = useQAContext();
     const [userDetails, setUserDetails] = useState<IUserDetails>();
+    const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
         username: userDetails?.username,
@@ -49,6 +46,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         login,
         logout,
         register,
+        isLoading,
     };
 
     async function login({
@@ -103,7 +101,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
             setIsLoading(false);
         };
         // Recompute user details whenever tokens change
-        void decodeToken();
+        decodeToken();
     }, [setIsLoading, tokens?.accessToken]);
 
     return (
