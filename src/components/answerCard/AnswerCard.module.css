@@ -9,7 +9,7 @@
 }
 
 .borderDefault {
-    border: 2px solid var(--grey-strong);
+    border: 3px solid var(--grey-strong);
 }
 
 .borderAccepted {

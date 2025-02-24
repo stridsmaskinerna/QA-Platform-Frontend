@@ -1,11 +1,12 @@
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
-import { IDetailedQuestion } from "../../utils";
+import { IAnswer, IDetailedQuestion } from "../../utils";
 import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
 import { RouteButton } from "../button";
-import { useRoles } from "../../hooks";
+import { useQAContext, useRoles } from "../../hooks";
 import { GUEST_HOME_ROUTE, HOME_ROUTE } from "../../data";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -16,6 +17,25 @@ export function QuestionDetailsViewer({
 }: QuestionDetailsViewerProps) {
     const { isUser } = useRoles();
     const { t } = useTranslation();
+
+    const {
+        authContext: { username },
+    } = useQAContext() || { authContext: { username: null } };
+
+    console.log(username);
+
+    const [answers, setAnswers] = useState<IAnswer[]>(question.answers);
+
+    const handleMarkAsSolved = (answerId: string) => {
+        setAnswers(prevAnswers =>
+            prevAnswers.map(answer =>
+                answer.id === answerId
+                    ? { ...answer, isAccepted: !answer.isAccepted } // Toggle isAccepted
+                    : { ...answer, isAccepted: false } // Unmark others
+            )
+        );
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.backBtn}>
@@ -45,10 +65,13 @@ export function QuestionDetailsViewer({
             />
             <h2>Answers</h2>
             <ul className={styles.container}>
-                {question.answers.map(answer => (
+                {answers.map(answer => (
                     <AnswerCard
                         key={answer.id}
                         data={answer}
+                        isOwner={!!username && username === question.userName}
+                        questionId={question.id}
+                        onMarkAsSolved={handleMarkAsSolved}
                     />
                 ))}
             </ul>

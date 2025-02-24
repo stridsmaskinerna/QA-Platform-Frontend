@@ -4,20 +4,18 @@ import { AnswerCardHeader } from "./answerCardHeader";
 import { AnswerCardComments } from "../answerCardComments";
 import { AnswerCardBottom } from "./AnswerCardBottom";
 import styles from "./AnswerCard.module.css";
-import { useEffect } from "react";
 
 interface IAnswerProps {
     data: IAnswer;
+    isOwner: boolean;
+    questionId: string;
+    onMarkAsSolved: (answerId: string) => void;
 }
 
-export function AnswerCard({ data }: IAnswerProps) {
+export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
     const borderStyle = data.isAccepted
         ? styles.borderAccepted
         : styles.borderDefault;
-
-    useEffect(() => {
-        console.log(data);
-    });
 
     return (
         <div className={`${styles.container} ${borderStyle}`}>
@@ -33,6 +31,9 @@ export function AnswerCard({ data }: IAnswerProps) {
                 answerId={data.id}
                 voteCount={data.voteCount}
                 myVote={data.myVote}
+                isAccepted={data.isAccepted}
+                isOwner={isOwner}
+                onMarkAsSolved={() => onMarkAsSolved(data.id)}
             />
             <AnswerCardComments
                 answerId={data.id}
