@@ -1,6 +1,7 @@
 .container {
     display: flex;
     width: 100%; /* Ensures it takes full width */
+    justify-content: space-between;
 }
 
 @media (max-width: 600px) {

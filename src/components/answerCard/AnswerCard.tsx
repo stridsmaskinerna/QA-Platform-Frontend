@@ -31,6 +31,7 @@ export function AnswerCard({ data }: IAnswerProps) {
             <AnswerCardBody answer={data.value} />
             <AnswerCardBottom
                 answerId={data.id}
+                answer={data}
                 voteCount={data.voteCount}
                 myVote={data.myVote}
             />

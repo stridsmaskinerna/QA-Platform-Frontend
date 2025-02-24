@@ -8,7 +8,6 @@ import { TabLabelContainer } from "../../utility";
 import { usePOST, useGET } from "../../../hooks";
 import { ANSWER_URL, BASE_URL } from "../../../data";
 import { IAnswerForCreation } from "../../../utils";
-import { LexicalEditor } from "lexical";
 
 interface IAnswerCreatorProps {
     questionId: string;
