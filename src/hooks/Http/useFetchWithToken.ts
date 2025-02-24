@@ -21,6 +21,10 @@ interface IUseFetchWithTokenReturn<T> {
         url: RequestInfo | URL,
         options?: RequestInit,
     ) => Promise<T | void>;
+    requestHandlerWithError: (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => Promise<{ result: T | void, error: CustomError | null}>;
     requestHandlerWithHeaderReturn: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
@@ -29,9 +33,7 @@ interface IUseFetchWithTokenReturn<T> {
     ) => Promise<{ data: T | null; headers: K | null }>;
 }
 
-export function useFetchWithToken<T>(
-    checkIfTokenNeedsRefresh = false,
-): IUseFetchWithTokenReturn<T> {
+export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
         LOCAL_STORAGE_TOKEN_KEY,
@@ -58,17 +60,27 @@ export function useFetchWithToken<T>(
                 accessToken,
                 options,
             );
-            const response: Response = await fetch(url, requestInit);
 
-            if (response.ok === false) {
-                throw new CustomError(response.status, response.statusText);
+            setIsLoading(true);       
+            let response: Response;
+            
+            try {
+                response = await fetch(url, requestInit);
+
+                if (response.ok === false) {
+                    throw new CustomError(response.status, response.statusText);
+                }
+
+            } finally {
+                setIsLoading(false)
             }
+            
             return response;
         },
         [],
     );
 
-    const requestHandler = useCallback(
+    const requestHandlerWithError = useCallback(
         async (url: RequestInfo | URL, options?: RequestInit) => {
             if (!tokens) {
                 throw new Error("There is no tokens to make this request");
@@ -77,41 +89,16 @@ export function useFetchWithToken<T>(
             setError(null);
             setIsLoading(true);
 
+            let result: T | void = undefined;
+            let resultError: CustomError | null = null;
+
             const tokenIsExpired: boolean = hasTokenExpired(tokens.accessToken);
-            // Ask api to refresh accesstoken before fetching the data if accesstoken has expired.
-            if (checkIfTokenNeedsRefresh && tokenIsExpired) {
-                try {
-                    const refreshedTokens = await refreshTokens(tokens);
-                    setTokens(refreshedTokens);
-                    const response = await generatedFetch(
-                        refreshedTokens.accessToken,
-                        url,
-                        options,
-                    );
-                    const contentType = response.headers.get("content-type");
-                    if (contentType?.includes("application/json")) {
-                        return (await response.json()) as T;
-                    }
-                    return;
-                } catch (error) {
-                    if (error instanceof CustomError) {
-                        setError(error);
-                        //If the attempt to refresh token fails with 401 unauthorized, then probably
-                        //the refreshtoken has expired, so we clear the tokens in localStorage
-                        //and send the user to the login screen
-                        if (error.errorCode === 401) {
-                            await navigate(LOGIN_REGISTER_ROUTE, {
-                                replace: true,
-                            });
-                            clearTokens();
-                        }
-                    } else {
-                        throw error;
-                    }
-                } finally {
-                    setIsLoading(false);
-                }
-                // Else just fetch the data right away
+            
+            if (tokenIsExpired) {
+                await navigate(LOGIN_REGISTER_ROUTE, {
+                    replace: true,
+                });
+                clearTokens();
             } else {
                 try {
                     const response = await generatedFetch(
@@ -119,21 +106,21 @@ export function useFetchWithToken<T>(
                         url,
                         options,
                     );
+                    
                     const contentType = response.headers.get("content-type");
+                    
                     if (contentType?.includes("application/json")) {
-                        return (await response.json()) as T;
+                        result = (await response.json()) as T;
                     }
-                    return;
                 } catch (error) {
                     if (error instanceof CustomError) {
-                        //THIS CAN BE REMOVED AFTER REFRESH-TOKEN FUNCTIONALITY IS IMPLEMENTED
+                        resultError = error;
                         if (error.errorCode === 401) {
                             await navigate(LOGIN_REGISTER_ROUTE, {
                                 replace: true,
                             });
                             clearTokens();
                         }
-                        //-------------------------------------------------------------------
                         setError(error);
                     } else {
                         throw error;
@@ -142,15 +129,22 @@ export function useFetchWithToken<T>(
                     setIsLoading(false);
                 }
             }
+            return { result, error: resultError }
         },
         [
-            checkIfTokenNeedsRefresh,
             clearTokens,
             generatedFetch,
             navigate,
-            setTokens,
             tokens,
         ],
+    );
+
+    const requestHandler = useCallback(
+        async (url: RequestInfo | URL, options?: RequestInit) => {
+            const { result } = await requestHandlerWithError(url, options);
+            return result;
+        },
+        [requestHandlerWithError],
     );
 
     const requestHandlerWithHeaderReturn = useCallback(
@@ -215,6 +209,7 @@ export function useFetchWithToken<T>(
         error,
         clearError,
         requestHandler,
+        requestHandlerWithError,
         requestHandlerWithHeaderReturn,
     };
 }

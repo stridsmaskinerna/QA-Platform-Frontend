@@ -131,16 +131,14 @@ export function TeacherDashboardProvider({
 
     return (
         <TeacherDashboardContext.Provider value={getContext()}>
-            {
-                <ErrorModal
-                    errors={[
-                        updateTopicReq.error,
-                        deleteTopicReq.error,
-                        createTopicReq.error,
-                    ]}
-                    onClearErrors={clearErrors}
-                />
-            }
+            <ErrorModal
+                errors={[
+                    updateTopicReq.error,
+                    deleteTopicReq.error,
+                    createTopicReq.error,
+                ]}
+                onClearErrors={clearErrors}
+            />
             {children}
         </TeacherDashboardContext.Provider>
     );

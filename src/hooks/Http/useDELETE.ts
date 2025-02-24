@@ -9,6 +9,10 @@ interface IUseDeleteReturn<T> {
         url: RequestInfo | URL,
         options?: RequestInit,
     ) => Promise<T | void>;
+    deleteRequestWithError: (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => Promise<{result: T | void, error: CustomError | null}>;
     deleteRequestWithHeaderReturn: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
@@ -28,6 +32,16 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
      */
     const deleteRequest = (url: RequestInfo | URL, options?: RequestInit) => {
         return fetchWithToken.requestHandler(url, {
+            ...options,
+            method: "DELETE",
+        });
+    };
+
+    /**
+     * Wrapper for making a DELETE request with error.
+     */
+    const deleteRequestWithError = (url: RequestInfo | URL, options?: RequestInit) => {
+        return fetchWithToken.requestHandlerWithError(url, {
             ...options,
             method: "DELETE",
         });
@@ -55,6 +69,7 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
         error: fetchWithToken.error,
         clearError: fetchWithToken.clearError,
         deleteRequest,
+        deleteRequestWithError,
         deleteRequestWithHeaderReturn,
     };
 }
