@@ -9,7 +9,7 @@ import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
 import { BASE_URL, QUESTION_URL } from "../data";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
-import { useDelete, useInfiniteScrolling } from ".";
+import { useDELETE, useInfiniteScrolling } from ".";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
 const questionsBaseUrl = `${BASE_URL}/questions`;
@@ -83,7 +83,7 @@ export const useSearchQuestions = () => {
         limit: 20,
     });
 
-    const { deleteRequest } = useDelete();
+    const { deleteRequest } = useDELETE();
     const handleDeleteClick = async (id: string) => {
         //TODO  handle error
         await deleteRequest(`${BASE_URL}${QUESTION_URL}/${id}`);

@@ -10,13 +10,14 @@ import { CommentCreator } from "../commentCreator";
 import { CommentList } from "../commentList";
 import styles from "./AnswerCardComments.module.css";
 import {
-    useDelete,
+    useDELETE,
     usePOST,
     usePUT,
-    useGet,
+    useGet as useGET,
     useQAContext,
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
+import { ErrorModal } from "../../modal";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -30,8 +31,8 @@ export function AnswerCardComments({
     const { t } = useTranslation();
     const qaContext = useQAContext();
     const postCommentReq = usePOST<IComment>();
-    const deleteCommentReq = useDelete<IComment>();
-    const getAnswerCommentsReq = useGet<IComment[]>();
+    const deleteCommentReq = useDELETE<IComment>();
+    const getAnswerCommentsReq = useGET<IComment[]>();
     const putCommentReq = usePUT<IComment>();
     const viewCommentsRef = useRef<HTMLImageElement | null>(null);
     const viewCommentsCreatorRef = useRef<HTMLImageElement | null>(null);
@@ -60,15 +61,26 @@ export function AnswerCardComments({
     };
 
     const createComment = async (comment: ICommentForCreation) => {
-        await postCommentReq.postRequest(`${BASE_URL}${COMMENT_URL}`, comment);
+        const postRes = await postCommentReq.postRequestWithError(
+            `${BASE_URL}${COMMENT_URL}`,
+            comment,
+        );
 
-        const getRes = await getAnswerCommentsReq.getRequest(
+        if (postRes.error != null) {
+            return;
+        }
+
+        const getRes = await getAnswerCommentsReq.getRequestWithError(
             `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
         );
 
-        setCurrentComments(getRes ?? []);
+        if (getRes.error != null) {
+            return;
+        }
 
-        markNewComment(getRes ?? [], comment.value);
+        setCurrentComments(getRes.response ?? []);
+
+        markNewComment(getRes.response ?? [], comment.value);
     };
 
     const markNewComment = (comments: IComment[], commentValue: string) => {
@@ -90,9 +102,13 @@ export function AnswerCardComments({
     };
 
     const deleteComment = async (comment: IComment) => {
-        await deleteCommentReq.deleteRequest(
+        const { error } = await deleteCommentReq.deleteRequestWithError(
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
         );
+
+        if (error != null) {
+            return;
+        }
 
         const commentsAfterDeletion = currentComments.filter(
             c => c.id != comment.id,
@@ -102,22 +118,41 @@ export function AnswerCardComments({
     };
 
     const updateComment = async (comment: IComment) => {
-        await putCommentReq.putRequest(
+        const { error } = await putCommentReq.putRequestWithError(
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
             comment,
         );
+
+        if (error != null) {
+            return;
+        }
 
         const commentsAfterUpdate = currentComments.map(c =>
             c.id != comment.id ? c : comment,
         );
 
         setCurrentComments(commentsAfterUpdate);
-
         markNewComment(commentsAfterUpdate, comment.value);
+    };
+
+    const clearErrors = () => {
+        deleteCommentReq.clearError();
+        putCommentReq.clearError();
+        postCommentReq.clearError();
+        getAnswerCommentsReq.clearError();
     };
 
     return (
         <div className={styles.container}>
+            <ErrorModal
+                errors={[
+                    deleteCommentReq.error,
+                    putCommentReq.error,
+                    postCommentReq.error,
+                    getAnswerCommentsReq.error,
+                ]}
+                onClearErrors={clearErrors}
+            />
             <div
                 className={styles.header}
                 onClick={() => {
