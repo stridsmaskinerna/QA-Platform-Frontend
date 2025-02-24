@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { EDIT_QUESTION_ROUTE } from "../../../data";
+import { highlights } from "../constants";
 
 interface QuestionCardBottomProps {
     tags: string[];
@@ -45,6 +46,7 @@ export function QuestionCardBottom({
                         <p
                             key={tag}
                             className={styles.tagContainer}
+                            data-hl={highlights.tags}
                         >
                             {tag}
                         </p>

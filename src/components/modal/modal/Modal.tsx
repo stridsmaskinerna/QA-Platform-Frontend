@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { H1 } from "../../text";
@@ -7,7 +7,7 @@ import styles from "./Modal.module.css";
 
 interface IModalProps {
     title: string;
-    message: string;
+    message: ReactNode;
     type?: "info" | "warning";
     okDisabled?: boolean;
     okClick: () => void;
@@ -58,7 +58,7 @@ export function Modal({
                     text={title}
                     color="white"
                 />
-                <p className={styles.text}>{message}</p>
+                <div className={styles.body}>{message}</div>
                 <div className={styles.btnsContainer}>
                     {cancelClick !== undefined && (
                         <CancelButton
