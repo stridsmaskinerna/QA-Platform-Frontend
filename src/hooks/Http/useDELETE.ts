@@ -9,16 +9,22 @@ interface IUseDeleteReturn<T> {
         url: RequestInfo | URL,
         options?: RequestInit,
     ) => Promise<T | void>;
-    deleteRequestWithError: (
-        url: RequestInfo | URL,
-        options?: RequestInit,
-    ) => Promise<{result: T | void, error: CustomError | null}>;
     deleteRequestWithHeaderReturn: <K extends Record<string, unknown>>(
         url: RequestInfo | URL,
         expectedHeaders: (keyof K)[],
         parser: { [U in keyof K]: (value: string | null) => K[U] },
         options?: RequestInit,
     ) => Promise<{ data: T | null; headers: K | null }>;
+    deleteRequestWithError: (
+        url: RequestInfo | URL,
+        options?: RequestInit,
+    ) => Promise<{ response: T | void, error: CustomError | null }>;
+    deleteRequestWithHeaderAndError: <K extends Record<string, unknown>>(
+        url: RequestInfo | URL,
+        expectedHeaders: (keyof K)[],
+        parser: { [U in keyof K]: (value: string | null) => K[U] },
+        options?: RequestInit,
+    ) => Promise<{ data: T | null; headers: K | null, error: CustomError | null }>;
 }
 
 /**
@@ -32,16 +38,6 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
      */
     const deleteRequest = (url: RequestInfo | URL, options?: RequestInit) => {
         return fetchWithToken.requestHandler(url, {
-            ...options,
-            method: "DELETE",
-        });
-    };
-
-    /**
-     * Wrapper for making a DELETE request with error.
-     */
-    const deleteRequestWithError = (url: RequestInfo | URL, options?: RequestInit) => {
-        return fetchWithToken.requestHandlerWithError(url, {
             ...options,
             method: "DELETE",
         });
@@ -64,12 +60,40 @@ export function useDelete<T>(): IUseDeleteReturn<T> {
         );
     };
 
+    /**
+     * Wrapper for making a DELETE request with error.
+     */
+    const deleteRequestWithError = (url: RequestInfo | URL, options?: RequestInit) => {
+        return fetchWithToken.requestHandlerWithError(url, {
+            ...options,
+            method: "DELETE",
+        });
+    };
+
+    /**
+     * Wrapper for making a DELETE request with error that also extracts response headers.
+     */
+    const deleteRequestWithHeaderAndError = <K extends Record<string, unknown>>(
+        url: RequestInfo | URL,
+        expectedHeaders: (keyof K)[],
+        parser: { [U in keyof K]: (value: string | null) => K[U] },
+        options?: RequestInit,
+    ) => {
+        return fetchWithToken.requestHandlerWithHeaderAndError<K>(
+            url,
+            expectedHeaders,
+            parser,
+            { ...options, method: "DELETE" },
+        );
+    };
+
     return {
         isLoading: fetchWithToken.isLoading,
         error: fetchWithToken.error,
         clearError: fetchWithToken.clearError,
         deleteRequest,
-        deleteRequestWithError,
         deleteRequestWithHeaderReturn,
+        deleteRequestWithError,
+        deleteRequestWithHeaderAndError
     };
 }

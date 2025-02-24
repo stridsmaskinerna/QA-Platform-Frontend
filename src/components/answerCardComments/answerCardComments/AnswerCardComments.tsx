@@ -61,15 +61,20 @@ export function AnswerCardComments({
     };
 
     const createComment = async (comment: ICommentForCreation) => {
-        await postCommentReq.postRequest(`${BASE_URL}${COMMENT_URL}`, comment);
+        const postRes = await postCommentReq.postRequestWithError(
+            `${BASE_URL}${COMMENT_URL}`, comment);
 
-        const getRes = await getAnswerCommentsReq.getRequest(
+        if (postRes.error != null) {
+            return;
+        }
+
+        const getRes  = await getAnswerCommentsReq.getRequestWithError(
             `${BASE_URL}${ANSWER_URL}/${answerId}/comments`,
         );
 
-        setCurrentComments(getRes ?? []);
+        setCurrentComments(getRes.response ?? []);
 
-        markNewComment(getRes ?? [], comment.value);
+        markNewComment(getRes.response ?? [], comment.value);
     };
 
     const markNewComment = (comments: IComment[], commentValue: string) => {
@@ -107,10 +112,14 @@ export function AnswerCardComments({
     };
 
     const updateComment = async (comment: IComment) => {
-        await putCommentReq.putRequest(
+        const { error } = await putCommentReq.putRequestWithError(
             `${BASE_URL}${COMMENT_URL}/${comment.id}`,
             comment,
         );
+
+        if (error != null) {
+            return;
+        }
 
         const commentsAfterUpdate = currentComments.map(c =>
             c.id != comment.id ? c : comment,
