@@ -15,7 +15,7 @@ export function InputWithPrefetchedSuggestions(
     const [displayedSuggestions, setDisplayedSuggestions] = useState<
         typeof props.possibleSuggestions
     >([]);
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState(props.defaultValue ?? "");
     const [showSuggestions, setShowSuggestions] = useState(false);
     const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const hideSuggestionsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -88,7 +88,6 @@ export function InputWithPrefetchedSuggestions(
             inputValue={inputValue}
             inputName={props.inputName}
             inputType={props.inputType}
-            defaultValue={props.defaultValue}
             minInputValueLength={props.minInputValueLength}
             label={props.label}
             labelStyle={props.labelStyle}

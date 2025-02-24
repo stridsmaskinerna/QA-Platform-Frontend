@@ -1,0 +1,41 @@
+.btnsContainer {
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--tabBtn-inactive);
+    border: 6px solid var(--tabBtn-inactive);
+}
+
+nav a {
+    text-decoration: none;
+}
+
+.tabButton {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--tabBtnText-inactive);
+    transition:
+        background-color 0.5s ease,
+        color 1s ease;
+}
+
+nav a:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+nav a:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+nav a:hover {
+    color: var(--tabBtnText-active);
+}
+
+nav a.btnActive {
+    background-color: var(--tabBtn-active);
+    color: var(--tabBtnText-active);
+    border-radius: 5px;
+}

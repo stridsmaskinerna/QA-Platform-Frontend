@@ -2,9 +2,15 @@
     border-top: 1px solid grey;
     padding: 1rem 2rem;
     display: flex;
+    justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
     position: relative;
+}
+
+.tagsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .tag-container {
@@ -14,10 +20,25 @@
     border-radius: 12px;
     font-size: 0.7rem;
     font-weight: 600;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.btnsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 @media (max-width: 600px) {
     .container {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .tagsWrapper {
         justify-content: center;
     }
 }

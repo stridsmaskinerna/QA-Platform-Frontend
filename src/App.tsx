@@ -4,6 +4,9 @@ import {
     Header,
     ErrorBoundary,
     FullScreenLoader,
+    QuestionFinder,
+    AskAQuestion,
+    TeacherDashboard,
 } from "./components";
 import {
     Admin,
@@ -12,9 +15,11 @@ import {
     HomeLimited,
     QuestionDetailsExtended,
     QuestionDetailsLimited,
+    EditQuestion,
 } from "./pages";
 import {
     ADMIN_ROUTE,
+    EDIT_QUESTION_ROUTE,
     GUEST_HOME_ROUTE,
     GUEST_QUESTION_DETAILS_ROUTE,
     HOME_ROUTE,
@@ -32,8 +37,8 @@ function App() {
 
     return (
         <ErrorBoundary>
-            {isLoading && <FullScreenLoader />}
             <main className="app">
+                {isLoading && <FullScreenLoader />}
                 <Header />
                 <Routes>
                     <Route
@@ -60,7 +65,20 @@ function App() {
                                 <HomeExtended />
                             </AuthGuard>
                         }
-                    />
+                    >
+                        <Route
+                            index
+                            element={<QuestionFinder />}
+                        />
+                        <Route
+                            path="ask"
+                            element={<AskAQuestion />}
+                        />
+                        <Route
+                            path="teacher"
+                            element={<TeacherDashboard />}
+                        />
+                    </Route>
                     <Route
                         path={QUESTION_DETAILS_ROUTE + QUESTION_ID}
                         element={
@@ -79,6 +97,21 @@ function App() {
                             </AuthGuard>
                         }
                     />
+
+                    <Route
+                        path={EDIT_QUESTION_ROUTE + QUESTION_ID}
+                        element={
+                            <AuthGuard
+                                roleBasedRedirect={{
+                                    allowedRoles: [Role.User],
+                                    fallbackRoute: HOME_ROUTE,
+                                }}
+                            >
+                                <EditQuestion />
+                            </AuthGuard>
+                        }
+                    />
+
                     <Route
                         path={ADMIN_ROUTE}
                         element={
