@@ -47,7 +47,7 @@ export function QuestionCardBottom({
                             key={tag}
                             className={styles.tagContainer}
                             data-hl={highlights.tags}
-                >
+                        >
                             {tag}
                         </p>
                     ))}
