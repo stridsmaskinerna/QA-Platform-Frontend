@@ -14,7 +14,7 @@
     border-bottom: 2px solid transparent;
 }
 
-.header-label {
+.header-label-container {
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -22,12 +22,16 @@
     gap: 0.5rem;
 }
 
-.header-label:hover {
+.header-label-container:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
-.label-icon {
+.header-label {
+    margin-bottom: 5px;
+}
+
+.header-label-icon {
     width: 2rem;
     height: 2rem;
     padding: 4px;

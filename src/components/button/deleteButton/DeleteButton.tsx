@@ -1,8 +1,10 @@
+import deleteIcon from "../../../assets/icons/delete_white.svg";
 import styles from "./DeleteButton.module.css";
 
-interface ISaveButtonProps {
+interface IDeleteButtonProps {
     onClick?: () => void;
     text?: string;
+    icon?: boolean;
     disabled?: boolean;
     className?: string;
 }
@@ -12,9 +14,10 @@ export function DeleteButton({
         return;
     },
     text = "Delete",
+    icon = false,
     disabled = false,
     className = "",
-}: ISaveButtonProps) {
+}: IDeleteButtonProps) {
     const getDerivedClass = () => {
         return className == "" ? styles.button : className;
     };
@@ -26,6 +29,13 @@ export function DeleteButton({
             disabled={disabled}
             className={getDerivedClass()}
         >
+            {icon && (
+                <img
+                    src={deleteIcon}
+                    alt={text}
+                    title={text}
+                />
+            )}
             {text}
         </button>
     );

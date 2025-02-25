@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { IComment, ICommentForCreation } from "../../../utils";
 import { CommentCreator } from "../commentCreator";
 import { CommentList } from "../commentList";
-import styles from "./AnswerCardComments.module.css";
+import addCommentIcon from "../../../assets/icons/add_comment.svg";
+import commentListIcon from "../../../assets/icons/comment_list.svg";
 import {
     useDELETE,
     usePOST,
@@ -15,6 +16,7 @@ import {
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
 import { TabLabelContainer } from "../../utility";
+import styles from "./AnswerCardComments.module.css";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -151,6 +153,7 @@ export function AnswerCardComments({
             <TabLabelContainer
                 label={t("answerCardComments.commentsCreatorTitle")}
                 isOpen={isCommentCreatorOpen}
+                labelIcon={addCommentIcon}
                 toggleOpen={() => {
                     setIsCommentCreatorOpen(prev => !prev);
                 }}
@@ -164,6 +167,7 @@ export function AnswerCardComments({
             <TabLabelContainer
                 label={t("answerCardComments.commentsListTitle")}
                 isOpen={isCommentsOpen}
+                labelIcon={commentListIcon}
                 toggleOpen={() => {
                     toggleComments();
                 }}

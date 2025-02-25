@@ -49,6 +49,11 @@ export interface IAnswerForCreation {
     filePath?: string | undefined;
 }
 
+export interface IAnswerForPut {
+    value: string;
+    filePath?: string | undefined;
+}
+
 export interface IComment {
     id: string;
     userName: string;

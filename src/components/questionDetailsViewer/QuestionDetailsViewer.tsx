@@ -1,19 +1,34 @@
+import { useTranslation } from "react-i18next";
+
+import { QuestionDetailsViewProvider } from "./provider";
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
 import { IDetailedQuestion } from "../../utils";
-import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
 import { GoBackButton } from "..";
-import { useTranslation } from "react-i18next";
 import { AnswerCreator } from "./answerCreator";
+import styles from "./QuestionDetailsViewer.module.css";
+import { ReactNode } from "react";
+import { useQuestionDetailsViewerContext } from "./context";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
+    children?: ReactNode;
 }
 
 export function QuestionDetailsViewer({
     question,
 }: QuestionDetailsViewerProps) {
+    return (
+        <QuestionDetailsViewProvider question={question}>
+            <QuestionDetailsViewerInner />
+        </QuestionDetailsViewProvider>
+    );
+}
+
+export function QuestionDetailsViewerInner() {
     const { t } = useTranslation();
+    const { question, currentAnswers } = useQuestionDetailsViewerContext();
+
     return (
         <div className={styles.container}>
             <div className={styles.backBtn}>
@@ -41,7 +56,7 @@ export function QuestionDetailsViewer({
             <h2>Answers</h2>
             <AnswerCreator questionId={question.id} />
             <ul className={styles.container}>
-                {question.answers.map(answer => (
+                {currentAnswers.map(answer => (
                     <AnswerCard
                         key={answer.id}
                         data={answer}

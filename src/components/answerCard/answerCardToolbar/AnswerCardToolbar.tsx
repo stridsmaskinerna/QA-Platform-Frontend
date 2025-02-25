@@ -1,12 +1,8 @@
-import { useRef, useState } from "react";
-
 import { useQAContext } from "../../../hooks";
-import updateIcon from "../../../assets/icons/edit.svg";
-import deleteIcon from "../../../assets/icons/delete.svg";
 import { IAnswer } from "../../../utils";
+import { DeleteButton, EditButton } from "../../button";
+import { useQuestionDetailsViewerContext } from "../../questionDetailsViewer/context";
 import styles from "./AnswerCardToolbar.module.css";
-
-// TODO! Delete and update functionality for answer.
 
 interface IAnswerCardToolbarProps {
     answer: IAnswer;
@@ -14,6 +10,8 @@ interface IAnswerCardToolbarProps {
 
 export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
     const qaContext = useQAContext();
+    const { deleteAnswer, toggleEditingAnswer: toggleIsEditingAnswer } =
+        useQuestionDetailsViewerContext();
 
     const isMyAnswer = () => {
         return qaContext.authContext.username === answer.userName;
@@ -23,30 +21,20 @@ export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
         <>
             {isMyAnswer() && (
                 <div className={styles.container}>
-                    <button className={styles.toolbarBtn}>
-                        <img
-                            onClick={() => {
-                                return;
-                            }}
-                            src={updateIcon}
-                            alt={"Update Answer"}
-                            title={"Update Answer"}
-                            className={styles.toolbarIcon}
-                        />
-                        Edit
-                    </button>
-                    <button className={styles.toolbarBtn}>
-                        <img
-                            onClick={() => {
-                                return;
-                            }}
-                            src={deleteIcon}
-                            alt={"Delete Answer"}
-                            title={"Delete Answer"}
-                            className={styles.toolbarIcon}
-                        />
-                        Delete
-                    </button>
+                    <EditButton
+                        onClick={() => {
+                            toggleIsEditingAnswer(answer);
+                        }}
+                        text={"Edit"}
+                        icon={true}
+                    />
+                    <DeleteButton
+                        onClick={() => {
+                            void deleteAnswer(answer);
+                        }}
+                        text={"Delete"}
+                        icon={true}
+                    />
                 </div>
             )}
         </>
