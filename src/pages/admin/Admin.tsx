@@ -1,8 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-
-    Tabs
-} from "../../components";
+import { Tabs } from "../../components";
 import styles from "../home/HomeSharedStyle.module.css";
 import { ITab } from "../../utils";
 import { CSSProperties, useMemo } from "react";
@@ -32,7 +29,7 @@ export function Admin() {
     const tabs = useMemo(() => {
         const baseTabs: ITab[] = [
             {
-                content: <CourseManagement/>,
+                content: <CourseManagement />,
                 contentContainerStyle,
                 btnStyle,
                 title: t("courseManagement"),
@@ -50,7 +47,7 @@ export function Admin() {
                 title: t("tagManagement"),
             },
         ];
- 
+
         return baseTabs;
     }, [t]);
 
