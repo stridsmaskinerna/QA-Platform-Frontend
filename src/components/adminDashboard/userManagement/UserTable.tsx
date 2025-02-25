@@ -30,8 +30,11 @@ export function UserTable({ users, onBlockUnblock }: UserTableProps) {
                             <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                             <td>
                                 <button
-                                    onClick={() => void
-                                        onBlockUnblock(user.id, user.isBlocked)
+                                    onClick={() =>
+                                        void onBlockUnblock(
+                                            user.id,
+                                            user.isBlocked,
+                                        )
                                     }
                                     className={
                                         user.isBlocked

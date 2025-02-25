@@ -4,7 +4,7 @@ import { IUser } from "../utils";
 import { BASE_URL, ADMIN_ROUTE } from "../data";
 
 export function useUser() {
-    const {putRequestWithError}  = usePUT()
+    const { putRequestWithError } = usePUT();
     const { requestHandler: fetchUsers } = useFetchWithToken<IUser[]>();
     const [allUsers, setAllUsers] = useState<IUser[] | null>(null);
     const [filteredUsers, setFilteredUsers] = useState<IUser[] | null>(null); // Initialize to null!
@@ -44,10 +44,8 @@ export function useUser() {
         console.log("Request URL:", url);
         console.log("Request Data:", data);
         try {
-            const {error, response} = await putRequestWithError(url, 
-                data
-            );
-            
+            const { error, response } = await putRequestWithError(url, data);
+
             if (error) {
                 throw error;
             }
