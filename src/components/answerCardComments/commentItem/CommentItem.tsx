@@ -27,7 +27,7 @@ export function CommentItem({
     const commentRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (highlightedCommentId === comment.id && commentRef.current) {
+        if (highlightedCommentId === comment.id && commentRef.current != null) {
             commentRef.current.scrollIntoView({
                 behavior: "smooth",
                 block: "center",

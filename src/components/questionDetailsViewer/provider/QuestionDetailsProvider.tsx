@@ -56,8 +56,9 @@ export function QuestionDetailsProvider({
             return;
         }
 
-        setCurrentAnswers(getQuestionRes.response?.answers ?? []);
-        markNewComment(getQuestionRes.response?.answers ?? [], answer.value);
+        const updatedAnswers = getQuestionRes.response?.answers ?? [];
+        setCurrentAnswers(updatedAnswers);
+        markNewComment(updatedAnswers, answer.value);
     };
 
     const markNewComment = (answers: IAnswer[], answerValue: string) => {
@@ -95,8 +96,6 @@ export function QuestionDetailsProvider({
     };
 
     const updateAnswer = async (answer: IAnswer) => {
-        console.log("answer", answer);
-
         const answerForPut: IAnswerForPut = {
             value: answer.value,
             filePath: answer.filePath,
@@ -111,9 +110,11 @@ export function QuestionDetailsProvider({
             return;
         }
 
-        setCurrentAnswers(prev =>
-            prev.map(a => (a.id == answer.id ? answer : a)),
+        const updatedAnswers = currentAnswers.map(a =>
+            a.id == answer.id ? answer : a,
         );
+        setCurrentAnswers(updatedAnswers);
+        markNewComment(updatedAnswers, answer.value);
     };
 
     const updateEditingAnswer = (answer: IAnswer | null) => {
