@@ -133,7 +133,7 @@ export function CourseManagement() {
                 </button>
             </form>
             <div className={styles.manageCourse}>
-                <h2 className={styles.heading}>Manage Existing Courses</h2>
+                <h2 className={styles.heading}>{t("manageExistingCourses")}</h2>
                 <Input
                     inputName="manageCourse"
                     inputType="text"
@@ -145,51 +145,47 @@ export function CourseManagement() {
                 <table className={styles.courseTable}>
                     <thead>
                         <tr>
-                            <th>Course Code</th>
-                            <th>Course Name</th>
-                            <th>Teachers</th>
-                            <th>Actions</th>
+                            <th>{t("courseCode")}</th>
+                            <th>{t("courseName")}</th>
+                            <th>{t("teachers")}</th>
+                            <th>{t("actions")}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCourses.map(
-                            (
-                                course, // Use filteredCourses here
-                            ) => (
-                                <tr key={course.id}>
-                                    <td data-label="Course Code">
-                                        {course.subjectCode}
-                                    </td>
-                                    <td data-label="Course Name">
-                                        {course.name}
-                                    </td>
-                                    <td data-label="Teachers">
-                                        {course.teachers?.map(teacher => (
-                                            <span
-                                                key={teacher.id}
-                                                className={styles.teacherTag}
-                                            >
-                                                {teacher.email}
-                                            </span>
-                                        ))}
-                                    </td>
-                                    <td data-label="Actions">
-                                        <button
-                                            className={styles.deleteBtn}
-                                            onClick={() =>
-                                                void handleDelete(course.id)
-                                            }
+                        {filteredCourses.map(course => (
+                            <tr key={course.id}>
+                                <td data-label={t("courseCode")}>
+                                    {course.subjectCode}
+                                </td>
+                                <td data-label={t("courseName")}>
+                                    {course.name}
+                                </td>
+                                <td data-label={t("teachers")}>
+                                    {course.teachers?.map(teacher => (
+                                        <span
+                                            key={teacher.id}
+                                            className={styles.teacherTag}
                                         >
-                                            <img
-                                                src={delete_icon}
-                                                alt="Delete Icon"
-                                                className="delete-icon"
-                                            />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ),
-                        )}
+                                            {teacher.email}
+                                        </span>
+                                    ))}
+                                </td>
+                                <td data-label={t("actions")}>
+                                    <button
+                                        className={styles.deleteBtn}
+                                        onClick={() =>
+                                            void handleDelete(course.id)
+                                        }
+                                    >
+                                        <img
+                                            src={delete_icon}
+                                            alt="Delete Icon"
+                                            className="delete-icon"
+                                        />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

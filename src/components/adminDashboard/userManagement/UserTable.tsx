@@ -1,54 +1,63 @@
+import { useTranslation } from "react-i18next";
 import { IUser } from "../../../utils"; // Assuming this is the user model
 import styles from "./UserManagement.module.css"; // Importing the CSS module styles
+import { Loader } from "../..";
 
 interface UserTableProps {
     users: IUser[];
-    onBlockUnblock: (id: string, isBlocked: boolean) => Promise<void>;
+    onBlockUnblock: (id: string) => Promise<void>;
+    hasMore: boolean;
+    loaderRef: (node?: Element | null) => void;
 }
 
-export function UserTable({ users, onBlockUnblock }: UserTableProps) {
+export function UserTable({
+    users,
+    onBlockUnblock,
+    hasMore,
+    loaderRef,
+}: UserTableProps) {
+    const { t } = useTranslation();
+
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>User Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {users.length === 0 ? (
+        <>
+            <table>
+                <thead>
                     <tr>
-                        <td colSpan={4}>No users found</td>
+                        <th>{t("username")}</th>
+                        <th>{t("email")}</th>
+                        <th>{t("status")}</th>
+                        <th>{t("actions")}</th>
                     </tr>
-                ) : (
-                    users.map(user => (
+                </thead>
+                <tbody>
+                    {users.map(user => (
                         <tr key={user.id}>
                             <td>{user.userName}</td>
                             <td>{user.email}</td>
-                            <td>{user.isBlocked ? "Blocked" : "Active"}</td>
+                            <td>
+                                {user.isBlocked ? t("blocked") : t("active")}
+                            </td>
                             <td>
                                 <button
-                                    onClick={() =>
-                                        void onBlockUnblock(
-                                            user.id,
-                                            user.isBlocked,
-                                        )
-                                    }
+                                    onClick={() => void onBlockUnblock(user.id)}
                                     className={
                                         user.isBlocked
                                             ? styles.unblockBtn
                                             : styles.blockBtn
                                     }
                                 >
-                                    {user.isBlocked ? "Unblock" : "Block"}
+                                    {user.isBlocked ? t("unblock") : t("block")}
                                 </button>
                             </td>
                         </tr>
-                    ))
-                )}
-            </tbody>
-        </table>
+                    ))}
+                </tbody>
+            </table>
+            {hasMore && (
+                <div ref={loaderRef}>
+                    <Loader />
+                </div>
+            )}
+        </>
     );
 }

@@ -139,5 +139,6 @@ export function useInfiniteScrolling<T extends { id: string }>({
         totalItemCount,
         resetPaginatedData,
         removeIdFromPaginatedData,
+        setPaginatedData,
     };
 }
