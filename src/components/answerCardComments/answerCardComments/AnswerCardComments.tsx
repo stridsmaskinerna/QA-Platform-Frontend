@@ -2,22 +2,21 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IComment, ICommentForCreation } from "../../../utils";
-import { H2 } from "../../text";
-import openIcon from "../../../assets/icons/arrow_right.svg";
-import addCommentIcon from "../../../assets/icons/add_comment.svg";
-import commentListIcon from "../../../assets/icons/comment_list.svg";
 import { CommentCreator } from "../commentCreator";
 import { CommentList } from "../commentList";
-import styles from "./AnswerCardComments.module.css";
+import addCommentIcon from "../../../assets/icons/add_comment.svg";
+import commentListIcon from "../../../assets/icons/comment_list.svg";
 import {
     useDELETE,
     usePOST,
     usePUT,
-    useGet as useGET,
+    useGET,
     useQAContext,
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
+import { TabLabelContainer } from "../../utility";
+import styles from "./AnswerCardComments.module.css";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -30,30 +29,23 @@ export function AnswerCardComments({
 }: IAnswerCardCommentsProps) {
     const { t } = useTranslation();
     const qaContext = useQAContext();
-    const postCommentReq = usePOST<IComment>();
-    const deleteCommentReq = useDELETE<IComment>();
-    const getAnswerCommentsReq = useGET<IComment[]>();
-    const putCommentReq = usePUT<IComment>();
-    const viewCommentsRef = useRef<HTMLImageElement | null>(null);
-    const viewCommentsCreatorRef = useRef<HTMLImageElement | null>(null);
     const scrollPositionRef = useRef<number>(0);
-    const [hideComment, setHideComment] = useState(true);
-    const [hideCommentCreator, setHideCommentCreator] = useState(true);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const postCommentReq = usePOST<void>();
+    const deleteCommentReq = useDELETE<void>();
+    const getAnswerCommentsReq = useGET<IComment[]>();
+    const putCommentReq = usePUT<void>();
+    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+    const [isCommentCreatorOpen, setIsCommentCreatorOpen] = useState(false);
     const [currentComments, setCurrentComments] = useState(comments);
     const [highlightedCommentId, setHighlightedCommentId] = useState<
         string | null
     >(null);
 
-    const toggleCommentsCreator = () => {
-        setHideCommentCreator(prev => !prev);
-        viewCommentsCreatorRef.current?.classList.toggle(styles.openIconHide);
-    };
-
     const toggleComments = () => {
         scrollPositionRef.current = window.scrollY;
 
-        setHideComment(prev => !prev);
-        viewCommentsRef.current?.classList.toggle(styles.openIconHide);
+        setIsCommentsOpen(prev => !prev);
 
         requestAnimationFrame(() => {
             window.scrollTo(0, scrollPositionRef.current);
@@ -81,6 +73,7 @@ export function AnswerCardComments({
         setCurrentComments(getRes.response ?? []);
 
         markNewComment(getRes.response ?? [], comment.value);
+        setIsCommentsOpen(true);
     };
 
     const markNewComment = (comments: IComment[], commentValue: string) => {
@@ -90,15 +83,19 @@ export function AnswerCardComments({
                 c.value === commentValue,
         );
 
-        if (newComment) {
-            setHideComment(false);
-            viewCommentsRef.current?.classList.add(styles.openIconHide);
-            setHighlightedCommentId(newComment.id);
-
-            setTimeout(() => {
-                setHighlightedCommentId(null);
-            }, 10000);
+        if (newComment == null) {
+            return;
         }
+
+        setHighlightedCommentId(newComment?.id);
+
+        if (timerRef.current != null) {
+            clearTimeout(timerRef.current);
+        }
+
+        timerRef.current = setTimeout(() => {
+            setHighlightedCommentId(null);
+        }, 10000);
     };
 
     const deleteComment = async (comment: IComment) => {
@@ -153,66 +150,35 @@ export function AnswerCardComments({
                 ]}
                 onClearErrors={clearErrors}
             />
-            <div
-                className={styles.header}
-                onClick={() => {
-                    toggleCommentsCreator();
+            <TabLabelContainer
+                label={t("answerCardComments.commentsCreatorTitle")}
+                isOpen={isCommentCreatorOpen}
+                labelIcon={addCommentIcon}
+                toggleOpen={() => {
+                    setIsCommentCreatorOpen(prev => !prev);
                 }}
             >
-                <div className={styles.headerLabel}>
-                    <img
-                        src={addCommentIcon}
-                        alt={t("answerCardComments.createCommentInfo")}
-                        title={t("answerCardComments.createCommentInfo")}
-                        className={styles.labelIcon}
-                    />
-                    <H2 text={t("answerCardComments.commentsCreatorTitle")} />
-                </div>
-                <img
-                    ref={viewCommentsCreatorRef}
-                    src={openIcon}
-                    alt={t("answerCardComments.createCommentInfo")}
-                    title={t("answerCardComments.createCommentInfo")}
-                    className={styles.openIcon}
-                />
-            </div>
-            {!hideCommentCreator && (
                 <CommentCreator
                     answerId={answerId}
                     createComment={createComment}
                 />
-            )}
-            <div
-                className={styles.header}
-                onClick={() => {
+            </TabLabelContainer>
+
+            <TabLabelContainer
+                label={t("answerCardComments.commentsListTitle")}
+                isOpen={isCommentsOpen}
+                labelIcon={commentListIcon}
+                toggleOpen={() => {
                     toggleComments();
                 }}
             >
-                <div className={styles.headerLabel}>
-                    <img
-                        src={commentListIcon}
-                        alt={t("answerCardComments.viewCommentInfo")}
-                        title={t("answerCardComments.viewCommentInfo")}
-                        className={styles.labelIcon}
-                    />
-                    <H2 text={t("answerCardComments.commentsListTitle")} />
-                </div>
-                <img
-                    ref={viewCommentsRef}
-                    src={openIcon}
-                    alt={t("answerCardComments.viewCommentInfo")}
-                    title={t("answerCardComments.viewCommentInfo")}
-                    className={styles.openIcon}
-                />
-            </div>
-            {!hideComment && (
                 <CommentList
                     highlightedCommentId={highlightedCommentId}
                     comments={currentComments}
                     deleteComment={deleteComment}
                     updateComment={updateComment}
                 />
-            )}
+            </TabLabelContainer>
         </div>
     );
 }

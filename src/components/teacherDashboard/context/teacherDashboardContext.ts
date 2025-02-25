@@ -19,9 +19,8 @@ export interface ITeacherDashboardContext {
     handleDeleteQuestion: (id: string) => Promise<void>;
 }
 
-export const TeacherDashboardContext = createContext<ITeacherDashboardContext>(
-    {} as ITeacherDashboardContext,
-);
+export const TeacherDashboardContext =
+    createContext<ITeacherDashboardContext | null>(null);
 
 export const useTeacherDashboardContext = () => {
     const contextValue = useContext(TeacherDashboardContext);

@@ -23,11 +23,8 @@ interface QuestionHeaderProps {
 
 export function QuestionHeader(props: QuestionHeaderProps) {
     const { t } = useTranslation();
-    const {
-        putRequest,
-        isLoading: isVisibilityToggleLoading,
-        error: toggleVisibilityError,
-    } = usePUT();
+    const { putRequestWithError, isLoading: isVisibilityToggleLoading } =
+        usePUT();
 
     const isResolvedClass = props.isResolved
         ? styles.resolved
@@ -39,11 +36,13 @@ export function QuestionHeader(props: QuestionHeaderProps) {
         : props.subjectName;
 
     const toggleVisibility = async () => {
-        await putRequest(`${BASE_URL}${QUESTION_URL}/${props.id}/visibility`);
-        if (!toggleVisibilityError) {
+        const { error } = await putRequestWithError(
+            `${BASE_URL}${QUESTION_URL}/${props.id}/visibility`,
+        );
+        if (!error) {
             props.setIsHiddenOptimistic(prev => !prev);
         } else {
-            console.error(toggleVisibilityError);
+            console.error(error);
         }
     };
 

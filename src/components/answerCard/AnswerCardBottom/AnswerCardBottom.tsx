@@ -1,9 +1,12 @@
 import styles from "./AnswerCardBottom.module.css";
 import { AnswerCardVote } from "../answerCardVote";
 import { AnswerAccept } from "../AnswerCardAccept";
+import { AnswerCardToolbar } from "../answerCardToolbar/AnswerCardToolbar";
+import { IAnswer } from "../../../utils";
 
 interface IAnswerCardBottomProps {
     answerId: string;
+    answer: IAnswer;
     voteCount: number;
     myVote: string;
     isAccepted: boolean;
@@ -13,6 +16,7 @@ interface IAnswerCardBottomProps {
 
 export function AnswerCardBottom({
     answerId,
+    answer,
     voteCount,
     myVote,
     isAccepted,
@@ -26,11 +30,9 @@ export function AnswerCardBottom({
                 voteCount={voteCount}
                 myVote={myVote}
             />
-            <AnswerAccept
-                answerId={answerId}
-                isAccepted={isAccepted}
+            <AnswerCardToolbar
+                answer={answer}
                 isOwner={isOwner}
-                onMarkAsSolved={onMarkAsSolved}
             />
         </div>
     );
