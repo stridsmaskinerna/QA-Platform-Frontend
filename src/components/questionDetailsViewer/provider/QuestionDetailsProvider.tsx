@@ -37,6 +37,8 @@ export function QuestionDetailsProvider({
         }
 
         // TODO! Update to more clean solution;
+        // 1) Create API endpoint to gett all answers for a question
+        //    api/questions/{id}/answers
         window.location.reload();
     };
 

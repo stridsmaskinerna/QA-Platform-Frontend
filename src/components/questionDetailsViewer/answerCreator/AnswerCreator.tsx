@@ -27,7 +27,10 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
                 questionId,
                 value,
             })
-            .then(() => setValue(""));
+            .then(() => {
+                setValue("");
+                setIsAnswerCreatorOpen(prev => !prev);
+            });
     };
 
     return (
