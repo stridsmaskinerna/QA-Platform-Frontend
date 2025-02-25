@@ -1,63 +1,31 @@
 import { useTranslation } from "react-i18next";
-import { Tabs } from "../../components";
-import styles from "../home/HomeSharedStyle.module.css";
-import { ITab } from "../../utils";
-import { CSSProperties, useMemo } from "react";
-import { CourseManagement } from "../../components/adminDashboard/courseManagement/CourseManagement";
-import { UserManagement } from "../../components/adminDashboard/userManagement/UserManagement";
-import { TagManagement } from "../../components/adminDashboard/tagManagement/TagManagement";
-
-const tabBtnsContainerStyle: CSSProperties = {
-    maxWidth: "100%",
-};
-
-const btnStyle: CSSProperties = {
-    fontSize: "13px",
-    width: "max-content",
-    paddingBlock: "5px",
-};
-
-const contentContainerStyle: CSSProperties = {
-    width: "100%",
-    marginTop: "1.5rem",
-};
-const tabsContainerStyle: CSSProperties = { width: "100%", maxWidth: "1600px" };
+import { NavLinkTabs } from "../../components";
+import { useMemo } from "react";
+import { Outlet } from "react-router";
+import styles from "./Admin.module.css";
 
 export function Admin() {
     const { t } = useTranslation();
 
-    const tabs = useMemo(() => {
-        const baseTabs: ITab[] = [
-            {
-                content: <CourseManagement />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("courseManagement"),
-            },
-            {
-                content: <UserManagement />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("userManagement"),
-            },
-            {
-                content: <TagManagement />,
-                contentContainerStyle,
-                btnStyle,
-                title: t("tagManagement"),
-            },
-        ];
-
-        return baseTabs;
-    }, [t]);
+    const navTabs = useMemo(
+        () => [
+            { title: t("courseManagement"), to: "course-management" },
+            { title: t("userManagement"), to: "user-management" },
+            { title: t("tagManagement"), to: "tag-management" },
+        ],
+        [t],
+    );
 
     return (
         <section className={styles.container}>
-            <Tabs
-                containerStyle={tabsContainerStyle}
-                tabs={tabs}
-                tabBtnsContainerStyle={tabBtnsContainerStyle}
-            />
+            <div className={styles.contentWrapper}>
+                <NavLinkTabs
+                    containerClass={styles.navTabsContainer}
+                    btnClass={styles.tabBtn}
+                    navTabs={navTabs}
+                />
+                <Outlet />
+            </div>
         </section>
     );
 }

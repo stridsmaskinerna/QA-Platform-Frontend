@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    padding-top: clamp(1rem, 5vw, 1.3rem);
+    padding-inline: clamp(15px, 4vw, 10rem);
+    justify-content: center;
+    flex: 1;
+}
+
+.contentWrapper {
+    display: flex;
+    max-width: 1600px;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.navTabsContainer {
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--tabBtn-inactive);
+    border: 6px solid var(--tabBtn-inactive);
+    align-self: flex-start;
+}
+
+.tabBtn {
+    display: block;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    cursor: pointer;
+    color: var(--tabBtnText-inactive);
+    transition:
+        background-color 0.5s ease,
+        color 1s ease;
+    font-size: 13px;
+    width: max-content;
+    padding-block: 5px;
+}
