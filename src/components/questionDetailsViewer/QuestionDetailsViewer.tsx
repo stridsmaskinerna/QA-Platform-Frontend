@@ -3,10 +3,12 @@ import { IAnswer, IDetailedQuestion } from "../../utils";
 import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
 
-import { useQAContext, useRoles } from "../../hooks";
+import { useQAContext } from "../../hooks";
 import { GoBackButton } from "..";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { ANSWER_URL, BASE_URL } from "../../data";
+import { usePUT } from "../../hooks";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -16,23 +18,30 @@ export function QuestionDetailsViewer({
     question,
 }: QuestionDetailsViewerProps) {
     const { t } = useTranslation();
+    const { putRequest, isLoading, error } = usePUT<void>();
 
     const {
         authContext: { username },
     } = useQAContext() || { authContext: { username: null } };
 
-    console.log(username);
-
     const [answers, setAnswers] = useState<IAnswer[]>(question.answers);
 
-    const handleMarkAsSolved = (answerId: string) => {
-        setAnswers(prevAnswers =>
-            prevAnswers.map(answer =>
-                answer.id === answerId
-                    ? { ...answer, isAccepted: !answer.isAccepted } // Toggle isAccepted
-                    : { ...answer, isAccepted: false } // Unmark others
-            )
-        );
+    const handleMarkAsSolved = async (answerId: string) => {
+        try {
+            await putRequest(
+                `${BASE_URL}${ANSWER_URL}/${answerId}/toggle-accepted`,
+            );
+
+            setAnswers(prevAnswers =>
+                prevAnswers.map(answer =>
+                    answer.id === answerId
+                        ? { ...answer, isAccepted: !answer.isAccepted }
+                        : { ...answer, isAccepted: false },
+                ),
+            );
+        } catch (error) {
+            console.error("Failed to update answer status:", error);
+        }
     };
 
     return (
@@ -67,7 +76,9 @@ export function QuestionDetailsViewer({
                         data={answer}
                         isOwner={!!username && username === question.userName}
                         questionId={question.id}
-                        onMarkAsSolved={handleMarkAsSolved}
+                        onMarkAsSolved={() => {
+                            void handleMarkAsSolved(answer.id);
+                        }}
                     />
                 ))}
             </ul>

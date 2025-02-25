@@ -26,10 +26,11 @@ export function AnswerCardBottom({
                 voteCount={voteCount}
                 myVote={myVote}
             />
-            <AnswerAccept 
-                isAccepted={isAccepted} 
-                isOwner={isOwner} 
-                onMarkAsSolved={onMarkAsSolved} 
+            <AnswerAccept
+                answerId={answerId}
+                isAccepted={isAccepted}
+                isOwner={isOwner}
+                onMarkAsSolved={onMarkAsSolved}
             />
         </div>
     );
