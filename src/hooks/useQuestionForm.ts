@@ -36,8 +36,8 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
             "Need to provide a questionId if using useQuestionForm for editing a question",
         );
     }
-    const { getRequest: getSubjects } = useGet<ISubject[]>();
-    const { getRequest: getQuestionForEdit } = useGet<IQuestionForEdit>();
+    const { getRequest: getSubjects } = useGET<ISubject[]>();
+    const { getRequest: getQuestionForEdit } = useGET<IQuestionForEdit>();
     const { postRequestWithError: postQuestion } = usePOST();
     const { putRequestWithError: editQuestion } = usePUT();
     const {
