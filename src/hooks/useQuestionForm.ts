@@ -36,10 +36,10 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
             "Need to provide a questionId if using useQuestionForm for editing a question",
         );
     }
-    const { getRequest: getSubjects } = useGET<ISubject[]>();
-    const { getRequest: getQuestionForEdit } = useGET<IQuestionForEdit>();
-    const { postRequest: postQuestion } = usePOST();
-    const { putRequest: editQuestion } = usePUT();
+    const { getRequest: getSubjects } = useGet<ISubject[]>();
+    const { getRequest: getQuestionForEdit } = useGet<IQuestionForEdit>();
+    const { postRequestWithError: postQuestion } = usePOST();
+    const { putRequestWithError: editQuestion } = usePUT();
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
@@ -106,14 +106,25 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
         void (async () => {
             setIsLoading(true);
             if (action === "ask") {
-                await postQuestion(postQuestionUrl, formDetails);
-                await navigate(HOME_ROUTE);
+                const { error } = await postQuestion(
+                    postQuestionUrl,
+                    formDetails,
+                );
+                if (!error) {
+                    await navigate(HOME_ROUTE);
+                } else {
+                    console.error(error);
+                }
             } else {
-                await editQuestion(
+                const { error } = await editQuestion(
                     `${postQuestionUrl}/${questionId}`,
                     formDetails,
                 );
-                await navigate(-1);
+                if (!error) {
+                    await navigate(-1);
+                } else {
+                    console.error(error);
+                }
             }
             setIsLoading(false);
         })();
