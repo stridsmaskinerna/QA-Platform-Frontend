@@ -107,6 +107,7 @@
         "addCourse": "+ Add Course",
         "manageCourse": "Enter the course code or Name",
         "manageTag": "Search tags",
+        "manageUser": "Search Users",
         "answerCardComments": {
             "commentLabelMarker": "✔ Your latest comment",
             "commentsListTitle": "View Comments",

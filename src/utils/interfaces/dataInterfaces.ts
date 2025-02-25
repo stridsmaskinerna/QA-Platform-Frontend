@@ -55,3 +55,10 @@ export interface IPaginationMeta {
     TotalItemCount: number;
     TotalPageCount: number;
 }
+
+export interface IUser {
+    id: string;
+    userName: string;
+    email: string;
+    isBlocked: boolean;
+}
