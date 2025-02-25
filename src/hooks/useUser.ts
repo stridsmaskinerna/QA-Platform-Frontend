@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useFetchWithToken } from "../hooks";
+import { useFetchWithToken, usePUT } from "../hooks";
 import { IUser } from "../utils";
 import { BASE_URL, ADMIN_ROUTE } from "../data";
 
 export function useUser() {
+    const {putRequestWithError}  = usePUT()
     const { requestHandler: fetchUsers } = useFetchWithToken<IUser[]>();
     const [allUsers, setAllUsers] = useState<IUser[] | null>(null);
     const [filteredUsers, setFilteredUsers] = useState<IUser[] | null>(null); // Initialize to null!
@@ -34,7 +35,7 @@ export function useUser() {
             }
         };
 
-        fetchAllUsers();
+        void fetchAllUsers();
     }, [fetchUsers, AdminUrl, searchTerm]);
 
     const updateUserStatus = async (id: string, newStatus: boolean) => {
@@ -43,17 +44,12 @@ export function useUser() {
         console.log("Request URL:", url);
         console.log("Request Data:", data);
         try {
-            const response = await fetch(url, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(
-                    `Failed to update status: ${response.status} - ${errorData?.message || response.statusText}`,
-                );
+            const {error, response} = await putRequestWithError(url, 
+                data
+            );
+            
+            if (error) {
+                throw error;
             }
 
             setFilteredUsers(prevUsers => {
@@ -72,7 +68,7 @@ export function useUser() {
                 setFilteredUsers(updatedUsers);
             }
 
-            return await response.json();
+            return response;
         } catch (error) {
             console.error("Error updating user status:", error);
             throw error; // Re-throw for the calling component to handle

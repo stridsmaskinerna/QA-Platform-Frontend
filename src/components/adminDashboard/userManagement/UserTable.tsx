@@ -3,7 +3,7 @@ import styles from "./UserManagement.module.css"; // Importing the CSS module st
 
 interface UserTableProps {
     users: IUser[];
-    onBlockUnblock: (id: string, isBlocked: boolean) => void;
+    onBlockUnblock: (id: string, isBlocked: boolean) => Promise<void>;
 }
 
 export function UserTable({ users, onBlockUnblock }: UserTableProps) {
@@ -30,7 +30,7 @@ export function UserTable({ users, onBlockUnblock }: UserTableProps) {
                             <td>{user.isBlocked ? "Blocked" : "Active"}</td>
                             <td>
                                 <button
-                                    onClick={() =>
+                                    onClick={() => void
                                         onBlockUnblock(user.id, user.isBlocked)
                                     }
                                     className={

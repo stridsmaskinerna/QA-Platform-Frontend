@@ -31,7 +31,7 @@ export function UserManagement() {
                 inputType="text"
                 placeHolder="Manage User"
                 inputValue={searchTerm}
-                onChange={e => handleSearchChange(e.target.value)}
+                onChange={e => void handleSearchChange(e.target.value)}
             />
 
             {isLoading && <div>Loading...</div>}
