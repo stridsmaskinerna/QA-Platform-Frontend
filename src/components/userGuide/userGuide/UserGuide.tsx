@@ -58,7 +58,9 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
         const target = e.currentTarget;
         target.classList.add(styles.hidePointerEvents);
 
-        if (timerRef.current) clearTimeout(timerRef.current);
+        if (timerRef.current != null) {
+            clearTimeout(timerRef.current);
+        }
 
         timerRef.current = setTimeout(() => {
             target.classList.remove(styles.hidePointerEvents);
@@ -89,7 +91,13 @@ export function UserGuide({ questionCards }: IUserGuideProps) {
                         }}
                         onMouseDown={hidePointerEvents}
                     >
-                        <QuestionCard data={questionCards[currentIndex]} />
+                        <QuestionCard
+                            data={questionCards[currentIndex]}
+                            isPostedByUser={false}
+                            handleDeleteClick={() => {
+                                return;
+                            }}
+                        />
                     </div>
                 </div>
                 {tooltipHook.tooltipData && (

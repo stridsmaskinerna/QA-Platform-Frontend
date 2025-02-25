@@ -10,13 +10,18 @@ export function QuestionCardDetails(data: IQuestion) {
     const {
         authContext: { username },
     } = useQAContext();
-    const { deleteRequest } = useDELETE();
+    const { deleteRequestWithError } = useDELETE();
     const [isHiddenOptimistic, setIsHiddenOptimistic] = useState(data.isHidden);
     const navigate = useNavigate();
     const handleDeleteClick = async () => {
-        //TODO handle error
-        await deleteRequest(`${BASE_URL}${QUESTION_URL}/${data.id}`);
-        await navigate(HOME_ROUTE);
+        const { error } = await deleteRequestWithError(
+            `${BASE_URL}${QUESTION_URL}/${data.id}`,
+        );
+        if (!error) {
+            await navigate(HOME_ROUTE);
+        } else {
+            console.error(error);
+        }
     };
 
     return (

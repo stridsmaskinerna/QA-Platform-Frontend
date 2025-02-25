@@ -35,7 +35,7 @@ interface IUseGetReturn<T> {
 /**
  * A custom hook to send GET requests with authentication tokens.
  */
-export function useGet<T>(): IUseGetReturn<T> {
+export function useGET<T>(): IUseGetReturn<T> {
     const fetchWithToken = useFetchWithToken<T>();
 
     /**
