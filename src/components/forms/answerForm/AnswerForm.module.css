@@ -13,8 +13,9 @@
 
 .answer-btn-ctr {
     display: flex;
-    flex-direction: column;
-    align-items: end;
+    flex-direction: row;
+    justify-content: end;
+    gap: 1rem;
 }
 
 .answer-btn {

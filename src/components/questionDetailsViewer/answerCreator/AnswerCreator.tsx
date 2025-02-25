@@ -39,7 +39,12 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
                 setIsAnswerCreatorOpen(prev => !prev);
             }}
         >
-            <AnswerForm onSubmit={submit}>
+            <AnswerForm
+                onSubmit={submit}
+                onCancel={() => {
+                    setIsAnswerCreatorOpen(false);
+                }}
+            >
                 <RichTextEditor
                     placeholder={"Create you answer..."}
                     setEditorState={setValue}

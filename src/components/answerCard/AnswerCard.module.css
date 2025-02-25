@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: clamp(25px, 3vw, 40px);
+    padding: 0.5rem;
+    gap: 0;
     border-radius: var(--border-radius);
 }
 

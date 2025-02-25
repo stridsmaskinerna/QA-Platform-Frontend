@@ -10,11 +10,15 @@ interface IAnswerCardToolbarProps {
 
 export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
     const qaContext = useQAContext();
-    const { deleteAnswer, toggleEditingAnswer: toggleIsEditingAnswer } =
+    const { editingAnswer, deleteAnswer, toggleEditingAnswer } =
         useQuestionDetailsViewerContext();
 
     const isMyAnswer = () => {
         return qaContext.authContext.username === answer.userName;
+    };
+
+    const getDisableStatus = () => {
+        return editingAnswer?.id == answer.id;
     };
 
     return (
@@ -22,13 +26,15 @@ export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
             {isMyAnswer() && (
                 <div className={styles.container}>
                     <EditButton
+                        disabled={getDisableStatus()}
                         onClick={() => {
-                            toggleIsEditingAnswer(answer);
+                            toggleEditingAnswer(answer);
                         }}
                         text={"Edit"}
                         icon={true}
                     />
                     <DeleteButton
+                        disabled={getDisableStatus()}
                         onClick={() => {
                             void deleteAnswer(answer);
                         }}

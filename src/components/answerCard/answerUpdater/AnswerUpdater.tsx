@@ -32,7 +32,12 @@ export function AnswerUpdater({ answer }: IAnswerCreatorProps) {
     };
 
     return (
-        <AnswerForm onSubmit={submit}>
+        <AnswerForm
+            onSubmit={submit}
+            onCancel={() => {
+                questionContext.updateEditingAnswer(null);
+            }}
+        >
             <RichTextEditor
                 initialState={answer.value}
                 placeholder={"Update you answer..."}
