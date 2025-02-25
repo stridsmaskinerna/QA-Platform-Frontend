@@ -1,0 +1,59 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.header-label-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-label-container:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.header-label {
+    margin-bottom: 5px;
+}
+
+.header-label-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 4px;
+}
+
+.open-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: rotate 0.1s ease-out;
+}
+
+.open-icon-hide {
+    rotate: 90deg;
+}
+
+.open-icon:hover {
+    background-color: var(--grey-strong);
+}
+
+.body {
+    width: 100%;
+}

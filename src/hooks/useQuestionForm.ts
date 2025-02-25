@@ -8,7 +8,7 @@ import {
 } from "react";
 import { BASE_URL, HOME_ROUTE, QUESTION_URL } from "../data";
 import { IOption, IQuestionForEdit, ISubject, ISuggestion } from "../utils";
-import { useGet, usePOST, usePUT } from "./Http";
+import { useGET, usePOST, usePUT } from "./Http";
 import { useQAContext } from ".";
 import { useDebounceCallback } from "usehooks-ts";
 import { useNavigate } from "react-router";
@@ -36,8 +36,8 @@ export function useQuestionForm({ action, questionId }: IUseQuestionForm) {
             "Need to provide a questionId if using useQuestionForm for editing a question",
         );
     }
-    const { getRequest: getSubjects } = useGet<ISubject[]>();
-    const { getRequest: getQuestionForEdit } = useGet<IQuestionForEdit>();
+    const { getRequest: getSubjects } = useGET<ISubject[]>();
+    const { getRequest: getQuestionForEdit } = useGET<IQuestionForEdit>();
     const { postRequestWithError: postQuestion } = usePOST();
     const { putRequestWithError: editQuestion } = usePUT();
     const {
