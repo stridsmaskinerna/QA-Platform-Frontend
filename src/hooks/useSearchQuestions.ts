@@ -83,11 +83,17 @@ export const useSearchQuestions = () => {
         limit: 20,
     });
 
-    const { deleteRequest } = useDELETE();
+    const { deleteRequestWithError } = useDELETE();
     const handleDeleteClick = async (id: string) => {
-        //TODO  handle error
-        await deleteRequest(`${BASE_URL}${QUESTION_URL}/${id}`);
-        removeIdFromPaginatedData(id);
+        const { error } = await deleteRequestWithError(
+            `${BASE_URL}${QUESTION_URL}/${id}`,
+        );
+
+        if (!error) {
+            removeIdFromPaginatedData(id);
+        } else {
+            console.error(error);
+        }
     };
 
     const onSubjectFilterClick = (subjectId: string) => {
