@@ -1,1 +1,1 @@
-export { QuestionDetailsViewProvider } from "./QuestionDetailsViewProvider";
+export { QuestionDetailsProvider } from "./QuestionDetailsProvider";

@@ -1,7 +1,7 @@
 import { CSSProperties, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useQuestionDetailsViewerContext } from "../../questionDetailsViewer/context";
+import { useQuestionDetailsContext } from "../../questionDetailsViewer/context";
 import { RichTextEditor } from "../../richText";
 import { IAnswer } from "../../../utils";
 import { AnswerForm } from "../../forms";
@@ -16,7 +16,7 @@ const detailsContainerStyle: CSSProperties = {
 
 export function AnswerUpdater({ answer }: IAnswerCreatorProps) {
     const { t } = useTranslation();
-    const questionContext = useQuestionDetailsViewerContext();
+    const questionContext = useQuestionDetailsContext();
     const [value, setValue] = useState("");
 
     const submit = () => {

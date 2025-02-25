@@ -1,4 +1,4 @@
-import { useQuestionDetailsViewerContext } from "../../questionDetailsViewer/context";
+import { useQuestionDetailsContext } from "../../questionDetailsViewer/context";
 import { RichTextReader } from "../../richText";
 import styles from "./AnswerCardBody.module.css";
 import { AnswerUpdater } from "../answerUpdater";
@@ -9,7 +9,7 @@ interface IAnswerCardBody {
 }
 
 export function AnswerCardBody({ answer }: IAnswerCardBody) {
-    const { editingAnswer } = useQuestionDetailsViewerContext();
+    const { editingAnswer } = useQuestionDetailsContext();
 
     return (
         <div className={styles.container}>

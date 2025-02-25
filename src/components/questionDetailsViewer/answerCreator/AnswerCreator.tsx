@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import addAnswerIcon from "../../../assets/icons/add_comment.svg";
 import { RichTextEditor } from "../../richText";
 import { TabLabelContainer } from "../../utility";
-import { useQuestionDetailsViewerContext } from "../context";
+import { useQuestionDetailsContext } from "../context";
 import { AnswerForm } from "../../forms";
 
 interface IAnswerCreatorProps {
@@ -17,7 +17,7 @@ const detailsContainerStyle: CSSProperties = {
 
 export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
     const { t } = useTranslation();
-    const questionContext = useQuestionDetailsViewerContext();
+    const questionContext = useQuestionDetailsContext();
     const [value, setValue] = useState("");
     const [isAnswerCreatorOpen, setIsAnswerCreatorOpen] = useState(false);
 

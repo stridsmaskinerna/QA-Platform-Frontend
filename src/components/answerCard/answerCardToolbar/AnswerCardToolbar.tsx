@@ -1,7 +1,7 @@
 import { useQAContext } from "../../../hooks";
 import { IAnswer } from "../../../utils";
 import { DeleteButton, EditButton } from "../../button";
-import { useQuestionDetailsViewerContext } from "../../questionDetailsViewer/context";
+import { useQuestionDetailsContext } from "../../questionDetailsViewer/context";
 import styles from "./AnswerCardToolbar.module.css";
 
 interface IAnswerCardToolbarProps {
@@ -11,7 +11,7 @@ interface IAnswerCardToolbarProps {
 export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
     const qaContext = useQAContext();
     const { editingAnswer, deleteAnswer, toggleEditingAnswer } =
-        useQuestionDetailsViewerContext();
+        useQuestionDetailsContext();
 
     const isMyAnswer = () => {
         return qaContext.authContext.username === answer.userName;

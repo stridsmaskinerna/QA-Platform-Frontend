@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { QuestionDetailsViewProvider } from "./provider";
+import { QuestionDetailsProvider } from "./provider";
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
 import { IDetailedQuestion } from "../../utils";
 import { AnswerCard } from "../answerCard";
@@ -8,7 +8,7 @@ import { GoBackButton } from "..";
 import { AnswerCreator } from "./answerCreator";
 import styles from "./QuestionDetailsViewer.module.css";
 import { ReactNode } from "react";
-import { useQuestionDetailsViewerContext } from "./context";
+import { useQuestionDetailsContext } from "./context";
 
 interface QuestionDetailsViewerProps {
     question: IDetailedQuestion;
@@ -19,15 +19,15 @@ export function QuestionDetailsViewer({
     question,
 }: QuestionDetailsViewerProps) {
     return (
-        <QuestionDetailsViewProvider question={question}>
+        <QuestionDetailsProvider question={question}>
             <QuestionDetailsViewerInner />
-        </QuestionDetailsViewProvider>
+        </QuestionDetailsProvider>
     );
 }
 
 export function QuestionDetailsViewerInner() {
     const { t } = useTranslation();
-    const { question, currentAnswers } = useQuestionDetailsViewerContext();
+    const { question, currentAnswers } = useQuestionDetailsContext();
 
     return (
         <div className={styles.container}>

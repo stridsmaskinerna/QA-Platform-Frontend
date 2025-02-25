@@ -1,9 +1,6 @@
 import { ReactNode, useState } from "react";
 
-import {
-    IQuestionDetailsViewerContext,
-    QuestionDetailsViewerContext,
-} from "../context";
+import { IQuestionDetailsContext, QuestionDetailsContext } from "../context";
 import { useDELETE, usePOST, usePUT } from "../../../hooks";
 import {
     IAnswer,
@@ -19,7 +16,7 @@ interface IQuestionDetailsViewProviderProps {
     children: ReactNode;
 }
 
-export function QuestionDetailsViewProvider({
+export function QuestionDetailsProvider({
     question,
     children,
 }: IQuestionDetailsViewProviderProps) {
@@ -93,7 +90,7 @@ export function QuestionDetailsViewProvider({
         );
     };
 
-    const getContext = (): IQuestionDetailsViewerContext => {
+    const getContext = (): IQuestionDetailsContext => {
         return {
             question,
             currentAnswers,
@@ -114,7 +111,7 @@ export function QuestionDetailsViewProvider({
     };
 
     return (
-        <QuestionDetailsViewerContext.Provider value={getContext()}>
+        <QuestionDetailsContext.Provider value={getContext()}>
             <ErrorModal
                 errors={[
                     deletAnswerReq.error,
@@ -124,6 +121,6 @@ export function QuestionDetailsViewProvider({
                 onClearErrors={clearErrors}
             />
             {children}
-        </QuestionDetailsViewerContext.Provider>
+        </QuestionDetailsContext.Provider>
     );
 }

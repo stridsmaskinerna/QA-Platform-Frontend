@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { IAnswer, IAnswerForCreation, IDetailedQuestion } from "../../../utils";
 
-export interface IQuestionDetailsViewerContext {
+export interface IQuestionDetailsContext {
     question: IDetailedQuestion;
     currentAnswers: IAnswer[];
     editingAnswer: IAnswer | null;
@@ -13,14 +13,14 @@ export interface IQuestionDetailsViewerContext {
     deleteAnswer: (topic: IAnswer) => Promise<void>;
 }
 
-export const QuestionDetailsViewerContext =
-    createContext<IQuestionDetailsViewerContext | null>(null);
+export const QuestionDetailsContext =
+    createContext<IQuestionDetailsContext | null>(null);
 
-export const useQuestionDetailsViewerContext = () => {
-    const contextValue = useContext(QuestionDetailsViewerContext);
+export const useQuestionDetailsContext = () => {
+    const contextValue = useContext(QuestionDetailsContext);
     if (contextValue == null) {
         throw new Error(
-            "useQuestionDetailsViewerContext must be used within a Provider",
+            "useQuestionDetailsContext must be used within a Provider",
         );
     }
     return contextValue;
