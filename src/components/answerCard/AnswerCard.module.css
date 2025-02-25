@@ -16,3 +16,34 @@
 .borderAccepted {
     border: 3px solid var(--green-resolved);
 }
+
+.highlighted-container {
+    border: 2px solid #4a90e2;
+    background-color: rgba(74, 144, 226, 0.15);
+    position: relative;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 1);
+    animation: highlightFade 10s ease-in-out forwards;
+}
+
+@keyframes highlightFade {
+    0% {
+        box-shadow: 0 0 24px rgba(74, 144, 226, 1);
+    }
+    20% {
+        box-shadow: 0 0 28px rgba(74, 144, 226, 0.9);
+    }
+    40% {
+        box-shadow: 0 0 24px rgba(74, 144, 226, 0.7);
+    }
+    60% {
+        box-shadow: 0 0 16px rgba(74, 144, 226, 0.5);
+    }
+    80% {
+        box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 0 rgba(74, 144, 226, 0);
+    }
+}

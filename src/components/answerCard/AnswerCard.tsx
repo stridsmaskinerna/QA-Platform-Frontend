@@ -4,13 +4,16 @@ import { AnswerCardHeader } from "./answerCardHeader";
 import { AnswerCardComments } from "../answerCardComments";
 import { AnswerCardBottom } from "./AnswerCardBottom";
 import styles from "./AnswerCard.module.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useQuestionDetailsContext } from "../questionDetailsViewer";
 
 interface IAnswerProps {
     data: IAnswer;
 }
 
 export function AnswerCard({ data }: IAnswerProps) {
+    const { highlightedAnswerId } = useQuestionDetailsContext();
+    const answerCardRef = useRef<HTMLDivElement | null>(null);
     const borderStyle = data.isAccepted
         ? styles.borderAccepted
         : styles.borderDefault;
@@ -19,8 +22,26 @@ export function AnswerCard({ data }: IAnswerProps) {
         console.log(data);
     });
 
+    useEffect(() => {
+        if (highlightedAnswerId === data.id && answerCardRef.current != null) {
+            answerCardRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }
+    }, [data.id, highlightedAnswerId]);
+
+    const getDerivedContainerClassName = () => {
+        return highlightedAnswerId == data.id
+            ? `${styles.container} ${styles.highlightedContainer}`
+            : styles.container;
+    };
+
     return (
-        <div className={`${styles.container} ${borderStyle}`}>
+        <div
+            ref={answerCardRef}
+            className={`${getDerivedContainerClassName()} ${borderStyle}`}
+        >
             <AnswerCardHeader
                 username={data.userName}
                 answeredByTeacher={data.answeredByTeacher}

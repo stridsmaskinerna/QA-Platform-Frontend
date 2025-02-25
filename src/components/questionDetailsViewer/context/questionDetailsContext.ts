@@ -5,6 +5,8 @@ export interface IQuestionDetailsContext {
     question: IDetailedQuestion;
     currentAnswers: IAnswer[];
     editingAnswer: IAnswer | null;
+    highlightedAnswerId: string | null;
+    updateHighlightedAnswerId: (id: string | null) => void;
     updateEditingAnswer: (answer: IAnswer | null) => void;
     toggleEditingAnswer: (answer: IAnswer) => void;
     isLoading: () => boolean;
