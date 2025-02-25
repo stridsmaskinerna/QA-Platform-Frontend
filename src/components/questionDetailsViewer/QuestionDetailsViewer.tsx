@@ -2,9 +2,7 @@ import { QuestionCardDetails } from "../questionCard/questionCardDetails/Questio
 import { IDetailedQuestion } from "../../utils";
 import styles from "./QuestionDetailsViewer.module.css";
 import { AnswerCard } from "../answerCard";
-import { RouteButton } from "../button";
-import { useRoles } from "../../hooks";
-import { GUEST_HOME_ROUTE, HOME_ROUTE } from "../../data";
+import { GoBackButton } from "..";
 import { useTranslation } from "react-i18next";
 
 interface QuestionDetailsViewerProps {
@@ -14,15 +12,11 @@ interface QuestionDetailsViewerProps {
 export function QuestionDetailsViewer({
     question,
 }: QuestionDetailsViewerProps) {
-    const { isUser } = useRoles();
     const { t } = useTranslation();
     return (
         <div className={styles.container}>
             <div className={styles.backBtn}>
-                <RouteButton
-                    text={`${t("backToQA")}`}
-                    routeTo={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
-                />
+                <GoBackButton text={`${t("backToQA")}`} />
             </div>
             <QuestionCardDetails
                 isHideable={question.isHideable}

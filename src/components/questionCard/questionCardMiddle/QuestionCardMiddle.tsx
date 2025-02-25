@@ -5,6 +5,7 @@ import sharedStyles from "../QuestionCardSharedStyles.module.css";
 import clock_icon from "../../../assets/icons/clock_24dp_808080.svg";
 import { getTimeAgo } from "../../../utils";
 import { RichTextReader } from "../../richText";
+import { highlights } from "../constants";
 
 interface QuestionCardMiddleProps {
     title: string;
@@ -44,26 +45,38 @@ export function QuestionCardMiddle(props: QuestionCardMiddleProps) {
                 <div className={sharedStyles.isHidden} />
             )}
             <div className={styles.header}>
-                <span className={styles.topicName}>{props.topicName}</span>
+                <span
+                    className={styles.topicName}
+                    data-hl={highlights.topicName}
+                >
+                    {props.topicName}
+                </span>
                 <div className={styles.timeSection}>
                     <img
                         className={styles.icon}
                         src={clock_icon}
                         alt=""
                     />
-                    <div>{timeAgo}</div>
+                    <div>
+                        <p data-hl={highlights.creationDate}>{timeAgo}</p>
+                    </div>
                 </div>
             </div>
             <div className={styles.questionSection}>
-                <h2 className={styles.title}>{props.title}</h2>
-                <p>
+                <h2
+                    className={styles.title}
+                    data-hl={highlights.titleQuestion}
+                >
+                    {props.title}
+                </h2>
+                <p data-hl={highlights.userName}>
                     {t("askedBy")}: {props.username}
                 </p>
                 {props.description !== undefined && (
                     <RichTextReader initialState={props.description} />
                 )}
                 {props.answerCount !== undefined && (
-                    <p>
+                    <p data-hl={highlights.answerCount}>
                         {props.answerCount} {answerLabel}
                     </p>
                 )}

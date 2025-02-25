@@ -62,3 +62,12 @@ export interface IUser {
     email: string;
     isBlocked: boolean;
 }
+export interface IQuestionForEdit {
+    topicId: string;
+    subjectId: string;
+    tags: string[];
+    description?: string;
+    title: string;
+    isProtected: boolean;
+}
+

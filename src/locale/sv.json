@@ -1,10 +1,6 @@
 {
     "translation": {
         "login": "Logga in",
-        "headerHeadline": "LTU Frågor & Svar",
-        "admin": "Admin",
-        "logout": "Logga ut",
-        "qa": "Frågor & Svar",
         "loginRegister": "Logga in/Registrering",
         "resolved": "Löst",
         "resolvedPlural": "Lösta",
@@ -77,6 +73,15 @@
         "nrOfQuestionsFound": "Hittade {{count}} frågor",
         "backToQA": "Tillbaka till Frågor & Svar",
 
+        "header": {
+            "headerHeadline": "LTU Frågor & Svar",
+            "linkLoginRegister": "Logga in/Registrering",
+            "linkAdmin": "Admin",
+            "linkLogout": "Logga ut",
+            "linkQA": "Frågor & Svar",
+            "linkHelp": "Hjälp?"
+        },
+
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",
@@ -108,6 +113,47 @@
             "submitCommentInfo": "Skapa kommentar",
             "createCommentPlaceholder": "Skapa en kommentar..",
             "submitComment": "Kommentera"
-        }
+        },
+
+        "userGuide": {
+            "title": "Frågekort",
+            "subtitleSubject": "Kurs",
+            "subtitleUnresolvedQuestion": "En olöst fråga",
+            "subtitleResolvedQuestion": "En löst fråga",
+            "subtitlePublicQuestion": "En publik fråga",
+            "subtitleProtectedQuestion": "En skyddad fråga",
+            "subtitleTopic": "Kursdel",
+            "subtitleCreationDate": "Datum",
+            "subtitleQuestionTitle": "Tittel",
+            "subtitleAuthor": "Användare",
+            "subtitleAnswercount": "Antal svar",
+            "subtitleTags": "Markörer",
+            "descriptionSubject": "Kurs namn och kod som frågan tillhör.",
+            "descriptionUnresolvedQuestion": "Användaren som skapade frågan har EJ accepterat ett svar som har löst frågan.",
+            "descriptionResolvedQuestion": "Användaren som skapade frågan har accepterat ett svar som har löst frågan.",
+            "descriptionPublicQuestion": "Frågan kan ses av alla, även användare som inte är inloggade.",
+            "descriptionProtectedQuestion": "Frågan kan endast ses av inloggade användare.",
+            "descriptionTopic": "Kursdelen som frågan tillför.",
+            "descriptionCreationDate": "Hur länge sedan frågan ställdes.",
+            "descriptionQuestionTitle": "Frågans titel.",
+            "descriptionAuthor": "Användaren som ställde frågan.",
+            "descriptionAnswercount": "Antal svar frågan har.",
+            "descriptionTags": "Markörer som används för att markera en fråga.",
+            "defaultTopicName": "Kursdel",
+            "defaultSubjectName": "Namnet på kursen ",
+            "defaultSubjectCode": "Koden för kursen",
+            "defaultQuestionTitle": "How do you prevent retain cycles in Swift closures?",
+            "defaultTag": "En Markör",
+            "previousButtonInfo": "Tillbaka",
+            "nextButtonInfo": "Nästa"
+        },
+
+        "deleteQuestion": "Radera fråga",
+        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
+        "delete": "Radera",
+        "edit": "Ändra",
+        "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
+        "editQuestion": "Ändra din fråga",
+        "saveChanges": "Spara ändringar"
     }
 }

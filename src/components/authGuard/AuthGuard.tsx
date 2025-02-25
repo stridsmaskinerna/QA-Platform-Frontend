@@ -29,8 +29,7 @@ export function AuthGuard({
 }: IRequireAuthProps): ReactElement {
     const { isRolesCorrupt } = useRoles();
     const {
-        authContext: { roles },
-        loaderContext: { isLoading },
+        authContext: { roles, isLoading },
     } = useQAContext();
     const params = useParams();
     const redirectUrl = createRedirectUrl(

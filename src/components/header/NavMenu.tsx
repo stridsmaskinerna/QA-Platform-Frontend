@@ -11,10 +11,12 @@ import {
     HOME_ROUTE,
     LOGIN_REGISTER_ROUTE,
 } from "../../data";
+import { UserGuideModal } from "../userGuide";
 
 export function NavMenu() {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
+    const [isUserGuideOpen, setUserGuideIsOpen] = useState(false);
     const { isAdmin, isGuest, isUser } = useRoles();
     const {
         authContext: { logout },
@@ -27,6 +29,10 @@ export function NavMenu() {
 
     const closeMenu = () => {
         setIsOpen(false);
+    };
+
+    const toggleUserGuide = () => {
+        setUserGuideIsOpen(prev => !prev);
     };
 
     useOnClickOutside(menuRef, () => {
@@ -46,16 +52,22 @@ export function NavMenu() {
                             <NavLink
                                 to={ADMIN_ROUTE}
                                 onClickSideEffect={closeMenu}
-                                title={t("admin")}
+                                title={t("header.linkAdmin")}
                             />
                         </li>
                     )}
-
+                    <li onClick={toggleUserGuide}>
+                        <NavLink
+                            to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
+                            onClickSideEffect={closeMenu}
+                            title={t("header.linkHelp")}
+                        />
+                    </li>
                     <li>
                         <NavLink
                             to={isUser ? HOME_ROUTE : GUEST_HOME_ROUTE}
                             onClickSideEffect={closeMenu}
-                            title={t("qa")}
+                            title={t("header.linkQA")}
                         />
                     </li>
                     {isGuest ? (
@@ -63,7 +75,7 @@ export function NavMenu() {
                             <NavLink
                                 to={LOGIN_REGISTER_ROUTE}
                                 onClickSideEffect={closeMenu}
-                                title={t("loginRegister")}
+                                title={t("header.linkLoginRegister")}
                             />
                         </li>
                     ) : (
@@ -74,7 +86,7 @@ export function NavMenu() {
                                     logout();
                                     closeMenu();
                                 }}
-                                title={t("logout")}
+                                title={t("header.linkLogout")}
                             />
                         </li>
                     )}
@@ -92,6 +104,10 @@ export function NavMenu() {
                 <span className={styles.burgerLine}></span>
                 <span className={styles.burgerLine}></span>
             </button>
+            <UserGuideModal
+                open={isUserGuideOpen}
+                onToggle={toggleUserGuide}
+            />
         </nav>
     );
 }

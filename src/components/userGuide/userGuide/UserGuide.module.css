@@ -1,0 +1,133 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 80vw;
+    max-width: 1000px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.slide-container-outer {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.slide-container-inner {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+.hide-pointer-events {
+    pointer-events: none;
+}
+
+.highlight-default {
+    color: black;
+    background-color: rgb(255, 255, 0, 1);
+    outline: 4px solid red;
+}
+
+.highlight-default-image,
+.highlight:hover {
+    color: black;
+    background-color: rgb(255, 255, 0, 0.5);
+    outline: 4px solid red;
+}
+
+.navigation-btn {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s linear;
+    filter: invert(0.2);
+}
+
+.navigation-btn:hover {
+    transform: scale(1.3);
+    filter: invert(0);
+}
+
+.nextEnter {
+    animation: slideInFromRight 0.3s forwards;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.nextExit {
+    animation: slideOutToLeft 0.2s forwards;
+}
+
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.prevEnter {
+    animation: slideInFromLeft 0.2s forwards;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.prevExit {
+    animation: slideOutToRight 0.2s forwards;
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}

@@ -17,7 +17,7 @@ const headerParser = {
         value ? (JSON.parse(value) as IPaginationMeta) : null,
 };
 
-export function useInfiniteScrolling<T>({
+export function useInfiniteScrolling<T extends { id: string }>({
     url: urlProp,
     limit,
 }: IUseInfiniteScrollingProps) {
@@ -119,6 +119,9 @@ export function useInfiniteScrolling<T>({
 
     const resetPaginatedData = () => setPaginatedData([]);
 
+    const removeIdFromPaginatedData = (id: string) =>
+        setPaginatedData(prev => prev.filter(i => i.id !== id));
+
     const fetchFromStart = async (urlArg?: string) => {
         pageNrRef.current = 1;
         const data = await fetchMore(pageNrRef.current, urlArg);
@@ -135,5 +138,6 @@ export function useInfiniteScrolling<T>({
         isLoading,
         totalItemCount,
         resetPaginatedData,
+        removeIdFromPaginatedData,
     };
 }

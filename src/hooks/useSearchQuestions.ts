@@ -7,11 +7,9 @@ import {
 } from "react";
 import { useRoles } from "./useRoles";
 import { useDebounceCallback } from "usehooks-ts";
-import { BASE_URL } from "../data";
-// import { useFetchWithToken } from "./useFetchWithToken";
+import { BASE_URL, QUESTION_URL } from "../data";
 import { IQuestion, IShouldShowFilters, UserInteractionFilter } from "../utils";
-// import { useFetchData } from "./useFetchData";
-import { useInfiniteScrolling } from ".";
+import { useDELETE, useInfiniteScrolling } from ".";
 
 const publicQuestionsBaseUrl = `${BASE_URL}/questions/public`;
 const questionsBaseUrl = `${BASE_URL}/questions`;
@@ -41,7 +39,6 @@ interface IDisplayedFilters {
 
 export const useSearchQuestions = () => {
     const { isGuest } = useRoles();
-    // const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [activeFilters, setActiveFilters] = useState<IActiveFilters>({
         subject: "",
@@ -80,10 +77,18 @@ export const useSearchQuestions = () => {
         fetchFromStart,
         isLoading: isLoadingQuestions,
         totalItemCount,
+        removeIdFromPaginatedData,
     } = useInfiniteScrolling<IQuestion>({
         url,
         limit: 20,
     });
+
+    const { deleteRequest } = useDELETE();
+    const handleDeleteClick = async (id: string) => {
+        //TODO  handle error
+        await deleteRequest(`${BASE_URL}${QUESTION_URL}/${id}`);
+        removeIdFromPaginatedData(id);
+    };
 
     const onSubjectFilterClick = (subjectId: string) => {
         setUrlAppendixes(prev => ({
@@ -303,5 +308,6 @@ export const useSearchQuestions = () => {
         loaderRef3,
         hasMore,
         totalItemCount,
+        handleDeleteClick,
     };
 };
