@@ -1,14 +1,20 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 
 import { IQuestionDetailsContext, QuestionDetailsContext } from "../context";
-import { useDELETE, usePOST, usePUT } from "../../../hooks";
+import {
+    useDELETE,
+    useGET,
+    usePOST,
+    usePUT,
+    useQAContext,
+} from "../../../hooks";
 import {
     IAnswer,
     IAnswerForCreation,
     IAnswerForPut,
     IDetailedQuestion,
 } from "../../../utils";
-import { ANSWER_URL, BASE_URL } from "../../../data";
+import { ANSWER_URL, BASE_URL, QUESTION_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
 
 interface IQuestionDetailsViewProviderProps {
@@ -20,26 +26,61 @@ export function QuestionDetailsProvider({
     question,
     children,
 }: IQuestionDetailsViewProviderProps) {
-    const [currentAnswers, setCurrentAnswers] = useState(question.answers);
-    const [editingAnswer, setEditingAnswer] = useState<IAnswer | null>(null);
+    const qaContext = useQAContext();
     const deletAnswerReq = useDELETE<void>();
     const putAnswerReq = usePUT<void>();
     const postAnswerReq = usePOST<void>();
+    const getQuestionReq = useGET<IDetailedQuestion>();
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const [highlightedAnswerId, setHighlightedAnswerId] = useState<
+        string | null
+    >(null);
+    const [currentAnswers, setCurrentAnswers] = useState(question.answers);
+    const [editingAnswer, setEditingAnswer] = useState<IAnswer | null>(null);
 
     const createAnswer = async (answer: IAnswerForCreation) => {
-        const { error } = await postAnswerReq.postRequestWithError(
+        const postRes = await postAnswerReq.postRequestWithError(
             `${BASE_URL}${ANSWER_URL}`,
             answer,
         );
 
-        if (error) {
+        if (postRes.error != null) {
             return;
         }
 
-        // TODO! Update to more clean solution;
-        // 1) Create API endpoint to gett all answers for a question
-        //    api/questions/{id}/answers
-        window.location.reload();
+        const getQuestionRes = await getQuestionReq.getRequestWithError(
+            `${BASE_URL}${QUESTION_URL}/${question.id}`,
+        );
+
+        if (getQuestionReq.error != null) {
+            return;
+        }
+
+        const updatedAnswers = getQuestionRes.response?.answers ?? [];
+        setCurrentAnswers(updatedAnswers);
+        markNewComment(updatedAnswers, answer.value);
+    };
+
+    const markNewComment = (answers: IAnswer[], answerValue: string) => {
+        const newAnswer = answers.find(
+            a =>
+                a.userName === qaContext.authContext.username &&
+                a.value === answerValue,
+        );
+
+        if (newAnswer == null) {
+            return;
+        }
+
+        setHighlightedAnswerId(newAnswer?.id);
+
+        if (timerRef.current != null) {
+            clearTimeout(timerRef.current);
+        }
+
+        timerRef.current = setTimeout(() => {
+            setHighlightedAnswerId(null);
+        }, 10000);
     };
 
     const deleteAnswer = async (answer: IAnswer) => {
@@ -55,8 +96,6 @@ export function QuestionDetailsProvider({
     };
 
     const updateAnswer = async (answer: IAnswer) => {
-        console.log("answer", answer);
-
         const answerForPut: IAnswerForPut = {
             value: answer.value,
             filePath: answer.filePath,
@@ -71,9 +110,11 @@ export function QuestionDetailsProvider({
             return;
         }
 
-        setCurrentAnswers(prev =>
-            prev.map(a => (a.id == answer.id ? answer : a)),
+        const updatedAnswers = currentAnswers.map(a =>
+            a.id == answer.id ? answer : a,
         );
+        setCurrentAnswers(updatedAnswers);
+        markNewComment(updatedAnswers, answer.value);
     };
 
     const updateEditingAnswer = (answer: IAnswer | null) => {
@@ -92,11 +133,17 @@ export function QuestionDetailsProvider({
         );
     };
 
+    const updateHighlightedAnswerId = (id: string | null) => {
+        setHighlightedAnswerId(id);
+    };
+
     const getContext = (): IQuestionDetailsContext => {
         return {
             question,
             currentAnswers,
             editingAnswer,
+            highlightedAnswerId,
+            updateHighlightedAnswerId,
             updateEditingAnswer,
             toggleEditingAnswer,
             isLoading,
