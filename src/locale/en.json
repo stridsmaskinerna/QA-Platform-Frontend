@@ -124,8 +124,7 @@
             "createCommentPlaceholder": "Add a comment..",
             "submitComment": "Comment"
         }
-
-        },
+    },
 
     "userGuide": {
         "title": "Question Card",
@@ -167,4 +166,3 @@
     "editQuestion": "Edit your question",
     "saveChanges": "Save changes"
 }
-

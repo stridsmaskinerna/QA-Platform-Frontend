@@ -35,7 +35,7 @@ export function useUser() {
         };
 
         fetchAllUsers();
-    }, [fetchUsers, AdminUrl, searchTerm]); 
+    }, [fetchUsers, AdminUrl, searchTerm]);
 
     const updateUserStatus = async (id: string, newStatus: boolean) => {
         const url = `${AdminUrl}blockuser?Id=${id}`;
@@ -51,15 +51,17 @@ export function useUser() {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`Failed to update status: ${response.status} - ${errorData?.message || response.statusText}`);
+                throw new Error(
+                    `Failed to update status: ${response.status} - ${errorData?.message || response.statusText}`,
+                );
             }
 
-            setFilteredUsers((prevUsers) => {
+            setFilteredUsers(prevUsers => {
                 if (!prevUsers) {
                     return []; // Or return null, depending on your state type
                 }
-                return prevUsers.map((user) =>
-                    user.id === id ? { ...user, isBlocked: newStatus } : user
+                return prevUsers.map(user =>
+                    user.id === id ? { ...user, isBlocked: newStatus } : user,
                 );
             });
 
@@ -86,10 +88,11 @@ export function useUser() {
             const url = `${AdminUrl}users${searchString}`;
             const data = await fetchUsers(url);
 
-            if (data) {  // Check if data is not void
+            if (data) {
+                // Check if data is not void
                 setFilteredUsers(data);
             } else {
-              setFilteredUsers([]); // or null
+                setFilteredUsers([]); // or null
             }
         } catch (error) {
             console.error("Error searching users:", error);

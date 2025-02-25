@@ -118,7 +118,6 @@ th {
     box-sizing: border-box;
 }
 
-
 /* Media Query for Small Screens (Mobile) */
 @media (max-width: 600px) {
     .container {
@@ -171,12 +170,12 @@ th {
         color: #333;
     }
 
-    th, td {
+    th,
+    td {
         white-space: nowrap; /* Keep header text from wrapping by default */
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
 
     .deleteBtn {
         width: 100%;

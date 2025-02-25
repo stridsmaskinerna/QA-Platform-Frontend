@@ -1,7 +1,4 @@
-import {
-    useEffect,
-    useState,
-} from "react";
+import { useEffect, useState } from "react";
 import styles from "./TagManagement.module.css";
 import { Input } from "../..";
 import { useTranslation } from "react-i18next";
@@ -17,12 +14,13 @@ export function TagManagement() {
     const { requestHandler: fetchTags } = useFetchWithToken<ITag[]>();
     const { requestHandler: deletetag } = useFetchWithToken<ITag>();
     const { t } = useTranslation();
-    const { loaderContext: { setIsLoading } } = useQAContext();
+    const {
+        loaderContext: { setIsLoading },
+    } = useQAContext();
 
     const [allTags, setAllTags] = useState<ITag[]>([]); // Store all tags
     const [filteredTags, setFilteredTags] = useState<ITag[]>([]); // Store filtered tags
     const [searchTerm, setSearchTerm] = useState("");
-
 
     useEffect(() => {
         void fetchTags(tagUrl).then(data => {
@@ -52,7 +50,7 @@ export function TagManagement() {
         setSearchTerm(term);
 
         const filtered = allTags.filter(tag =>
-            tag.value.toLowerCase().includes(term.toLowerCase())
+            tag.value.toLowerCase().includes(term.toLowerCase()),
         );
         setFilteredTags(filtered);
     };
@@ -63,8 +61,8 @@ export function TagManagement() {
                 inputName="manageTag"
                 inputType="text"
                 placeHolder={t("manageTag")}
-                inputValue={searchTerm} 
-                onChange={handleSearchChange} 
+                inputValue={searchTerm}
+                onChange={handleSearchChange}
             />
 
             <table className={styles.tagTable}>
@@ -75,19 +73,29 @@ export function TagManagement() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredTags.map(tag => ( // Use filteredTags for rendering
-                        <tr key={tag.id}>
-                            <td>{tag.value}</td>
-                            <td>
-                                <button
-                                    className={styles.deleteBtn}
-                                    onClick={() => handleDelete(tag.id)}
-                                >
-                                    <img src={delete_icon} alt="Delete Icon" className="delete-icon" />
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                    {filteredTags.map(
+                        (
+                            tag, // Use filteredTags for rendering
+                        ) => (
+                            <tr key={tag.id}>
+                                <td>{tag.value}</td>
+                                <td>
+                                    <button
+                                        className={styles.deleteBtn}
+                                        onClick={() =>
+                                            void handleDelete(tag.id)
+                                        }
+                                    >
+                                        <img
+                                            src={delete_icon}
+                                            alt="Delete Icon"
+                                            className="delete-icon"
+                                        />
+                                    </button>
+                                </td>
+                            </tr>
+                        ),
+                    )}
                 </tbody>
             </table>
         </div>

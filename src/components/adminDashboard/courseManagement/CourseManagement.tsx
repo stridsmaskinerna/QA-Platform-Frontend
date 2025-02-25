@@ -1,9 +1,4 @@
-import {
-    FormEventHandler,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import styles from "./CourseManagement.module.css";
 import { Input } from "../..";
 import { useTranslation } from "react-i18next";
@@ -21,7 +16,9 @@ export function CourseManagement() {
     const { requestHandler: postCourse } = useFetchWithToken<void>();
     const { requestHandler: deleteCourse } = useFetchWithToken<void>();
     const { t } = useTranslation();
-    const { loaderContext: { setIsLoading } } = useQAContext();
+    const {
+        loaderContext: { setIsLoading },
+    } = useQAContext();
     const [allCourses, setAllCourses] = useState<ISubject[]>([]); // Store all courses
     const [filteredCourses, setFilteredCourses] = useState<ISubject[]>([]); // Store filtered courses
     const [searchTerm, setSearchTerm] = useState("");
@@ -33,47 +30,49 @@ export function CourseManagement() {
         void fetchCourses(courseUrl).then(data => {
             if (data) {
                 setAllCourses(data);
-                setFilteredCourses(data); 
+                setFilteredCourses(data);
             }
         });
     }, []);
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const formDetails = Object.fromEntries(formData);
-        const teachers = typeof formDetails.teachers === "string"
-            ? formDetails.teachers.split(",").map(t => t.trim())
-            : [];
+        void (async () => {
+            const formData = new FormData(e.currentTarget);
+            const formDetails = Object.fromEntries(formData);
+            const teachers =
+                typeof formDetails.teachers === "string"
+                    ? formDetails.teachers.split(",").map(t => t.trim())
+                    : [];
 
-        const formattedData = {
-            ...formDetails,
-            teachers,
-        };
-        console.log(formattedData);
-        setIsLoading(true);
-        try {
-            await postCourse(postCourseUrl, {
-                
-                method: "POST",
-                body: JSON.stringify(formattedData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            formRef.current?.reset();
-            void fetchCourses(courseUrl).then((data) => {
-                if (data) setCourses(data);
-            });
-        } catch (error) {
-            if (error instanceof CustomError) {
-                console.error(error);
-            } else {
-                throw error;
+            const formattedData = {
+                ...formDetails,
+                teachers,
+            };
+            console.log(formattedData);
+            setIsLoading(true);
+            try {
+                await postCourse(postCourseUrl, {
+                    method: "POST",
+                    body: JSON.stringify(formattedData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                formRef.current?.reset();
+                void fetchCourses(courseUrl).then(data => {
+                    if (data) setCourses(data);
+                });
+            } catch (error) {
+                if (error instanceof CustomError) {
+                    console.error(error);
+                } else {
+                    throw error;
+                }
+            } finally {
+                setIsLoading(false);
             }
-        } finally {
-            setIsLoading(false);
-        }
+        })();
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +80,8 @@ export function CourseManagement() {
         setSearchTerm(term);
 
         const filtered = allCourses.filter(course => {
-            const searchString = `${course.subjectCode} ${course.name} ${course.teachers?.map(t => t.email).join(" ")}`.toLowerCase(); // Include teachers in search
+            const searchString =
+                `${course.subjectCode} ${course.name} ${course.teachers?.map(t => t.email).join(" ")}`.toLowerCase(); // Include teachers in search
             return searchString.includes(term.toLowerCase());
         });
         setFilteredCourses(filtered);
@@ -102,7 +102,11 @@ export function CourseManagement() {
 
     return (
         <div className={styles.container}>
-            <form onSubmit={handleSubmit} className={styles.form} ref={formRef}>
+            <form
+                onSubmit={handleSubmit}
+                className={styles.form}
+                ref={formRef}
+            >
                 <Input
                     inputName="subjectCode"
                     inputType="text"
@@ -121,18 +125,21 @@ export function CourseManagement() {
                     label={t("teacherName")}
                     placeHolder={t("teacherNamePlaceHolder")}
                 />
-                <button className={styles.submitBtn} type="submit">
+                <button
+                    className={styles.submitBtn}
+                    type="submit"
+                >
                     {t("addCourse")}
                 </button>
             </form>
-            <div className= {styles.manageCourse}>
+            <div className={styles.manageCourse}>
                 <h2 className={styles.heading}>Manage Existing Courses</h2>
                 <Input
                     inputName="manageCourse"
                     inputType="text"
                     placeHolder={t("manageCourse")}
-                    inputValue={searchTerm} 
-                    onChange={handleSearchChange} 
+                    inputValue={searchTerm}
+                    onChange={handleSearchChange}
                 />
 
                 <table className={styles.courseTable}>
@@ -145,24 +152,44 @@ export function CourseManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCourses.map(course => ( // Use filteredCourses here
-                            <tr key={course.id}>
-                                <td data-label="Course Code">{course.subjectCode}</td>
-                                <td data-label="Course Name">{course.name}</td>
-                                <td data-label="Teachers">
-                                    {course.teachers?.map(teacher => (
-                                        <span key={teacher.id} className={styles.teacherTag}>
-                                            {teacher.email}
-                                        </span>
-                                    ))}
-                                </td>
-                                <td data-label="Actions">
-                                    <button className={styles.deleteBtn} onClick={() => handleDelete(course.id)}>
-                                        <img src={delete_icon} alt="Delete Icon" className="delete-icon" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        {filteredCourses.map(
+                            (
+                                course, // Use filteredCourses here
+                            ) => (
+                                <tr key={course.id}>
+                                    <td data-label="Course Code">
+                                        {course.subjectCode}
+                                    </td>
+                                    <td data-label="Course Name">
+                                        {course.name}
+                                    </td>
+                                    <td data-label="Teachers">
+                                        {course.teachers?.map(teacher => (
+                                            <span
+                                                key={teacher.id}
+                                                className={styles.teacherTag}
+                                            >
+                                                {teacher.email}
+                                            </span>
+                                        ))}
+                                    </td>
+                                    <td data-label="Actions">
+                                        <button
+                                            className={styles.deleteBtn}
+                                            onClick={() =>
+                                                void handleDelete(course.id)
+                                            }
+                                        >
+                                            <img
+                                                src={delete_icon}
+                                                alt="Delete Icon"
+                                                className="delete-icon"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ),
+                        )}
                     </tbody>
                 </table>
             </div>

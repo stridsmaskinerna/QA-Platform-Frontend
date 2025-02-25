@@ -11,16 +11,15 @@
 }
 
 .form {
-    border: 2px solid var(--border-color, lightgray); 
+    border: 2px solid var(--border-color, lightgray);
     border-radius: 10px;
-    padding: 20px; 
+    padding: 20px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: clamp(20px, 3vw, 30px);
 }
-
 
 .inputPair {
     width: 100%;
@@ -30,9 +29,7 @@
     height: fit-content;
 }
 
-
 .submitBtn {
-    
     border: none;
     background-color: var(--btnDark-bg);
     color: var(--btnDark-text);
@@ -47,12 +44,13 @@
 }
 table {
     display: table;
-    width: 100%; 
+    width: 100%;
     border-collapse: collapse;
     padding: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
@@ -77,34 +75,33 @@ th {
 
 .heading {
     padding: 20px;
-    font-size: 1.5rem;  /* Increase font size for heading */
+    font-size: 1.5rem; /* Increase font size for heading */
 }
 
 .manageCourse {
-    border: 2px solid var(--border-color, lightgray); 
+    border: 2px solid var(--border-color, lightgray);
     border-radius: 10px;
     padding: 20px;
 }
 
-
 @media (max-width: 600px) {
-
     table {
         display: block;
         width: 100%;
-        overflow-x: auto; 
+        overflow-x: auto;
     }
-    
-    th, td {
-        display: block; 
+
+    th,
+    td {
+        display: block;
         width: 100%;
-        text-align: right;  
+        text-align: right;
     }
 
     th {
         background-color: #f4f4f4;
         position: sticky;
-        top: 0;  /* Keep header at the top when scrolling */
+        top: 0; /* Keep header at the top when scrolling */
     }
 
     td {
@@ -114,7 +111,7 @@ th {
 
     .deleteBtn {
         width: 100%;
-        padding: 10px 0;  /* Make delete button full width */
+        padding: 10px 0; /* Make delete button full width */
         margin-top: 10px;
     }
 
@@ -126,7 +123,7 @@ th {
     }
 
     .heading {
-        font-size: 1.2rem;  /* Adjust font size for small screens */
+        font-size: 1.2rem; /* Adjust font size for small screens */
         padding: 15px;
     }
 
@@ -135,4 +132,3 @@ th {
         padding: 15px;
     }
 }
-

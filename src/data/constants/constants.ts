@@ -18,7 +18,6 @@ export const SUBJECT_URL = "/subjects";
 export const TOPIC_URL = "/topics";
 export const PUBLIC_URL = "/public";
 
-
 //Misc
 export const QUESTION_ID = ":questionId";
 export const PASSWORD_MIN_LENGTH = 8;

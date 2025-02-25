@@ -81,4 +81,3 @@ export interface IQuestionForEdit {
     title: string;
     isProtected: boolean;
 }
-
