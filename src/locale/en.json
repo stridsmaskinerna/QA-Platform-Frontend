@@ -113,6 +113,8 @@
         "manageCourse": "Enter the course code or Name",
         "manageExistingCourses": "Manage Existing Courses",
         "manageTag": "Search tags",
+        "areYouSureYouWantToDeleteTag": "Are You Sure You Want To Delete",
+        "deleteTag": "Confirm Delete",
         "manageUser": "Search Users",
         "courseCode": "Course Code",
         "teachers": "Teachers",
