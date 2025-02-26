@@ -30,7 +30,7 @@ export function CommentItem({
         if (highlightedCommentId === comment.id && commentRef.current != null) {
             commentRef.current.scrollIntoView({
                 behavior: "smooth",
-                block: "center",
+                block: "start",
             });
         }
     }, [highlightedCommentId, comment.id]);
