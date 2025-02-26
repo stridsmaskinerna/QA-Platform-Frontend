@@ -41,6 +41,7 @@ export function AnswerCardComments({
     const [highlightedCommentId, setHighlightedCommentId] = useState<
         string | null
     >(null);
+    const { isLoggedIn } = useQAContext().authContext;
 
     const toggleComments = () => {
         scrollPositionRef.current = window.scrollY;
@@ -150,20 +151,21 @@ export function AnswerCardComments({
                 ]}
                 onClearErrors={clearErrors}
             />
-            <TabLabelContainer
-                label={t("answerCardComments.commentsCreatorTitle")}
-                isOpen={isCommentCreatorOpen}
-                labelIcon={addCommentIcon}
-                toggleOpen={() => {
-                    setIsCommentCreatorOpen(prev => !prev);
-                }}
-            >
-                <CommentCreator
-                    answerId={answerId}
-                    createComment={createComment}
-                />
-            </TabLabelContainer>
-
+            {isLoggedIn && (
+                <TabLabelContainer
+                    label={t("answerCardComments.commentsCreatorTitle")}
+                    isOpen={isCommentCreatorOpen}
+                    labelIcon={addCommentIcon}
+                    toggleOpen={() => {
+                        setIsCommentCreatorOpen(prev => !prev);
+                    }}
+                >
+                    <CommentCreator
+                        answerId={answerId}
+                        createComment={createComment}
+                    />
+                </TabLabelContainer>
+            )}
             <TabLabelContainer
                 label={t("answerCardComments.commentsListTitle")}
                 isOpen={isCommentsOpen}

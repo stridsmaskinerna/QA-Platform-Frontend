@@ -8,6 +8,9 @@ interface IAnswerCardBottomProps {
     answer: IAnswer;
     voteCount: number;
     myVote: string;
+    isAccepted: boolean;
+    isOwner: boolean;
+    onMarkAsSolved: () => void;
 }
 
 export function AnswerCardBottom({
@@ -15,6 +18,7 @@ export function AnswerCardBottom({
     answer,
     voteCount,
     myVote,
+    isOwner,
 }: IAnswerCardBottomProps) {
     return (
         <div className={styles.container}>
@@ -23,7 +27,10 @@ export function AnswerCardBottom({
                 voteCount={voteCount}
                 myVote={myVote}
             />
-            <AnswerCardToolbar answer={answer} />
+            <AnswerCardToolbar
+                answer={answer}
+                isOwner={isOwner}
+            />
         </div>
     );
 }

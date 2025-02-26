@@ -96,6 +96,11 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                             onClick={() => void toggleVisibility()}
                         >
                             <img
+                                title={
+                                    props.isHiddenOptimistic
+                                        ? t("clickToShow")
+                                        : t("clickToHide")
+                                }
                                 className={styles.icon}
                                 src={
                                     props.isHiddenOptimistic
@@ -105,11 +110,6 @@ export function QuestionHeader(props: QuestionHeaderProps) {
                                 alt=""
                             />
                         </button>
-                        <span className={styles.tooltip}>
-                            {props.isHiddenOptimistic
-                                ? t("clickToShow")
-                                : t("clickToHide")}
-                        </span>
                     </div>
                 )}
             </div>
