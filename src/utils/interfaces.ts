@@ -21,6 +21,7 @@ export interface IAuthContext {
         formData: Omit<IRegisterFormData, "confirmPassword">,
     ) => Promise<RegisterErrorMessage | void>;
     isLoading: boolean;
+    isLoggedIn: boolean;
 }
 
 export interface IProblemDetail {

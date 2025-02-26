@@ -37,6 +37,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         null,
     );
     const [userDetails, setUserDetails] = useState<IUserDetails>();
+    const isLoggedIn = userDetails?.userId != null;
     const [isLoading, setIsLoading] = useState(true);
 
     const values: IAuthContext = {
@@ -47,6 +48,7 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
         logout,
         register,
         isLoading,
+        isLoggedIn,
     };
 
     async function login({

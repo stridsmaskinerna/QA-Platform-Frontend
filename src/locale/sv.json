@@ -72,6 +72,9 @@
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
         "nrOfQuestionsFound": "Hittade {{count}} frågor",
         "backToQA": "Tillbaka till Frågor & Svar",
+        "acceptedAnswer": "Godkänt svar",
+
+        "markAsAccepted": "Markera som godkänt",
 
         "header": {
             "headerHeadline": "LTU Frågor & Svar",
