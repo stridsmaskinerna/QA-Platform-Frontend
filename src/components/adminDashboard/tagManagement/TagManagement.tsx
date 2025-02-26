@@ -35,23 +35,27 @@ export function TagManagement() {
         });
     }, []); // Runs only once when the component is mounted
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         if (tagToDelete) {
             setIsLoading(true);
-            try {
-                await deletetag(deletetagUrl(tagToDelete), {
-                    method: "DELETE",
-                });
-                setAllTags(prev => prev.filter(tag => tag.id !== tagToDelete));
-                setFilteredTags(prev =>
-                    prev.filter(tag => tag.id !== tagToDelete),
-                );
-                setShowDeleteModal(false);
-            } catch (error) {
-                console.error("Error deleting tag:", error);
-            } finally {
-                setIsLoading(false);
-            }
+            void (async () => {
+                try {
+                    await deletetag(deletetagUrl(tagToDelete), {
+                        method: "DELETE",
+                    });
+                    setAllTags(prev =>
+                        prev.filter(tag => tag.id !== tagToDelete),
+                    );
+                    setFilteredTags(prev =>
+                        prev.filter(tag => tag.id !== tagToDelete),
+                    );
+                    setShowDeleteModal(false);
+                } catch (error) {
+                    console.error("Error deleting tag:", error);
+                } finally {
+                    setIsLoading(false);
+                }
+            })();
         }
     };
 
