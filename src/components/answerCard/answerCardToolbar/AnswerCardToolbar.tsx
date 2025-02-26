@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useQAContext } from "../../../hooks";
 import { IAnswer } from "../../../utils";
 import { DeleteButton, EditButton } from "../../button";
@@ -21,6 +22,14 @@ export function AnswerCardToolbar({
         toggleEditingAnswer,
         handleMarkAsSolved,
     } = useQuestionDetailsContext();
+    const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 600);
+
+    useEffect(() => {
+        const handleResize = () => setIsWideScreen(window.innerWidth >= 600);
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const isMyAnswer = () => {
         return qaContext.authContext.username === answer.userName;
@@ -46,7 +55,7 @@ export function AnswerCardToolbar({
                             onClick={() => {
                                 toggleEditingAnswer(answer);
                             }}
-                            text={"Edit"}
+                            text={isWideScreen ? "Edit" : ""}
                             icon={true}
                         />
                         <DeleteButton
@@ -54,7 +63,7 @@ export function AnswerCardToolbar({
                             onClick={() => {
                                 void deleteAnswer(answer);
                             }}
-                            text={"Delete"}
+                            text={isWideScreen ? "Delete" : ""}
                             icon={true}
                         />
                     </>

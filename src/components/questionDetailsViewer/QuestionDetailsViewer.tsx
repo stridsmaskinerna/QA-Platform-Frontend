@@ -2,15 +2,11 @@ import { useTranslation } from "react-i18next";
 
 import { QuestionDetailsProvider } from "./provider";
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
-import { IAnswer, IDetailedQuestion } from "../../utils";
+import { IDetailedQuestion } from "../../utils";
 import { AnswerCard } from "../answerCard";
 
 import { useQAContext } from "../../hooks";
 import { GoBackButton } from "..";
-
-import { useState } from "react";
-import { ANSWER_URL, BASE_URL } from "../../data";
-import { usePUT } from "../../hooks";
 
 import { AnswerCreator } from "./answerCreator";
 import styles from "./QuestionDetailsViewer.module.css";
@@ -34,7 +30,7 @@ export function QuestionDetailsViewer({
 
 export function QuestionDetailsViewerInner() {
     const { t } = useTranslation();
-    // const { putRequest, isLoading, error } = usePUT<void>();
+    const { isLoggedIn } = useQAContext().authContext;
 
     const {
         authContext: { username },
@@ -42,25 +38,6 @@ export function QuestionDetailsViewerInner() {
 
     const { question, currentAnswers, handleMarkAsSolved } =
         useQuestionDetailsContext();
-    const [answers, setAnswers] = useState<IAnswer[]>(currentAnswers);
-
-    // const handleMarkAsSolved = async (answerId: string) => {
-    //     try {
-    //         await putRequest(
-    //             `${BASE_URL}${ANSWER_URL}/${answerId}/toggle-accepted`,
-    //         );
-
-    //         setAnswers(prevAnswers =>
-    //             prevAnswers.map(answer =>
-    //                 answer.id === answerId
-    //                     ? { ...answer, isAccepted: !answer.isAccepted }
-    //                     : { ...answer, isAccepted: false },
-    //             ),
-    //         );
-    //     } catch (error) {
-    //         console.error("Failed to update answer status:", error);
-    //     }
-    // };
 
     return (
         <div className={styles.container}>
@@ -87,7 +64,7 @@ export function QuestionDetailsViewerInner() {
                 userId={question.userId}
             />
             <h2>Answers</h2>
-            <AnswerCreator questionId={question.id} />
+            {isLoggedIn && <AnswerCreator questionId={question.id} />}
             <ul className={styles.container}>
                 {/* {answers.map(answer => ( */}
                 {currentAnswers.map(answer => (

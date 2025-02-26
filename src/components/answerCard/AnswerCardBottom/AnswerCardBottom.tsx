@@ -1,6 +1,5 @@
 import styles from "./AnswerCardBottom.module.css";
 import { AnswerCardVote } from "../answerCardVote";
-import { AnswerAccept } from "../AnswerCardAccept";
 import { AnswerCardToolbar } from "../answerCardToolbar/AnswerCardToolbar";
 import { IAnswer } from "../../../utils";
 
@@ -19,9 +18,7 @@ export function AnswerCardBottom({
     answer,
     voteCount,
     myVote,
-    isAccepted,
     isOwner,
-    onMarkAsSolved,
 }: IAnswerCardBottomProps) {
     return (
         <div className={styles.container}>

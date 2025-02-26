@@ -30,7 +30,7 @@ export function QuestionDetailsProvider({
     const deletAnswerReq = useDELETE<void>();
     const putAnswerReq = usePUT<void>();
     const postAnswerReq = usePOST<void>();
-    const putIsAcceptedAnswer  = usePUT<void>();
+    const putIsAcceptedAnswer = usePUT<void>();
     const getQuestionReq = useGET<IDetailedQuestion>();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [highlightedAnswerId, setHighlightedAnswerId] = useState<
@@ -38,6 +38,8 @@ export function QuestionDetailsProvider({
     >(null);
     const [currentAnswers, setCurrentAnswers] = useState(question.answers);
     const [editingAnswer, setEditingAnswer] = useState<IAnswer | null>(null);
+    const [currentQuestion, setCurrentQuestion] =
+        useState<IDetailedQuestion>(question);
 
     const createAnswer = async (answer: IAnswerForCreation) => {
         const postRes = await postAnswerReq.postRequestWithError(
@@ -127,21 +129,30 @@ export function QuestionDetailsProvider({
     };
 
     const handleMarkAsSolved = async (answerId: string) => {
-        try {
-            await putIsAcceptedAnswer.putRequest(
-                `${BASE_URL}${ANSWER_URL}/${answerId}/toggle-accepted`,
+        const { error } = await putIsAcceptedAnswer.putRequestWithError(
+            `${BASE_URL}${ANSWER_URL}/${answerId}/toggle-accepted`,
+        );
+
+        if (error) {
+            return;
+        }
+
+        setCurrentAnswers(prevAnswers => {
+            const updatedAnswers = prevAnswers.map(answer =>
+                answer.id === answerId
+                    ? { ...answer, isAccepted: !answer.isAccepted }
+                    : { ...answer, isAccepted: false },
             );
 
-            setCurrentAnswers(prevAnswers =>
-                prevAnswers.map(answer =>
-                    answer.id === answerId
-                        ? { ...answer, isAccepted: !answer.isAccepted }
-                        : { ...answer, isAccepted: false },
-                ),
-            );
-        } catch (error) {
-            console.error("Failed to update answer status:", error);
-        }
+            const isResolved = updatedAnswers.some(answer => answer.isAccepted);
+
+            setCurrentQuestion(prevQuestion => ({
+                ...prevQuestion,
+                isResolved,
+            }));
+
+            return updatedAnswers;
+        });
     };
 
     const isLoading = () => {
@@ -158,7 +169,7 @@ export function QuestionDetailsProvider({
 
     const getContext = (): IQuestionDetailsContext => {
         return {
-            question,
+            question: currentQuestion,
             currentAnswers,
             editingAnswer,
             highlightedAnswerId,
@@ -169,7 +180,7 @@ export function QuestionDetailsProvider({
             createAnswer,
             updateAnswer,
             deleteAnswer,
-            handleMarkAsSolved
+            handleMarkAsSolved,
         };
     };
 
@@ -177,6 +188,7 @@ export function QuestionDetailsProvider({
         deletAnswerReq.clearError();
         postAnswerReq.clearError();
         putAnswerReq.clearError();
+        putIsAcceptedAnswer.clearError();
     };
 
     return (
@@ -186,6 +198,7 @@ export function QuestionDetailsProvider({
                     deletAnswerReq.error,
                     postAnswerReq.error,
                     putAnswerReq.error,
+                    putIsAcceptedAnswer.error,
                 ]}
                 onClearErrors={clearErrors}
             />

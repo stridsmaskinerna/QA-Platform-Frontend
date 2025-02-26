@@ -14,7 +14,6 @@ interface IAnswerProps {
     onMarkAsSolved: (answerId: string) => void;
 }
 
-
 export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
     const { highlightedAnswerId } = useQuestionDetailsContext();
     const answerCardRef = useRef<HTMLDivElement | null>(null);

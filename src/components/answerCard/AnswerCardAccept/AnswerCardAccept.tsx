@@ -1,4 +1,5 @@
 import styles from "./AnswerCardAccept.module.css";
+import { useTranslation } from "react-i18next";
 
 interface IAnswerAcceptProps {
     answerId: string;
@@ -13,14 +14,16 @@ export function AnswerAccept({
     isOwner,
     onMarkAsSolved,
 }: IAnswerAcceptProps) {
+    const { t } = useTranslation();
+
     if (!isOwner) return null;
 
     return (
         <button
-            className={isAccepted ? styles.accepted : styles.default}
+            className={`${styles.button} ${isAccepted ? styles.accepted : styles.default}`}
             onClick={() => onMarkAsSolved(answerId)}
         >
-            {isAccepted ? "✔ Marked as Solution" : "Mark as Solution"}
+            {isAccepted ? t("acceptedAnswer") : t("markAsAccepted")}
         </button>
     );
 }

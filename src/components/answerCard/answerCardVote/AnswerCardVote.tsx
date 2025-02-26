@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { usePUT } from "../../../hooks";
+import { usePUT, useQAContext } from "../../../hooks";
 import styles from "./AnswerCardVote.module.css";
 import ThumpUpNeutral from "../../../assets/icons/thumb_up_neutral.svg";
 import ThumpUpFilled from "../../../assets/icons/thumb_up_filled.svg";
@@ -20,7 +20,9 @@ export function AnswerCardVote({
 }: IAnswerCardVoteProps) {
     const [currentVote, setCurrentVote] = useState<string>(myVote);
     const [voteCount, setVoteCount] = useState<number>(initialVoteCount);
-    const { isLoading, error, putRequest } = usePUT();
+    const { isLoading, putRequest } = usePUT();
+
+    const { isLoggedIn } = useQAContext().authContext;
 
     const upvoteToShow =
         currentVote === "like" ? ThumpUpFilled : ThumpUpNeutral;
@@ -38,6 +40,9 @@ export function AnswerCardVote({
     };
 
     const toggleLike = () => {
+        if (!isLoggedIn) {
+            return;
+        }
         const newVote = currentVote === "like" ? "neutral" : "like";
         setVoteCount(prevCount => {
             if (currentVote === "neutral") return prevCount + 1;
@@ -51,6 +56,9 @@ export function AnswerCardVote({
     };
 
     const toggleDislike = () => {
+        if (!isLoggedIn) {
+            return;
+        }
         const newVote = currentVote === "dislike" ? "neutral" : "dislike";
         setVoteCount(prevCount => {
             if (currentVote === "neutral") return prevCount - 1;
@@ -63,20 +71,27 @@ export function AnswerCardVote({
         void sendVote(newVote);
     };
 
+    const getVoteButtonClass = () => {
+        return `${styles.voteButton} 
+                ${isLoading ? styles.loading : ""} 
+                ${!isLoggedIn ? styles.disabled : ""}`;
+    };
+
     return (
         <div className={styles.container}>
             <img
                 src={upvoteToShow}
                 alt=""
                 onClick={toggleLike}
-                className={`${styles.voteButton} ${isLoading ? styles.loading : ""}`}
+                className={getVoteButtonClass()}
             />
+
             <span className={styles.voteCount}>{voteCount}</span>
             <img
                 src={downvoteToShow}
                 alt=""
                 onClick={toggleDislike}
-                className={`${styles.voteButton} ${isLoading ? styles.loading : ""} ${styles.downButton}`}
+                className={getVoteButtonClass()}
             />
         </div>
     );
