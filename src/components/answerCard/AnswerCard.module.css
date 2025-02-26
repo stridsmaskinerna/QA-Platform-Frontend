@@ -21,7 +21,6 @@
 .highlighted-container {
     border: 2px solid #4a90e2;
     background-color: rgba(74, 144, 226, 0.15);
-    position: relative;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(74, 144, 226, 1);
@@ -47,4 +46,17 @@
     100% {
         box-shadow: 0 0 0 rgba(74, 144, 226, 0);
     }
+}
+
+.new-answer-label {
+    font-size: 0.8rem;
+    color: #1e5ba3;
+    font-weight: bold;
+    bottom: -20px;
+    left: 10px;
+    background: #e3f2fd;
+    padding: 3px 8px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: fadeOut 10s ease-in-out forwards;
 }

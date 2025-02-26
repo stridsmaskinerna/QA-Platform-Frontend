@@ -64,6 +64,8 @@
     "tagLimitWarning": "Please limit your tags to 5 or fewer.",
     "nrOfQuestionsFound": "Found {{count}} questions",
     "backToQA": "Back to Q&A",
+    "acceptedAnswer": "Godkänt svar",
+    "markAsAccepted": "Markera som godkänt",
     "deleteQuestion": "Delete question",
     "deleteQuestionPrompt": "Are you sure you want to delete this question?",
     "delete": "Delete",

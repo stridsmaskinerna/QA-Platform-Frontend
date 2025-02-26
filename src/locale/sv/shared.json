@@ -64,6 +64,8 @@
     "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
     "nrOfQuestionsFound": "Hittade {{count}} frågor",
     "backToQA": "Tillbaka till Frågor & Svar",
+    "acceptedAnswer": "Accepted answer",
+    "markAsAccepted": "Mark as accepted",
     "deleteQuestion": "Radera fråga",
     "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
     "delete": "Radera",

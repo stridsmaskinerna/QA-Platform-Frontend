@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IComment, ICommentForCreation } from "../../../utils";
@@ -21,11 +21,13 @@ import styles from "./AnswerCardComments.module.css";
 interface IAnswerCardCommentsProps {
     answerId: string;
     comments: IComment[];
+    children?: ReactNode;
 }
 
 export function AnswerCardComments({
     answerId,
     comments,
+    children,
 }: IAnswerCardCommentsProps) {
     const { t } = useTranslation();
     const qaContext = useQAContext();
@@ -181,6 +183,7 @@ export function AnswerCardComments({
                     updateComment={updateComment}
                 />
             </TabLabelContainer>
+            <div>{children}</div>
         </div>
     );
 }

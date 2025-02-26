@@ -26,7 +26,7 @@ export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
         if (highlightedAnswerId === data.id && answerCardRef.current != null) {
             answerCardRef.current.scrollIntoView({
                 behavior: "smooth",
-                block: "center",
+                block: "start",
             });
         }
     }, [data.id, highlightedAnswerId]);
@@ -62,7 +62,13 @@ export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
             <AnswerCardComments
                 answerId={data.id}
                 comments={data.comments}
-            />
+            >
+                {highlightedAnswerId === data.id && (
+                    <span className={styles.newAnswerLabel}>
+                        {"Your latest answer"}
+                    </span>
+                )}
+            </AnswerCardComments>
         </div>
     );
 }
