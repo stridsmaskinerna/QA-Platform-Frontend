@@ -1,43 +1,45 @@
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import styles from "./CourseManagement.module.css";
-import { Input } from "../..";
+import { DeleteButton, EditButton, Input, SaveButton } from "../..";
 import { useTranslation } from "react-i18next";
-import { useFetchWithToken, useQAContext } from "../../../hooks";
-import { CustomError, ISubject } from "../../../utils";
+import {
+    useDELETE,
+    useFetchWithToken,
+    usePOST,
+    usePUT,
+    useQAContext,
+} from "../../../hooks";
+import {
+    ISubject,
+    ISubjectForPut,
+    removePropertiesFromObject,
+} from "../../../utils";
 import { BASE_URL } from "../../../data";
-import delete_icon from "../../../assets/icons/delete.svg";
+import removeX from "../../../assets/icons/removeX.svg";
 
 const courseUrl = `${BASE_URL}/subjects`;
-const postCourseUrl = `${BASE_URL}/subjects`;
 const deleteCourseUrl = (id: string) => `${BASE_URL}/subjects/${id}`;
 
 export function CourseManagement() {
     const { requestHandler: fetchCourses } = useFetchWithToken<ISubject[]>();
-    const { requestHandler: postCourse } = useFetchWithToken<void>();
-    const { requestHandler: deleteCourse } = useFetchWithToken<void>();
+    const { postRequestWithError: postCourse } = usePOST();
+    const { deleteRequestWithError: deleteCourse } = useDELETE();
+    const { putRequestWithError: putSubject } = usePUT<ISubject>();
     const { t } = useTranslation();
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
     const [allCourses, setAllCourses] = useState<ISubject[]>([]); // Store all courses
     const [filteredCourses, setFilteredCourses] = useState<ISubject[]>([]); // Store filtered courses
-    const [searchTerm, setSearchTerm] = useState("");
+    const [courseForEditing, setCourseForEditing] = useState<ISubjectForPut>();
+    const [addTeacherInput, setAddTeacherInput] = useState("");
 
-    const [courses, setCourses] = useState<ISubject[]>([]);
     const formRef = useRef<HTMLFormElement>(null);
-
-    useEffect(() => {
-        void fetchCourses(courseUrl).then(data => {
-            if (data) {
-                setAllCourses(data);
-                setFilteredCourses(data);
-            }
-        });
-    }, []);
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
         void (async () => {
+            setIsLoading(true);
             const formData = new FormData(e.currentTarget);
             const formDetails = Object.fromEntries(formData);
             const teachers =
@@ -49,56 +51,137 @@ export function CourseManagement() {
                 ...formDetails,
                 teachers,
             };
-            console.log(formattedData);
-            setIsLoading(true);
-            try {
-                await postCourse(postCourseUrl, {
-                    method: "POST",
-                    body: JSON.stringify(formattedData),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+
+            const { error } = await postCourse(courseUrl, formattedData);
+            if (!error) {
                 formRef.current?.reset();
-                void fetchCourses(courseUrl).then(data => {
-                    if (data) setCourses(data);
-                });
-            } catch (error) {
-                if (error instanceof CustomError) {
-                    console.error(error);
-                } else {
-                    throw error;
-                }
-            } finally {
-                setIsLoading(false);
+            } else {
+                console.error(error);
             }
+            setIsLoading(false);
         })();
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const term = event.target.value;
-        setSearchTerm(term);
-
-        const filtered = allCourses.filter(course => {
-            const searchString =
-                `${course.subjectCode} ${course.name} ${course.teachers?.map(t => t.email).join(" ")}`.toLowerCase(); // Include teachers in search
-            return searchString.includes(term.toLowerCase());
-        });
-        setFilteredCourses(filtered);
+        const term = event.target.value.trim().toLowerCase();
+        setFilteredCourses(
+            term
+                ? allCourses
+                      .filter(
+                          c =>
+                              c.name.toLowerCase().includes(term) ||
+                              c.subjectCode?.toLowerCase().includes(term),
+                      )
+                      .slice(0, 15)
+                : allCourses.slice(0, 15),
+        );
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure you want to delete this course?")) return;
         setIsLoading(true);
-        try {
-            await deleteCourse(deleteCourseUrl(id), { method: "DELETE" });
-            setCourses(prev => prev.filter(course => course.id !== id));
-        } catch (error) {
-            console.error("Error deleting course:", error);
-        } finally {
+
+        const { error } = await deleteCourse(deleteCourseUrl(id), {
+            method: "DELETE",
+        });
+
+        if (!error) {
+            setFilteredCourses(prev => prev.filter(course => course.id !== id));
+        } else if (error.errorCode === 403) {
+            //TODO
+            //Display modal saying it is unallowed because course has questions connected to it
+        } else {
+            console.error(error);
+        }
+        setIsLoading(false);
+    };
+
+    const handleAddTeacher = () => {
+        if (!addTeacherInput.trim()) {
+            return;
+        }
+
+        const formattedInput = addTeacherInput
+            .split(",")
+            .map(e => e.trim())
+            .filter(e => e && !courseForEditing?.teachers.includes(e));
+
+        setCourseForEditing(prev => {
+            if (prev) {
+                return {
+                    ...prev,
+                    teachers: [...prev.teachers, ...formattedInput],
+                };
+            }
+            return prev;
+        });
+        setAddTeacherInput("");
+    };
+
+    const handleEditClick = (subject: ISubject) => {
+        setCourseForEditing(prev => {
+            if (prev?.id !== subject.id) {
+                return {
+                    id: subject.id,
+                    teachers: subject.teachers?.map(t => t.email) ?? [],
+                    name: subject.name,
+                    subjectCode: subject.subjectCode,
+                };
+            }
+            return undefined;
+        });
+    };
+
+    const handleRemoveTeacherTag = (teacherEmail: string) => {
+        setCourseForEditing(prev => {
+            if (prev) {
+                return {
+                    ...prev,
+                    teachers: prev.teachers.filter(
+                        e => e.toLowerCase() !== teacherEmail.toLowerCase(),
+                    ),
+                };
+            }
+            return prev;
+        });
+    };
+
+    const handleSaveSubjectChanges = async () => {
+        if (courseForEditing) {
+            setIsLoading(true);
+            const { error, response } = await putSubject(
+                `${courseUrl}/${courseForEditing.id}`,
+                removePropertiesFromObject({ ...courseForEditing }, "id"),
+            );
+
+            if (!error && response) {
+                setFilteredCourses(prev => {
+                    const idx = prev.findIndex(
+                        s => s.id === courseForEditing.id,
+                    );
+
+                    const prevCopy = [...prev];
+
+                    prevCopy.splice(idx, 1, response);
+                    return prevCopy;
+                });
+                setCourseForEditing(undefined);
+            } else {
+                console.error(error);
+            }
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        void fetchCourses(courseUrl).then(data => {
+            if (data) {
+                setAllCourses(data);
+                setFilteredCourses(data.slice(0, 15));
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -134,13 +217,34 @@ export function CourseManagement() {
             </form>
             <div className={styles.manageCourse}>
                 <h2 className={styles.heading}>{t("manageExistingCourses")}</h2>
-                <Input
-                    inputName="manageCourse"
-                    inputType="text"
-                    placeHolder={t("manageCourse")}
-                    inputValue={searchTerm}
-                    onChange={handleSearchChange}
-                />
+
+                {courseForEditing ? (
+                    <div className={styles.addTeacherContainer}>
+                        <Input
+                            label={t("addTeacherToSubject", {
+                                subject: `${courseForEditing.subjectCode ? courseForEditing.subjectCode + " " : ""}${courseForEditing.name}`,
+                            })}
+                            placeHolder={t("teacherNamePlaceHolder")}
+                            inputType="text"
+                            inputValue={addTeacherInput}
+                            onChange={e => setAddTeacherInput(e.target.value)}
+                        />
+                        <button
+                            onClick={handleAddTeacher}
+                            className={styles.addTeacherBtn}
+                        >
+                            {t("addTeacher")}
+                        </button>
+                    </div>
+                ) : (
+                    <Input
+                        label={t("searchSubjects")}
+                        inputName="manageCourse"
+                        inputType="search"
+                        placeHolder={t("searchCoursePlaceholder")}
+                        onChange={handleSearchChange}
+                    />
+                )}
 
                 <table className={styles.courseTable}>
                     <thead>
@@ -153,7 +257,14 @@ export function CourseManagement() {
                     </thead>
                     <tbody>
                         {filteredCourses.map(course => (
-                            <tr key={course.id}>
+                            <tr
+                                key={course.id}
+                                className={
+                                    course.id === courseForEditing?.id
+                                        ? styles.activeRow
+                                        : ""
+                                }
+                            >
                                 <td data-label={t("courseCode")}>
                                     {course.subjectCode}
                                 </td>
@@ -161,28 +272,86 @@ export function CourseManagement() {
                                     {course.name}
                                 </td>
                                 <td data-label={t("teachers")}>
-                                    {course.teachers?.map(teacher => (
-                                        <span
-                                            key={teacher.id}
-                                            className={styles.teacherTag}
-                                        >
-                                            {teacher.email}
-                                        </span>
-                                    ))}
+                                    <div
+                                        className={styles.teacherTagsContainer}
+                                    >
+                                        {(course.id === courseForEditing?.id
+                                            ? courseForEditing.teachers
+                                            : (course.teachers?.map(
+                                                  c => c.email,
+                                              ) ?? [])
+                                        ).map((email, idx) => (
+                                            <button
+                                                disabled={
+                                                    course.id !==
+                                                    courseForEditing?.id
+                                                }
+                                                onClick={() =>
+                                                    handleRemoveTeacherTag(
+                                                        email,
+                                                    )
+                                                }
+                                                key={`${email}-${idx}`}
+                                                className={`${styles.teacherTag} ${course.id === courseForEditing?.id ? styles.activeTag : ""}`}
+                                            >
+                                                {email}
+                                                {course.id ===
+                                                    courseForEditing?.id && (
+                                                    <img
+                                                        src={removeX}
+                                                        className={styles.xIcon}
+                                                    />
+                                                )}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </td>
                                 <td data-label={t("actions")}>
-                                    <button
-                                        className={styles.deleteBtn}
-                                        onClick={() =>
-                                            void handleDelete(course.id)
-                                        }
-                                    >
-                                        <img
-                                            src={delete_icon}
-                                            alt="Delete Icon"
-                                            className="delete-icon"
-                                        />
-                                    </button>
+                                    <div className={styles.actionsContainer}>
+                                        <div className={styles.btnsContainer}>
+                                            <EditButton
+                                                disabled={
+                                                    courseForEditing !==
+                                                        undefined &&
+                                                    course.id !==
+                                                        courseForEditing.id
+                                                }
+                                                text={
+                                                    course.id ===
+                                                    courseForEditing?.id
+                                                        ? t("cancelChanges")
+                                                        : t("edit")
+                                                }
+                                                onClick={() =>
+                                                    handleEditClick(course)
+                                                }
+                                            />
+                                            {course.id ===
+                                                courseForEditing?.id && (
+                                                <SaveButton
+                                                    onClick={() =>
+                                                        void handleSaveSubjectChanges()
+                                                    }
+                                                    text={t("saveChanges")}
+                                                />
+                                            )}
+                                            {course.id !==
+                                                courseForEditing?.id && (
+                                                <DeleteButton
+                                                    disabled={
+                                                        courseForEditing !==
+                                                        undefined
+                                                    }
+                                                    text={t("delete")}
+                                                    onClick={() =>
+                                                        void handleDelete(
+                                                            course.id,
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
