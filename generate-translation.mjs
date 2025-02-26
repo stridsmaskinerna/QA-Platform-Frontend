@@ -6,7 +6,7 @@ const localesDir = path.join(cwd(), "src/locale");
 const languages = ["en", "sv"];
 const jsonIndexFile = "index.json";
 
-console.log("> Building translation files...")
+console.log("> Building translation files...");
 
 languages.forEach((lang) => {
     const langDir = path.join(localesDir, lang);

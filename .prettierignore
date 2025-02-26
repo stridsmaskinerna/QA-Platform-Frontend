@@ -2,7 +2,8 @@
 build
 coverage
 
-
 **/*.yml
 
 package-lock.json
+
+generate-translation.mjs
