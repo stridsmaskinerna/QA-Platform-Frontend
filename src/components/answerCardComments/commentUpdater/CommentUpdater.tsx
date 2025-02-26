@@ -5,22 +5,23 @@ import { TextArea } from "../../input";
 import { IComment } from "../../../utils";
 import { CommentSubmitButton } from "../commentSubmitButton";
 import styles from "./CommentUpdater.module.css";
+import { CommentForm } from "../../forms";
 
 interface ICommentUpdaterProps {
     comment: IComment;
+    onCancel: () => void;
     onUpdateComment: (comment: IComment) => Promise<void>;
 }
 
 export function CommentUpdater({
     comment,
+    onCancel,
     onUpdateComment,
 }: ICommentUpdaterProps) {
     const { t } = useTranslation();
     const [currentContent, setCurrentContent] = useState(comment.value);
 
-    const submit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const submit = () => {
         const commentForUpdate: IComment = {
             ...comment,
             value: currentContent,
@@ -33,9 +34,9 @@ export function CommentUpdater({
     };
 
     return (
-        <form
-            className={styles.container}
+        <CommentForm
             onSubmit={submit}
+            onCancel={onCancel}
         >
             <div className={styles.textArea}>
                 <TextArea
@@ -49,7 +50,6 @@ export function CommentUpdater({
                     onChange={updateContent}
                 />
             </div>
-            <CommentSubmitButton />
-        </form>
+        </CommentForm>
     );
 }

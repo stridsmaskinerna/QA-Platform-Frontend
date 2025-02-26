@@ -8,6 +8,7 @@
         "deleteCommentInfo": "Radera kommentar",
         "submitCommentInfo": "Skapa kommentar",
         "createCommentPlaceholder": "Skapa en kommentar..",
-        "submitComment": "Kommentera"
+        "submitComment": "Kommentera",
+        "noCommentsLabel": "Inga kommentarer existerar för detta svar"
     }
 }

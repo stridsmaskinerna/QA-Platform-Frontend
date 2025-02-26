@@ -17,6 +17,7 @@ import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
 import { TabLabelContainer } from "../../tabs";
 import styles from "./AnswerCardComments.module.css";
+import { H2 } from "../../text";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
@@ -164,7 +165,10 @@ export function AnswerCardComments({
                 >
                     <CommentCreator
                         answerId={answerId}
-                        createComment={createComment}
+                        onCreateComment={createComment}
+                        onCancel={() => {
+                            setIsCommentCreatorOpen(false);
+                        }}
                     />
                 </TabLabelContainer>
             )}
@@ -183,6 +187,7 @@ export function AnswerCardComments({
                     updateComment={updateComment}
                 />
             </TabLabelContainer>
+
             <div>{children}</div>
         </div>
     );

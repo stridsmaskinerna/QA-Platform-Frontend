@@ -35,9 +35,13 @@ export function AnswerCardToolbar({
         return qaContext.authContext.username === answer.userName;
     };
 
-    const getDisableStatus = () => {
+    const isEditingAnswer = () => {
         return editingAnswer?.id == answer.id;
     };
+
+    if (isEditingAnswer()) {
+        return <></>;
+    }
 
     return (
         <>
@@ -51,7 +55,7 @@ export function AnswerCardToolbar({
                 {isMyAnswer() && (
                     <>
                         <EditButton
-                            disabled={getDisableStatus()}
+                            disabled={isEditingAnswer()}
                             onClick={() => {
                                 toggleEditingAnswer(answer);
                             }}
@@ -59,7 +63,7 @@ export function AnswerCardToolbar({
                             icon={true}
                         />
                         <DeleteButton
-                            disabled={getDisableStatus()}
+                            disabled={isEditingAnswer()}
                             onClick={() => {
                                 void deleteAnswer(answer);
                             }}

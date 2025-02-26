@@ -43,6 +43,10 @@ export function CommentItem({
         setIsUpdating(prev => !prev);
     };
 
+    const cancelIsUpdating = () => {
+        setIsUpdating(false);
+    };
+
     const handleDelete = () => {
         void deleteComment(comment);
     };
@@ -69,11 +73,12 @@ export function CommentItem({
                 <CommentUpdater
                     comment={comment}
                     onUpdateComment={handleUpdate}
+                    onCancel={cancelIsUpdating}
                 />
             )}
             <div className={styles.footer}>
                 <p className={styles.userName}>{comment.userName}</p>
-                {isMyQuestion() && (
+                {isMyQuestion() && !isUpdating && (
                     <div className={styles.footerToolbar}>
                         <img
                             onClick={() => {

@@ -65,7 +65,6 @@ export function QuestionDetailsViewerInner() {
             <h2>Answers</h2>
             {isLoggedIn && <AnswerCreator questionId={question.id} />}
             <ul className={styles.container}>
-                {/* {answers.map(answer => ( */}
                 {currentAnswers.map(answer => (
                     <AnswerCard
                         key={answer.id}
