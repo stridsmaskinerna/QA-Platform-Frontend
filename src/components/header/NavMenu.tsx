@@ -50,7 +50,7 @@ export function NavMenu() {
                     {isAdmin && (
                         <li>
                             <NavLink
-                                to={ADMIN_ROUTE}
+                                to={ADMIN_ROUTE + "course-management"}
                                 onClickSideEffect={closeMenu}
                                 title={t("header.linkAdmin")}
                             />

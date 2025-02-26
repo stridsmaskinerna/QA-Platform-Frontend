@@ -18,3 +18,4 @@ export * from "./button";
 export * from "./teacherDashboard";
 export * from "./text";
 export * from "./navlinkTabs";
+export * from "./adminDashboard";

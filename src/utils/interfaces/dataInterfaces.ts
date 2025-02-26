@@ -67,6 +67,12 @@ export interface IPaginationMeta {
     TotalPageCount: number;
 }
 
+export interface IUser {
+    id: string;
+    userName: string;
+    email: string;
+    isBlocked: boolean;
+}
 export interface IQuestionForEdit {
     topicId: string;
     subjectId: string;
