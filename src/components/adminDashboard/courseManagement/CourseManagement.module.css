@@ -61,6 +61,45 @@
     overflow-x: auto; /* For horizontal scrolling if needed */
 }
 
+.btnsContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.addTeacherContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.addTeacherBtn {
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    border-radius: 5px;
+    border: none;
+    text-wrap: nowrap;
+    height: min-content;
+    padding: 12px 20px;
+    align-self: flex-end;
+    position: relative;
+    bottom: 6px;
+    cursor: pointer;
+}
+
+.addTeacherBtn:hover {
+    background-color: var(--btnDark-hover);
+}
+
+.activeRow {
+    border: 2px solid var(--grey-strong);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -107,14 +146,38 @@ th {
 }
 
 .teacherTag {
-    display: inline-block;
-    margin-right: 5px;
+    display: flex;
     padding: 5px 10px;
-    background-color: #f0f0f0;
+    background-color: var(--grey-light);
     border-radius: 5px;
     font-size: 0.9rem;
-    white-space: nowrap;
-    box-sizing: border-box;
+    border: none;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    color: var(--text-default);
+}
+
+.teacherTagsContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.activeTag {
+    cursor: pointer;
+    border: 2px solid var(--red-delete);
+}
+
+.xIcon {
+    height: 17px;
+    width: 17px;
+}
+
+.courseTable {
+    margin-top: 1rem;
 }
 
 /* Media Query for Small Screens (Mobile) */

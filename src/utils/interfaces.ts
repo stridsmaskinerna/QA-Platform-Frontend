@@ -133,6 +133,12 @@ export interface ISubject {
     teachers?: ITeacher[];
     topics: ITopic[];
 }
+export interface ISubjectForPut {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers: string[];
+}
 
 export interface IInputProps {
     required?: boolean;

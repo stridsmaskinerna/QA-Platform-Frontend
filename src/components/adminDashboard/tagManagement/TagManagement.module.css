@@ -1,13 +1,9 @@
 .container {
     max-width: 1600px;
     width: 100%;
-}
-
-.loaderContainer {
-    margin-top: 10rem;
     display: flex;
-    width: 100%;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form {
@@ -42,40 +38,28 @@
 .submitBtn:hover {
     background-color: var(--btnDark-hover);
 }
-table {
-    display: table;
+.tagTable {
     width: 100%;
     border-collapse: collapse;
     padding: 20px;
+    border-collapse: collapse;
+    display: table;
 }
 
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 10px;
+.tagTableCell {
     text-align: left;
+    display: table-cell;
 }
-
-th {
-    background-color: #f4f4f4;
+.tagTableDelCell {
+    text-align: center;
+    display: table-cell;
 }
-
-.deleteBtn {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.deleteBtn:hover {
-    background-color: darkred;
-}
-
-.heading {
-    padding: 20px;
-    font-size: 1.5rem; /* Increase font size for heading */
+.tagTableDeleteCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    text-align: center;
 }
 
 .manageCourse {
@@ -107,12 +91,6 @@ th {
     td {
         text-align: left;
         padding-left: 10px;
-    }
-
-    .deleteBtn {
-        width: 100%;
-        padding: 10px 0; /* Make delete button full width */
-        margin-top: 10px;
     }
 
     /* Stack heading and input pair */
