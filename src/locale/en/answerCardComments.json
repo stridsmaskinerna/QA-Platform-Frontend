@@ -6,9 +6,7 @@
         "hideCommentInfo": "Hide comments",
         "updateCommentInfo": "Update comment",
         "deleteCommentInfo": "Delete comment",
-        "submitCommentInfo": "Submit comment",
         "createCommentPlaceholder": "Add a comment..",
-        "submitComment": "Comment",
         "noCommentsLabel": "No comments exist for this answer"
     }
 }

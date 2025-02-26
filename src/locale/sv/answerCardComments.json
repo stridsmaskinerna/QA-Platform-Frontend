@@ -6,9 +6,7 @@
         "hideCommentInfo": "Dölj kommentarer",
         "updateCommentInfo": "Uppdatera kommentar",
         "deleteCommentInfo": "Radera kommentar",
-        "submitCommentInfo": "Skapa kommentar",
         "createCommentPlaceholder": "Skapa en kommentar..",
-        "submitComment": "Kommentera",
         "noCommentsLabel": "Inga kommentarer existerar för detta svar"
     }
 }

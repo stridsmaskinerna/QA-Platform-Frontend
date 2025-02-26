@@ -34,7 +34,7 @@ export function AnswerForm({
             <div className={styles.editor}>{children}</div>
             <div className={styles.answerBtnCtr}>
                 <CancelButton
-                    text={"Cancel"}
+                    text={t("answerForm.cancelButton")}
                     onClick={() => {
                         onCancel();
                     }}

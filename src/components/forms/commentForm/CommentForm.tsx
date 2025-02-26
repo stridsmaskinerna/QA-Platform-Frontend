@@ -32,22 +32,22 @@ export function CommentForm({
             <div className={styles.textArea}>{children}</div>
             <div className={styles.commentBtnCtr}>
                 <CancelButton
-                    text={"Cancel"}
+                    text={t("commentForm.cancelButton")}
                     onClick={() => {
                         onCancel();
                     }}
                 />
                 <button
-                    title={t("answerCardComments.submitCommentInfo")}
+                    title={t("commentForm.submitCommentInfo")}
                     type="submit"
                     className={styles.commentBtn}
                 >
                     <img
                         src={chatIcon}
-                        alt="Add"
+                        alt={t("commentForm.submitComment")}
                     />
                     <span className={styles.commentBtnText}>
-                        {t("answerCardComments.submitComment")}
+                        {t("commentForm.submitComment")}
                     </span>
                 </button>
             </div>

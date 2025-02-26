@@ -1,6 +1,14 @@
 {
     "answerForm": {
         "submitInfo": "Submit Answer",
+        "cancelButton": "Cancel",
         "submitButton": "Submit"
+    },
+    "commentForm": {
+        "submitInfo": "Submit Answer",
+        "cancelButton": "Cancel",
+        "submitButton": "Submit",
+        "submitCommentInfo": "Submit comment",
+        "submitComment": "Comment"
     }
 }
