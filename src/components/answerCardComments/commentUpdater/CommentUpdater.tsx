@@ -1,9 +1,8 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { TextArea } from "../../input";
 import { IComment } from "../../../utils";
-import { CommentSubmitButton } from "../commentSubmitButton";
 import styles from "./CommentUpdater.module.css";
 import { CommentForm } from "../../forms";
 
