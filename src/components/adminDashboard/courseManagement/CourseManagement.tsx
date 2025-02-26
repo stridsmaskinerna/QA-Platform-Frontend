@@ -266,10 +266,39 @@ export function CourseManagement() {
                                 }
                             >
                                 <td data-label={t("courseCode")}>
-                                    {course.subjectCode}
+                                    {course.id === courseForEditing?.id ? (
+                                        <Input
+                                            inputType="text"
+                                            inputValue={
+                                                courseForEditing.subjectCode ??
+                                                ""
+                                            }
+                                            onChange={e =>
+                                                setCourseForEditing(prev => ({
+                                                    ...prev!,
+                                                    subjectCode: e.target.value,
+                                                }))
+                                            }
+                                        />
+                                    ) : (
+                                        course.subjectCode
+                                    )}
                                 </td>
                                 <td data-label={t("courseName")}>
-                                    {course.name}
+                                    {course.id === courseForEditing?.id ? (
+                                        <Input
+                                            inputType="text"
+                                            inputValue={courseForEditing.name}
+                                            onChange={e =>
+                                                setCourseForEditing(prev => ({
+                                                    ...prev!,
+                                                    name: e.target.value,
+                                                }))
+                                            }
+                                        />
+                                    ) : (
+                                        course.name
+                                    )}
                                 </td>
                                 <td data-label={t("teachers")}>
                                     <div
