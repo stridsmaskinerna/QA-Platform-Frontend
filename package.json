@@ -4,13 +4,13 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "build-translation": "node generate-translation.mjs",
-        "dev": "npm run build-translation && vite",
-        "build": "npm run build-translation && tsc -b && vite build --mode prod",
-        "lint": "eslint .",
-        "preview": "vite preview",
-        "test": "vitest",
-        "test:watch": "vitest --watch"
+        "pre": "node generate-translation.mjs",
+        "dev": "npm run pre && vite",
+        "build": "npm run pre && tsc -b && vite build --mode prod",
+        "lint": "npm run pre && eslint .",
+        "preview": "npm run pre && vite preview",
+        "test": "npm run pre && vitest",
+        "test:watch": "npm run pre && vitest --watch"
     },
     "dependencies": {
         "@lexical/react": "^0.24.0",
