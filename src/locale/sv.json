@@ -73,9 +73,7 @@
         "nrOfQuestionsFound": "Hittade {{count}} frågor",
         "backToQA": "Tillbaka till Frågor & Svar",
         "acceptedAnswer": "Godkänt svar",
-
         "markAsAccepted": "Markera som godkänt",
-
         "header": {
             "headerHeadline": "LTU Frågor & Svar",
             "linkLoginRegister": "Logga in/Registrering",
@@ -84,7 +82,6 @@
             "linkQA": "Frågor & Svar",
             "linkHelp": "Hjälp?"
         },
-
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",
@@ -103,7 +100,6 @@
             "confirmDelete": "Radera",
             "questionDelete": "Radera"
         },
-
         "courseManagement": "Hantera kurser",
         "userManagement": "Hantera användare",
         "tagManagement": "Hantera taggar",
@@ -117,6 +113,8 @@
         "searchCoursePlaceholder": "Skriv in kurskod eller kursnamn",
         "manageExistingCourses": "Hantera existerande kurser",
         "manageTag": "Sök efter taggar",
+        "areYouSureYouWantToDeleteTag": "Är du säker på att du vill readera",
+        "deleteTag": "Bekräta Radera",
         "manageUser": "Sök efter användare",
         "courseCode": "Kurskod",
         "teachers": "Lärare",
@@ -133,6 +131,7 @@
         "addTeacher": "Lägg till lärare",
         "cancelChanges": "Avbryt ändringar",
         "searchSubjects": "Sök kurser",
+        "manageCourse": "Skriv in kurskod eller kursnamn",
         "answerCardComments": {
             "commentLabelMarker": "✔ Din senaste kommentar",
             "commentsListTitle": "Läs Kommentarer",
@@ -144,7 +143,6 @@
             "createCommentPlaceholder": "Skapa en kommentar..",
             "submitComment": "Kommentera"
         },
-
         "userGuide": {
             "title": "Frågekort",
             "subtitleSubject": "Kurs",
@@ -177,7 +175,6 @@
             "previousButtonInfo": "Tillbaka",
             "nextButtonInfo": "Nästa"
         },
-
         "deleteQuestion": "Radera fråga",
         "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
         "delete": "Radera",

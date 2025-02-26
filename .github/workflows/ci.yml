@@ -48,6 +48,9 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Generate Translations
+        run: node generate-translation.mjs
+
       - name: Run ESLint
         run: npx eslint .
 
@@ -65,6 +68,9 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Generate Translations
+        run: node generate-translation.mjs
+    
       - name: Check TypeScript
         run: npx tsc --noEmit
 
@@ -81,6 +87,9 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Generate Translations
+        run: node generate-translation.mjs
 
       - name: Run Prettier Check
         run: npx prettier --check .
@@ -99,6 +108,9 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Generate Translations
+        run: node generate-translation.mjs
+      
       - name: Run Tests
         run: npx vitest
 
@@ -115,6 +127,9 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Generate Translations
+        run: node generate-translation.mjs
 
       - name: Build the project
         run: npx vite build --mode prod
