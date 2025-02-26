@@ -17,6 +17,7 @@ export const QUESTION_URL = "/questions";
 export const SUBJECT_URL = "/subjects";
 export const TOPIC_URL = "/topics";
 export const PUBLIC_URL = "/public";
+export const USERS_URL = "/admin/users";
 
 //Misc
 export const QUESTION_ID = ":questionId";

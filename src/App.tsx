@@ -7,6 +7,9 @@ import {
     QuestionFinder,
     AskAQuestion,
     TeacherDashboard,
+    CourseManagement,
+    UserManagement,
+    TagManagement,
 } from "./components";
 import {
     Admin,
@@ -124,7 +127,21 @@ function App() {
                                 <Admin />
                             </AuthGuard>
                         }
-                    />
+                    >
+                        <Route
+                            index
+                            path="course-management"
+                            element={<CourseManagement />}
+                        />
+                        <Route
+                            path="user-management"
+                            element={<UserManagement />}
+                        />
+                        <Route
+                            path="tag-management"
+                            element={<TagManagement />}
+                        />
+                    </Route>
                 </Routes>
             </main>
         </ErrorBoundary>

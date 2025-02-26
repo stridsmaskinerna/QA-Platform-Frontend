@@ -1,0 +1,201 @@
+.container {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.loaderContainer {
+    margin-top: 10rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.form {
+    border: 2px solid var(--border-color, lightgray);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(20px, 3vw, 30px);
+    box-sizing: border-box; /* Important for consistent sizing */
+}
+
+.inputPair {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.form .inputPair > * {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.submitBtn {
+    border: none;
+    background-color: var(--btnDark-bg);
+    color: var(--btnDark-text);
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.submitBtn:hover {
+    background-color: var(--btnDark-hover);
+}
+
+.manageCourse {
+    border: 2px solid var(--border-color, lightgray);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    overflow-x: auto; /* For horizontal scrolling if needed */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 100%; /* Prevent table from shrinking */
+    box-sizing: border-box;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.deleteBtn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.deleteBtn:hover {
+    background-color: darkred;
+}
+
+.heading {
+    padding: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.teacherTag {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Media Query for Small Screens (Mobile) */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .manageCourse {
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-bottom: 1px solid #ddd;
+        word-break: break-word; /* For mobile word wrapping */
+        white-space: normal; /* Allow cell content to wrap */
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    th,
+    td {
+        white-space: nowrap; /* Keep header text from wrapping by default */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .deleteBtn {
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 10px;
+    }
+
+    .inputPair {
+        flex-direction: column;
+    }
+
+    .teacherTag {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    .heading {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}
