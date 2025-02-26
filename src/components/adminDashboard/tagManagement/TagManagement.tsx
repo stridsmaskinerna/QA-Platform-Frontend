@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./TagManagement.module.css";
-import { Input } from "../..";
+import { Input, Loader } from "../..";
 import { useTranslation } from "react-i18next";
-import { useFetchWithToken, useQAContext } from "../../../hooks";
+import {
+    useDELETE,
+    useFetchWithToken,
+    useInfiniteScrolling,
+    useQAContext,
+} from "../../../hooks";
 import { ITag } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { DeleteButton } from "../../button"; // Import the DeleteButton component
@@ -12,62 +17,52 @@ const tagUrl = `${BASE_URL}/tags`;
 const deletetagUrl = (id: string) => `${BASE_URL}/tags?id=${id}`;
 
 export function TagManagement() {
-    const { requestHandler: fetchTags } = useFetchWithToken<ITag[]>();
-    const { requestHandler: deletetag } = useFetchWithToken<ITag>();
+    const { deleteRequestWithError: deleteTag } = useDELETE<ITag>();
     const { t } = useTranslation();
     const {
         loaderContext: { setIsLoading },
     } = useQAContext();
 
-    const [allTags, setAllTags] = useState<ITag[]>([]);
-    const [filteredTags, setFilteredTags] = useState<ITag[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [tagToDelete, setTagToDelete] = useState<string | null>(null);
-    const [tagName, setTagName] = useState<string>(""); // State to store the tag name
+    const [tagToDelete, setTagToDelete] = useState<ITag | null>(null);
+    const {
+        isLoading,
+        totalItemCount,
+        paginatedData,
+        removeIdFromPaginatedData,
+        hasMore,
+        loaderRef,
+        fetchFromStart,
+    } = useInfiniteScrolling<ITag>({
+        url: `${tagUrl}${searchTerm ? `?subTagValue=${searchTerm}` : ""}`,
+        limit: 20,
+    });
 
     useEffect(() => {
-        void fetchTags(tagUrl).then(data => {
-            if (data) {
-                setAllTags(data);
-                setFilteredTags(data); // Initially, show all tags
-            }
-        });
-    }, []); // Runs only once when the component is mounted
+        void fetchFromStart(tagUrl);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleDelete = () => {
-        if (tagToDelete) {
-            setIsLoading(true);
-            void (async () => {
-                try {
-                    await deletetag(deletetagUrl(tagToDelete), {
-                        method: "DELETE",
-                    });
-                    setAllTags(prev =>
-                        prev.filter(tag => tag.id !== tagToDelete),
-                    );
-                    setFilteredTags(prev =>
-                        prev.filter(tag => tag.id !== tagToDelete),
-                    );
-                    setShowDeleteModal(false);
-                } catch (error) {
-                    console.error("Error deleting tag:", error);
-                } finally {
-                    setIsLoading(false);
-                }
-            })();
-        }
+        if (tagToDelete == null) return;
+        setIsLoading(true);
+        void (async () => {
+            const { error } = await deleteTag(deletetagUrl(tagToDelete.id));
+            if (!error) {
+                removeIdFromPaginatedData(tagToDelete.id);
+                setTagToDelete(null);
+            } else {
+                console.error(error);
+            }
+            setIsLoading(false);
+        })();
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const term = event.target.value;
         setSearchTerm(term);
 
-        // Filter tags based on the search term
-        const filtered = allTags.filter(tag =>
-            tag.value.toLowerCase().includes(term.toLowerCase()),
-        );
-        setFilteredTags(filtered);
+        void fetchFromStart(`${tagUrl}?subTagValue=${term}`);
     };
 
     return (
@@ -79,25 +74,23 @@ export function TagManagement() {
                 inputValue={searchTerm}
                 onChange={handleSearchChange} // Trigger search on input change
             />
-
+            {isLoading && <Loader />}
+            {totalItemCount != null && <p>{totalItemCount} found</p>}
             <table className={styles.tagTable}>
                 <thead>
                     <tr className={styles.tagTableHeader}>
                         <th className={styles.tagTableCell}>Tag Name</th>
-                        <th className={styles.tagTableDelCell}>Actions</th>{" "}
-                        {/* Header for actions column */}
+                        <th className={styles.tagTableDelCell}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredTags.map(tag => (
+                    {paginatedData.map(tag => (
                         <tr key={tag.id}>
                             <td className={styles.tagTableCell}>{tag.value}</td>
                             <td className={styles.tagTableDeleteCell}>
                                 <DeleteButton
                                     onClick={() => {
-                                        setTagToDelete(tag.id);
-                                        setTagName(tag.value);
-                                        setShowDeleteModal(true);
+                                        setTagToDelete(tag);
                                     }}
                                     text={t("delete")}
                                     icon={true}
@@ -108,14 +101,20 @@ export function TagManagement() {
                 </tbody>
             </table>
 
-            {showDeleteModal && (
+            {tagToDelete && (
                 <Modal
                     title={t("deleteTag")}
-                    message={`${t("areYouSureYouWantToDeleteTag")} ${tagName}?`}
+                    message={`${t("areYouSureYouWantToDeleteTag")} ${tagToDelete.value}?`}
                     okClick={handleDelete}
-                    cancelClick={() => setShowDeleteModal(false)}
-                    onBackdropClick={() => setShowDeleteModal(false)} //
+                    cancelClick={() => setTagToDelete(null)}
+                    onBackdropClick={() => setTagToDelete(null)} //
                 />
+            )}
+
+            {hasMore && (
+                <div ref={loaderRef}>
+                    <Loader />
+                </div>
             )}
         </div>
     );
