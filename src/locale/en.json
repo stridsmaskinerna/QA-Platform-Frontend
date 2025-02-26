@@ -72,6 +72,8 @@
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
         "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
+        "acceptedAnswer": "Accepted answer",
+        "markAsAccepted": "Mark as accepted",
 
         "header": {
             "headerHeadline": "LTU Q&A",
@@ -110,7 +112,7 @@
         "courseNamePlaceHolder": "Enter the course name",
         "teacherNamePlaceHolder": "e.g. teacher1@ltu.se, teacher2@ltu.se",
         "addCourse": "Add Course",
-        "manageCourse": "Enter the course code or Name",
+        "searchCoursePlaceholder": "Enter the course code or name",
         "manageExistingCourses": "Manage Existing Courses",
         "manageTag": "Search tags",
         "areYouSureYouWantToDeleteTag": "Are You Sure You Want To Delete",
@@ -127,6 +129,10 @@
         "active": "Active",
         "nrOfUsersFound": "Found {{count}} users",
         "noUsersFound": "No users found",
+        "addTeacherToSubject": "Add teachers to course: {{subject}}",
+        "addTeacher": "Add Teacher",
+        "cancelChanges": "Cancel changes",
+        "searchSubjects": "Search courses",
         "answerCardComments": {
             "commentLabelMarker": "✔ Your latest comment",
             "commentsListTitle": "View Comments",

@@ -4,7 +4,10 @@ import { QuestionDetailsProvider } from "./provider";
 import { QuestionCardDetails } from "../questionCard/questionCardDetails/QuestionCardDetails";
 import { IDetailedQuestion } from "../../utils";
 import { AnswerCard } from "../answerCard";
+
+import { useQAContext } from "../../hooks";
 import { GoBackButton } from "..";
+
 import { AnswerCreator } from "./answerCreator";
 import styles from "./QuestionDetailsViewer.module.css";
 import { ReactNode } from "react";
@@ -27,7 +30,14 @@ export function QuestionDetailsViewer({
 
 export function QuestionDetailsViewerInner() {
     const { t } = useTranslation();
-    const { question, currentAnswers } = useQuestionDetailsContext();
+    const { isLoggedIn } = useQAContext().authContext;
+
+    const {
+        authContext: { username },
+    } = useQAContext() || { authContext: { username: null } };
+
+    const { question, currentAnswers, handleMarkAsSolved } =
+        useQuestionDetailsContext();
 
     return (
         <div className={styles.container}>
@@ -54,12 +64,18 @@ export function QuestionDetailsViewerInner() {
                 userId={question.userId}
             />
             <h2>Answers</h2>
-            <AnswerCreator questionId={question.id} />
+            {isLoggedIn && <AnswerCreator questionId={question.id} />}
             <ul className={styles.container}>
+                {/* {answers.map(answer => ( */}
                 {currentAnswers.map(answer => (
                     <AnswerCard
                         key={answer.id}
                         data={answer}
+                        isOwner={!!username && username === question.userName}
+                        questionId={question.id}
+                        onMarkAsSolved={() => {
+                            void handleMarkAsSolved(answer.id);
+                        }}
                     />
                 ))}
             </ul>

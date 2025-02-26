@@ -21,6 +21,7 @@ export interface IAuthContext {
         formData: Omit<IRegisterFormData, "confirmPassword">,
     ) => Promise<RegisterErrorMessage | void>;
     isLoading: boolean;
+    isLoggedIn: boolean;
 }
 
 export interface IProblemDetail {
@@ -131,6 +132,12 @@ export interface ISubject {
     subjectCode?: string;
     teachers?: ITeacher[];
     topics: ITopic[];
+}
+export interface ISubjectForPut {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers: string[];
 }
 
 export interface IInputProps {

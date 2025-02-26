@@ -9,18 +9,18 @@ import { useQuestionDetailsContext } from "../questionDetailsViewer";
 
 interface IAnswerProps {
     data: IAnswer;
+    isOwner: boolean;
+    questionId: string;
+    onMarkAsSolved: (answerId: string) => void;
 }
 
-export function AnswerCard({ data }: IAnswerProps) {
+export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
     const { highlightedAnswerId } = useQuestionDetailsContext();
     const answerCardRef = useRef<HTMLDivElement | null>(null);
+
     const borderStyle = data.isAccepted
         ? styles.borderAccepted
         : styles.borderDefault;
-
-    useEffect(() => {
-        console.log(data);
-    });
 
     useEffect(() => {
         if (highlightedAnswerId === data.id && answerCardRef.current != null) {
@@ -55,6 +55,9 @@ export function AnswerCard({ data }: IAnswerProps) {
                 answer={data}
                 voteCount={data.voteCount}
                 myVote={data.myVote}
+                isAccepted={data.isAccepted}
+                isOwner={isOwner}
+                onMarkAsSolved={() => onMarkAsSolved(data.id)}
             />
             <AnswerCardComments
                 answerId={data.id}

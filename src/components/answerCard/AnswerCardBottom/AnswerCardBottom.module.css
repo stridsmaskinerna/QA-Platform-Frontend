@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    width: 100%; /* Ensures it takes full width */
+    width: 100%;
     justify-content: space-between;
     align-items: center;
 }
@@ -8,5 +8,6 @@
 @media (max-width: 600px) {
     .container {
         justify-content: center;
+        flex-direction: column;
     }
 }

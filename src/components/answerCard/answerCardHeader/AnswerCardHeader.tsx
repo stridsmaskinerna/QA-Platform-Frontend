@@ -15,15 +15,9 @@ export function AnswerCardHeader({
     username,
     answeredByTeacher,
     created,
-    isAccepted,
-    isHidden,
 }: IAnswerCardHeaderProps) {
     const { t } = useTranslation();
     const [timeAgo, setTimeAgo] = useState(() => getTimeAgo(created, t));
-
-    const isAnsweredByTeacher = answeredByTeacher
-        ? styles.answeredByTeacher
-        : "";
 
     useEffect(() => {
         const updateTimer = () => {
@@ -40,12 +34,17 @@ export function AnswerCardHeader({
 
         return () => clearTimeout(initialTimeout); // Cleanup on unmount
     }, [created, t]);
+    {
+        /* <GoBackButton text={`${t("backToQA")}`} /> */
+    }
 
     return (
         <div className={styles.container}>
             <div className={styles.left}>
                 {answeredByTeacher && (
-                    <span className={styles.teacherBox}>Teacher</span>
+                    <span
+                        className={styles.teacherBox}
+                    >{`${t("teacher")}`}</span>
                 )}
                 <span>{username}</span>
                 <span className={styles.timeContainer}>{timeAgo}</span>

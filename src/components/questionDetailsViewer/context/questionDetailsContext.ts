@@ -13,6 +13,7 @@ export interface IQuestionDetailsContext {
     createAnswer: (answer: IAnswerForCreation) => Promise<void>;
     updateAnswer: (topic: IAnswer) => Promise<void>;
     deleteAnswer: (topic: IAnswer) => Promise<void>;
+    handleMarkAsSolved: (answerId: string) => Promise<void>;
 }
 
 export const QuestionDetailsContext =
