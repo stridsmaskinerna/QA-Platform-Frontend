@@ -1,0 +1,13 @@
+{
+    "answerCardComments": {
+        "commentLabelMarker": "✔ Your latest comment",
+        "commentsListTitle": "View Comments",
+        "commentsCreatorTitle": "Create Comment",
+        "hideCommentInfo": "Hide comments",
+        "updateCommentInfo": "Update comment",
+        "deleteCommentInfo": "Delete comment",
+        "submitCommentInfo": "Submit comment",
+        "createCommentPlaceholder": "Add a comment..",
+        "submitComment": "Comment"
+    }
+}

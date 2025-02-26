@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { useQAContext } from "../../../hooks";
 import { IAnswer } from "../../../utils";
 import { DeleteButton, EditButton } from "../../button";
@@ -9,6 +11,7 @@ interface IAnswerCardToolbarProps {
 }
 
 export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
+    const { t } = useTranslation();
     const qaContext = useQAContext();
     const { editingAnswer, deleteAnswer, toggleEditingAnswer } =
         useQuestionDetailsContext();
@@ -30,7 +33,7 @@ export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
                         onClick={() => {
                             toggleEditingAnswer(answer);
                         }}
-                        text={"Edit"}
+                        text={t("answerCard.editButton")}
                         icon={true}
                     />
                     <DeleteButton
@@ -38,7 +41,7 @@ export function AnswerCardToolbar({ answer }: IAnswerCardToolbarProps) {
                         onClick={() => {
                             void deleteAnswer(answer);
                         }}
-                        text={"Delete"}
+                        text={t("answerCard.deleteButton")}
                         icon={true}
                     />
                 </div>

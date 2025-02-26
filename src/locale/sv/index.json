@@ -1,5 +1,37 @@
 {
     "translation": {
+        "answerCard": {
+            "updatePlaceHolder": "Uppdatera ditt svar...",
+            "editButton": "Uppdatera",
+            "deleteButton": "Radera"
+        },
+        "answerCardComments": {
+            "commentLabelMarker": "✔ Din senaste kommentar",
+            "commentsListTitle": "Läs Kommentarer",
+            "commentsCreatorTitle": "Skapa Kommentar",
+            "hideCommentInfo": "Dölj kommentarer",
+            "updateCommentInfo": "Uppdatera kommentar",
+            "deleteCommentInfo": "Radera kommentar",
+            "submitCommentInfo": "Skapa kommentar",
+            "createCommentPlaceholder": "Skapa en kommentar..",
+            "submitComment": "Kommentera"
+        },
+        "answerCreator": {
+            "tabTitle": "Skapa Svar",
+            "createPlaceholder": "Skriv dit svar..."
+        },
+        "answerForm": {
+            "submitInfo": "Sänd svar",
+            "submitButton": "Sänd"
+        },
+        "header": {
+            "headerHeadline": "LTU Frågor & Svar",
+            "linkLoginRegister": "Logga in/Registrering",
+            "linkAdmin": "Admin",
+            "linkLogout": "Logga ut",
+            "linkQA": "Frågor & Svar",
+            "linkHelp": "Hjälp?"
+        },
         "login": "Logga in",
         "loginRegister": "Logga in/Registrering",
         "resolved": "Löst",
@@ -9,13 +41,6 @@
         "askedBy": "Frågad av",
         "answer": "svar",
         "answers": "svar",
-        "lessThanMinuteAgo": "Mindre än en minut sedan",
-        "oneMinuteAgo": "En minut sedan",
-        "minutesAgo": "{{minutes}} minuter sedan",
-        "oneHourAgo": "En timma sedan",
-        "hoursAgo": "{{hours}} timmar sedan",
-        "oneDayAgo": "En dag sedan",
-        "daysAgo": "{{days}} dagar sedan",
         "nonPublicQuestion": "Icke-offentlig fråga",
         "publicQuestion": "Offentlig fråga",
         "register": "Registrering",
@@ -72,16 +97,13 @@
         "tagLimitWarning": "Vänligen begränsa dina taggar till högst 5.",
         "nrOfQuestionsFound": "Hittade {{count}} frågor",
         "backToQA": "Tillbaka till Frågor & Svar",
-
-        "header": {
-            "headerHeadline": "LTU Frågor & Svar",
-            "linkLoginRegister": "Logga in/Registrering",
-            "linkAdmin": "Admin",
-            "linkLogout": "Logga ut",
-            "linkQA": "Frågor & Svar",
-            "linkHelp": "Hjälp?"
-        },
-
+        "deleteQuestion": "Radera fråga",
+        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
+        "delete": "Radera",
+        "edit": "Ändra",
+        "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
+        "editQuestion": "Ändra din fråga",
+        "saveChanges": "Spara ändringar",
         "teacherDashboard": {
             "manageTopicsFor": "Hantera Frågor för",
             "questionsInCourse": "Frågor i kurs",
@@ -100,19 +122,6 @@
             "confirmDelete": "Radera",
             "questionDelete": "Radera"
         },
-
-        "answerCardComments": {
-            "commentLabelMarker": "✔ Din senaste kommentar",
-            "commentsListTitle": "Läs Kommentarer",
-            "commentsCreatorTitle": "Skapa Kommentar",
-            "hideCommentInfo": "Dölj kommentarer",
-            "updateCommentInfo": "Uppdatera kommentar",
-            "deleteCommentInfo": "Radera kommentar",
-            "submitCommentInfo": "Skapa kommentar",
-            "createCommentPlaceholder": "Skapa en kommentar..",
-            "submitComment": "Kommentera"
-        },
-
         "userGuide": {
             "title": "Frågekort",
             "subtitleSubject": "Kurs",
@@ -145,13 +154,14 @@
             "previousButtonInfo": "Tillbaka",
             "nextButtonInfo": "Nästa"
         },
-
-        "deleteQuestion": "Radera fråga",
-        "deleteQuestionPrompt": "Är du säker på att du vill radera denna fråga?",
-        "delete": "Radera",
-        "edit": "Ändra",
-        "couldNotFindQuestion": "Hoppsan! Vi kunde inte hitta denna fråga",
-        "editQuestion": "Ändra din fråga",
-        "saveChanges": "Spara ändringar"
+        "utilities": {
+            "lessThanMinuteAgo": "Mindre än en minut sedan",
+            "oneMinuteAgo": "En minut sedan",
+            "minutesAgo": "{{minutes}} minuter sedan",
+            "oneHourAgo": "En timma sedan",
+            "hoursAgo": "{{hours}} timmar sedan",
+            "oneDayAgo": "En dag sedan",
+            "daysAgo": "{{days}} dagar sedan"
+        }
     }
 }

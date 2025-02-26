@@ -42,13 +42,15 @@ export function AnswerForm({
                 <button
                     type="submit"
                     className={styles.answerBtn}
-                    title={"Submit Answer"}
+                    title={t("answerForm.submitInfo")}
                 >
                     <img
                         src={chatIcon}
-                        alt={"Submit Answer"}
+                        alt={t("answerForm.submitInfo")}
                     />
-                    <span className={styles.answerBtnText}>{"Submit"}</span>
+                    <span className={styles.answerBtnText}>
+                        {t("answerForm.submitButton")}
+                    </span>
                 </button>
             </div>
         </form>

@@ -40,7 +40,7 @@ export function AnswerUpdater({ answer }: IAnswerCreatorProps) {
         >
             <RichTextEditor
                 initialState={answer.value}
-                placeholder={"Update you answer..."}
+                placeholder={t("answerCard.updatePlaceHolder")}
                 setEditorState={setValue}
                 containerStyle={detailsContainerStyle}
             />

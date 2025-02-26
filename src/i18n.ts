@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import enJSON from "./locale/en.json";
-import svJSON from "./locale/sv.json";
+import enJSON from "./locale/en/index.json";
+import svJSON from "./locale/sv/index.json";
 
 export const resources = {
     en: { ...enJSON },

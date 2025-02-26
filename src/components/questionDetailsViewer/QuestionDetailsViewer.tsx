@@ -5,7 +5,7 @@ import { QuestionCardDetails } from "../questionCard/questionCardDetails/Questio
 import { IDetailedQuestion } from "../../utils";
 import { AnswerCard } from "../answerCard";
 import { GoBackButton } from "..";
-import { AnswerCreator } from "./answerCreator";
+import { AnswerCreator } from "../answerCreator";
 import styles from "./QuestionDetailsViewer.module.css";
 import { ReactNode } from "react";
 import { useQuestionDetailsContext } from "./context";

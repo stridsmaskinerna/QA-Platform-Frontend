@@ -4,8 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "tsc -b && vite build --mode prod",
+        "build-translation": "node generate-translation.mjs",
+        "dev": "npm run build-translation && vite",
+        "build": "npm run build-translation && tsc -b && vite build --mode prod",
         "lint": "eslint .",
         "preview": "vite preview",
         "test": "vitest",

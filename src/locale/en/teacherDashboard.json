@@ -1,0 +1,20 @@
+{
+    "teacherDashboard": {
+        "title": "Teacher Dashboard",
+        "manageTopicsFor": "Manage Topics for",
+        "questionsInCourse": "Questions in course",
+        "viewQuestions": "View questions",
+        "yourCourses": "Your Courses",
+        "newTopicPlacholder": "New topic name...",
+        "createNewTopic": "Add Topic",
+        "editInfo": "Edit Topic",
+        "activateInfo": "Activate Topic",
+        "deactivateInfo": "Deactivate Topic",
+        "deleteInfo": "Delete Topic",
+        "cancelUpdate": "Cancel",
+        "saveUpdate": "Save",
+        "cancelDelete": "Cancel",
+        "confirmDelete": "Delete",
+        "questionDelete": "Delete"
+    }
+}

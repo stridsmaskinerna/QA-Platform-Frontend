@@ -1,0 +1,11 @@
+{
+    "utilities": {
+        "lessThanMinuteAgo": "Mindre än en minut sedan",
+        "oneMinuteAgo": "En minut sedan",
+        "minutesAgo": "{{minutes}} minuter sedan",
+        "oneHourAgo": "En timma sedan",
+        "hoursAgo": "{{hours}} timmar sedan",
+        "oneDayAgo": "En dag sedan",
+        "daysAgo": "{{days}} dagar sedan"
+    }
+}

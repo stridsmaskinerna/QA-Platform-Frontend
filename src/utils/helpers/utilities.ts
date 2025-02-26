@@ -23,11 +23,13 @@ export const getTimeAgo = (
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInSeconds < 60) return t("lessThanMinuteAgo");
-    if (diffInMinutes === 1) return t("oneMinuteAgo");
-    if (diffInMinutes < 60) return t("minutesAgo", { minutes: diffInMinutes });
-    if (diffInHours === 1) return t("oneHourAgo");
-    if (diffInHours < 24) return t("hoursAgo", { hours: diffInHours });
-    if (diffInDays === 1) return t("oneDayAgo");
-    return t("daysAgo", { days: diffInDays });
+    if (diffInSeconds < 60) return t("utilities.lessThanMinuteAgo");
+    if (diffInMinutes === 1) return t("utilities.oneMinuteAgo");
+    if (diffInMinutes < 60)
+        return t("utilities.minutesAgo", { minutes: diffInMinutes });
+    if (diffInHours === 1) return t("utilities.oneHourAgo");
+    if (diffInHours < 24)
+        return t("utilities.hoursAgo", { hours: diffInHours });
+    if (diffInDays === 1) return t("utilities.oneDayAgo");
+    return t("utilities.daysAgo", { days: diffInDays });
 };

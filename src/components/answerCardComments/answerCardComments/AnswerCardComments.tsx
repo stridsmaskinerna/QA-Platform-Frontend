@@ -15,7 +15,7 @@ import {
 } from "../../../hooks";
 import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
-import { TabLabelContainer } from "../../utility";
+import { TabLabelContainer } from "../../tabs";
 import styles from "./AnswerCardComments.module.css";
 
 interface IAnswerCardCommentsProps {

@@ -1,5 +1,37 @@
 {
     "translation": {
+        "answerCard": {
+            "updatePlaceHolder": "Update you answer...",
+            "editButton": "Edit",
+            "deleteButton": "Delete"
+        },
+        "answerCardComments": {
+            "commentLabelMarker": "✔ Your latest comment",
+            "commentsListTitle": "View Comments",
+            "commentsCreatorTitle": "Create Comment",
+            "hideCommentInfo": "Hide comments",
+            "updateCommentInfo": "Update comment",
+            "deleteCommentInfo": "Delete comment",
+            "submitCommentInfo": "Submit comment",
+            "createCommentPlaceholder": "Add a comment..",
+            "submitComment": "Comment"
+        },
+        "answerCreator": {
+            "tabTitle": "Create Answer",
+            "createPlaceholder": "Write you answer..."
+        },
+        "answerForm": {
+            "submitInfo": "Submit Answer",
+            "submitButton": "Submit"
+        },
+        "header": {
+            "headerHeadline": "LTU Q&A",
+            "linkAdmin": "Admin",
+            "linkLogout": "Log out",
+            "linkQA": "Q&A",
+            "linkLoginRegister": "Login/Register",
+            "linkHelp": "Help?"
+        },
         "login": "Login",
         "loginRegister": "Login/Register",
         "resolved": "Resolved",
@@ -9,13 +41,6 @@
         "askedBy": "Asked by",
         "answer": "answer",
         "answers": "answers",
-        "lessThanMinuteAgo": "Less than a minute ago",
-        "oneMinuteAgo": "One minute ago",
-        "minutesAgo": "{{minutes}} minutes ago",
-        "oneHourAgo": "One hour ago",
-        "hoursAgo": "{{hours}} hours ago",
-        "oneDayAgo": "One day ago",
-        "daysAgo": "{{days}} days ago",
         "nonPublicQuestion": "Non-public question",
         "publicQuestion": "Public question",
         "register": "Register",
@@ -72,16 +97,13 @@
         "tagLimitWarning": "Please limit your tags to 5 or fewer.",
         "nrOfQuestionsFound": "Found {{count}} questions",
         "backToQA": "Back to Q&A",
-
-        "header": {
-            "headerHeadline": "LTU Q&A",
-            "linkAdmin": "Admin",
-            "linkLogout": "Log out",
-            "linkQA": "Q&A",
-            "linkLoginRegister": "Login/Register",
-            "linkHelp": "Help?"
-        },
-
+        "deleteQuestion": "Delete question",
+        "deleteQuestionPrompt": "Are you sure you want to delete this question?",
+        "delete": "Delete",
+        "edit": "Edit",
+        "couldNotFindQuestion": "Oops! We could not find this question",
+        "editQuestion": "Edit your question",
+        "saveChanges": "Save changes",
         "teacherDashboard": {
             "title": "Teacher Dashboard",
             "manageTopicsFor": "Manage Topics for",
@@ -100,19 +122,6 @@
             "confirmDelete": "Delete",
             "questionDelete": "Delete"
         },
-
-        "answerCardComments": {
-            "commentLabelMarker": "✔ Your latest comment",
-            "commentsListTitle": "View Comments",
-            "commentsCreatorTitle": "Create Comment",
-            "hideCommentInfo": "Hide comments",
-            "updateCommentInfo": "Update comment",
-            "deleteCommentInfo": "Delete comment",
-            "submitCommentInfo": "Submit comment",
-            "createCommentPlaceholder": "Add a comment..",
-            "submitComment": "Comment"
-        },
-
         "userGuide": {
             "title": "Question Card",
             "subtitleSubject": "Course",
@@ -145,12 +154,14 @@
             "previousButtonInfo": "Previous",
             "nextButtonInfo": "Next"
         },
-        "deleteQuestion": "Delete question",
-        "deleteQuestionPrompt": "Are you sure you want to delete this question?",
-        "delete": "Delete",
-        "edit": "Edit",
-        "couldNotFindQuestion": "Oops! We could not find this question",
-        "editQuestion": "Edit your question",
-        "saveChanges": "Save changes"
+        "utilities": {
+            "lessThanMinuteAgo": "Less than a minute ago",
+            "oneMinuteAgo": "One minute ago",
+            "minutesAgo": "{{minutes}} minutes ago",
+            "oneHourAgo": "One hour ago",
+            "hoursAgo": "{{hours}} hours ago",
+            "oneDayAgo": "One day ago",
+            "daysAgo": "{{days}} days ago"
+        }
     }
 }

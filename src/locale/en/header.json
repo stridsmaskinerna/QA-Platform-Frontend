@@ -1,0 +1,10 @@
+{
+    "header": {
+        "headerHeadline": "LTU Q&A",
+        "linkAdmin": "Admin",
+        "linkLogout": "Log out",
+        "linkQA": "Q&A",
+        "linkLoginRegister": "Login/Register",
+        "linkHelp": "Help?"
+    }
+}
