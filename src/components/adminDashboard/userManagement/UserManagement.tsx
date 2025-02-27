@@ -98,7 +98,9 @@ export function UserManagement() {
             {paginatedData.length > 0 && (
                 <>
                     <h4 className={styles.foundInfo}>
-                        {t("adminDashBoard.nrOfUsersFound", { count: totalItemCount })}
+                        {t("adminDashBoard.nrOfUsersFound", {
+                            count: totalItemCount,
+                        })}
                     </h4>
                     <UserTable
                         hasMore={hasMore}

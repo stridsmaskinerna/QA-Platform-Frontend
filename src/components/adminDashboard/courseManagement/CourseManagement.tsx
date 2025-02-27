@@ -216,7 +216,9 @@ export function CourseManagement() {
                 </button>
             </form>
             <div className={styles.manageCourse}>
-                <h2 className={styles.heading}>{t("adminDashBoard.manageExistingCourses")}</h2>
+                <h2 className={styles.heading}>
+                    {t("adminDashBoard.manageExistingCourses")}
+                </h2>
 
                 {courseForEditing ? (
                     <div className={styles.addTeacherContainer}>
@@ -224,7 +226,9 @@ export function CourseManagement() {
                             label={t("addTeacherToSubject", {
                                 subject: `${courseForEditing.subjectCode ? courseForEditing.subjectCode + " " : ""}${courseForEditing.name}`,
                             })}
-                            placeHolder={t("adminDashBoard.teacherNamePlaceHolder")}
+                            placeHolder={t(
+                                "adminDashBoard.teacherNamePlaceHolder",
+                            )}
                             inputType="text"
                             inputValue={addTeacherInput}
                             onChange={e => setAddTeacherInput(e.target.value)}
@@ -241,7 +245,9 @@ export function CourseManagement() {
                         label={t("searchSubjects")}
                         inputName="manageCourse"
                         inputType="search"
-                        placeHolder={t("adminDashBoard.searchCoursePlaceholder")}
+                        placeHolder={t(
+                            "adminDashBoard.searchCoursePlaceholder",
+                        )}
                         onChange={handleSearchChange}
                     />
                 )}

@@ -25,8 +25,8 @@ export function UserTable({
                     <tr>
                         <th>{t("username")}</th>
                         <th>{t("email")}</th>
-                        <th>{t("status")}</th>
-                        <th>{t("actions")}</th>
+                        <th>{t("adminDashBoard.status")}</th>
+                        <th>{t("adminDashBoard.actions")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@ export function UserTable({
                             <td>{user.userName}</td>
                             <td>{user.email}</td>
                             <td>
-                                {user.isBlocked ? t("blocked") : t("active")}
+                                {user.isBlocked ? t("adminDashBoard.blocked") : t("adminDashBoard.active")}
                             </td>
                             <td>
                                 <button
@@ -46,7 +46,7 @@ export function UserTable({
                                             : styles.blockBtn
                                     }
                                 >
-                                    {user.isBlocked ? t("unblock") : t("block")}
+                                    {user.isBlocked ? t("adminDashBoard.unblock") : t("adminDashBoard.block")}
                                 </button>
                             </td>
                         </tr>
