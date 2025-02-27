@@ -9,8 +9,14 @@ export function Admin() {
 
     const navTabs = useMemo(
         () => [
-            { title: t("adminDashBoard.courseManagement"), to: "course-management" },
-            { title: t("adminDashBoard.userManagement"), to: "user-management" },
+            {
+                title: t("adminDashBoard.courseManagement"),
+                to: "course-management",
+            },
+            {
+                title: t("adminDashBoard.userManagement"),
+                to: "user-management",
+            },
             { title: t("adminDashBoard.tagManagement"), to: "tag-management" },
         ],
         [t],
