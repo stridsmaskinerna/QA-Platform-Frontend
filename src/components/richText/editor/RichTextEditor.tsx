@@ -58,7 +58,7 @@ export function RichTextEditor({
                     <RichTextPlugin
                         contentEditable={
                             <ContentEditable
-                                className={styles.editorInput}
+                                className={`${styles.input} ${styles.editorInput}`}
                                 aria-placeholder={placeholder}
                                 placeholder={
                                     <div className={styles.editorPlaceholder}>
