@@ -81,10 +81,10 @@ export function TagManagement() {
                         <thead>
                             <tr className={styles.tagTableHeader}>
                                 <th className={styles.tagTableCell}>
-                                {t("adminDashBoard.TagName")}
+                                    {t("adminDashBoard.TagName")}
                                 </th>
                                 <th className={styles.tagTableDelCell}>
-                                {t("adminDashBoard.actions")}
+                                    {t("adminDashBoard.actions")}
                                 </th>
                             </tr>
                         </thead>
