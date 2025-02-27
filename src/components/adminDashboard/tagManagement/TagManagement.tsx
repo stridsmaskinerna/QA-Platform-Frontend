@@ -73,7 +73,7 @@ export function TagManagement() {
             {paginatedData.length > 0 && (
                 <>
                     <h4 className={styles.foundInfo}>
-                        {t("adminDashBoard.nrOfUsersFound", {
+                        {t("adminDashBoard.nrOfTagFound", {
                             count: totalItemCount,
                         })}
                     </h4>
@@ -81,10 +81,10 @@ export function TagManagement() {
                         <thead>
                             <tr className={styles.tagTableHeader}>
                                 <th className={styles.tagTableCell}>
-                                    Tag Name
+                                {t("adminDashBoard.TagName")}
                                 </th>
                                 <th className={styles.tagTableDelCell}>
-                                    Actions
+                                {t("adminDashBoard.actions")}
                                 </th>
                             </tr>
                         </thead>
@@ -111,7 +111,7 @@ export function TagManagement() {
                     {tagToDelete && (
                         <Modal
                             title={t("adminDashBoard.deleteTag")}
-                            message={`adminDashBoard.ConfirmDeleteTagteTag")} ${tagToDelete.value}?`}
+                            message={`${t("adminDashBoard.ConfirmDeleteTag")} ${tagToDelete.value}?`}
                             okClick={handleDelete}
                             cancelClick={() => setTagToDelete(null)}
                             onBackdropClick={() => setTagToDelete(null)} //
@@ -120,7 +120,7 @@ export function TagManagement() {
                 </>
             )}
             {paginatedData.length === 0 && !isLoading && searchTerm && (
-                <h4>{t("adminDashBoard.noUsersFound")}</h4>
+                <h4>{t("adminDashBoard.noTagFound")}</h4>
             )}
             {hasMore && (
                 <div ref={loaderRef}>

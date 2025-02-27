@@ -26,6 +26,9 @@
         "blocked": "Blockerad",
         "active": "Aktiv",
         "nrOfUsersFound": "Hittade {{count}} användare",
-        "noUsersFound": "Inga användare hittade"
+        "noUsersFound": "Inga användare hittade",
+        "nrOfTagFound": "Hittade {{count}} taggar",
+        "noTagFound": "Inga taggar hittade",
+        "TagName": "Taggnamn"
     }
 }
