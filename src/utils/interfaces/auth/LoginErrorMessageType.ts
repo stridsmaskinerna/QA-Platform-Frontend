@@ -1,4 +1,5 @@
 export type LoginErrorMessage =
     | "wrongCredentials"
     | "serverProblem"
-    | "mustEndWithLtuErrMsg";
+    | "mustEndWithLtuErrMsg"
+    | "userBlocked";
