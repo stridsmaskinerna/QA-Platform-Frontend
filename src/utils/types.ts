@@ -8,6 +8,7 @@ export type RegisterErrorMessage =
 export type LoginErrorMessage =
     | "wrongCredentials"
     | "serverProblem"
-    | "mustEndWithLtuErrMsg";
+    | "mustEndWithLtuErrMsg"
+    | "userBlocked";
 
 export type UserInteractionFilter = "created" | "answered" | "commented";
