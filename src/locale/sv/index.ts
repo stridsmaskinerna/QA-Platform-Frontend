@@ -7,6 +7,7 @@ import shared from "./shared.json";
 import teacherDashboard from "./teacherDashboard.json";
 import userGuide from "./userGuide.json";
 import utilities from "./utilities.json";
+import questionDetailsViewer from "./questionDetailsViewer.json";
 
 export default {
     translation: {
@@ -15,6 +16,7 @@ export default {
         ...answerCreator,
         ...forms,
         ...header,
+        ...questionDetailsViewer,
         ...shared,
         ...teacherDashboard,
         ...userGuide,
