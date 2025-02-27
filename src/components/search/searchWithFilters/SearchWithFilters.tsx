@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { SearchFilter } from ".";
 import { SearchBar } from "..";
-import { ISearchWithFiltersProps } from "../../../utils";
 import styles from "./SearchWithFilters.module.css";
+import { ISearchWithFiltersProps } from "../../../utils";
 
 export function SearchWithFilters(props: ISearchWithFiltersProps) {
     const { t } = useTranslation();

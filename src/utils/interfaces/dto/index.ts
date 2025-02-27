@@ -1,4 +1,11 @@
-// TODO! Move to DTO
+// DTO
+
+export interface IProblemDetail {
+    status: number;
+    title: string;
+    detail: string | undefined;
+}
+
 export interface IQuestion {
     id: string;
     topicName: string;
@@ -19,13 +26,11 @@ export interface IQuestion {
     description?: string;
 }
 
-// TODO! Move to DTO
 export interface IDetailedQuestion extends IQuestion {
     filePath: string;
     answers: IAnswer[];
 }
 
-// TODO! Move to DTO
 export interface IAnswer {
     id: string;
     userName: string;
@@ -41,20 +46,17 @@ export interface IAnswer {
     answeredByTeacher: boolean;
 }
 
-// TODO! Move to DTO
 export interface ICommentForCreation {
     answerId: string;
     value: string;
 }
 
-// TODO! Move to DTO
 export interface IAnswerForCreation {
     questionId: string;
     value: string;
     filePath?: string | undefined;
 }
 
-// TODO! Move to DTO
 export interface IAnswerForPut {
     value: string;
     filePath?: string | undefined;
@@ -66,7 +68,6 @@ export interface IComment {
     value: string;
 }
 
-// TODO! Move to DTO or dto/header ???
 export interface IPaginationMeta {
     PageNr: number;
     Limit: number;
@@ -74,7 +75,6 @@ export interface IPaginationMeta {
     TotalPageCount: number;
 }
 
-// TODO! Move to DTO
 export interface IUser {
     id: string;
     userName: string;
@@ -82,7 +82,6 @@ export interface IUser {
     isBlocked: boolean;
 }
 
-// TODO! Move to DTO
 export interface IQuestionForEdit {
     topicId: string;
     subjectId: string;
@@ -90,4 +89,42 @@ export interface IQuestionForEdit {
     description?: string;
     title: string;
     isProtected: boolean;
+}
+
+export interface ISubject {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers?: ITeacher[];
+    topics: ITopic[];
+}
+
+export interface ITeacher {
+    id: string;
+    email: string;
+    userName: string;
+}
+
+export interface ITopic {
+    id: string;
+    name: string;
+    isActive: boolean;
+    subjectId: string;
+}
+
+export interface ITopicForCreation {
+    name: string;
+    subjectId: string;
+}
+
+export interface ISubjectForPut {
+    id: string;
+    name: string;
+    subjectCode?: string;
+    teachers: string[];
+}
+
+export interface ITag {
+    id: string;
+    value: string;
 }
