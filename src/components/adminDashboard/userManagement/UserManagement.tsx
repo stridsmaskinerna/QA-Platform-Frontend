@@ -18,7 +18,6 @@ export function UserManagement() {
     const {
         isLoading,
         totalItemCount,
-        resetPaginatedData,
         paginatedData,
         hasMore,
         loaderRef,
