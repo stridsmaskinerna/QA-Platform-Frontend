@@ -9,6 +9,7 @@ import {
 import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
 import { IQuestion } from ".";
 
+// TODO! Move to AuthContext
 export interface IAuthContext {
     userId: string | undefined;
     username: string | undefined;
@@ -24,28 +25,33 @@ export interface IAuthContext {
     isLoggedIn: boolean;
 }
 
+// TODO! DTO
 export interface IProblemDetail {
     status: number;
     title: string;
     detail: string | undefined;
 }
 
+// TODO! Move to AUTH; Part of Token payload
 export interface IUserDetails {
     username: string;
     userId: string;
     roles: Role[];
 }
 
+// Token! Move to AUTH
 export interface ITokens {
     accessToken: string;
     refreshToken: string;
 }
 
+// Move to AUTH
 export interface ILoginCredentials {
     email: string;
     password: string;
 }
 
+// Move to AUTH
 export interface IRegisterFormData {
     email: string;
     password: string;
@@ -53,11 +59,14 @@ export interface IRegisterFormData {
     username: string;
 }
 
+
+// TODO! Move to AUTH or AuthGuard component
 export interface IRoleBasedRedirect {
     allowedRoles: Role[];
     fallbackRoute: string;
 }
 
+// TODO! UI
 export interface ITab {
     title: string;
     content: ReactElement;
@@ -66,21 +75,25 @@ export interface ITab {
     tabBtnClickSideEffect?: () => void;
 }
 
+// TODO! Move to AUTH
 export interface IAuthErrorResponse {
     detail: string;
 }
 
+// TODO! Move to I Loader context
 export interface ILoaderContext {
     isLoading: boolean;
     setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
+// TODO! Move to component
 export interface ISearchBarProps {
     onInputChange: ChangeEventHandler<HTMLInputElement>;
     defaultValue?: string;
     placeholder?: string;
 }
 
+// TODO! Move to component
 export interface ISearchFilter {
     displayedFilters: { title: string; id: string }[];
     onFilterClick: (id: string) => void;
@@ -88,6 +101,7 @@ export interface ISearchFilter {
     title?: string;
 }
 
+// TODO! Move to component
 export interface ISearchWithFiltersProps extends ISearchBarProps {
     subjectFilter: ISearchFilter;
     topicFilter: ISearchFilter;
@@ -95,25 +109,30 @@ export interface ISearchWithFiltersProps extends ISearchBarProps {
     shouldShowFilters: IShouldShowFilters;
 }
 
+// TODO! Not used ???
 export interface IQuestionCardProps {
     data: IQuestion;
 }
 
+// TODO! Not used ???
 export interface IQuestionCardListProps {
     data: IQuestionCardProps[];
 }
 
+// TODO! MOve to hook
 export interface IShouldShowFilters {
     subject: boolean;
     topic: boolean;
 }
 
+// TODO! Not used ???
 export interface ITeacher {
     id: string;
     email: string;
     userName: string;
 }
 
+// Todo DTO
 export interface ITopic {
     id: string;
     name: string;
@@ -121,11 +140,13 @@ export interface ITopic {
     subjectId: string;
 }
 
+// TODO! DTO
 export interface ITopicForCreation {
     name: string;
     subjectId: string;
 }
 
+// TODO! DTO
 export interface ISubject {
     id: string;
     name: string;
@@ -133,6 +154,8 @@ export interface ISubject {
     teachers?: ITeacher[];
     topics: ITopic[];
 }
+
+// TODO! DTO
 export interface ISubjectForPut {
     id: string;
     name: string;
@@ -140,6 +163,7 @@ export interface ISubjectForPut {
     teachers: string[];
 }
 
+// TODO! UI
 export interface IInputProps {
     required?: boolean;
     inputType: HTMLInputTypeAttribute;
@@ -156,21 +180,25 @@ export interface IInputProps {
     inputValue?: string;
 }
 
+// TODO! UI
 export interface ISuggestion {
     name: string;
     id: string;
 }
 
+// TODO! UI
 export interface IOption {
     id: string;
     name: string;
 }
 
+// TODO! DTO
 export interface ITag {
     id: string;
     value: string;
 }
 
+// TODO! Not used ???
 export interface IRichTextEditorHandle {
     clearEditor: () => void;
 }

@@ -1,3 +1,4 @@
+// TODO! Move to DTO
 export interface IQuestion {
     id: string;
     topicName: string;
@@ -18,11 +19,13 @@ export interface IQuestion {
     description?: string;
 }
 
+// TODO! Move to DTO
 export interface IDetailedQuestion extends IQuestion {
     filePath: string;
     answers: IAnswer[];
 }
 
+// TODO! Move to DTO
 export interface IAnswer {
     id: string;
     userName: string;
@@ -38,17 +41,20 @@ export interface IAnswer {
     answeredByTeacher: boolean;
 }
 
+// TODO! Move to DTO
 export interface ICommentForCreation {
     answerId: string;
     value: string;
 }
 
+// TODO! Move to DTO
 export interface IAnswerForCreation {
     questionId: string;
     value: string;
     filePath?: string | undefined;
 }
 
+// TODO! Move to DTO
 export interface IAnswerForPut {
     value: string;
     filePath?: string | undefined;
@@ -60,6 +66,7 @@ export interface IComment {
     value: string;
 }
 
+// TODO! Move to DTO or dto/header ???
 export interface IPaginationMeta {
     PageNr: number;
     Limit: number;
@@ -67,12 +74,15 @@ export interface IPaginationMeta {
     TotalPageCount: number;
 }
 
+// TODO! Move to DTO
 export interface IUser {
     id: string;
     userName: string;
     email: string;
     isBlocked: boolean;
 }
+
+// TODO! Move to DTO
 export interface IQuestionForEdit {
     topicId: string;
     subjectId: string;

@@ -18,7 +18,7 @@ export function RegisterForm() {
         loaderContext: { setIsLoading },
     } = useQAContext();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<RegisterErrorMessage>();
+    const [error, setError] = useState<RegisterErrorMessage | null>();
     const [showVerificationMsg, setShowVerificationMsg] = useState(false);
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
@@ -44,7 +44,9 @@ export function RegisterForm() {
                 removePropertiesFromObject(formDetails, "confirmPassword"),
             );
             if (!errMsg) {
+                // TODO! Navigate to login ???
                 formRef.current?.reset();
+
                 setShowVerificationMsg(true);
             } else {
                 setError(errMsg);
@@ -89,9 +91,10 @@ export function RegisterForm() {
                 </button>
 
                 <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                    {t(error ?? "")}
+                    {error != null ? t(error) : ""}
                 </p>
             </form>
+            {/* TODO! REMOVE NOT IMPLEMENTED IN BACKEND */}
             {showVerificationMsg && (
                 <Modal
                     message={t("verifyEmail")}
