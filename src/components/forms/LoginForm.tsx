@@ -49,13 +49,13 @@ export function LoginForm() {
             <Input
                 inputName="email"
                 inputType="email"
-                label={t("email")}
+                label={t("loginRegisterForm.email")}
             />
             <Input
                 minInputValueLength={PASSWORD_MIN_LENGTH}
                 inputName="password"
                 inputType="password"
-                label={t("password")}
+                label={t("loginRegisterForm.password")}
             />
             <button
                 className={styles.submitBtn}
@@ -65,7 +65,7 @@ export function LoginForm() {
             </button>
 
             <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                {t(error ?? "")}
+                {error ? t(error) : ""}
             </p>
         </form>
     );

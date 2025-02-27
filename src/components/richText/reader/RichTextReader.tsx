@@ -19,6 +19,7 @@ interface IRichTextReaderProps {
     initialState: string;
 }
 
+//TODO: Change reader to not have min-height. Use padding or gap instead.
 export function RichTextReader({ initialState }: IRichTextReaderProps) {
     return (
         <LexicalComposer
@@ -28,7 +29,7 @@ export function RichTextReader({ initialState }: IRichTextReaderProps) {
                 <div className={styles.editorInner}>
                     <RichTextPlugin
                         contentEditable={
-                            <ContentEditable className={styles.editorInput} />
+                            <ContentEditable className={styles.input} />
                         }
                         ErrorBoundary={LexicalErrorBoundary}
                     />
