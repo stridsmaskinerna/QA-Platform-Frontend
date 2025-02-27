@@ -65,7 +65,7 @@ export function LoginForm() {
             </button>
 
             <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                {error != null ?  t(error) : ""}
+                {error != null ? t(error) : ""}
             </p>
         </form>
     );

@@ -94,7 +94,6 @@ export function RegisterForm() {
                     {error != null ? t(error) : ""}
                 </p>
             </form>
-            {/* TODO! REMOVE NOT IMPLEMENTED IN BACKEND */}
             {showVerificationMsg && (
                 <Modal
                     message={t("verifyEmail")}

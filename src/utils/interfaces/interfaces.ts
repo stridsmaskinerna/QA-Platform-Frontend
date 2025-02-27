@@ -6,8 +6,8 @@ import {
     ReactElement,
     SetStateAction,
 } from "react";
-import { LoginErrorMessage, RegisterErrorMessage, Role } from ".";
-import { IQuestion } from ".";
+import { LoginErrorMessage, RegisterErrorMessage } from "./types";
+import { Role } from "../enums";
 
 // TODO! Move to AuthContext
 export interface IAuthContext {
@@ -59,7 +59,6 @@ export interface IRegisterFormData {
     username: string;
 }
 
-
 // TODO! Move to AUTH or AuthGuard component
 export interface IRoleBasedRedirect {
     allowedRoles: Role[];
@@ -110,14 +109,14 @@ export interface ISearchWithFiltersProps extends ISearchBarProps {
 }
 
 // TODO! Not used ???
-export interface IQuestionCardProps {
-    data: IQuestion;
-}
+// export interface IQuestionCardProps {
+//     data: IQuestion;
+// }
 
-// TODO! Not used ???
-export interface IQuestionCardListProps {
-    data: IQuestionCardProps[];
-}
+// // TODO! Not used ???
+// export interface IQuestionCardListProps {
+//     data: IQuestionCardProps[];
+// }
 
 // TODO! MOve to hook
 export interface IShouldShowFilters {

@@ -10,11 +10,10 @@
 
 ## Create a constant or enum folder
 
-
-
 ## Interfaces
 
 - Separate into:
+
     - dto
     - auth
     - ui
