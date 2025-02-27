@@ -1,11 +1,11 @@
 import { CSSProperties, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import addAnswerIcon from "../../../assets/icons/add_comment.svg";
-import { RichTextEditor } from "../../richText";
-import { TabLabelContainer } from "../../utility";
-import { useQuestionDetailsContext } from "../context";
-import { AnswerForm } from "../../forms";
+import addAnswerIcon from "../../assets/icons/add_comment.svg";
+import { RichTextEditor } from "../richText";
+import { TabLabelContainer } from "../tabs";
+import { useQuestionDetailsContext } from "../questionDetailsViewer";
+import { AnswerForm } from "../forms";
 
 interface IAnswerCreatorProps {
     questionId: string;
@@ -35,7 +35,7 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
 
     return (
         <TabLabelContainer
-            label={"Create Answer"}
+            label={t("answerCreator.tabTitle")}
             isOpen={isAnswerCreatorOpen}
             labelIcon={addAnswerIcon}
             toggleOpen={() => {
@@ -49,7 +49,7 @@ export function AnswerCreator({ questionId }: IAnswerCreatorProps) {
                 }}
             >
                 <RichTextEditor
-                    placeholder={"Create you answer..."}
+                    placeholder={t("answerCreator.createPlaceholder")}
                     setEditorState={setValue}
                     containerStyle={detailsContainerStyle}
                 />

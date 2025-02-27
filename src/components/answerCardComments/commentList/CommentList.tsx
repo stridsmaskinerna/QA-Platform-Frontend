@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 import { IComment } from "../../../utils";
+import { H2 } from "../../text";
 import { CommentItem } from "../commentItem";
 import styles from "./CommentList.module.css";
 
@@ -15,6 +18,16 @@ export function CommentList({
     deleteComment,
     updateComment,
 }: ICommentListProps) {
+    const { t } = useTranslation();
+
+    if (comments.length === 0) {
+        return (
+            <div className={styles.containerNoComments}>
+                <H2 text={t("answerCardComments.noCommentsLabel")} />
+            </div>
+        );
+    }
+
     return (
         <div className={styles.container}>
             {comments.map(c => (

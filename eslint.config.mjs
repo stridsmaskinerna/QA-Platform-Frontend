@@ -8,7 +8,7 @@ import react from "eslint-plugin-react";
 import { fixupPluginRules } from "@eslint/compat";
 
 export default tseslint.config(
-    { ignores: ["**/build/**", "**/dist/**"] },
+    { ignores: ["**/build/**", "**/dist/**", "./generate-translation.mjs"] },
     eslintJS.configs.recommended,
     tseslint.configs.recommendedTypeChecked,
     tseslint.configs.stylisticTypeChecked,

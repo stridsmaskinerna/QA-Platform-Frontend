@@ -1,11 +1,3 @@
-.container {
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
 .text-area {
     background-color: white;
     flex: 1;

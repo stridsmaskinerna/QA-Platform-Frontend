@@ -7,8 +7,7 @@ import { AnswerCard } from "../answerCard";
 
 import { useQAContext } from "../../hooks";
 import { GoBackButton } from "..";
-
-import { AnswerCreator } from "./answerCreator";
+import { AnswerCreator } from "../answerCreator";
 import styles from "./QuestionDetailsViewer.module.css";
 import { ReactNode } from "react";
 import { useQuestionDetailsContext } from "./context";
@@ -66,7 +65,6 @@ export function QuestionDetailsViewerInner() {
             <h2>Answers</h2>
             {isLoggedIn && <AnswerCreator questionId={question.id} />}
             <ul className={styles.container}>
-                {/* {answers.map(answer => ( */}
                 {currentAnswers.map(answer => (
                     <AnswerCard
                         key={answer.id}

@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import styles from "./Tabs.module.css";
 import { TabButtons, TabButtonsMobile } from ".";
-import { ITab } from "../../utils";
+import { ITab } from "../../../utils";
 import { useMediaQuery } from "usehooks-ts";
 
 //Used internally in the tabs component

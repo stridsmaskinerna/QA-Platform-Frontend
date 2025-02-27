@@ -2,28 +2,25 @@ import { FormEvent, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
 import chatIcon from "../../../assets/icons/chat_white.svg";
-import styles from "./AnswerForm.module.css";
+import styles from "./CommentForm.module.css";
 import { CancelButton } from "../../button";
 
-interface IAnswerFormProps {
+interface ICommentUpdaterProps {
     children: ReactNode;
+    onCancel: () => void;
     onSubmit: () => void;
-    onCancel?: () => void;
 }
 
-export function AnswerForm({
+export function CommentForm({
     children,
+    onCancel,
     onSubmit,
-    onCancel = () => {
-        return;
-    },
-}: IAnswerFormProps) {
+}: ICommentUpdaterProps) {
     const { t } = useTranslation();
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        onSubmit();
+        void onSubmit();
     };
 
     return (
@@ -31,25 +28,25 @@ export function AnswerForm({
             className={styles.container}
             onSubmit={submit}
         >
-            <div className={styles.editor}>{children}</div>
-            <div className={styles.answerBtnCtr}>
+            <div className={styles.textArea}>{children}</div>
+            <div className={styles.commentBtnCtr}>
                 <CancelButton
-                    text={t("answerForm.cancelButton")}
+                    text={t("commentForm.cancelButton")}
                     onClick={() => {
                         onCancel();
                     }}
                 />
                 <button
+                    title={t("commentForm.submitCommentInfo")}
                     type="submit"
-                    className={styles.answerBtn}
-                    title={t("answerForm.submitInfo")}
+                    className={styles.commentBtn}
                 >
                     <img
                         src={chatIcon}
-                        alt={t("answerForm.submitInfo")}
+                        alt={t("commentForm.submitComment")}
                     />
-                    <span className={styles.answerBtnText}>
-                        {t("answerForm.submitButton")}
+                    <span className={styles.commentBtnText}>
+                        {t("commentForm.submitComment")}
                     </span>
                 </button>
             </div>

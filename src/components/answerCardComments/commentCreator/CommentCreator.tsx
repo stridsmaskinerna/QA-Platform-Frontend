@@ -1,31 +1,32 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { TextArea } from "../../input";
 import { ICommentForCreation } from "../../../utils";
-import { CommentSubmitButton } from "../commentSubmitButton";
 import styles from "./CommentCreator.module.css";
+import { CommentForm } from "../../forms";
 
 interface ICommentCreatorProps {
     answerId: string;
-    createComment: (comment: ICommentForCreation) => Promise<void>;
+    onCreateComment: (comment: ICommentForCreation) => Promise<void>;
+    onCancel: () => void;
 }
 
 export function CommentCreator({
     answerId,
-    createComment,
+    onCreateComment,
+    onCancel,
 }: ICommentCreatorProps) {
     const { t } = useTranslation();
     const [currentContent, setCurrentContent] = useState("");
 
-    const submit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const submit = () => {
         setCurrentContent("");
         const comment: ICommentForCreation = {
             answerId,
             value: currentContent,
         };
-        void createComment(comment);
+        void onCreateComment(comment);
     };
 
     const updateComment = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +34,8 @@ export function CommentCreator({
     };
 
     return (
-        <form
-            className={styles.container}
+        <CommentForm
+            onCancel={onCancel}
             onSubmit={submit}
         >
             <div className={styles.textArea}>
@@ -49,7 +50,6 @@ export function CommentCreator({
                     onChange={updateComment}
                 />
             </div>
-            <CommentSubmitButton />
-        </form>
+        </CommentForm>
     );
 }

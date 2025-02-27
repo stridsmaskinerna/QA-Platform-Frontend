@@ -1,0 +1,11 @@
+{
+    "utilities": {
+        "lessThanMinuteAgo": "Less than a minute ago",
+        "oneMinuteAgo": "One minute ago",
+        "minutesAgo": "{{minutes}} minutes ago",
+        "oneHourAgo": "One hour ago",
+        "hoursAgo": "{{hours}} hours ago",
+        "oneDayAgo": "One day ago",
+        "daysAgo": "{{days}} days ago"
+    }
+}

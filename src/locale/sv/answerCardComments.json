@@ -1,0 +1,12 @@
+{
+    "answerCardComments": {
+        "commentLabelMarker": "✔ Din senaste kommentar",
+        "commentsListTitle": "Läs Kommentarer",
+        "commentsCreatorTitle": "Skapa Kommentar",
+        "hideCommentInfo": "Dölj kommentarer",
+        "updateCommentInfo": "Uppdatera kommentar",
+        "deleteCommentInfo": "Radera kommentar",
+        "createCommentPlaceholder": "Skapa en kommentar..",
+        "noCommentsLabel": "Inga kommentarer existerar för detta svar"
+    }
+}

@@ -2,7 +2,6 @@
 build
 coverage
 
-
 **/*.yml
 
 package-lock.json

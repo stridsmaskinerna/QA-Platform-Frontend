@@ -30,7 +30,7 @@ export function CommentItem({
         if (highlightedCommentId === comment.id && commentRef.current != null) {
             commentRef.current.scrollIntoView({
                 behavior: "smooth",
-                block: "center",
+                block: "start",
             });
         }
     }, [highlightedCommentId, comment.id]);
@@ -41,6 +41,10 @@ export function CommentItem({
 
     const handleIsUpdating = () => {
         setIsUpdating(prev => !prev);
+    };
+
+    const cancelIsUpdating = () => {
+        setIsUpdating(false);
     };
 
     const handleDelete = () => {
@@ -69,11 +73,12 @@ export function CommentItem({
                 <CommentUpdater
                     comment={comment}
                     onUpdateComment={handleUpdate}
+                    onCancel={cancelIsUpdating}
                 />
             )}
             <div className={styles.footer}>
                 <p className={styles.userName}>{comment.userName}</p>
-                {isMyQuestion() && (
+                {isMyQuestion() && !isUpdating && (
                     <div className={styles.footerToolbar}>
                         <img
                             onClick={() => {

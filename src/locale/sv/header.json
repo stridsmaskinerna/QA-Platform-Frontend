@@ -1,0 +1,10 @@
+{
+    "header": {
+        "headerHeadline": "LTU Frågor & Svar",
+        "linkLoginRegister": "Logga in/Registrering",
+        "linkAdmin": "Admin",
+        "linkLogout": "Logga ut",
+        "linkQA": "Frågor & Svar",
+        "linkHelp": "Hjälp?"
+    }
+}

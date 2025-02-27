@@ -1,0 +1,14 @@
+{
+    "answerForm": {
+        "submitInfo": "Sänd svar",
+        "cancelButton": "Stäng",
+        "submitButton": "Submit"
+    },
+    "commentForm": {
+        "submitInfo": "Submit Answer",
+        "cancelButton": "Stäng",
+        "submitButton": "Submit",
+        "submitComment": "Kommentera",
+        "submitCommentInfo": "Skapa kommentar"
+    }
+}
