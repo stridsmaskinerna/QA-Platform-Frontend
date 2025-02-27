@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`QuestionCard to match snapshot 1`] = `
+<QuestionCard
+  data={
+    {
+      "answerCount": 5,
+      "created": "2025-02-27T10:45:06.221Z",
+      "id": "1",
+      "isHidden": false,
+      "isHideable": true,
+      "isProtected": false,
+      "isResolved": true,
+      "subjectCode": "007",
+      "subjectId": "subjectId",
+      "subjectName": "subjectName",
+      "tags": [
+        "TAG1, TAG2, TAG3, TAG4",
+      ],
+      "title": "title",
+      "topicId": "topicId",
+      "topicName": "topicName",
+      "userId": "userId",
+      "userName": "username",
+    }
+  }
+  handleDeleteClick={[Function]}
+  isPostedByUser={true}
+/>
+`;
