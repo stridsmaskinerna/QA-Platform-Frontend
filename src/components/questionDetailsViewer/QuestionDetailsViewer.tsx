@@ -41,7 +41,7 @@ export function QuestionDetailsViewerInner() {
     return (
         <div className={styles.container}>
             <div className={styles.backBtn}>
-                <GoBackButton text={`${t("backToQA")}`} />
+                <GoBackButton text={`${t("questionDetailsViewer.backToQA")}`} />
             </div>
             <QuestionCardDetails
                 isHideable={question.isHideable}
@@ -62,7 +62,10 @@ export function QuestionDetailsViewerInner() {
                 tags={question.tags}
                 userId={question.userId}
             />
-            <h2>Answers</h2>
+            <h2>
+                {`${t("questionDetailsViewer.answers")} (${currentAnswers.length}`}
+                )
+            </h2>
             {isLoggedIn && <AnswerCreator questionId={question.id} />}
             <ul className={styles.container}>
                 {currentAnswers.map(answer => (
