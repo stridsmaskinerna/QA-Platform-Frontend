@@ -17,7 +17,6 @@ import { ANSWER_URL, BASE_URL, COMMENT_URL } from "../../../data";
 import { ErrorModal } from "../../modal";
 import { TabLabelContainer } from "../../tabs";
 import styles from "./AnswerCardComments.module.css";
-import { H2 } from "../../text";
 
 interface IAnswerCardCommentsProps {
     answerId: string;
