@@ -26,7 +26,7 @@ export function AnswerCard({ data, isOwner, onMarkAsSolved }: IAnswerProps) {
         if (highlightedAnswerId === data.id && answerCardRef.current != null) {
             answerCardRef.current.scrollIntoView({
                 behavior: "smooth",
-                block: "start",
+                block: "nearest",
             });
         }
     }, [data.id, highlightedAnswerId]);
