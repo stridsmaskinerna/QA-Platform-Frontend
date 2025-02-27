@@ -4,7 +4,7 @@ import { UserTable } from "./UserTable";
 import { useTranslation } from "react-i18next";
 import { useInfiniteScrolling, usePUT } from "../../../hooks";
 import { BASE_URL, USERS_URL } from "../../../data";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 import { IUser } from "../../../utils";
 
@@ -18,14 +18,13 @@ export function UserManagement() {
     const {
         isLoading,
         totalItemCount,
-        resetPaginatedData,
         paginatedData,
         hasMore,
         loaderRef,
         fetchFromStart,
         setPaginatedData,
     } = useInfiniteScrolling<IUser>({
-        url: `${getUsersUrl}${searchString ? `?searchString=${searchString}` : ""}`,
+        url: `${getUsersUrl}?searchString=${searchString}`,
         limit: 20,
     });
 
@@ -49,11 +48,7 @@ export function UserManagement() {
     };
 
     const fetchUsersBySearchString = async (str: string) => {
-        if (str.trim()) {
-            await fetchFromStart(`${getUsersUrl}?searchString=${str}`);
-        } else {
-            resetPaginatedData();
-        }
+        await fetchFromStart(`${getUsersUrl}?searchString=${str}`);
     };
 
     const debouncedHandleSearchChange = useDebounceCallback(
@@ -83,6 +78,12 @@ export function UserManagement() {
             return prevCopy;
         });
     };
+
+    useEffect(() => {
+        void fetchFromStart(`${getUsersUrl}?searchString=`);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={styles.container}>
