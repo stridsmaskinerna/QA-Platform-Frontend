@@ -26,6 +26,9 @@
         "blocked": "Blocked",
         "active": "Active",
         "nrOfUsersFound": "Found {{count}} users",
-        "noUsersFound": "No users found"
+        "noUsersFound": "No users found",
+        "nrOfTagFound": "Found {{count}} tags",
+        "noTagFound": "No tag found",
+        "TagName": "Tag Name"
     }
 }
