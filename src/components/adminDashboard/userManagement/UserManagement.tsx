@@ -90,7 +90,7 @@ export function UserManagement() {
             <Input
                 inputName="manageUser"
                 inputType="search"
-                placeHolder={t("searchUser")}
+                placeHolder={t("adminDashBoard.searchUser")}
                 inputValue={searchString}
                 onChange={handleSearchChange}
             />
@@ -98,7 +98,9 @@ export function UserManagement() {
             {paginatedData.length > 0 && (
                 <>
                     <h4 className={styles.foundInfo}>
-                        {t("nrOfUsersFound", { count: totalItemCount })}
+                        {t("adminDashBoard.nrOfUsersFound", {
+                            count: totalItemCount,
+                        })}
                     </h4>
                     <UserTable
                         hasMore={hasMore}
@@ -109,7 +111,7 @@ export function UserManagement() {
                 </>
             )}
             {paginatedData.length === 0 && !isLoading && searchString && (
-                <h5>{t("noUsersFound")}</h5>
+                <h5>{t("adminDashBoard.noUsersFound")}</h5>
             )}
         </div>
     );
