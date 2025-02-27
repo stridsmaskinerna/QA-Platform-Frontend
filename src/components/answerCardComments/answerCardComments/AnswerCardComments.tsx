@@ -142,6 +142,10 @@ export function AnswerCardComments({
         getAnswerCommentsReq.clearError();
     };
 
+    const getCommentListLabel = () => {
+        return `${t("answerCardComments.commentsListTitle")} (${currentComments.length})`;
+    };
+
     return (
         <div className={styles.container}>
             <ErrorModal
@@ -172,7 +176,7 @@ export function AnswerCardComments({
                 </TabLabelContainer>
             )}
             <TabLabelContainer
-                label={t("answerCardComments.commentsListTitle")}
+                label={getCommentListLabel()}
                 isOpen={isCommentsOpen}
                 labelIcon={commentListIcon}
                 toggleOpen={() => {

@@ -8,13 +8,13 @@ import {
 import {
     CustomError,
     getValuesFromToken,
-    IAuthContext,
     ILoginCredentials,
     IRegisterFormData,
     ITokens,
     IUserDetails,
     LoginErrorMessage,
     RegisterErrorMessage,
+    Role,
 } from "../../utils";
 import { useLocalStorage } from "usehooks-ts";
 import {
@@ -27,6 +27,21 @@ import {
 
 interface IAuthProviderProps {
     children: ReactNode;
+}
+
+export interface IAuthContext {
+    userId: string | undefined;
+    username: string | undefined;
+    roles: Role[] | undefined;
+    login: (
+        credentials: ILoginCredentials,
+    ) => Promise<LoginErrorMessage | void>;
+    logout: () => void;
+    register: (
+        formData: Omit<IRegisterFormData, "confirmPassword">,
+    ) => Promise<RegisterErrorMessage | void>;
+    isLoading: boolean;
+    isLoggedIn: boolean;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);

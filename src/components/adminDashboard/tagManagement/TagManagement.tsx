@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./TagManagement.module.css";
 import { Input, Loader } from "../..";
 import { useTranslation } from "react-i18next";
-import {
-    useDELETE,
-    useFetchWithToken,
-    useInfiniteScrolling,
-    useQAContext,
-} from "../../../hooks";
+import { useDELETE, useInfiniteScrolling, useQAContext } from "../../../hooks";
 import { ITag } from "../../../utils";
 import { BASE_URL } from "../../../data";
 import { DeleteButton } from "../../button"; // Import the DeleteButton component
@@ -70,47 +65,63 @@ export function TagManagement() {
             <Input
                 inputName="manageTag"
                 inputType="text"
-                placeHolder={t("manageTag")}
+                placeHolder={t("adminDashBoard.manageTag")}
                 inputValue={searchTerm}
                 onChange={handleSearchChange} // Trigger search on input change
             />
             {isLoading && <Loader />}
-            {totalItemCount != null && <p>{totalItemCount} found</p>}
-            <table className={styles.tagTable}>
-                <thead>
-                    <tr className={styles.tagTableHeader}>
-                        <th className={styles.tagTableCell}>Tag Name</th>
-                        <th className={styles.tagTableDelCell}>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedData.map(tag => (
-                        <tr key={tag.id}>
-                            <td className={styles.tagTableCell}>{tag.value}</td>
-                            <td className={styles.tagTableDeleteCell}>
-                                <DeleteButton
-                                    onClick={() => {
-                                        setTagToDelete(tag);
-                                    }}
-                                    text={t("delete")}
-                                    icon={true}
-                                />
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {paginatedData.length > 0 && (
+                <>
+                    <h4 className={styles.foundInfo}>
+                        {t("adminDashBoard.nrOfUsersFound", {
+                            count: totalItemCount,
+                        })}
+                    </h4>
+                    <table className={styles.tagTable}>
+                        <thead>
+                            <tr className={styles.tagTableHeader}>
+                                <th className={styles.tagTableCell}>
+                                    Tag Name
+                                </th>
+                                <th className={styles.tagTableDelCell}>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {paginatedData.map(tag => (
+                                <tr key={tag.id}>
+                                    <td className={styles.tagTableCell}>
+                                        {tag.value}
+                                    </td>
+                                    <td className={styles.tagTableDeleteCell}>
+                                        <DeleteButton
+                                            onClick={() => {
+                                                setTagToDelete(tag);
+                                            }}
+                                            text={t("delete")}
+                                            icon={true}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
-            {tagToDelete && (
-                <Modal
-                    title={t("deleteTag")}
-                    message={`${t("areYouSureYouWantToDeleteTag")} ${tagToDelete.value}?`}
-                    okClick={handleDelete}
-                    cancelClick={() => setTagToDelete(null)}
-                    onBackdropClick={() => setTagToDelete(null)} //
-                />
+                    {tagToDelete && (
+                        <Modal
+                            title={t("adminDashBoard.deleteTag")}
+                            message={`adminDashBoard.ConfirmDeleteTagteTag")} ${tagToDelete.value}?`}
+                            okClick={handleDelete}
+                            cancelClick={() => setTagToDelete(null)}
+                            onBackdropClick={() => setTagToDelete(null)} //
+                        />
+                    )}
+                </>
             )}
-
+            {paginatedData.length === 0 && !isLoading && searchTerm && (
+                <h4>{t("adminDashBoard.noUsersFound")}</h4>
+            )}
             {hasMore && (
                 <div ref={loaderRef}>
                     <Loader />

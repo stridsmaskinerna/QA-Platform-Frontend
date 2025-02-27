@@ -5,8 +5,10 @@ import forms from "./forms.json";
 import header from "./header.json";
 import shared from "./shared.json";
 import teacherDashboard from "./teacherDashboard.json";
+import adminDashboard from "./adminDashboard.json";
 import userGuide from "./userGuide.json";
 import utilities from "./utilities.json";
+import questionDetailsViewer from "./questionDetailsViewer.json";
 
 export default {
     translation: {
@@ -15,9 +17,11 @@ export default {
         ...answerCreator,
         ...forms,
         ...header,
+        ...questionDetailsViewer,
         ...shared,
         ...teacherDashboard,
         ...userGuide,
         ...utilities,
+        ...adminDashboard,
     },
 };

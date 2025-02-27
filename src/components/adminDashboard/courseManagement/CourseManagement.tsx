@@ -193,30 +193,32 @@ export function CourseManagement() {
                 <Input
                     inputName="subjectCode"
                     inputType="text"
-                    label={t("addNewCourse")}
-                    placeHolder={t("courseCodePlaceHolder")}
+                    label={t("adminDashBoard.addNewCourse")}
+                    placeHolder={t("adminDashBoard.courseCodePlaceHolder")}
                 />
                 <Input
                     inputName="name"
                     inputType="text"
-                    label={t("courseName")}
-                    placeHolder={t("courseNamePlaceHolder")}
+                    label={t("adminDashBoard.courseName")}
+                    placeHolder={t("adminDashBoard.courseNamePlaceHolder")}
                 />
                 <Input
                     inputName="teachers"
                     inputType="text"
-                    label={t("teacherName")}
-                    placeHolder={t("teacherNamePlaceHolder")}
+                    label={t("adminDashBoard.teacherName")}
+                    placeHolder={t("adminDashBoard.teacherNamePlaceHolder")}
                 />
                 <button
                     className={styles.submitBtn}
                     type="submit"
                 >
-                    {t("addCourse")}
+                    {t("adminDashBoard.addCourse")}
                 </button>
             </form>
             <div className={styles.manageCourse}>
-                <h2 className={styles.heading}>{t("manageExistingCourses")}</h2>
+                <h2 className={styles.heading}>
+                    {t("adminDashBoard.manageExistingCourses")}
+                </h2>
 
                 {courseForEditing ? (
                     <div className={styles.addTeacherContainer}>
@@ -224,7 +226,9 @@ export function CourseManagement() {
                             label={t("addTeacherToSubject", {
                                 subject: `${courseForEditing.subjectCode ? courseForEditing.subjectCode + " " : ""}${courseForEditing.name}`,
                             })}
-                            placeHolder={t("teacherNamePlaceHolder")}
+                            placeHolder={t(
+                                "adminDashBoard.teacherNamePlaceHolder",
+                            )}
                             inputType="text"
                             inputValue={addTeacherInput}
                             onChange={e => setAddTeacherInput(e.target.value)}
@@ -241,7 +245,9 @@ export function CourseManagement() {
                         label={t("searchSubjects")}
                         inputName="manageCourse"
                         inputType="search"
-                        placeHolder={t("searchCoursePlaceholder")}
+                        placeHolder={t(
+                            "adminDashBoard.searchCoursePlaceholder",
+                        )}
                         onChange={handleSearchChange}
                     />
                 )}
@@ -249,10 +255,10 @@ export function CourseManagement() {
                 <table className={styles.courseTable}>
                     <thead>
                         <tr>
-                            <th>{t("courseCode")}</th>
-                            <th>{t("courseName")}</th>
-                            <th>{t("teachers")}</th>
-                            <th>{t("actions")}</th>
+                            <th>{t("adminDashBoard.courseCode")}</th>
+                            <th>{t("adminDashBoard.courseName")}</th>
+                            <th>{t("adminDashBoard.teachers")}</th>
+                            <th>{t("adminDashBoard.actions")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -265,7 +271,7 @@ export function CourseManagement() {
                                         : ""
                                 }
                             >
-                                <td data-label={t("courseCode")}>
+                                <td data-label={t("adminDashBoard.courseCode")}>
                                     {course.id === courseForEditing?.id ? (
                                         <Input
                                             inputType="text"
@@ -284,7 +290,7 @@ export function CourseManagement() {
                                         course.subjectCode
                                     )}
                                 </td>
-                                <td data-label={t("courseName")}>
+                                <td data-label={t("adminDashBoard.courseName")}>
                                     {course.id === courseForEditing?.id ? (
                                         <Input
                                             inputType="text"
@@ -300,7 +306,7 @@ export function CourseManagement() {
                                         course.name
                                     )}
                                 </td>
-                                <td data-label={t("teachers")}>
+                                <td data-label={t("adminDashBoard.teachers")}>
                                     <div
                                         className={styles.teacherTagsContainer}
                                     >
@@ -335,7 +341,7 @@ export function CourseManagement() {
                                         ))}
                                     </div>
                                 </td>
-                                <td data-label={t("actions")}>
+                                <td data-label={t("adminDashBoard.actions")}>
                                     <div className={styles.actionsContainer}>
                                         <div className={styles.btnsContainer}>
                                             <EditButton
