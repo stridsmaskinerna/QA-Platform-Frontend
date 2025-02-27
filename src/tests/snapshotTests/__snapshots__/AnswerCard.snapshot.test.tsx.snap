@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnswerCard to match snapshot 1`] = `
+<AnswerCard
+  data={
+    {
+      "answeredByTeacher": true,
+      "comments": [
+        {
+          "id": "commentID",
+          "userName": "commenterUsername",
+          "value": "commentValue",
+        },
+      ],
+      "created": "2025-02-22T13:30:00.000Z",
+      "filePath": "",
+      "id": "id",
+      "isAccepted": true,
+      "isHidden": false,
+      "myVote": "neutral",
+      "rating": 0,
+      "userName": "username",
+      "value": "{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Laborum ratione consectetur esse est et voluptas distinctio rerum qui architecto nihil in fuga et optio enim illum laudantium alias soluta optio odio incidunt non fuga libero est quaerat velit nemo consectetur sint ipsum et est nulla est amet tenetur distinctio accusamus est quis nihil nobis debitis sed deserunt aut repellendus autem modi nesciunt dolor rerum aspernatur ad dolore qui nihil tenetur in non unde animi fuga totam fugiat eos qui qui sunt cumque.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}",
+      "voteCount": 7,
+    }
+  }
+  isOwner={true}
+  onMarkAsSolved={[Function]}
+  questionId="questionId"
+/>
+`;
