@@ -20,7 +20,6 @@ export function CommentForm({
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         void onSubmit();
     };
 

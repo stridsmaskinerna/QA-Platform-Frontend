@@ -4,7 +4,6 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "pre": "node generate-translation.mjs",
         "dev": "vite",
         "build": "tsc -b && vite build --mode prod",
         "lint": "eslint .",
