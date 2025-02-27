@@ -1,31 +1,140 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`AnswerCard to match snapshot 1`] = `
-<AnswerCard
-  data={
-    {
-      "answeredByTeacher": true,
-      "comments": [
-        {
-          "id": "commentID",
-          "userName": "commenterUsername",
-          "value": "commentValue",
-        },
-      ],
-      "created": "2025-02-22T13:30:00.000Z",
-      "filePath": "",
-      "id": "id",
-      "isAccepted": true,
-      "isHidden": false,
-      "myVote": "neutral",
-      "rating": 0,
-      "userName": "username",
-      "value": "{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Laborum ratione consectetur esse est et voluptas distinctio rerum qui architecto nihil in fuga et optio enim illum laudantium alias soluta optio odio incidunt non fuga libero est quaerat velit nemo consectetur sint ipsum et est nulla est amet tenetur distinctio accusamus est quis nihil nobis debitis sed deserunt aut repellendus autem modi nesciunt dolor rerum aspernatur ad dolore qui nihil tenetur in non unde animi fuga totam fugiat eos qui qui sunt cumque.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}",
-      "voteCount": 7,
-    }
-  }
-  isOwner={true}
-  onMarkAsSolved={[Function]}
-  questionId="questionId"
-/>
+<DocumentFragment>
+  <div
+    class="container borderAccepted"
+  >
+    <div
+      class="container"
+    >
+      <div
+        class="left"
+      >
+        <span
+          class="teacherBox"
+        >
+          Teacher
+        </span>
+        <span>
+          username
+        </span>
+        <span
+          class="timeContainer"
+        >
+          Less than a minute ago
+        </span>
+      </div>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="editorContainer"
+      >
+        <div
+          class="editorInner"
+        >
+          <div
+            aria-autocomplete="none"
+            aria-readonly="true"
+            class="input"
+            contenteditable="false"
+            data-lexical-editor="true"
+            spellcheck="true"
+            style="user-select: text; white-space: pre-wrap; word-break: break-word;"
+          >
+            <p
+              class="editorParagraph ltr"
+              dir="ltr"
+            >
+              <span
+                data-lexical-text="true"
+              >
+                Laborum ratione consectetur esse est et voluptas distinctio rerum qui architecto nihil in fuga et optio enim illum laudantium alias soluta optio odio incidunt non fuga libero est quaerat velit nemo consectetur sint ipsum et est nulla est amet tenetur distinctio accusamus est quis nihil nobis debitis sed deserunt aut repellendus autem modi nesciunt dolor rerum aspernatur ad dolore qui nihil tenetur in non unde animi fuga totam fugiat eos qui qui sunt cumque.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="container"
+      >
+        <img
+          alt=""
+          class="voteButton 
+                 
+                disabled"
+          src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20height='24px'%20viewBox='0%20-960%20960%20960'%20width='24px'%20fill='%2350c878'%3e%3cpath%20d='M720-120H280v-520l280-280%2050%2050q7%207%2011.5%2019t4.5%2023v14l-44%20174h258q32%200%2056%2024t24%2056v80q0%207-2%2015t-4%2015L794-168q-9%2020-30%2034t-44%2014Zm-360-80h360l120-280v-80H480l54-220-174%20174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z'/%3e%3c/svg%3e"
+        />
+        <span
+          class="voteCount"
+        >
+          7
+        </span>
+        <img
+          alt=""
+          class="voteButton 
+                 
+                disabled"
+          src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20height='24px'%20viewBox='0%20-960%20960%20960'%20width='24px'%20fill='%23c70000'%3e%3cpath%20d='M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32%200-56-24t-24-56v-80q0-7%202-15t4-15l120-282q9-20%2030-34t44-14Zm360%2080H240L120-480v80h360l-54%20220%20174-174v-406Zm0%20406v-406%20406Zm80%2034v-80h120v-360H680v-80h200v520H680Z'/%3e%3c/svg%3e"
+        />
+      </div>
+      <div
+        class="container"
+      >
+        <button
+          class="button accepted"
+        >
+          Accepted answer
+        </button>
+      </div>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header"
+        >
+          <div
+            class="headerLabelContainer"
+          >
+            <img
+              alt="View Comments"
+              class="headerLabelIcon"
+              src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20height='24px'%20viewBox='0%20-960%20960%20960'%20width='24px'%20fill='%23000'%3e%3cpath%20d='M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33%2023.5-56.5T160-880h640q33%200%2056.5%2023.5T880-800v480q0%2033-23.5%2056.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46%200v-480%20480Z'/%3e%3c/svg%3e"
+              title="View Comments"
+            />
+            <div
+              class="headerLabel"
+            >
+              <h2
+                class="colorBlack h2"
+              >
+                View Comments
+              </h2>
+            </div>
+          </div>
+          <img
+            alt="View Comments"
+            class="openIcon"
+            src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%3e%3cpolygon%20points='7.293%204.707%2014.586%2012%207.293%2019.293%208.707%2020.707%2017.414%2012%208.707%203.293%207.293%204.707'/%3e%3c/svg%3e"
+            title="View Comments"
+          />
+        </div>
+        <div
+          class="body"
+        />
+      </div>
+      <div />
+    </div>
+  </div>
+</DocumentFragment>
 `;
