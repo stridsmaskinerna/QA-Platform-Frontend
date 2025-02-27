@@ -9,5 +9,14 @@
         "submitButton": "Submit",
         "submitCommentInfo": "Submit comment",
         "submitComment": "Comment"
+    },
+    "loginRegisterForm": {
+        "registrationConfirmation": "You have been succesfully registered and can now login",
+        "email": "Email",
+        "mustEndWithLtu": "must end with @ltu.se",
+        "username": "Username",
+        "confirmPassword": "Confirm password",
+        "password": "Password",
+        "register": "Register"
     }
 }

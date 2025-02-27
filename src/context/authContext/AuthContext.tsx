@@ -59,8 +59,9 @@ function AuthProvider({ children }: IAuthProviderProps): ReactElement {
             const tokens = await loginReq({ email, password });
             setTokens(tokens);
         } catch (error) {
-            if (error instanceof CustomError && error.errorCode === 401) {
-                return "wrongCredentials";
+            if (error instanceof CustomError) {
+                if (error.errorCode === 401) return "wrongCredentials";
+                if (error.errorCode === 403) return "userBlocked";
             }
             console.error(error);
             return "serverProblem";

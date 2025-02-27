@@ -52,6 +52,12 @@ export function RegisterForm() {
             setIsLoading(false);
         })();
     };
+
+    const handleOkModalClick = () => {
+        setShowVerificationMsg(false);
+        window.location.reload();
+    };
+
     return (
         <>
             <form
@@ -62,40 +68,43 @@ export function RegisterForm() {
                 <Input
                     inputName="email"
                     inputType="email"
-                    label={`${t("email")} (${t("mustEndWithLtu")})`}
+                    label={`${t("loginRegisterForm.email")} (${t("loginRegisterForm.mustEndWithLtu")})`}
                 />
                 <Input
                     inputName="username"
                     inputType="text"
-                    label={t("username")}
+                    label={t("loginRegisterForm.username")}
                 />
                 <Input
                     minInputValueLength={PASSWORD_MIN_LENGTH}
                     inputName="password"
                     inputType="password"
-                    label={t("password")}
+                    label={t("loginRegisterForm.password")}
                 />
                 <Input
                     minInputValueLength={PASSWORD_MIN_LENGTH}
                     inputName="confirmPassword"
                     inputType="password"
-                    label={t("confirmPassword")}
+                    label={t("loginRegisterForm.confirmPassword")}
                 />
                 <button
                     className={styles.submitBtn}
                     type="submit"
                 >
-                    {t("register")}
+                    {t("loginRegisterForm.register")}
                 </button>
 
                 <p className={`${styles.errorMsg} ${error ? styles.show : ""}`}>
-                    {t(error ?? "")}
+                    {error ? t(error) : ""}
                 </p>
             </form>
             {showVerificationMsg && (
                 <Modal
-                    message={t("verifyEmail")}
-                    okClick={() => setShowVerificationMsg(false)}
+                    title=""
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    onBackdropClick={() => {}}
+                    message={t("loginRegisterForm.registrationConfirmation")}
+                    okClick={handleOkModalClick}
                 />
             )}
         </>
