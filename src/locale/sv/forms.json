@@ -10,5 +10,14 @@
         "submitButton": "Submit",
         "submitComment": "Kommentera",
         "submitCommentInfo": "Skapa kommentar"
+    },
+    "loginRegisterForm": {
+        "registrationConfirmation": "Du har registrerats och kan nu logga in",
+        "email": "E-post",
+        "password": "Lösenord",
+        "confirmPassword": "Bekräfta lösenord",
+        "mustEndWithLtu": "måste sluta på @ltu.se",
+        "username": "Användarnamn",
+        "register": "Registrera"
     }
 }
