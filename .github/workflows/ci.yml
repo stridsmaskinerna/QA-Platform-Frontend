@@ -124,7 +124,7 @@ jobs:
 
   # Job 6: Register container        
   build-and-push:
-    needs: [build]  # Run only after the build passes
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       packages: write
