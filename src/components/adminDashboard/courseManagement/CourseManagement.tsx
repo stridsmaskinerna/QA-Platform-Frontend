@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import styles from "./CourseManagement.module.css";
-import { DeleteButton, EditButton, Input, SaveButton } from "../..";
+import { DeleteButton, EditButton, Input, Modal, SaveButton } from "../..";
 import { useTranslation } from "react-i18next";
 import {
     useDELETE,
@@ -33,6 +33,8 @@ export function CourseManagement() {
     const [filteredCourses, setFilteredCourses] = useState<ISubject[]>([]); // Store filtered courses
     const [courseForEditing, setCourseForEditing] = useState<ISubjectForPut>();
     const [addTeacherInput, setAddTeacherInput] = useState("");
+    const [showCreateCourseConfirmation, setShowCreateCourseConfirmation] =
+        useState(false);
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -54,12 +56,17 @@ export function CourseManagement() {
 
             const { error } = await postCourse(courseUrl, formattedData);
             if (!error) {
-                formRef.current?.reset();
+                setShowCreateCourseConfirmation(true);
             } else {
                 console.error(error);
             }
             setIsLoading(false);
         })();
+    };
+
+    const handleOkConfirmation = () => {
+        setShowCreateCourseConfirmation(false);
+        window.location.reload();
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,6 +210,7 @@ export function CourseManagement() {
                     placeHolder={t("adminDashBoard.courseNamePlaceHolder")}
                 />
                 <Input
+                    required={false}
                     inputName="teachers"
                     inputType="text"
                     label={t("adminDashBoard.teacherName")}
@@ -393,6 +401,14 @@ export function CourseManagement() {
                     </tbody>
                 </table>
             </div>
+            {showCreateCourseConfirmation && (
+                <Modal
+                    onBackdropClick={handleOkConfirmation}
+                    title={t("adminDashBoard.confirmation")}
+                    message={t("adminDashBoard.courseCreated")}
+                    okClick={handleOkConfirmation}
+                />
+            )}
         </div>
     );
 }

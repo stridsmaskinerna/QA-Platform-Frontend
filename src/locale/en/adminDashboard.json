@@ -29,6 +29,8 @@
         "noUsersFound": "No users found",
         "nrOfTagFound": "Found {{count}} tags",
         "noTagFound": "No tag found",
-        "TagName": "Tag Name"
+        "TagName": "Tag Name",
+        "confirmation": "Confirmation",
+        "courseCreated": "Course created"
     }
 }
