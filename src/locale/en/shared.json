@@ -13,6 +13,7 @@
     "register": "Register",
     "email": "Email",
     "password": "Password",
+    "backToQA": "Back to Q&A",
     "wrongCredentials": "Invalid email or password. Please try again.",
     "serverProblem": "Something went wrong. Please try again later.",
     "usernameTaken": "Username unavailable. Please choose another one.",

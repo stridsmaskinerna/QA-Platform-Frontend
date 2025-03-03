@@ -42,7 +42,8 @@ interface IUseFetchWithTokenReturn<T> {
 
 export function useFetchWithToken<T>(): IUseFetchWithTokenReturn<T> {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [tokens, _, clearTokens] = useLocalStorage<ITokens | null>(
         LOCAL_STORAGE_TOKEN_KEY,
         null,
     );

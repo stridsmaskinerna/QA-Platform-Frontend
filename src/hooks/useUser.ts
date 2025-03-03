@@ -6,7 +6,8 @@ import { BASE_URL, ADMIN_ROUTE } from "../data";
 export function useUser() {
     const { putRequestWithError } = usePUT();
     const { requestHandler: fetchUsers } = useFetchWithToken<IUser[]>();
-    const [allUsers, setAllUsers] = useState<IUser[] | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, setAllUsers] = useState<IUser[] | null>(null);
     const [filteredUsers, setFilteredUsers] = useState<IUser[] | null>(null); // Initialize to null!
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);

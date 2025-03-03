@@ -13,6 +13,7 @@
     "register": "Registrering",
     "email": "E-post",
     "password": "Lösenord",
+    "backToQA": "Tillbaka till Frågor & Svar",
     "userBlocked": "Ditt konto har blivit blockerat. Vänligen kontakta din lärare för att begära en upplåsning.",
     "wrongCredentials": "Ogiltig e-postadress eller lösenord. Vänligen försök igen.",
     "serverProblem": "Något gick fel. Vänligen försök igen senare.",

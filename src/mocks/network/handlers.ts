@@ -65,4 +65,5 @@ const questions: IQuestion[] = Array.from({ length: 10 }, (_, index) => ({
     answerCount: Math.floor(Math.random() * 10), // Random answer count
     tags: [`tag${index + 1}-1`, `tag${index + 1}-2`], // Example tags
     userId: `user-${index + 1}`,
+    isHideable: false,
 }));
