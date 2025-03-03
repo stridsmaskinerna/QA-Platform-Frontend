@@ -1,9 +1,6 @@
 name: CI Workflow
 
 on:
-  push:
-    branches:
-      - spike-deployment
   pull_request:
     branches: 
       - main        # Run on pull requests targeting main branch
