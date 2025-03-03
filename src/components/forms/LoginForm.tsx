@@ -25,7 +25,7 @@ export function LoginForm() {
             const formDetails = Object.fromEntries(
                 formData,
             ) as unknown as ILoginCredentials;
-            if (formDetails.email.slice(-7).toUpperCase() !== "@LTU.SE") {
+            if (formDetails.email.slice(-6).toUpperCase() !== "LTU.SE") {
                 setError("mustEndWithLtuErrMsg");
                 return;
             }

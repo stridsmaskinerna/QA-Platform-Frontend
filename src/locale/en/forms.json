@@ -13,7 +13,7 @@
     "loginRegisterForm": {
         "registrationConfirmation": "You have been succesfully registered and can now login",
         "email": "Email",
-        "mustEndWithLtu": "must end with @ltu.se",
+        "mustEndWithLtu": "must end with ltu.se",
         "username": "Username",
         "confirmPassword": "Confirm password",
         "password": "Password",
