@@ -16,7 +16,7 @@
         "email": "E-post",
         "password": "Lösenord",
         "confirmPassword": "Bekräfta lösenord",
-        "mustEndWithLtu": "måste sluta på @ltu.se",
+        "mustEndWithLtu": "måste sluta på ltu.se",
         "username": "Användarnamn",
         "register": "Registrera"
     }

@@ -29,6 +29,8 @@
         "noUsersFound": "Inga användare hittade",
         "nrOfTagFound": "Hittade {{count}} taggar",
         "noTagFound": "Inga taggar hittade",
-        "TagName": "Taggnamn"
+        "TagName": "Taggnamn",
+        "confirmation": "Bekräftelse",
+        "courseCreated": "Kurs skapad"
     }
 }

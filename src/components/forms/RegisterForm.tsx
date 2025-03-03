@@ -34,7 +34,7 @@ export function RegisterForm() {
                 setError("passwordsNoMatch");
                 return;
             }
-            if (formDetails.email.slice(-7).toUpperCase() !== "@LTU.SE") {
+            if (formDetails.email.slice(-6).toUpperCase() !== "LTU.SE") {
                 setError("mustEndWithLtuErrMsg");
                 return;
             }
